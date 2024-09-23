@@ -1,0 +1,18 @@
+# JetBrains
+.idea/
+*.iml
+
+# VSCode
+.vscode/
+
+# Eclipse
+.settings/
+*.project
+*.classpath
+
+# NetBeans
+/nbproject/
+
+# Sublime Text
+*.sublime-workspace
+*.sublime-project
