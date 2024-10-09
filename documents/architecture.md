@@ -1,13 +1,15 @@
 # Architecture
 
-- Java
-- Maven
+## Development Environment
+- Docker Compose
+  - Java (Watch for changes)
+    - Maven (build/manage tool)
+    - JTE (Templating engine)
+    - Junit (Unit testing)
 
-- _Templating Engine?_
-    - [JTE](https://jte.gg/)
-        - Maven plugin
-    - [Thymeleaf](https://www.thymeleaf.org/)
-        - Requires Spring
+## Version Control
+- Git
+  - Automatic (whole app) unit testing on commit?
 
 # Webserver
 Java (18) provides functionality to create a simple webserver. Specifically a FileServer. 
