@@ -43,3 +43,13 @@ Het Facade Pattern wordt gebruikt om een eenvoudige interface te bieden voor een
 #### Toepassing:
 Het kan handig zijn om een Facade te creëren die de communicatie tussen verschillende subsysteemmodules (zoals authenticatie, bibliotheekcatalogus, en betaalsysteem) eenvoudig en overzichtelijk maakt. 
 Hierdoor hoeven gebruikers niet rechtstreeks met de complexiteit van elk subsysteem om te gaan.
+
+
+## Singleton Pattern
+The singleton pattern is a creational design pattern that ensures that a class has only one instance and provides a global point of access to that instance.
+
+#### Waarom?
+Het Singleton Pattern wordt gebruikt om ervoor te zorgen dat een klasse slechts één instantie heeft en biedt een wereldwijd toegangspunt tot die instantie.
+
+#### Toepassing:
+Het kan gebruikt worden voor het beheren van bibliotheekcatalogi of voor het authenticatiesysteem, zodat er altijd maar één instantie van deze services draait die door de gehele applicatie wordt gedeeld.
