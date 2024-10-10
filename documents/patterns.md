@@ -53,3 +53,17 @@ Het Singleton Pattern wordt gebruikt om ervoor te zorgen dat een klasse slechts 
 
 #### Toepassing:
 Het kan gebruikt worden voor het beheren van bibliotheekcatalogi of voor het authenticatiesysteem, zodat er altijd maar één instantie van deze services draait die door de gehele applicatie wordt gedeeld.
+
+
+## Strategy Pattern
+_Behavioral_ 
+
+Lets you design a family of algorithms, put each of them into a separate class, and make their objects interchangeable.
+
+### Waarom? 
+Isolates implementation details, the interface methods specify what behavior must happen. We don't care how that actually happens for _that_ specific type of that object. 
+
+### Toepassing
+The deleting of products from our system. The actual implementation for a product type may differ from others. 
+
+
