@@ -51,4 +51,4 @@ The singleton pattern is a creational design pattern that ensures that a class h
 Het Singleton Pattern wordt gebruikt om ervoor te zorgen dat een klasse slechts één instantie heeft en biedt een wereldwijd toegangspunt tot die instantie.
 
 #### Toepassing:
-Het kan gebruikt worden voor het beheren van bibliotheekcatalogi of voor het authenticatiesysteem, zodat er altijd maar één instantie van deze services draait die door de gehele applicatie wordt gedeeld.
+Het kan gebruikt worden voor het beheren van het bibliotheekcatalogus of voor het authenticatiesysteem, zodat er altijd maar één instantie van deze services draait die door de gehele applicatie wordt gedeeld.
