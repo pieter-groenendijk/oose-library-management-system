@@ -7,10 +7,9 @@ Het Command Pattern wordt gebruikt om verzoeken of acties als objecten te behand
 
 #### Toepassing:
 Het lenen van een boek of tijdschrift is een actie die met het Command Pattern kan worden afgehandeld. 
-Het kan bijvoorbeeld handig zijn om de uitleenactie later ongedaan te maken als er een fout optreedt, of om acties in een queue te plaatsen voor latere verwerking.
+Het kan bijvoorbeeld handig zijn om de uitleenactie later ongedaan te maken als er een fout optreedt, of om acties in een queue te plaatsen voor latere verwerking, en het reserveringssysteem.
 
-
-
+ 
 ## Observer Pattern
 The observer pattern is a behavioral design pattern in which an object, called the subject, maintains a list of its dependents, called observers, and notifies them of state changes, usually by calling one of their methods.
 
@@ -34,16 +33,16 @@ Het Template Method Pattern wordt gebruikt om een algoritme te definiëren in ee
 Als er verschillende soorten leenprocessen zijn (bijvoorbeeld fysieke boeken, digitale tijdschriften, of audioboeken), kan een template-methode de algemene logica van het uitleenproces definiëren, terwijl specifieke stappen voor elke mediatype kunnen worden ingevuld door subklassen.
 
 
-## Facade Pattern
-The facade pattern is a structural design pattern that provides a simplified interface to a larger body of code, such as a class library.
+## Strategy Pattern
+The strategy pattern is a behavioral design pattern that enables selecting an algorithm at runtime. Instead of implementing a single algorithm directly, code receives run-time instructions as to which in a family of algorithms to use.
 
 #### Waarom?
-Het Facade Pattern wordt gebruikt om een eenvoudige interface te bieden voor een complex systeem of een reeks klassen.
+Het Strategy Pattern wordt gebruikt om een algoritme te selecteren op runtime. 
+In plaats van een enkel algoritme direct te implementeren, ontvangt de code runtime-instructies over welk algoritme uit een familie van algoritmen moet worden gebruikt.
 
 #### Toepassing:
-Het kan handig zijn om een Facade te creëren die de communicatie tussen verschillende subsysteemmodules (zoals authenticatie, bibliotheekcatalogus, en betaalsysteem) eenvoudig en overzichtelijk maakt. 
-Hierdoor hoeven gebruikers niet rechtstreeks met de complexiteit van elk subsysteem om te gaan.
-
+Het kan worden gebruikt om verschillende soorten uitleenprocessen te definiëren, zoals het lenen van fysieke boeken, digitale tijdschriften of audioboeken.
+Het kan ook worden gebruikt voor het toepassen van verschillende zoekstragieen in een bibliotheekcatalogus.
 
 ## Singleton Pattern
 The singleton pattern is a creational design pattern that ensures that a class has only one instance and provides a global point of access to that instance.
