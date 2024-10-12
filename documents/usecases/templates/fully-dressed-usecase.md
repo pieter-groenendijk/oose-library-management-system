@@ -1,4 +1,4 @@
-# Schulden (gedeeltelijk) Betalen
+# Usecase name
 <table> 
     <thead>
         <tr>
