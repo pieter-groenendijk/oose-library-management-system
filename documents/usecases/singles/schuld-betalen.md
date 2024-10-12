@@ -83,7 +83,7 @@
         <tr>
             <th scope="row">Alternate Flow</th>
             <td>
-                Gehele bedrag aflossen             
+                <div>Gehele bedrag aflossen</div>           
                 <table>
                     <thead>
                         <tr>
@@ -94,11 +94,11 @@
                     <tbody> 
                         <tr>
                             <td>4.A Het lid geeft aan het gehele bedrag te willen af te lossen.</td>
+                            <td></td>
                         </tr>
                     </tbody>
                 </table>
-                    
-                Ongeldig bedrag opgeleverd  
+                <div>Ongeldig bedrag opgeleverd</div>
                 <table>
                     <thead>
                         <tr>
@@ -108,7 +108,8 @@
                     </thead>
                     <tbody> 
                         <tr>
-                            <td>6.A Het systeem stelt een foutief opgegeven bedrag vast. _terug naar 4_</td>
+                            <td></td>
+                            <td>6.A Het systeem stelt een foutief opgegeven bedrag vast. <em>terug naar 4</em></td>
                         </tr>
                     </tbody>
                 </table> 
@@ -117,7 +118,7 @@
         <tr>
             <th scope="row">Exceptional Flows</th>
             <td>
-                Schuldinformatie onbereikbaar  
+                <div>Schuldinformatie onbereikbaar</div>
                 <table>
                     <thead>
                         <tr>
@@ -127,6 +128,7 @@
                     </thead>
                     <tbody> 
                         <tr>
+                            <td></td>
                             <td>
                                 2.A Systeem geeft een foutmelding aan dat de schuld niet opgehaald kon worden.
                                 Lid wordt geadviseerd contact op te nemen. 
@@ -134,8 +136,7 @@
                         </tr>
                     </tbody>
                 </table>
-
-                Geen openstaande schuld  
+                <div>Geen openstaande schuld</div>  
                 <table>
                     <thead>
                         <tr>
@@ -145,12 +146,12 @@
                     </thead>
                     <tbody> 
                         <tr>
+                            <td></td>
                             <td>3.A Het systeem geeft aan dat er niks te betalen is.</td>
                         </tr>
                     </tbody>
                 </table>    
-                
-                Fout extern betaalsysteem               
+                <div>Fout extern betaalsysteem</div>            
                 <table>
                     <thead>
                         <tr>
@@ -160,6 +161,7 @@
                     </thead>
                     <tbody> 
                         <tr>
+                            <td></td>
                             <td>
                                 7.A Het systeem geeft een foutmelding aan dat schuld momenteel niet betaald kan worden. 
                                 Lid wordt geadviseerd contact op te nemen.
@@ -167,8 +169,7 @@
                         </tr>
                     </tbody>
                 </table>
-
-                Gefaalde betaling betaalsysteem 
+                <div>Gefaalde betaling betaalsysteem</div>
                 <table>
                     <thead>
                         <tr>
@@ -178,6 +179,7 @@
                     </thead>
                     <tbody> 
                         <tr>
+                            <td></td>
                             <td>
                                 11.A Het systeem geeft een foutmelding aan dat de betaling mislukt is.
                                 Lid wordt geadviseerd wanneer deze denkt dat er iets is fout gegaan contact op te nemen.
@@ -185,8 +187,7 @@
                         </tr>
                     </tbody>
                 </table>
-
-                Mislukte verwerking betaling 
+                <div>Mislukte verwerking betaling</div>
                 <table>
                     <thead>
                         <tr>
@@ -196,6 +197,7 @@
                     </thead>
                     <tbody> 
                         <tr>
+                            <td></td>
                             <td>
                                 12.A Het systeem geeft een foutmelding aan dat de betaling niet verwerkt kon worden.
                                 Lid wordt geadviseerd contact op te nemen.
