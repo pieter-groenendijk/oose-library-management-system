@@ -16,4 +16,6 @@
 # Sublime Text
 *.sublime-workspace
 *.sublime-project
+
+# Visual Studio
 /.vs
