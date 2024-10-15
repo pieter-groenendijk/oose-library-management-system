@@ -34,7 +34,6 @@
 - UC9: Digitaal product toevoegen aan Accountbeheer
 - UC10: Schuld afbetalen
 - UC11: Notificatieoverzicht inzien
-- UC12: Notificatieinstellingen beheren.
 - UC13: Notificatie inzien.
 - UC14: Leenhistorie inzien.
 - UC15: (Extra) abonnement aanschaffen/verwijderen.
