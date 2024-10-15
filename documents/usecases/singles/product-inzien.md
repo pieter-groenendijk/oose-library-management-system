@@ -16,11 +16,11 @@
         </tr>
         <tr>
             <th scope="row">Cross References</th>
-            <td></td>
+            <td>FR-006</td>
         </tr>
         <tr>
             <th scope="row">Brief Description</th>
-            <td></td>
+            <td>Als bezoeker(of andere hogere rol), wil ik informatie kunnen inzien van een specifiek product.</td>
         </tr>
         <tr>
             <th scope="row">Preconditions</th>
@@ -46,16 +46,11 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
+                            <td>1. Bezoeker verzoekt een specifiek product in te zien.</td>
+                            <td>
+                                2. Systeem haalt gegevens op van het specifieke product.<br>
+                                3. Systeem presenteert gegevens.
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -64,7 +59,7 @@
         <tr>
             <th scope="row">Alternate Flow</th>
             <td>
-                <div>Alternatieve flow naam</div>           
+                <div>Fysiek product reserveren</div>           
                 <table>
                     <thead>
                         <tr>
@@ -75,7 +70,57 @@
                     <tbody> 
                         <tr>
                             <td></td>
+                            <td>
+                                4b. Systeem weet dat het product niet in bezit is van deze gebruiker en niet gereserveerd is.
+                                De mogelijkheid om te reserveren wordt gepresenteerd.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>5b. Bezoeker verzoekt product te reserveren. Usecase <em>Fysiek Product Reserveren</em> begint.</td>
                             <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div>Fysiek product verlengen</div>           
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">User</th>
+                            <th scope="col">System</th>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        <tr>
+                            <td></td>
+                            <td>
+                                4a. Systeem weet dat het product in bezit is van deze gebruiker. De mogelijkheid om te
+                                verlengen wordt gepresenteerd.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>5a. Bezoeker verzoekt product te verlengen. Usecase <em>Fysiek Product Verlengen</em> begint.</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div>Digitaal product toevoegen aan account</div>           
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">User</th>
+                            <th scope="col">System</th>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        <tr>
+                            <td></td>
+                            <td>
+                                4c. Systeem weet dat het product digitaal beschikbaar is. De mogelijkheid om het product 
+                                toe te voegen aan zijn account wordt gepresenteerd.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>5c. Bezoeker verzoekt het product toe te voegen aan zijn account. Usecase <em>Digitaal Product Toevoegen Aan Account</em> begint.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -84,7 +129,7 @@
         <tr>
             <th scope="row">Exceptional Flows</th>
             <td>
-                <div>Exceptional flow naam</div>           
+                <div>Gegevensbron onbereikbaar of geen gegevens beschikbaar</div>           
                 <table>
                     <thead>
                         <tr>
@@ -95,7 +140,10 @@
                     <tbody> 
                         <tr>
                             <td></td>
-                            <td></td>
+                            <td>
+                                2d. Systeem kan gegevens niet verkrijgen.<br>
+                                3d. Systeem presenteert foutmelding dat de gegevens niet verkregen konden worden.
+                            </td>
                         </tr>
                     </tbody>
                 </table>
