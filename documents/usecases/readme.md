@@ -27,7 +27,6 @@
 - UC1: "Mijn bibliotheek" inzien
 - UC2: Digitaal product consumeren
 - UC3: Catalogus inzien
-- UC4: Zoeken in catalogus
 - UC5: Productinformatie inzien
 - UC6: Catalogus filteren
 - UC7: Fysiek product verlengen
