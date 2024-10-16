@@ -1,10 +1,9 @@
 # Notes
 
 ## To Do
-- Attributen
-- Notificaties
 
 ### Lid domain model
+- Rechten en/of rollen zijn nog vaag.
 
 ### Bezoeker domain model
 
