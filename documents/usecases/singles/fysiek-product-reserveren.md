@@ -25,11 +25,14 @@
         </tr>
         <tr>
             <td><strong>Preconditions</strong></td>
-            <td>1. Het lid is geautoriseerd.</td>
+            <td>1. Lid is geautoriseerd.</td>
         </tr>
         <tr>
             <td><strong>Postconditions on Success</strong></td>
-            <td>1. De bezoeker heeft een reservering gemaakt voor het gekozen media uit de catalogus.<br>2. Het aantal beschikbare exemplaren van het media ter reservering is verminderd.<br>3. De bezoeker heeft een bericht ontvangen wanneer deze reservering verloopt.</td>
+            <td>
+                1. De bezoeker heeft een reservering gemaakt voor het gekozen product uit de catalogus.<br>
+                2. Het aantal beschikbare exemplaren van het product ter reservering is verminderd.<br>
+                3. De bezoeker zal een bericht ontvangen wanneer deze reservering verloopt.</td>
         </tr>
         <tr>
             <td><strong>Postconditions on Failure</strong></td>
@@ -37,7 +40,31 @@
         </tr>
         <tr>
             <td><strong>Main Success Scenario (Basic Flow)</strong></td>
-            <td><strong>Actor Action</strong><br>1. De bezoeker doorzoekt de catalogus en selecteert het gewenste media.<br>3. De bezoeker kiest om het media te reserveren.<br>11. De bezoeker ontvangt een notificatie met wanneer de reservering beschikbaar is en hoe lang de bezoeker gebruik kan maken van de reservering.<br>12. De bezoeker verlaat het systeem.<br> <strong>System Responsibility</strong><br>2. Het systeem toont de beschikbaarheid van het media.<br>4. Het systeem controleert of de lid aan de reserveringsvoorwaarden voldoet.<br>5. Het systeem registreert de reservering aan het ledenaccount.<br>6. Het systeem wijst een uiterste reservering verbruik dag aan.<br>7. Het systeem vermindert het aantal beschikbare exemplaren van het item in de catalogus.<br>8. Het systeem geeft een notificatie wanneer de reservering beschikbaar is.</td>
+            <td>
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">User</th>
+                            <th scope="col">System</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                1. Lid verzoekt product te reserveren.<br>
+                                2. Lid bevestigt keuze.<br>
+                            </td>
+                            <td>
+                                3. Systeem controleert of het lid aan de reserveringsvoorwaarden voldoet.<br>
+                                4. Systeem registreert de reservering.<br>
+                                5. Systeem weergeeft het bijhorende reserveer-termijn.<br>
+                                6. Systeem plant een notificatie wanneer de reservering beschikbaar is.<br>
+                                7. Systeem stuurt notificatie om lid te informeren wanneer de reservering beschikbaar zal zijn.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
         </tr>
         <tr>
             <td><strong>Alternate Flows</strong></td>
@@ -45,7 +72,26 @@
         </tr>
         <tr>
             <td><strong>Exceptional Flows</strong></td>
-            <td>3.A. Het systeem geeft aan dat de bezoeker het maximum aantal reserveringen heeft bereikt. Ga door naar stap 10.<br>4.B. Het systeem geeft aan dat de bezoeker geen reservering kan maken tenzij een bestaande reservering wordt geannuleerd. Ga door naar stap 10.<br>6.A. Het systeem geeft een melding dat de bezoeker eerst de openstaande boetes moet betalen voordat er een reservering kan plaatsvinden.</td>
+            <td>
+                <div>Voldoet niet aan reserveringsvoorwaarden</div>           
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">User</th>
+                            <th scope="col">System</th>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        <tr>
+                            <td></td>
+                            <td>
+                                3.A Systeem stelt vast dat lid niet voldoet aan reserveringsvoorwaarden. Het lid krijgt 
+                                een passende foutmelding te zien.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
         </tr>
     </tbody>
 </table>
