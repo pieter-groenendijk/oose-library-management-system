@@ -5,19 +5,16 @@
 
 ![](./diagrams/concept-lid-usecase-diagram.drawio.svg)
 
-## List 
-## Management
-- UC 19: Aanpassen hoogte flexibele boete per type media-item.
-- UC 20: Aanpassen lengte leenduur media-items per soort.
-- UC 21: Aanpassen prijs/rechten abonnementsvormen.
-- UC 22: Inzien huidige beheerdersinstellingen
+## List
+### Beheerder
+- Beheerdersinstellingen beheren (RUD)
 
-## Contentbeheerder
+### Editor
 - UC 23: Inzien catalogus
 - UC 25: Media-items toevoegen aan de lijst �uitgelicht� op webpagina voor leden
-- UC 24:Media-items (CRUD) (contentbeheer)
+- UC 24: Media-items (CRUD) (contentbeheer)
 
-## Baliemedewerker
+### Baliemedewerker
 - UC 25: Reservering aanmaken
 - UC 26: Reservering verwijderen 
 - UC 27: Fysieke uitlening aanmaken
@@ -26,11 +23,10 @@
 - UC 30: Leden beheren (CRUD)
 - UC 31: Accountbeheer (CRUD)
 
-## Lid
+### Lid
 - UC1: "Mijn bibliotheek" inzien
 - UC2: Digitaal product consumeren
 - UC3: Catalogus inzien
-- UC4: Zoeken in catalogus
 - UC5: Productinformatie inzien
 - UC6: Catalogus filteren
 - UC7: Fysiek product verlengen
@@ -38,7 +34,6 @@
 - UC9: Digitaal product toevoegen aan Accountbeheer
 - UC10: Schuld afbetalen
 - UC11: Notificatieoverzicht inzien
-- UC12: Notificatieinstellingen beheren.
 - UC13: Notificatie inzien.
 - UC14: Leenhistorie inzien.
 - UC15: (Extra) abonnement aanschaffen/verwijderen.
@@ -46,13 +41,13 @@
 - UC17: Fysiek product lenen.
 - UC18: Fysiek product verlengen.
 
-## Bezoeker
+### Bezoeker
 - UC3: Catalogus inzien
 - UC4: Zoeken in catalogus
 - UC5: Productinformatie inzien
 - UC6: Catalogus filteren
 
-## Systeem
+### Systeem
 Dit zijn eigenlijk geen usecases aangezien een actor hier niets doet.
 - Boete toewijzen aan lening/reservering
 - Boete ophogen
