@@ -1,4 +1,4 @@
-# Schulden (gedeeltelijk) Betalen
+# Schulden Betalen
 <table> 
     <thead>
         <tr>
@@ -20,17 +20,15 @@
         </tr>
         <tr>
             <th scope="row">Brief Description</th>
-            <td>
-                Het lid kiest een bedrag en dient deze gegevens in. Het systeem valideert de opgegeven gegevens. 
-                Het systeem begeleidt de gebruiker vervolgens door het betaalproces</td>
+            <td>Als lid, wil ik mijn openstaande schuld afbetalen.</td>
         </tr>
         <tr>
             <th scope="row">Preconditions</th>
-            <td>Heeft een openstaande schuld</td>
+            <td>1. Heeft een openstaande schuld</td>
         </tr>
         <tr>
             <th scope="row">Postconditions on Success</th>
-            <td>De schuld is met het opgegeven bedrag verlaagt.</td>
+            <td>1. De schuld is afgelost. Er is geen openstaande schuld<br></td>
         </tr>
         <tr>
             <th scope="row">Postconditions on Failure</th>
@@ -48,32 +46,30 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>1. Het lid verzoekt om zijn schuld te betalen.</td>
+                            <td>1. Lid verzoekt om zijn schuld te betalen.</td>
                             <td>
-                                2. Het systeem haalt informatie van de schuld op.<br>
-                                3. Het systeem presenteert een lijst van boetes en een totaalbedrag.<br>
+                                2. Systeem haalt informatie van de schuld op.<br>
+                                3. Systeem presenteert een lijst van boetes en een totaalbedrag.<br>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                4. Het lid geeft het bedrag aan om af te lossen.<br>
-                                5. Het lid geeft aan gegevens te willen verzenden.
+                                4. Lid verzoekt de openstaande schuld af te lossen.<br>
                             </td>
                             <td>
-                                6. Het systeem valideert het aangegeven getal.<br>
-                                7. Het systeem vertelt het externe betaalsysteem dat het lid het bedrag gaat betalen.<br>
-                                8. Het systeem geeft aan dat de gebruiker doorverwezen kan worden naar het externe betaalsysteem.
+                                5. Systeem vertelt het externe betaalsysteem dat het lid het bedrag gaat betalen.<br>
+                                6. Systeem geeft aan dat de gebruiker doorverwezen kan worden naar het externe betaalsysteem.
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                9. Het lid geeft aan doorverwezen te willen worden.
+                                7. Lid geeft aan doorverwezen te willen worden.
                             </td>
                             <td>
-                                10. Het systeem verwijst de gebruiker door naar het externe betaalsysteem.<br> 
-                                11. Het systeem wacht voor bevestiging van extern betaalsysteem.<br>
-                                12. Het systeem verwerkt de betaling.<br>
-                                13. Het systeem toont dat de betaling is voltooid.
+                                8. Systeem verwijst de gebruiker door naar het externe betaalsysteem.<br> 
+                                9. Systeem wacht voor bevestiging van extern betaalsysteem.<br>
+                                10. Systeem verwerkt de betaling.<br>
+                                11. Systeem toont dat de betaling is voltooid.
                             </td>
                         </tr>
                     </tbody>
@@ -82,38 +78,7 @@
         </tr>
         <tr>
             <th scope="row">Alternate Flow</th>
-            <td>
-                <div>Gehele bedrag aflossen</div>           
-                <table>
-                    <thead>
-                        <tr>
-                            <th scope="col">User</th>
-                            <th scope="col">System</th>
-                        </tr>
-                    </thead>
-                    <tbody> 
-                        <tr>
-                            <td>4.A Het lid geeft aan het gehele bedrag te willen af te lossen.</td>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div>Ongeldig bedrag opgeleverd</div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th scope="col">User</th>
-                            <th scope="col">System</th>
-                        </tr>
-                    </thead>
-                    <tbody> 
-                        <tr>
-                            <td></td>
-                            <td>6.A Het systeem stelt een foutief opgegeven bedrag vast. <em>terug naar 4</em></td>
-                        </tr>
-                    </tbody>
-                </table> 
-            </td>
+            <td></td>
         </tr>
         <tr>
             <th scope="row">Exceptional Flows</th>
@@ -136,21 +101,6 @@
                         </tr>
                     </tbody>
                 </table>
-                <div>Geen openstaande schuld</div>  
-                <table>
-                    <thead>
-                        <tr>
-                            <th scope="col">User</th>
-                            <th scope="col">System</th>
-                        </tr>
-                    </thead>
-                    <tbody> 
-                        <tr>
-                            <td></td>
-                            <td>3.A Het systeem geeft aan dat er niks te betalen is.</td>
-                        </tr>
-                    </tbody>
-                </table>    
                 <div>Fout extern betaalsysteem</div>            
                 <table>
                     <thead>
@@ -163,7 +113,7 @@
                         <tr>
                             <td></td>
                             <td>
-                                7.A Het systeem geeft een foutmelding aan dat schuld momenteel niet betaald kan worden. 
+                                7.B Systeem geeft een foutmelding aan dat schuld momenteel niet betaald kan worden. 
                                 Lid wordt geadviseerd contact op te nemen.
                             </td>
                         </tr>
@@ -181,7 +131,7 @@
                         <tr>
                             <td></td>
                             <td>
-                                11.A Het systeem geeft een foutmelding aan dat de betaling mislukt is.
+                                11.C Systeem geeft een foutmelding aan dat de betaling mislukt is.
                                 Lid wordt geadviseerd wanneer deze denkt dat er iets is fout gegaan contact op te nemen.
                             </td>
                         </tr>
@@ -199,7 +149,7 @@
                         <tr>
                             <td></td>
                             <td>
-                                12.A Het systeem geeft een foutmelding aan dat de betaling niet verwerkt kon worden.
+                                12.D Systeem geeft een foutmelding aan dat de betaling niet verwerkt kon worden.
                                 Lid wordt geadviseerd contact op te nemen.
                             </td>
                         </tr>
