@@ -95,8 +95,7 @@
                         <tr>
                             <td></td>
                             <td>
-                                2.A Systeem geeft een foutmelding aan dat de schuld niet opgehaald kon worden.
-                                Lid wordt geadviseerd contact op te nemen. 
+                                2.A Systeem geeft een foutmelding aan dat de schuld niet opgehaald kon worden. --> Terug naar stap 1.<br>
                             </td>
                         </tr>
                     </tbody>
@@ -113,9 +112,11 @@
                         <tr>
                             <td></td>
                             <td>
-                                7.B Systeem geeft een foutmelding aan dat schuld momenteel niet betaald kan worden. 
-                                Lid wordt geadviseerd contact op te nemen.
-                            </td>
+                                7.B Het systeem toont een "loading" bericht en probeert in de achtergrond opnieuw verbinding te maken met het betaalsysteem.<br>
+                                8.B Systeem geeft een foutmelding aan dat schuld momenteel niet betaald kan worden. <br>                               
+                                9.B Lid krijgt een bericht dat de schuld momenteel niet afbetaald kan worden - Probeer het later opnieuw. <br>
+                                10.B  Het systeem registreert het mislukte schuld afbetaal poging in de logbestanden voor verdere opvolging.<br>
+                                11.B De actie 'schuld betalen' wordt geannuleerd.<br>
                         </tr>
                     </tbody>
                 </table>
@@ -131,8 +132,9 @@
                         <tr>
                             <td></td>
                             <td>
-                                11.C Systeem geeft een foutmelding aan dat de betaling mislukt is.
-                                Lid wordt geadviseerd wanneer deze denkt dat er iets is fout gegaan contact op te nemen.
+                                10.C Systeem geeft een foutmelding aan dat de betaling mislukt is, bijvoorbeeld "Geen Saldo".  <br>
+                                11.C De gebruiker heeft de keuze om het opnieuw te proberen of te annuleren. Terug naar 12.C <br>
+                                12.C De actie 'schuld betalen' wordt geannuleerd.<br>
                             </td>
                         </tr>
                     </tbody>
@@ -149,8 +151,11 @@
                         <tr>
                             <td></td>
                             <td>
-                                12.D Systeem geeft een foutmelding aan dat de betaling niet verwerkt kon worden.
-                                Lid wordt geadviseerd contact op te nemen.
+                                12.D Systeem geeft een foutmelding aan dat de betaling niet verwerkt kon worden. <br>
+                                13.D Het systeem toont een melding aan de gebruiker dat de betaling is mislukt en geeft gedetailleerde informatie over de fout (bijvoorbeeld "Interne fout, betaling kan momenteel niet worden voltooid").<br>
+                                14.D Het systeem annuleert de betalingspoging en zorgt ervoor dat er geen geld van de gebruiker wordt afgeschreven.<br>
+                                15.D Alle relevante details van de mislukte transactie worden gelogd voor verdere diagnose en probleemoplossing.<br>
+                                16.D  De gebruiker wordt teruggeleid naar de vorige pagina (Stap 4), waar hij/zij opnieuw een betaling kan proberen zodra het systeem hersteld is.
                             </td>
                         </tr>
                     </tbody>
