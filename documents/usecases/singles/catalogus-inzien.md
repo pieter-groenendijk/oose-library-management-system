@@ -25,11 +25,13 @@
         </tr>
         <tr>
             <td><strong>Preconditions</strong></td>
-            <td>(onder voorbehoud) 1. Moet de database gevuld zijn?</td>
+            <td> De catalogus kan in eerste instantie leeg zijn als er nog geen producten zijn toegevoegd.<br>
+                </td>
         </tr>
         <tr>
             <td><strong>Postconditions on Success</strong></td>
-            <td></td>
+            <td>De gebruiker heeft resultaten uit de catalogus gezien of een melding ontvangen dat er geen resultaten zijn.</td>
+        </tr></td>
         </tr>
         <tr>
             <td><strong>Postconditions on Failure</strong></td>
@@ -41,10 +43,12 @@
         </tr>
         <tr>
             <td><strong>Alternate Flows</strong></td>
-            <td>5.A: De bezoeker kiest er voor om de zoekopdracht te veranderen of te verfijnen. Terug naar stap 3.</td>
+            <td>5.A: De bezoeker kiest er voor om de zoekopdracht te veranderen of te verfijnen. Terug naar stap 1.</td>
         </tr>
         <tr>    
             <td><strong>Exceptional Flows</strong></td>
+            <td> 5.B Het systeem toont een melding "Geen resultaten gevonden voor de opgegeven zoekcriteria." Terug naar stap 1.<br>
+                6.B Het systeem registreerd dat de gebruiker geen zoekresultaten heeft gezien. </td>
         </tr>
     </tbody>
 </table>
