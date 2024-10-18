@@ -41,7 +41,7 @@
         </tr>
         <tr>
             <td><strong>Alternate Flows</strong></td>
-            <td>5.A. Als het tijdschrift niet beschikbaar is (bijvoorbeeld als het al is uitgeleend):<br>&nbsp;&nbsp;&nbsp;&nbsp;5.A.1. Het systeem toont een melding dat het tijdschrift niet beschikbaar is en biedt de mogelijkheid om een reservering te plaatsen.<br>7.A. Als het lid niet voldoet aan de uitleenvoorwaarden (bijv. openstaande boetes):<br>&nbsp;&nbsp;&nbsp;&nbsp;7.A.1. Het systeem toont een foutmelding en vraagt het lid om de situatie op te lossen (bijv. betalen van boetes).<br>9.A. Als de uitleenactie mislukt door een systeemfout:<br>&nbsp;&nbsp;&nbsp;&nbsp;9.A.1. Het systeem toont een foutmelding en vraagt het lid om het opnieuw te proberen.</td>
+            <td>5.A. Als het tijdschrift niet beschikbaar is (bijvoorbeeld als het al is uitgeleend):<br>&nbsp;&nbsp;&nbsp;&nbsp;5.A.1. Het systeem toont een melding dat het tijdschrift niet beschikbaar is en biedt de mogelijkheid om een reservering te plaatsen.<br>7.A. Als het lid niet voldoet aan de uitleenvoorwaarden (bijv. openstaande boetes):<br>&nbsp;&nbsp;&nbsp;&nbsp;7.A.1. Het systeem toont een foutmelding en vraagt het lid om de situatie op te lossen (bijv. betalen van boetes).---> Use Case Schuld Betalen.<br>9.A. Als de uitleenactie mislukt door een systeemfout:<br>&nbsp;&nbsp;&nbsp;&nbsp;9.A.1. Het systeem toont een foutmelding en vraagt het lid om het opnieuw te proberen.</td>
         </tr>
         <tr>
             <td><strong>Exceptional Flows</strong></td>
