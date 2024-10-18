@@ -23,14 +23,26 @@ function addNewLine() {
 
 function add() {
     local filePath="$1"
+    
+    cat "$filePath" >> "$OUTPUT_PATH"
+    addNewLine
+    addNewLine
+}
 
-    cat "$1" >> "$OUTPUT_PATH"
+function addDirectory() {
+    local directoryPath="$1"
+
+    for file in "$directoryPath"/*; do
+        add "$file"
+    done 
 }
 
 empty
 
 add "${DOCUMENTS_DIRECTORY}/requirements.md"
-
+add "${DOCUMENTS_DIRECTORY}/domain-model/readme.md"
+add "${DOCUMENTS_DIRECTORY}/usecases/readme.md"
+addDirectory "${DOCUMENTS_DIRECTORY}/usecases/singles"
 
 
 cd - || exit
