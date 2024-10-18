@@ -41,10 +41,15 @@
         </tr>
         <tr>
             <td><strong>Alternate Flows</strong></td>
-            <td>7.A. De beheerder wil de instellingen niet opslaan --&gt; Verder bij stap 3.<br> 9.A. Invoer niet valide. --&gt; Verder bij stap 5.</td>
+            <td>7.A. De beheerder wil de instellingen niet opslaan --&gt; Verder bij stap 3.<br> 
+                9.A. Het systeem geeft aan dat de invoer niet valide is. --&gt; Verder bij stap 6.</td>
         </tr>
             <tr>
             <td><strong>Exceptional Flows</strong></td>
+            <td>9.B. Systeemfout bij laden van instellingen: Als het systeem niet in staat is om de huidige instellingen te laden (bijvoorbeeld door een serverfout of databaseconnectieprobleem), dan wordt er een foutmelding getoond aan de beheerder, en de beheerder kan geen aanpassingen maken. <br><br>
+                9.C. Systeemfout bij opslaan van instellingen: Als het systeem niet in staat is om de instellingen op te slaan (bijvoorbeeld door een serverfout of databaseconnectieprobleem), dan wordt er een foutmelding getoond aan de beheerder, en de beheerder kan geen aanpassingen maken. <br><br>
+                9.D. Systeemfout bij valideren van invoer: Als het systeem niet in staat is om de invoer te valideren (bijvoorbeeld door een serverfout of databaseconnectieprobleem), dan wordt er een foutmelding getoond aan de beheerder, en de beheerder kan geen aanpassingen maken.</td> 
+            
         </tr>
     </tbody>
 </table>
