@@ -18,7 +18,7 @@
 
 
 **Ronald** Vraag: Wordt de staat van het boek gecontrolleerd? Als je hem terug brengt, staat het dan meteen weer als beschikbaar? Status voor teruggebrachte producten?
-Je legt je boek in de kar - baliemedewerker scant hem/check zn status - en zet hem weer op zn plek - daarna is het boek pas weer uitleenbaar. Magazijn? De verwerking van ingeleverde boeken moeten
+Je legt je boek in de kar - baliemedewerker scant hem/check zn status - en zet hem weer op z'n plek - daarna is het boek pas weer uitleenbaar. Magazijn? De verwerking van ingeleverde boeken moeten
 
 ## Use Case modellen feedback: ##
 
@@ -34,7 +34,8 @@ Vraag studiegenoot: moet een abonnement meteen betaald worden om er gebruik van 
 
 **Ronald** : Meerdere volwassenene mogen een abonnement hebben onder 1 lid.
 
-Use Case Abonnement-aanschaffen: Bij de exceptional flow, wat gebeurd er dan als 8.B, 12.C, 13.D gebeurd? Breek je het af, wil je het opnieuw proberen? Maak Alternative flows en Exceptional flows SMART.
+### Abonnement-aanschaffen ###  
+Bij de exceptional flow, wat gebeurd er dan als 8.B, 12.C, 13.D gebeurd? Breek je het af, wil je het opnieuw proberen? Maak Alternative flows en Exceptional flows SMART.
 **Ronald** : wacht het systeem als de betaalprodiver het druk heeft? En als het niet lukt? Hangt dat abonnement dan in de wacht ergens?
 
 Bedenk ook alternative flows: wat gebeurd er als de gebruiker niet bevestigd? Dat is een alternative flow.
