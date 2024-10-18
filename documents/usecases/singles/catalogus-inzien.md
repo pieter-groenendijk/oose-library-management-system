@@ -47,8 +47,8 @@
         </tr>
         <tr>    
             <td><strong>Exceptional Flows</strong></td>
-            <td> 5.B Het systeem toont een melding "Geen resultaten gevonden voor de opgegeven zoekcriteria." Terug naar stap 1.<br>
-                6.B Het systeem registreerd dat de gebruiker geen zoekresultaten heeft gezien. </td>
+            <td> 5.B Het systeem toont een melding "Geen resultaten gevonden voor de opgegeven zoekcriteria." Terug naar stap 1.<br><br>
+                5.C Het systeem geeft geen resultaten terug aan de gebruiker. <br> 6.C Het systeem registreerd dat de gebruiker geen zoekresultaten heeft gezien. </td>
         </tr>
     </tbody>
 </table>
