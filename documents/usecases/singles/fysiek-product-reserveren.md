@@ -54,7 +54,7 @@
                                 1. Lid verzoekt product te reserveren.<br>
                                 2. Lid bevestigt keuze.<br>
                             </td>
-                            <td><br><br><br><br>
+                            <td>
                                 3. Systeem controleert of het lid aan de reserveringsvoorwaarden voldoet.<br>
                                 4. Systeem registreert de reservering.<br>
                                 5. Systeem weergeeft het bijhorende reserveer-termijn.<br>

@@ -50,7 +50,7 @@
                             <td>
                                 1. 1. Het lid logt in op het systeem en navigeert naar de bibliotheekcatalogus.<br>
                                2. Het lid zoekt een digitaal tijdschrift in de catalogus.<br> </td>
-                            <td><br><br>
+                            <td>
                                 3. Het systeem toont de resultaten van de zoekopdracht, inclusief de beschikbare digitale tijdschriften. </td>
 							<tr>
                                 <td>
