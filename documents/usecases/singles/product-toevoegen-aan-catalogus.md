@@ -76,7 +76,7 @@
                     <tbody> 
                         <tr>
                             <td></td><td>
-                             6.A Het systeem heeft een validatiefout. Als verplichte velden niet zijn ingevuld of de gegevens ongeldig zijn, geeft het systeem een foutmelding en vraagt om correcties. -->Verder naar stap 3.   <br><br>
+                             6.A Het systeem heeft een validatiefout. Als verplichte velden niet zijn ingevuld of de gegevens ongeldig zijn, geeft het systeem een foutmelding en vraagt om correcties. →Verder naar stap 3.   <br><br>
                             </td> 
                         </tr>
 		        <table>
@@ -89,7 +89,7 @@
                     <tbody> 
                         <tr>
                             <td></td><td>
-           6.B Het systeem heeft geeft een melding dat dit product al aanwezig is in de catalogus. --> Verder naar stap 3.
+           6.B Het systeem heeft geeft een melding dat dit product al aanwezig is in de catalogus. → Verder naar stap 3.
                             </td> 
                         </tr>
                     </tbody></table>

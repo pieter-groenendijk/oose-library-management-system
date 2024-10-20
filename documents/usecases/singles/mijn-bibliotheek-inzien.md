@@ -100,7 +100,7 @@
         <tr>
             <th scope="row">Exceptional Flows</th>
             <td>
-                <div>Exceptional flow naam</div>           
+                <div> </div>           
                 <table>
                     <thead>
                         <tr>

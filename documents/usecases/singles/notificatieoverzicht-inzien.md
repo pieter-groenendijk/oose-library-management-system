@@ -81,8 +81,23 @@
                         </tr>
                     </tbody>
                 </table>
-            </td>
-        </tr>
+                <div> Fout bij het laden van notificaties: </div>           
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">User</th>
+                            <th scope="col">System</th>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        <tr>
+                            <td></td>
+                                <td>
+                                2.A Het systeem geeft aan geen notificaties te kunnen laden momenteel. Probeer het later nog eens. → Verder naar stap 1.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
         <tr>
             <th scope="row">Exceptional Flows</th>
             <td>
