@@ -64,14 +64,50 @@
             </td>
         </tr>
         <tr>
-            <td><strong>Alternate Flows</strong></td>
-            <td>6.A Het systeem heeft een validatiefout. Als verplichte velden niet zijn ingevuld of de gegevens ongeldig zijn, geeft het systeem een foutmelding en vraagt om correcties. Ga terug naar stap 3.
-            <br><br> 6.B Het systeem heeft geeft een melding dat dit product al aanwezig is in de catalogus. Ga terug naar stap 3.
-</td>
-        </tr>
+            <th scope="row">Alternate Flow</th>
+            <td>
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">User</th>
+                            <th scope="col">System</th>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        <tr>
+                            <td></td><td>
+                             6.A Het systeem heeft een validatiefout. Als verplichte velden niet zijn ingevuld of de gegevens ongeldig zijn, geeft het systeem een foutmelding en vraagt om correcties. -->Verder naar stap 3.   <br><br>
+                            </td> 
+                        </tr>
+		        <table>
+                 <thead>
+                        <tr>
+                            <th scope="col">User</th>
+                            <th scope="col">System</th>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        <tr>
+                            <td></td><td>
+           6.B Het systeem heeft geeft een melding dat dit product al aanwezig is in de catalogus. --> Verder naar stap 3.
+                            </td> 
+                        </tr>
+                    </tbody></table>
         <tr>
-            <td><strong>Exceptional Flows</strong></td>
-            <td>3.A  De editor annuleert de invoer. Het systeem annuleert de invoer en keert terug naar de catalogus zonder het product toe te voegen.</td>
-        </tr>
-    </tbody>
-</table>
+            <th scope="row">Exceptional Flows</th>
+            <td>
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">User</th>
+                            <th scope="col">System</th>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        <tr>
+                            <td>
+                         3.A  De editor annuleert de invoer. </td> 
+<td>4.A Het systeem annuleert de invoer en keert terug naar de catalogus zonder het product toe te voegen.</td>
+                        </tr>
+    </tbody></table>
+</table></table>
