@@ -64,7 +64,6 @@
        <tr>
             <th scope="row">Alternate Flow</th>
             <td>
-                <div>Foutieve persoonsgegevens en/of abonnementstype</div>
                 <table>
                     <thead>
                         <tr>
