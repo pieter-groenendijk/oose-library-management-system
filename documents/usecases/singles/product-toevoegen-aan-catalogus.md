@@ -35,13 +35,37 @@
             <td><strong>Postconditions on Failure</strong></td>
             <td></td>
         </tr>
-        <tr>
-            <td><strong>Main Success Scenario (Basic Flow)</strong></td>
-            <td><strong>Actor Action</strong><br>1. De editor gaat nagiveert naar de locatie voor het toevoegen van een nieuwe product. <br> 3. De Editor vult de gegevens van het nieuwe product in. <br> 4. De editor bevestigt de invoer.<br> <strong>System Responsibility</strong><br>2.Het systeem toont een formulier met velden zoals titel, auteur/maker, publicatiedatum, beschrijving, producttype, en beschikbaarheid.<br> 5.Het systeem valideert de ingevoerde gegevens (bijvoorbeeld verplichte velden zijn ingevuld). <br> 6.Bij een succesvolle validatie slaat het systeem het product op in de catalogus en bevestigt de toevoeging.</td>
+         <tr>
+            <th scope="row">Main Success Scenario (Basic Flow)</th>
+            <td>
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">User</th>
+                            <th scope="col">System</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                    <td><br>
+                1. De editor navigeerd naar de locatie voor het toevoegen van een nieuw product.<br></td> 
+                <td>
+                2. Het systeem toont een formulier met velden zoals titel, auteur, ISBN, beschrijving en producttype.</td>
+                <tr><td>
+                3. De editor vult de velden voor het nieuwe product.<br>
+                4. De editor bevestigd de invoer.</td>
+                <td>
+                    5. Het systeem valideert de invoer (bijvoorbeeld verplichte velden zijn ingevuld).<br>
+                    6. Het systeem voegt het product toe aan de catalogus.<br>
+                    7. Het systeem toont een bevestiging van de toevoeging.</td>
+                </tr>
+                    </tbody>
+                </table>
+            </td>
         </tr>
         <tr>
             <td><strong>Alternate Flows</strong></td>
-            <td>6.A. Het systeem heeft een validatiefout. Als verplichte velden niet zijn ingevuld of de gegevens ongeldig zijn, geeft het systeem een foutmelding en vraagt om correcties. Ga terug naar stap 3.
+            <td>6.A Het systeem heeft een validatiefout. Als verplichte velden niet zijn ingevuld of de gegevens ongeldig zijn, geeft het systeem een foutmelding en vraagt om correcties. Ga terug naar stap 3.
             <br><br> 6.B Het systeem heeft geeft een melding dat dit product al aanwezig is in de catalogus. Ga terug naar stap 3.
 </td>
         </tr>
