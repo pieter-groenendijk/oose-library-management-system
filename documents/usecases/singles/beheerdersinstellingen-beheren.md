@@ -35,13 +35,39 @@
             <td><strong>Postconditions on Failure</strong></td>
             <td>1. De beheerder heeft de instellingen niet aangepast.</td>
         </tr>
-        <tr>
-            <td><strong>Main Success Scenario (Basic Flow)</strong></td>
-            <td><strong>Actor Action</strong><br>1. De beheerder navigeert naar de pagina met beheerdersinstellingen<br>3. De beheerder bekijkt de instellingen zoals ze nu zijn. <br>4. De beheerder geeft aan de instellingen te willen wijzigen. <br>6. De beheerder past een of meerdere instellingen aan. <br>7. De beheerder geeft aan dat hij de instellingen op wil slaan.<br> 9. De beheerder bevestigt dat hij de instellingen op wil slaan. <br> <strong>System Responsibility</strong><br>2. Het systeem toont de huidige instellingen. <br>5. Het systeem maakt de instelling wijzigbaar. <br>8. Het systeem vraagt om bevestiging aan de gebruiker.<br>9. Het systeem valideert de ingave succesvol.<br>11. Het systeem registreert de instellingen.<br>12. Het systeem maakt de instellingen niet wijzigbaar. <br></td>
+      <tr>
+            <th scope="row">Main Success Scenario (Basic Flow)</th>
+            <td>
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">User</th>
+                            <th scope="col">System</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                1. De beheerder navigeert naar de pagina met beheerdersinstellingen<br><br>
+                                3. De beheerder bekijkt de instellingen zoals ze nu zijn.<br> </td>
+                           <td><br>
+                                2. Het systeem toont de huidige instellingen. <br></td>
+                        <tr>  
+                            <td>4. De beheerder geeft aan de instellingen te willen wijzigen. <br> </td>
+                        <td> 5. Het systeem toont de instellingen die aangepast kunnen worden. <br> </tr>
+                        <tr> <td>   
+                                6. De beheerder past een of meerdere instellingen aan. <br> 
+                                7. De beheerder geeft aan dat hij de instellingen op wil slaan.<br>
+                                9. De beheerder bevestigt dat hij de instellingen op wil slaan. <br>
+                            </td>
+                        </tr> 
+                    </tbody>
+                </table>
+            </td>
         </tr>
         <tr>
             <td><strong>Alternate Flows</strong></td>
-            <td>7.A. De beheerder wil de instellingen niet opslaan --&gt; Verder bij stap 3.<br> 
+            <td>7.A. De beheerder wil de instellingen niet opslaan --&gt; Verder bij stap 3.<br> <br>
                 9.A. Het systeem geeft aan dat de invoer niet valide is. --&gt; Verder bij stap 6.</td>
         </tr>
             <tr>
@@ -49,6 +75,4 @@
             <td>9.B. Systeemfout bij laden van instellingen: Als het systeem niet in staat is om de huidige instellingen te laden (bijvoorbeeld door een serverfout of databaseconnectieprobleem), dan wordt er een foutmelding getoond aan de beheerder, en de beheerder kan geen aanpassingen maken. --&gt; Verder bij stap 1. <br><br>
                 9.C. Systeemfout bij opslaan van instellingen: Als het systeem niet in staat is om de instellingen op te slaan (bijvoorbeeld door een serverfout of databaseconnectieprobleem), dan wordt er een foutmelding getoond aan de beheerder, en de beheerder kan geen aanpassingen maken. --&gt; Verder bij stap 3. <br><br>
                 9.D. Systeemfout bij valideren van invoer: Als het systeem niet in staat is om de invoer te valideren (bijvoorbeeld door een serverfout of databaseconnectieprobleem), dan wordt er een foutmelding getoond aan de beheerder, en de beheerder kan geen aanpassingen maken.--&gt; Verder bij stap 3.</td>
-        </tr>
-    </tbody>
 </table>
