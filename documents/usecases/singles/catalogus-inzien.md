@@ -61,11 +61,11 @@
                 </table>
         <tr>
             <td><strong>Alternate Flows</strong></td>
-            <td>5.A: De bezoeker kiest er voor om de zoekopdracht te veranderen of te verfijnen. Terug naar stap 1.</td>
+            <td>5.A: De bezoeker kiest er voor om de zoekopdracht te veranderen of te verfijnen. --> Verder bij stap 1.</td>
         </tr>
         <tr>    
             <td><strong>Exceptional Flows</strong></td>
-            <td> 5.B Het systeem toont een melding "Geen resultaten gevonden voor de opgegeven zoekcriteria." Terug naar stap 1.<br><br>
+            <td> 5.B Het systeem toont een melding "Geen resultaten gevonden voor de opgegeven zoekcriteria." --> Verder bij 1.<br><br>
                 5.C Het systeem geeft geen resultaten terug aan de gebruiker. <br>
                 6.C Het systeem registreerd dat de gebruiker geen zoekresultaten heeft gezien. </td>
         </tr>

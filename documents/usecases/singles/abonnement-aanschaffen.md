@@ -149,7 +149,7 @@
                             <td></td>
                             <td>
                                 12.C Systeem geeft een foutmelding aan dat de betaling mislukt is, bijvoorbeeld "Geen Saldo".  <br>
-                                13.C De gebruiker heeft de keuze om het opnieuw te proberen of te annuleren. Terug naar 12.C <br>
+                                13.C De gebruiker heeft de keuze om het opnieuw te proberen of te annuleren. --> Verder bij 12.C <br>
                                 13.C De aanvraag procedure voor het abonnement wordt geannuleerd.<br>
                             </td>
                         </tr>
