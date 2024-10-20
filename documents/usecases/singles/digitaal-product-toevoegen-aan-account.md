@@ -69,12 +69,70 @@
                     </table>
                 </td>
             </tr>
-            <td><strong>Alternate Flows</strong></td>
-            <td>5.A. Als het tijdschrift niet beschikbaar is (bijvoorbeeld als het al is uitgeleend):<br>&nbsp;&nbsp;&nbsp;&nbsp;6.A Het systeem toont een melding dat het tijdschrift niet beschikbaar is en biedt de mogelijkheid om een reservering te plaatsen.<br><br>7.B Als het lid niet voldoet aan de uitleenvoorwaarden (bijv. openstaande boetes):<br>&nbsp &nbsp;&nbsp;&nbsp;8.B Het systeem toont een foutmelding en vraagt het lid om de situatie op te lossen (bijv. betalen van boetes).---> Use Case Schuld Betalen.<br><br>9.C Als de uitleenactie mislukt door een systeemfout:<br>&nbsp;&nbsp;&nbsp;&nbsp;10.C Het systeem toont een foutmelding en vraagt het lid om het opnieuw te proberen.</td>
+ <tr>
+            <th scope="row">Alternate Flow</th>
+            <td>
+                <div>Het tijdschrift is niet beschikbaar: </div>           
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">User</th>
+                            <th scope="col">System</th>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        <tr>
+                            <td></td>
+                            <td>5.A Het systeem toont een melding dat het tijdschrift niet beschikbaar is en dat het lid een ander product kan proberen. → Verder naar stap 2.</td>
+                        </tr>
+                    </tbody>
+                </table><table>
+                <div> Het lid voldoet niet aan de uitleenvoorwaarden: </div>
+                    <thead>
+                        <tr>
+                            <th scope="col">User</th>
+                            <th scope="col">System</th>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        <tr>
+                            <td></td>
+                            <td>7.A Het systeem toont een foutmelding en vraagt het lid om de situatie op te lossen (bijv. betalen van boetes).Verder naar <em>Use Case Schuld Betalen.</em></td>
+                        </tr>
+                    </tbody></table>
+        <table>
+                <div> De uitleenactie mislukt door een systeemfout: </div>
+                    <thead>
+                        <tr>
+                            <th scope="col">User</th>
+                            <th scope="col">System</th>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        <tr>
+                            <td></td>
+                            <td>9.A Het systeem toont een foutmelding en vraagt het lid om het opnieuw te proberen. → Verder naar stap 2</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
         </tr>
-        <tr>
-            <td><strong>Exceptional Flows</strong></td>
-            <td>3.A. Als er geen tijdschriften beschikbaar zijn:<br>&nbsp;&nbsp;&nbsp;&nbsp;3.A.1. Het systeem toont een melding dat er geen resultaten zijn of biedt een suggestie voor andere beschikbare items.<br><br>7.A. Als het lid niet voldoet aan de uitleenvoorwaarden (bijv. openstaande boetes):<br>&nbsp;&nbsp;&nbsp;&nbsp;7.A.1. Het systeem toont een foutmelding en vraagt het lid om de situatie op te lossen (bijv. betalen van boetes).<br><br>9.A. Als de uitleenactie mislukt door een systeemfout:<br>&nbsp;&nbsp;&nbsp;&nbsp;9.A.1. Het systeem toont een foutmelding en vraagt het lid om het opnieuw te proberen.</td>
-        </tr>
+<tr>
+        <th scope="row">Exceptional Flows</th>
+            <td>
+                <div> Als er een geen tijdschriften beschikbaar zijn: </div>           
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">User</th>
+                            <th scope="col">System</th>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        <tr>
+                            <td></td>
+                            <td>3.A Het systeem toont een melding dat er geen resultaten zijn of biedt een suggestie voor andere beschikbare items.</td>
+                        </tr> </tbody>
+            </table></td>
     </tbody>
 </table>
