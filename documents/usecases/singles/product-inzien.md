@@ -69,9 +69,9 @@
                     </thead>
                     <tbody> 
                         <tr>
-                            <td></td>
+                            <td>4.A De gebruiker ziet het product in.</td>
                             <td>
-                                4b. Systeem weet dat het product niet in bezit is van deze gebruiker en niet gereserveerd is.
+                                5.A. Systeem weet dat het product niet in bezit is van deze gebruiker en niet gereserveerd is.
                                 De mogelijkheid om te reserveren wordt gepresenteerd.
                             </td>
                         </tr>
