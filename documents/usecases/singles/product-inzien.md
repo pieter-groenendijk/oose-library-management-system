@@ -1,4 +1,4 @@
-# Usecase name
+# Product inzien
 <table> 
     <thead>
         <tr>

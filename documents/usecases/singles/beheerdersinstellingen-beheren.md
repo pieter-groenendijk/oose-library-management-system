@@ -102,8 +102,8 @@
                             <td></td>
                             <td>
                            9.B. Systeemfout bij laden van instellingen: Als het systeem niet in staat is om de huidige instellingen te laden (bijvoorbeeld door een serverfout of databaseconnectieprobleem), dan wordt er een foutmelding getoond aan de beheerder, en de beheerder kan geen aanpassingen maken. --&gt; Verder bij stap 1. <br><br>
-                9.C. Systeemfout bij opslaan van instellingen: Als het systeem niet in staat is om de instellingen op te slaan (bijvoorbeeld door een serverfout of databaseconnectieprobleem), dan wordt er een foutmelding getoond aan de beheerder, en de beheerder kan geen aanpassingen maken. --&gt; Verder bij stap 3. <br><br>
-                9.D. Systeemfout bij valideren van invoer: Als het systeem niet in staat is om de invoer te valideren (bijvoorbeeld door een serverfout of databaseconnectieprobleem), dan wordt er een foutmelding getoond aan de beheerder, en de beheerder kan geen aanpassingen maken.--&gt; Verder bij stap 3.</td>
+                            9.C. Systeemfout bij opslaan van instellingen: Als het systeem niet in staat is om de instellingen op te slaan (bijvoorbeeld door een serverfout of databaseconnectieprobleem), dan wordt er een foutmelding getoond aan de beheerder, en de beheerder kan geen aanpassingen maken. --&gt; Verder bij stap 3. <br><br>
+                            9.D. Systeemfout bij valideren van invoer: Als het systeem niet in staat is om de invoer te valideren (bijvoorbeeld door een serverfout of databaseconnectieprobleem), dan wordt er een foutmelding getoond aan de beheerder, en de beheerder kan geen aanpassingen maken.--&gt; Verder bij stap 3.</td>
                         </tr>
     </tbody>
 </table></table>
