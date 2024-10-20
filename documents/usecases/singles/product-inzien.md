@@ -8,7 +8,7 @@
     <tbody>
         <tr>
             <th scope="row">Primary Actor</th>
-            <td></td>
+            <td>Bezoeker</td>
         </tr>
         <tr>
             <th scope="row">Stakeholders & Interests</th>
