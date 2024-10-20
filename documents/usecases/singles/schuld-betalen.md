@@ -95,7 +95,7 @@
                         <tr>
                             <td></td>
                             <td>
-                                2.A Systeem geeft een foutmelding aan dat de schuld niet opgehaald kon worden. --> Terug naar stap 1.<br>
+                                2.A Systeem geeft een foutmelding aan dat de schuld niet opgehaald kon worden. --> Verder naar stap 1.<br>
                             </td>
                         </tr>
                     </tbody>
@@ -133,7 +133,7 @@
                             <td></td>
                             <td>
                                 10.C Systeem geeft een foutmelding aan dat de betaling mislukt is, bijvoorbeeld "Geen Saldo".  <br>
-                                11.C De gebruiker heeft de keuze om het opnieuw te proberen of te annuleren. Terug naar 12.C <br>
+                                11.C De gebruiker heeft de keuze om het opnieuw te proberen of te annuleren. --> Verder naar 12.C <br>
                                 12.C De actie 'schuld betalen' wordt geannuleerd.<br>
                             </td>
                         </tr>
