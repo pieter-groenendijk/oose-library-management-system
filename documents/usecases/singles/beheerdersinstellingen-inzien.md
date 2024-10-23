@@ -17,7 +17,7 @@
         </tr>
         <tr>
             <td><strong>Cross References</strong></td>
-            <td>Requirement FR-035, FR-036, FR-037, FR-038</td>
+            <td>FR-048</td>
         </tr>
         <tr>
             <td><strong>Brief Description</strong></td>
