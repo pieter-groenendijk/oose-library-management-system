@@ -7,3 +7,8 @@ aan te maken dat niet gekoppeld is aan een abonnement.
 - 1 leenhistorie heeft 1 ... \*uitlening -> **1 leenhistorie heeft 0 ...\***. In de praktijk is het leenhistorie concept
 puur wat records in de database. Als men dus nog niks heeft geleend is deze gewoon leeg.
 - **Associaties verwoordingen verduidelijkt**
+
+## Catalogus
+- **Correcte syntax toegepast**
+- **Composition toegepast**. De catalogus bestaat uit producten.
+- **Associaties verwoordingen verduidelijkt**
