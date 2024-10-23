@@ -105,6 +105,7 @@ public class ProductFactory {
         switch (type.toLowerCase()) {
             case "book":
                 return new Book(title, description, genre, ageRating, author, numberOfCopies);
+            // And other such cases for other product types
         }
     }
 }
