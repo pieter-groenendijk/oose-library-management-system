@@ -1,4 +1,4 @@
-# Schulden Betalen
+# Boete Betalen
 <table> 
     <thead>
         <tr>
@@ -20,15 +20,15 @@
         </tr>
         <tr>
             <th scope="row">Brief Description</th>
-            <td>Als lid, wil ik mijn openstaande schuld afbetalen.</td>
+            <td>Als lid, wil ik mijn boetes kunnen betalen.</td>
         </tr>
         <tr>
             <th scope="row">Preconditions</th>
-            <td>1. Heeft een openstaande schuld</td>
+            <td>1. Heeft een openstaande boete</td>
         </tr>
         <tr>
             <th scope="row">Postconditions on Success</th>
-            <td>1. De schuld is afgelost. Er is geen openstaande schuld<br></td>
+            <td>1. De boete(s) is betaald. Er is geen openstaande boete.<br></td>
         </tr>
         <tr>
             <th scope="row">Postconditions on Failure</th>
@@ -46,15 +46,15 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>1. Lid verzoekt om zijn schuld te betalen.</td>
+                            <td>1. Lid verzoekt om de boete te betalen.</td>
                             <td>
-                                2. Systeem haalt informatie van de schuld op.<br>
+                                2. Systeem haalt informatie van de boete op.<br>
                                 3. Systeem presenteert een lijst van boetes en een totaalbedrag.<br>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                4. Lid verzoekt de openstaande schuld af te lossen.<br>
+                                4. Lid verzoekt de openstaande boete af te lossen.<br>
                             </td>
                             <td>
                                 5. Systeem vertelt het externe betaalsysteem dat het lid het bedrag gaat betalen.<br>
@@ -95,7 +95,7 @@
                         <tr>
                             <td></td>
                             <td>
-                                2.A Systeem geeft een foutmelding aan dat de schuld niet opgehaald kon worden. --> Verder naar stap 1.<br>
+                                2.A Systeem geeft een foutmelding aan dat de openstaande boete(s) niet opgehaald kan worden. → Verder naar stap 1.<br>
                             </td>
                         </tr>
                     </tbody>
@@ -113,10 +113,10 @@
                             <td></td>
                             <td>
                                 7.B Het systeem toont een "loading" bericht en probeert in de achtergrond opnieuw verbinding te maken met het betaalsysteem.<br>
-                                8.B Systeem geeft een foutmelding aan dat schuld momenteel niet betaald kan worden. <br>                               
-                                9.B Lid krijgt een bericht dat de schuld momenteel niet afbetaald kan worden - Probeer het later opnieuw. <br>
-                                10.B  Het systeem registreert het mislukte schuld afbetaal poging in de logbestanden voor verdere opvolging.<br>
-                                11.B De actie 'schuld betalen' wordt geannuleerd.<br>
+                                8.B Systeem geeft een foutmelding aan dat de boete momenteel niet betaald kan worden. <br>                               
+                                9.B Lid krijgt een bericht dat de boete momenteel niet afbetaald kan worden - Probeer het later opnieuw. <br>
+                                10.B  Het systeem registreert het mislukte betaal poging in de logbestanden voor verdere opvolging.<br>
+                                11.B De actie 'boete betalen' wordt geannuleerd.<br>
                         </tr>
                     </tbody>
                 </table>
@@ -133,8 +133,8 @@
                             <td></td>
                             <td>
                                 10.C Systeem geeft een foutmelding aan dat de betaling mislukt is, bijvoorbeeld "Geen Saldo".  <br>
-                                11.C De gebruiker heeft de keuze om het opnieuw te proberen of te annuleren. --> Verder naar 12.C <br>
-                                12.C De actie 'schuld betalen' wordt geannuleerd.<br>
+                                11.C De gebruiker heeft de keuze om het opnieuw te proberen of te annuleren. → Verder naar 12.C <br>
+                                12.C De actie 'boete betalen' wordt geannuleerd.<br>
                             </td>
                         </tr>
                     </tbody>
@@ -153,9 +153,9 @@
                             <td>
                                 12.D Systeem geeft een foutmelding aan dat de betaling niet verwerkt kon worden. <br>
                                 13.D Het systeem toont een melding aan de gebruiker dat de betaling is mislukt en geeft gedetailleerde informatie over de fout (bijvoorbeeld "Interne fout, betaling kan momenteel niet worden voltooid").<br>
-                                14.D Het systeem annuleert de betalingspoging en zorgt ervoor dat er geen geld van de gebruiker wordt afgeschreven.<br>
+                                14.D Het systeem annuleert de betaalpoging en zorgt ervoor dat er geen geld van de gebruiker wordt afgeschreven.<br>
                                 15.D Alle relevante details van de mislukte transactie worden gelogd voor verdere diagnose en probleemoplossing.<br>
-                                16.D  De gebruiker wordt teruggeleid naar de vorige pagina (Stap 4), waar hij/zij opnieuw een betaling kan proberen zodra het systeem hersteld is.
+                                16.D  Het lid wordt teruggeleid naar de vorige pagina (Stap 4), waar deze opnieuw een betaling kan proberen zodra het systeem hersteld is.
                             </td>
                         </tr>
                     </tbody>
