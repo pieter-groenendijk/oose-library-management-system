@@ -26,4 +26,6 @@ Net zoals bij de usecase representeerd dit concept de registraties van digitale 
 ### Digitaal Product Gebruik
 **Toegevoegd**
 
-
+## Uitlening
+- **1 uitlening heeft 1...\* -> 1 uitlening heeft 1..1**. 
+- **associatie naar 'van'**
