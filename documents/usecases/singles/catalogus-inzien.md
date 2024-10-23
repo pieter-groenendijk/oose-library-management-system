@@ -79,6 +79,21 @@
                         </tr>
                     </tbody>
                 </table> 
+ <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">User</th>
+                            <th scope="col">System</th>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        <tr>
+                            <td>
+                              5.A: De bezoeker voert geen zoekcriteria in en start direct de zoekopdracht. <br>
+                            </td> <td>6.A Het systeem toont de volledige catalogus zonder enige filtering.</td>
+                        </tr>
+                    </tbody>
+                </table> 
             </td>
         </tr>
         <tr>
@@ -110,6 +125,20 @@
                             <td>
                         5.C Het systeem geeft geen resultaten terug aan de gebruiker. <br>
                         6.C Het systeem registreerd dat de gebruiker geen zoekresultaten heeft gezien. </td>
+                        </tr>
+            </table>
+  <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">User</th>
+                            <th scope="col">System</th>
+                        </tr>
+                    </thead>
+                          <tr>  
+                            <td></td>
+                            <td>
+                        5.C Het systeem ontvangt ongeldig zoekcriterium.  (bijvoorbeeld een ongepaste tekenset, te lange invoer of code). <br>
+                        6.C Het systeem geeft een melding weer dat het ingevoerde zoekcriterium ongeldig is en vraagt de bezoeker om het te corrigeren. --> Verder naar stap 3.  </td>
                         </tr>
             </table>
     </tbody>
