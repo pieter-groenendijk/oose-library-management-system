@@ -1,4 +1,4 @@
-# Beheerdersinstellingen Beheren
+# Beheerdersinstellingen inzien
 <table>
     <thead>
         <tr>
