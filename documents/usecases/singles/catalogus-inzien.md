@@ -1,4 +1,5 @@
 # Catalogus Inzien
+
 <table>
     <thead>
         <tr>
@@ -25,27 +26,120 @@
         </tr>
         <tr>
             <td><strong>Preconditions</strong></td>
-            <td>(onder voorbehoud) 1. Moet de database gevuld zijn?</td>
+            <td> De catalogus kan in eerste instantie leeg zijn als er nog geen producten zijn toegevoegd.<br>
+                </td>
         </tr>
         <tr>
             <td><strong>Postconditions on Success</strong></td>
-            <td></td>
-        </tr>
+            <td>De gebruiker heeft resultaten uit de catalogus gezien of een melding ontvangen dat er geen resultaten zijn.</td>
         <tr>
             <td><strong>Postconditions on Failure</strong></td>
             <td></td>
         </tr>
         <tr>
-            <td><strong>Main Success Scenario (Basic Flow)</strong></td>
-            <td><strong>Actor Action</strong><br>1. De bezoeker opent het catalogus.<br>2. De bezoeker voert zoekcriteria in.<br>3. De bezoeker start de zoekopdracht.<br>6. De bezoeker bekijkt de resultaten.<br> <strong>System Responsibility</strong><br>4. Het systeem ontvangt de ingevoerde zoekcriteria en verwerkt deze, door de catalogus te doorzoeken op basis van de opgegeven filters.<br>5. Het systeem geeft de resultaten weer.</td>
+             <th scope="row">Main Success Scenario (Basic Flow)</th>
+            <td>
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">User</th>
+                            <th scope="col">System</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                1. De bezoeker opent het catalogus.<br>
+                               2. De bezoeker voert zoekcriteria in.<br>
+							   3. De bezoeker start de zoekopdracht.<br>
+                            </td>
+                            <td><br><br><br>
+                                4. Het systeem ontvangt de ingevoerde zoekcriteria en verwerkt deze, door de catalogus te doorzoeken op basis van de opgegeven filters.<br>
+								5. Het systeem geeft de resultaten weer.<br>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+        <tr>
+       <tr>
+            <th scope="row">Alternate Flow</th>
+            <td>
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">User</th>
+                            <th scope="col">System</th>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        <tr>
+                            <td>
+                              5.A: De bezoeker kiest er voor om de zoekopdracht te veranderen of te verfijnen. --> Verder bij stap 1.<br> <br>
+                            </td> <td></td>
+                        </tr>
+                    </tbody>
+                </table> 
+ <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">User</th>
+                            <th scope="col">System</th>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        <tr>
+                            <td>
+                              5.A: De bezoeker voert geen zoekcriteria in en start direct de zoekopdracht. <br>
+                            </td> <td>6.A Het systeem toont de volledige catalogus zonder enige filtering.</td>
+                        </tr>
+                    </tbody>
+                </table> 
+            </td>
         </tr>
         <tr>
-            <td><strong>Alternate Flows</strong></td>
-            <td>5.A: De bezoeker kiest er voor om de zoekopdracht te veranderen of te verfijnen. Terug naar stap 3.</td>
-        </tr>
-        <tr>    
-            <td><strong>Exceptional Flows</strong></td>
-        </tr>
+            <th scope="row">Exceptional Flows</th>
+            <td>
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">User</th>
+                            <th scope="col">System</th>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        <tr>
+                            <td></td>
+                            <td>
+                          5.B Het systeem toont een melding "Geen resultaten gevonden voor de opgegeven zoekcriteria." --> Verder bij stap 1.
+             </td>
+                        </tr>
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">User</th>
+                            <th scope="col">System</th>
+                        </tr>
+                    </thead>
+                          <tr>  
+                            <td></td>
+                            <td>
+                        5.C Het systeem geeft geen resultaten terug aan de gebruiker. <br>
+                        6.C Het systeem registreerd dat de gebruiker geen zoekresultaten heeft gezien. </td>
+                        </tr>
+            </table>
+  <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">User</th>
+                            <th scope="col">System</th>
+                        </tr>
+                    </thead>
+                          <tr>  
+                            <td></td>
+                            <td>
+                        5.C Het systeem ontvangt ongeldig zoekcriterium.  (bijvoorbeeld een ongepaste tekenset, te lange invoer of code). <br>
+                        6.C Het systeem geeft een melding weer dat het ingevoerde zoekcriterium ongeldig is en vraagt de bezoeker om het te corrigeren. --> Verder naar stap 3.  </td>
+                        </tr>
+            </table>
     </tbody>
-</table>
-
+</table></table>

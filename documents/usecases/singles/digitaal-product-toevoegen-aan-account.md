@@ -36,16 +36,103 @@
             <td>1. Het digitale tijdschrift is niet uitgeleend aan het lid.<br>2. Het lid heeft geen toegang tot het digitale tijdschrift.<br>3. Het systeem toont een foutmelding met de reden van het falen (bijv. tijdschrift niet beschikbaar, lid niet in orde).<br>4. Geen uitleenactie wordt geregistreerd.</td>
         </tr>
         <tr>
-            <td><strong>Main Success Scenario (Basic Flow)</strong></td>
-            <td><strong>Actor Action</strong><br>1. Het lid logt in op het systeem en navigeert naar de bibliotheekcatalogus.<br>2. Het lid zoekt een digitaal tijdschrift in de catalogus.<br>4. Het lid selecteert een tijdschrift dat beschikbaar is voor uitleen.<br>6. Het lid bevestigt dit tijdschrift te lenen.<br>9. Het lid krijgt een melding dat het tijdschrift succesvol is uitgeleend en heeft nu toegang tot het digitale tijdschrift.<br>10. Het lid ontvangt een bevestiging met de uitleengegevens en instructies voor het lezen van het digitale tijdschrift.<br> <strong>System Responsibility</strong><br>3. Het systeem toont de resultaten van de zoekopdracht, inclusief de beschikbare digitale tijdschriften.<br>5. Het systeem toont de details van het tijdschrift, inclusief de leentermijn en eventuele uitleenvoorwaarden.<br>7. Het systeem controleert de lidstatus en controleert of het lid het tijdschrift mag lenen (bijv. geen boetes of restricties).<br>8. Het systeem registreert de uitleenactie en markeert het tijdschrift als uitgeleend aan het lid.</td>
+            <th scope="row">Main Success Scenario (Basic Flow)</th>
+            <td>
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">User</th>
+                            <th scope="col">System</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                1. 1. Het lid logt in op het systeem en navigeert naar de bibliotheekcatalogus.<br>
+                               2. Het lid zoekt een digitaal tijdschrift in de catalogus.<br> </td>
+                            <td>
+                                3. Het systeem toont de resultaten van de zoekopdracht, inclusief de beschikbare digitale tijdschriften. </td>
+							<tr>
+                                <td>
+                                4. Het lid selecteert een tijdschrift dat beschikbaar is voor uitleen. </td>
+                                <td>
+                                5. Het systeem toont de details van het tijdschrift, inclusief de leentermijn en eventuele uitleenvoorwaarden.</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                6. Het lid bevestigt dit tijdschrift te lenen.<br> </td>
+                            <td>
+                                7.  Het systeem controleert de lidstatus en controleert of het lid het tijdschrift mag lenen (bijv. geen boetes of restricties).<br> 
+                                8. Het systeem registreert de uitleenactie en markeert het tijdschrift als uitgeleend aan het lid.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+ <tr>
+            <th scope="row">Alternate Flow</th>
+            <td>
+                <div>Het tijdschrift is niet beschikbaar: </div>           
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">User</th>
+                            <th scope="col">System</th>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        <tr>
+                            <td></td>
+                            <td>5.A Het systeem toont een melding dat het tijdschrift niet beschikbaar is en dat het lid een ander product kan proberen. → Verder naar stap 2.</td>
+                        </tr>
+                    </tbody>
+                </table><table>
+                <div> Het lid voldoet niet aan de uitleenvoorwaarden: </div>
+                    <thead>
+                        <tr>
+                            <th scope="col">User</th>
+                            <th scope="col">System</th>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        <tr>
+                            <td></td>
+                            <td>7.A Het systeem toont een foutmelding en vraagt het lid om de situatie op te lossen (bijv. betalen van boetes).Verder naar <em>Use Case Schuld Betalen.</em></td>
+                        </tr>
+                    </tbody></table>
+        <table>
+                <div> De uitleenactie mislukt door een systeemfout: </div>
+                    <thead>
+                        <tr>
+                            <th scope="col">User</th>
+                            <th scope="col">System</th>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        <tr>
+                            <td></td>
+                            <td>9.A Het systeem toont een foutmelding en vraagt het lid om het opnieuw te proberen. → Verder naar stap 2</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
         </tr>
-        <tr>
-            <td><strong>Alternate Flows</strong></td>
-            <td>5.A. Als het tijdschrift niet beschikbaar is (bijvoorbeeld als het al is uitgeleend):<br>&nbsp;&nbsp;&nbsp;&nbsp;5.A.1. Het systeem toont een melding dat het tijdschrift niet beschikbaar is en biedt de mogelijkheid om een reservering te plaatsen.<br>7.A. Als het lid niet voldoet aan de uitleenvoorwaarden (bijv. openstaande boetes):<br>&nbsp;&nbsp;&nbsp;&nbsp;7.A.1. Het systeem toont een foutmelding en vraagt het lid om de situatie op te lossen (bijv. betalen van boetes).<br>9.A. Als de uitleenactie mislukt door een systeemfout:<br>&nbsp;&nbsp;&nbsp;&nbsp;9.A.1. Het systeem toont een foutmelding en vraagt het lid om het opnieuw te proberen.</td>
-        </tr>
-        <tr>
-            <td><strong>Exceptional Flows</strong></td>
-            <td>3.A. Als er geen tijdschriften beschikbaar zijn:<br>&nbsp;&nbsp;&nbsp;&nbsp;3.A.1. Het systeem toont een melding dat er geen resultaten zijn of biedt een suggestie voor andere beschikbare items.<br>7.A. Als het lid niet voldoet aan de uitleenvoorwaarden (bijv. openstaande boetes):<br>&nbsp;&nbsp;&nbsp;&nbsp;7.A.1. Het systeem toont een foutmelding en vraagt het lid om de situatie op te lossen (bijv. betalen van boetes).<br>9.A. Als de uitleenactie mislukt door een systeemfout:<br>&nbsp;&nbsp;&nbsp;&nbsp;9.A.1. Het systeem toont een foutmelding en vraagt het lid om het opnieuw te proberen.</td>
-        </tr>
+<tr>
+        <th scope="row">Exceptional Flows</th>
+            <td>
+                <div> Als er een geen tijdschriften beschikbaar zijn: </div>           
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">User</th>
+                            <th scope="col">System</th>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        <tr>
+                            <td></td>
+                            <td>3.A Het systeem toont een melding dat er geen resultaten zijn of biedt een suggestie voor andere beschikbare items.</td>
+                        </tr> </tbody>
+            </table></td>
     </tbody>
 </table>

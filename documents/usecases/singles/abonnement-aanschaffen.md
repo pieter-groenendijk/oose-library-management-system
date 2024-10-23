@@ -104,7 +104,7 @@
                         <tr>
                             <td></td>
                             <td>
-                                7.A Systeem stelt foutieve persoonsgegevens en/of abonnementstype vast.<br>
+                                7.A Systeem stelt foutieve persoonsgegevens en/of abonnementstype vast. <br>
                                 8.A Systeem communiceert fout.<br>
                                 <em>terug naar stap 2 of 6 (afhankelijk van fout)</em>
                             </td>
@@ -128,9 +128,11 @@
                         <tr>
                             <td></td>
                             <td>
-                                8.B Systeem geeft een foutmelding aan dat schuld momenteel niet betaald kan worden. 
-                                Lid wordt geadviseerd contact op te nemen.
-                            </td>
+                                8.B Het systeem toont een "loading" bericht en probeert in de achtergrond opnieuw verbinding te maken met het betaalsysteem.<br>
+                                9.B Lid krijgt een bericht dat het abonnement momenteel niet aangeschaft kan worden - Probeer het later opnieuw. <br>
+                                10.B  Het systeem registreert het mislukte aanschafpoging in de logbestanden voor verdere opvolging.<br>
+                                11.B   De aanvraagprocedure voor het abonnement wordt geannuleerd, en er worden geen kosten in rekening gebracht.<br>
+</td>
                         </tr>
                     </tbody>
                 </table>
@@ -146,8 +148,9 @@
                         <tr>
                             <td></td>
                             <td>
-                                12.C Systeem geeft een foutmelding aan dat de betaling mislukt is.
-                                Lid wordt geadviseerd wanneer deze denkt dat er iets is fout gegaan contact op te nemen.
+                                12.C Systeem geeft een foutmelding aan dat de betaling mislukt is, bijvoorbeeld "Geen Saldo".  <br>
+                                13.C De gebruiker heeft de keuze om het opnieuw te proberen of te annuleren. --> Verder bij 12.C <br>
+                                13.C De aanvraag procedure voor het abonnement wordt geannuleerd.<br>
                             </td>
                         </tr>
                     </tbody>
@@ -164,8 +167,11 @@
                         <tr>
                             <td></td>
                             <td>
-                                13.D Systeem geeft een foutmelding aan dat de betaling niet verwerkt kon worden.
-                                Lid wordt geadviseerd contact op te nemen.
+                                13.D Systeem geeft een foutmelding aan dat de betaling niet verwerkt kon worden. <br>
+                                14.D Het systeem toont een melding aan de gebruiker dat de betaling is mislukt en geeft gedetailleerde informatie over de fout (bijvoorbeeld "Interne fout, betaling kan momenteel niet worden voltooid").<br>
+                                15.D Het systeem annuleert de betalingspoging en zorgt ervoor dat er geen geld van de gebruiker wordt afgeschreven.<br>
+                                16.D Alle relevante details van de mislukte transactie worden gelogd voor verdere diagnose en probleemoplossing.<br>
+                                17.D  De gebruiker wordt teruggeleid naar de vorige pagina (Stap 3), waar hij/zij opnieuw een betaling kan proberen zodra het systeem hersteld is.
                             </td>
                         </tr>
                     </tbody>
