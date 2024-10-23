@@ -26,7 +26,7 @@
         </tr>
         <tr>
             <th scope="row">Preconditions</th>
-            <td></td>
+            <td>Het lid is ingelogd.</td>
         </tr>
         <tr>
             <th scope="row">Postconditions on Success</th>
@@ -101,7 +101,24 @@
         <tr>
             <th scope="row">Exceptional Flows</th>
             <td>
-            </td>
+                <div>Geen notificaties</div>           
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">User</th>
+                            <th scope="col">System</th>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        <tr>
+                            <td></td>
+                            <td>
+                                2.B Het systeem geeft aan dat er geen notificaties zijn om weer te geven. → Einde UC.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+</td>
         </tr>
     </tbody>
 </table>
