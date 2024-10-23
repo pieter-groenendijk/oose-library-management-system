@@ -50,33 +50,37 @@
 
 ### Lenen
 
-| Actor            |                                                                        | Prioriteit | Code   |
-|:-----------------|:-----------------------------------------------------------------------|------------|--------|
-| Als **lid**,[^1] | wil ik een fysiek boek kunnen lenen.                                   | M          | FR-024 |
-| Als **lid**,[^1] | wil ik een digitaal boek (ebook) kunnen lenen.                         | M          | FR-025 |
-| Als **lid**,[^1] | wil ik een fysiek tijdschrift kunnen lenen.                            | M          | FR-026 |
-| Als **lid**,[^1] | wil ik een digitaal tijdschrift kunnen lenen.                          | M          | FR-027 |
-| Als **lid**,     | wil ik _on demand_ een film kunnen bekijken.                           | S          | FR-028 |
-| Als **lid**,     | wil ik _on demand_ een audioboek kunnen beluisteren.                   | S          | FR-029 |
-| Als **lid**,[^1] | wil ik het leentermijn van een geleend fysiek product kunnen verlengen | S          | FR-044 |
+| Actor              |                                                                        | Prioriteit | Code   |
+|:-------------------|:-----------------------------------------------------------------------|------------|--------|
+| Als **lid**,[^1]   | wil ik een fysiek boek kunnen lenen.                                   | M          | FR-024 |
+| Als **lid**,[^1]   | wil ik een digitaal boek (ebook) kunnen lenen.                         | M          | FR-025 |
+| Als **lid**,[^1]   | wil ik een fysiek tijdschrift kunnen lenen.                            | M          | FR-026 |
+| Als **lid**,[^1]   | wil ik een digitaal tijdschrift kunnen lenen.                          | M          | FR-027 |
+| Als **lid**,       | wil ik _on demand_ een film kunnen bekijken.                           | S          | FR-028 |
+| Als **lid**,       | wil ik _on demand_ een audioboek kunnen beluisteren.                   | S          | FR-029 |
+| Als **lid**,[^1]   | wil ik het leentermijn van een geleend fysiek product kunnen verlengen | S          | FR-044 |
+| Als **beheerder**, | wil ik het leentermijn van de fysieke producten kunnen aanpassen       | C          | FR-046 |
 
 [^1]: Als lid zelf of met behulp van de baliemedewerker.
 [^4]: Een lid kan zijn uitlening (oneindige keren) verlengen zolang dit product niet gereserveerd wordt.
 
 ### Reserveren
 
-| Actor        |                                                                                                                                                     | Prioriteit | Code   |
-|:-------------|:----------------------------------------------------------------------------------------------------------------------------------------------------|------------|--------|
-| Als **lid**, | wil ik een momenteel uitgeleend fysiek product kunnen reserveren indien deze nog niet door een ander is gereserveerd.                               | M          | FR-030 |
+| Actor              |                                                                                                                       | Prioriteit | Code   |
+|:-------------------|:----------------------------------------------------------------------------------------------------------------------|------------|--------|
+| Als **lid**,       | wil ik een momenteel uitgeleend fysiek product kunnen reserveren indien deze nog niet door een ander is gereserveerd. | M          | FR-030 |
+| Als **beheerder**, | wil ik het reserveertermijn van de fysieke producten kunnen aanpassen                                                 | C          | FR-047 |
 
 ### Boetes
 
-| Actor        |                                                                                                          | Prioriteit | Code   |
-|:-------------|:---------------------------------------------------------------------------------------------------------|------------|--------|
-| Als **lid**, | ben ik een opbouwende boete schuldig wanneer ik een geleend product niet binnen het leentermijn inlever. | M          | FR-031 |
-| Als **lid**, | verlies ik toegang van het gehele productaanbod wanneer mijn schuld een vastgesteld bedrag bereikt.      | M          | FR-033 |
-| Als **lid**, | wil ik mijn schuld kunnen betalen                                                                        | M          | FR-034 |
-| Als **lid**, | ben ik een boete schuldig wanneer ik 3x in serie niet gebruik maak van een reservering.                  | S          | FR-032 |
+| Actor              |                                                                                                             | Prioriteit | Code   |
+|:-------------------|:------------------------------------------------------------------------------------------------------------|------------|--------|
+| Als **lid**,       | ben ik een opbouwende boete schuldig wanneer ik een geleend product niet binnen het leentermijn inlever.    | M          | FR-031 |
+| Als **lid**,       | verlies ik toegang van het gehele productaanbod wanneer mijn schuld een vastgesteld bedrag bereikt.         | M          | FR-033 |
+| Als **lid**,       | wil ik mijn schuld kunnen betalen                                                                           | M          | FR-034 |
+| Als **lid**,       | ben ik een boete schuldig wanneer ik een vastgesteld aantal in serie niet gebruik maak van een reservering. | S          | FR-032 |
+| Als **beheerder**, | wil ik het boete bedrag van FR-032 kunnen aanpassen.                                                        | C          | FR-049 |
+| Als **beheerder**, | wil ik het boete bedrag per dag van FR-031 kunnen aanpassen.                                                | C          | FR-050 |
 
 ### Limieten
 
@@ -103,6 +107,12 @@
 | Als **lid**, | wil ik een notificatie ontvangen wanneer ik niet gebruik heb gemaakt van een reservering. Ik wordt geïnformeerd van een mogelijk toekomstige boete. | S          | FR-044 |
 | Als **lid**, | wil ik wekelijks een notificatie ontvangen wanneer ik een _te laat_ boete schuldig ben van een geleend product.                                     | C          | FR-041 |
 | Als **lid**, | wil ik een notificatie ontvangen wanneer een gereserveerd product beschikbaar is geworden om te lenen                                               | C          | FR-043 |
+
+### Elders
+
+| Actor              |                                                          | Prioriteit | Code   |
+|:-------------------|:---------------------------------------------------------|------------|--------|
+| Als **beheerder**, | wil ik kunnen inzien welke instellingen ik kan aanpassen | M          | FR-048 |
 
 ## Definities
 ### Kinderabonnement
