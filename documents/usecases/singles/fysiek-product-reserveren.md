@@ -68,7 +68,21 @@
         </tr>
         <tr>
             <td><strong>Alternate Flows</strong></td>
-            <td></td>
+            <td>   <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">User</th>
+                            <th scope="col">System</th>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        <tr>
+                            <td>2.A Het lid kiest ervoor om de reservering te annuleren nadat het verzoek is ingediend.</td>
+                            <td>3.A Het systeem annuleert de reservering en toont een bevestiging van de annulering.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table></td>
         </tr>
         <tr>
             <td><strong>Exceptional Flows</strong></td>
@@ -87,6 +101,23 @@
                             <td>
                                 3.A Systeem stelt vast dat lid niet voldoet aan reserveringsvoorwaarden. Het lid krijgt 
                                 een passende foutmelding te zien.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+      <div>Het lid heeft incomplete contactgegevens geregistreerd, waardoor de notificatie niet kan worden verstuurd.</div>           
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">User</th>
+                            <th scope="col">System</th>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        <tr>
+                            <td></td>
+                            <td>
+                                3.A Het systeem waarschuwt de gebruiker dat de contactinformatie moet worden bijgewerkt om notificaties te ontvangen. <br>
                             </td>
                         </tr>
                     </tbody>

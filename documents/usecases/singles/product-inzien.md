@@ -1,4 +1,4 @@
-# Usecase name
+# Product inzien
 <table> 
     <thead>
         <tr>
@@ -8,7 +8,7 @@
     <tbody>
         <tr>
             <th scope="row">Primary Actor</th>
-            <td></td>
+            <td>Bezoeker</td>
         </tr>
         <tr>
             <th scope="row">Stakeholders & Interests</th>
@@ -24,7 +24,7 @@
         </tr>
         <tr>
             <th scope="row">Preconditions</th>
-            <td></td>
+            <td>Er is minimaal 1 product in de catalogus. </td>
         </tr>
         <tr>
             <th scope="row">Postconditions on Success</th>
@@ -69,9 +69,9 @@
                     </thead>
                     <tbody> 
                         <tr>
-                            <td></td>
+                            <td>4.A De gebruiker ziet het product in.</td>
                             <td>
-                                4b. Systeem weet dat het product niet in bezit is van deze gebruiker en niet gereserveerd is.
+                                5.A. Systeem controlleert dat het product niet in bezit is van deze gebruiker en niet al gereserveerd is.
                                 De mogelijkheid om te reserveren wordt gepresenteerd.
                             </td>
                         </tr>
@@ -93,7 +93,7 @@
                         <tr>
                             <td></td>
                             <td>
-                                4a. Systeem weet dat het product in bezit is van deze gebruiker. De mogelijkheid om te
+                                4a. Systeem controlleert dat het product uitgeleend is aan deze gebruiker. De mogelijkheid om te
                                 verlengen wordt gepresenteerd.
                             </td>
                         </tr>
@@ -115,7 +115,7 @@
                         <tr>
                             <td></td>
                             <td>
-                                4c. Systeem weet dat het product digitaal beschikbaar is. De mogelijkheid om het product 
+                                4c. Systeem controlleert dat het product digitaal beschikbaar is. De mogelijkheid om het product 
                                 toe te voegen aan zijn account wordt gepresenteerd.
                             </td>
                         </tr>
@@ -142,7 +142,7 @@
                             <td></td>
                             <td>
                                 2d. Systeem kan gegevens niet verkrijgen.<br>
-                                3d. Systeem presenteert foutmelding dat de gegevens niet verkregen konden worden.
+                                3d. Systeem presenteert foutmelding dat de gegevens niet verkregen konden worden. → Verder naar stap 1.
                             </td>
                         </tr>
                     </tbody>
