@@ -10,21 +10,24 @@ public class NotificationStrategyFactory {
     private final SMSNotifier smsNotifier = new SMSNotifier();
     private final AppNotifier appNotifier = new AppNotifier();
 
-    public NotificationStrategy createAlertStrategy() {
-        return new NotificationStrategy(new Notifier[]{
+    public AlertNotificationStrategy createAlertStrategy() {
+        return new AlertNotificationStrategy(
             emailNotifier,
             smsNotifier,
             appNotifier
-        });
+        );
     }
 
-    public NotificationStrategy createWarningStrategy() {
-        return new NotificationStrategy(new Notifier[]{
-            appNotifier,
-        });
+    public WarningNotificationStrategy createWarningStrategy() {
+        return new WarningNotificationStrategy(
+            emailNotifier,
+            appNotifier
+        );
     }
 
-    public NotificationStrategy createReminderStrategy() {
-        return new NotificationStrategy(new Notifier[]{});
+    public ReminderNotificationStrategy createReminderStrategy() {
+        return new ReminderNotificationStrategy(
+            emailNotifier
+        );
     }
 }

@@ -3,7 +3,7 @@ package com.github.pietergroenendijk.notifications.strategy;
 import com.github.pietergroenendijk.notifications.NotificationTask;
 import com.github.pietergroenendijk.notifications.notifiers.Notifier;
 
-public class NotificationStrategy implements Notifier {
+public abstract class NotificationStrategy implements Notifier {
     private final Notifier[] channels;
 
     public NotificationStrategy(Notifier[] channels) {
