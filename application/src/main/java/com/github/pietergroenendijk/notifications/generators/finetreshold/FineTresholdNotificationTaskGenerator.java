@@ -1,4 +1,7 @@
-package com.github.pietergroenendijk.notifications;
+package com.github.pietergroenendijk.notifications.generators.finetreshold;
+
+import com.github.pietergroenendijk.notifications.generators.*;
+import com.github.pietergroenendijk.notifications.strategy.NotificationStrategy;
 
 import java.time.LocalTime;
 

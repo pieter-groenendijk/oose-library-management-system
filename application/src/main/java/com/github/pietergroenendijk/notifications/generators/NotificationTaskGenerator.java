@@ -1,8 +1,13 @@
-package com.github.pietergroenendijk.notifications;
+package com.github.pietergroenendijk.notifications.generators;
+
+import com.github.pietergroenendijk.notifications.Notification;
+import com.github.pietergroenendijk.notifications.NotificationTask;
+import com.github.pietergroenendijk.notifications.UserContactDetails;
+import com.github.pietergroenendijk.notifications.strategy.NotificationStrategy;
 
 import java.time.LocalTime;
 
-abstract class NotificationTaskGenerator<T> {
+public abstract class NotificationTaskGenerator<T> {
     private final NotificationStrategy STRATEGY;
 
     protected NotificationTaskGenerator(NotificationStrategy strategy) {
