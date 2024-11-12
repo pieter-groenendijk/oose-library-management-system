@@ -3,9 +3,9 @@ package com.github.pietergroenendijk.notifications.notifiers;
 import com.github.pietergroenendijk.notifications.NotificationTask;
 
 public abstract class ChannelNotifier implements Notifier {
-    private final int MAXIMUM_AMOUNT_OF_ATTEMPTS;
+    private final byte MAXIMUM_AMOUNT_OF_ATTEMPTS;
 
-    public ChannelNotifier(int maximumAmountOfAttempts) {
+    public ChannelNotifier(byte maximumAmountOfAttempts) {
         this.MAXIMUM_AMOUNT_OF_ATTEMPTS = maximumAmountOfAttempts;
     }
 
@@ -15,10 +15,10 @@ public abstract class ChannelNotifier implements Notifier {
 
     @Override
     public void send(NotificationTask task) {
-        this.send(task, 1);
+        this.send(task, (byte)1);
     }
 
-    private void send(NotificationTask task, int amountOfAttempts) {
+    private void send(NotificationTask task, byte amountOfAttempts) {
         try {
             this.attempt(task);
         } catch (Exception e) {
@@ -26,7 +26,7 @@ public abstract class ChannelNotifier implements Notifier {
         }
     }
 
-    private void handleSendingError(NotificationTask task, int amountOfAttempts) {
+    private void handleSendingError(NotificationTask task, byte amountOfAttempts) {
         if (amountOfAttempts < this.MAXIMUM_AMOUNT_OF_ATTEMPTS) {
             ++amountOfAttempts;
             this.send(task, amountOfAttempts);
