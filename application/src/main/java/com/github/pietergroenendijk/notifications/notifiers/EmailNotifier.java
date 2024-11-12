@@ -2,9 +2,8 @@ package com.github.pietergroenendijk.notifications.notifiers;
 
 import com.github.pietergroenendijk.notifications.NotificationTask;
 
-public class EmailNotifier implements Notifier {
+public class EmailNotifier extends ChannelNotifier {
     @Override
-    public void send(NotificationTask task) {
-
+    protected void attempt(NotificationTask task) throws Exception {
     }
 }

@@ -2,9 +2,9 @@ package com.github.pietergroenendijk.notifications.notifiers;
 
 import com.github.pietergroenendijk.notifications.NotificationTask;
 
-public class SMSNotifier implements Notifier {
+public class SMSNotifier extends ChannelNotifier {
     @Override
-    public void send(NotificationTask task) {
+    protected void attempt(NotificationTask task) throws Exception {
 
     }
 }
