@@ -3,7 +3,7 @@ package com.github.pietergroenendijk.notifications.generators.finetreshold;
 import com.github.pietergroenendijk.notifications.generators.*;
 import com.github.pietergroenendijk.notifications.strategy.NotificationStrategy;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 public class FineTresholdNotificationTaskGenerator extends NotificationTaskGenerator<FineTresholdNotificationTaskData> {
     protected FineTresholdNotificationTaskGenerator(NotificationStrategy strategy) {
@@ -21,7 +21,7 @@ public class FineTresholdNotificationTaskGenerator extends NotificationTaskGener
     }
 
     @Override
-    protected LocalTime determineSendDateTime(FineTresholdNotificationTaskData data) {
+    protected LocalDateTime determineSendDateTime(FineTresholdNotificationTaskData data) {
         return null;
     }
 }
