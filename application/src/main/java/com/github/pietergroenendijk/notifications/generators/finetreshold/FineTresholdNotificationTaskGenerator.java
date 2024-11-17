@@ -5,23 +5,23 @@ import com.github.pietergroenendijk.notifications.strategy.NotificationStrategy;
 
 import java.time.LocalDateTime;
 
-public class FineTresholdNotificationTaskGenerator extends NotificationTaskGenerator<FineTresholdNotificationTaskData> {
-    protected FineTresholdNotificationTaskGenerator(NotificationStrategy strategy) {
+public class FineTresholdNotificationTaskGenerator extends NotificationTaskGenerator<FineThresholdNotificationTaskContext> {
+    public FineTresholdNotificationTaskGenerator(NotificationStrategy strategy) {
         super(strategy);
     }
 
     @Override
-    protected String generateTitle(FineTresholdNotificationTaskData data) {
+    protected String generateTitle(FineThresholdNotificationTaskContext data) {
         return "";
     }
 
     @Override
-    protected String generateMessage(FineTresholdNotificationTaskData data) {
+    protected String generateMessage(FineThresholdNotificationTaskContext data) {
         return "";
     }
 
     @Override
-    protected LocalDateTime determineSendDateTime(FineTresholdNotificationTaskData data) {
+    protected LocalDateTime determineSendDateTime(FineThresholdNotificationTaskContext data) {
         return null;
     }
 }

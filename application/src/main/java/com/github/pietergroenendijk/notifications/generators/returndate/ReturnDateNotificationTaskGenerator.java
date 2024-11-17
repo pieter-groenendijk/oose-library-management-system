@@ -6,7 +6,7 @@ import com.github.pietergroenendijk.notifications.strategy.NotificationStrategy;
 import java.time.LocalDateTime;
 
 public class ReturnDateNotificationTaskGenerator extends NotificationTaskGenerator<ReturnDateNotificationTaskContext> {
-    protected ReturnDateNotificationTaskGenerator(NotificationStrategy strategy) {
+    public ReturnDateNotificationTaskGenerator(NotificationStrategy strategy) {
         super(strategy);
     }
 

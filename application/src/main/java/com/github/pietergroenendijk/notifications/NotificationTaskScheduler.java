@@ -8,15 +8,14 @@ import java.util.HashSet;
 
 public class NotificationTaskScheduler {
     private final TaskScheduler SCHEDULER;
-    private final Duration RETRIEVE_INTERVAL;
-    private HashSet<NotificationTask> handledManually;
+    private final Duration RETRIEVE_INTERVAL = Duration.ofMinutes(5);
+    private final HashSet<NotificationTask> handledManually = new HashSet<>();
 
     private final NotificationTaskRepository REPOSITORY;
 
-    public NotificationTaskScheduler(TaskScheduler scheduler, Duration retrieveInterval, NotificationTaskRepository repository) {
+    public NotificationTaskScheduler(TaskScheduler scheduler) {
         this.SCHEDULER = scheduler;
-        this.RETRIEVE_INTERVAL = retrieveInterval;
-        this.REPOSITORY = repository;
+        this.REPOSITORY = new NotificationTaskRepository();
     }
 
     public void schedule(NotificationTask task) {
