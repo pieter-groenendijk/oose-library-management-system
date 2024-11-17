@@ -5,25 +5,25 @@ import com.github.pietergroenendijk.notifications.strategy.NotificationStrategy;
 
 import java.time.LocalDateTime;
 
-public class ReturnDateNotificationTaskGenerator extends NotificationTaskGenerator<ReturnDateNotificationTaskData> {
+public class ReturnDateNotificationTaskGenerator extends NotificationTaskGenerator<ReturnDateNotificationTaskContext> {
     protected ReturnDateNotificationTaskGenerator(NotificationStrategy strategy) {
         super(strategy);
     }
 
     @Override
-    protected String generateTitle(ReturnDateNotificationTaskData data) {
+    protected String generateTitle(ReturnDateNotificationTaskContext context) {
         return "A product is due today!";
     }
 
     @Override
-    protected String generateMessage(ReturnDateNotificationTaskData data) {
+    protected String generateMessage(ReturnDateNotificationTaskContext context) {
         return "Return the product to prevent a fine.";
     }
 
     @Override
-    protected LocalDateTime determineSendDateTime(ReturnDateNotificationTaskData data) {
-        return data.START_OF_LENDING
-                .plus(data.LENDING_DURATION)
+    protected LocalDateTime determineSendDateTime(ReturnDateNotificationTaskContext context) {
+        return context.START_OF_LENDING
+                .plus(context.LENDING_DURATION)
                 .withHour(8);
     }
 }
