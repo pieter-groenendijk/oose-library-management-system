@@ -22,7 +22,7 @@ public class ReturnDateNotificationTaskGenerator extends NotificationTaskGenerat
 
     @Override
     protected LocalDateTime determineSendDateTime(ReturnDateNotificationTaskContext context) {
-        return context.START_OF_LENDING
+        return context.LENDING_START_DATETIME
                 .plus(context.LENDING_DURATION)
                 .withHour(8);
     }

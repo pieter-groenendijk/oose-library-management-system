@@ -7,7 +7,7 @@ import com.github.pietergroenendijk.notifications.strategy.NotificationStrategy;
 
 import java.time.LocalDateTime;
 
-public abstract class NotificationTaskGenerator<T extends NotificationTaskContext> {
+public abstract class NotificationTaskGenerator<T> {
     private final NotificationStrategy STRATEGY;
 
     protected NotificationTaskGenerator(NotificationStrategy strategy) {
@@ -21,7 +21,6 @@ public abstract class NotificationTaskGenerator<T extends NotificationTaskContex
         );
 
         return new NotificationTask(
-            context.REFERENCE_ID,
             notification,
             this.STRATEGY,
             determineSendDateTime(context),

@@ -5,7 +5,6 @@ import com.github.pietergroenendijk.notifications.strategy.NotificationStrategy;
 import java.time.LocalDateTime;
 
 public record NotificationTask(
-        int referenceId,
         Notification notification,
         NotificationStrategy strategy,
         java.time.LocalDateTime scheduledDateTime,
