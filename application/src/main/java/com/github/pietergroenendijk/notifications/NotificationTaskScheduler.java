@@ -8,14 +8,15 @@ import java.util.HashSet;
 
 public class NotificationTaskScheduler {
     private final TaskScheduler SCHEDULER;
+    private final NotificationTaskRepository REPOSITORY;
     private final Duration RETRIEVE_INTERVAL = Duration.ofMinutes(5);
     private final HashSet<NotificationTask> handledManually = new HashSet<>();
-
-    private final NotificationTaskRepository REPOSITORY;
 
     public NotificationTaskScheduler(TaskScheduler scheduler) {
         this.SCHEDULER = scheduler;
         this.REPOSITORY = new NotificationTaskRepository();
+
+        startSchedulingFromDatabase();
     }
 
     public void schedule(NotificationTask task) {
@@ -24,6 +25,13 @@ public class NotificationTaskScheduler {
         if (shouldScheduleInMemory(task)) {
             scheduleDirectlyInMemory(task);
         }
+    }
+
+    private void startSchedulingFromDatabase() {
+        this.SCHEDULER.scheduleRecurring(
+            this::scheduleFromDatabase,
+            this.RETRIEVE_INTERVAL
+        );
     }
 
     private void scheduleFromDatabase() {
