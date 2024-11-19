@@ -12,15 +12,15 @@ public class NotificationTaskScheduler {
     private final Duration RETRIEVE_INTERVAL = Duration.ofMinutes(5);
     private final HashSet<NotificationTask> handledManually = new HashSet<>();
 
-    public NotificationTaskScheduler(TaskScheduler scheduler) {
+    public NotificationTaskScheduler(TaskScheduler scheduler, NotificationTaskRepository repository) {
         this.SCHEDULER = scheduler;
-        this.REPOSITORY = new NotificationTaskRepository();
+        this.REPOSITORY = repository;
 
         startSchedulingFromDatabase();
     }
 
     public void schedule(NotificationTask task) {
-        this.REPOSITORY.store(task);
+        task.store();
 
         if (shouldScheduleInMemory(task)) {
             scheduleDirectlyInMemory(task);

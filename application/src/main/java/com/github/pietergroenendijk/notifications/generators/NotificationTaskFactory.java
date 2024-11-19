@@ -1,8 +1,9 @@
 package com.github.pietergroenendijk.notifications.generators;
 
+import com.github.pietergroenendijk.Lending;
 import com.github.pietergroenendijk.notifications.NotificationTask;
+import com.github.pietergroenendijk.notifications.NotificationTaskRepository;
 import com.github.pietergroenendijk.notifications.UserContactDetails;
-import com.github.pietergroenendijk.notifications.generators.returndate.ReturnDateNotificationTaskContext;
 import com.github.pietergroenendijk.notifications.generators.returndate.ReturnDateNotificationTaskGenerator;
 import com.github.pietergroenendijk.notifications.strategy.AlertNotificationStrategy;
 import com.github.pietergroenendijk.notifications.strategy.NotificationStrategyFactory;
@@ -11,18 +12,18 @@ import com.github.pietergroenendijk.notifications.strategy.WarningNotificationSt
 public class NotificationTaskFactory {
     private final ReturnDateNotificationTaskGenerator RETURN_DATE_TASK_GENERATOR;
 
-    public NotificationTaskFactory() {
+    public NotificationTaskFactory(NotificationTaskRepository repository) {
         NotificationStrategyFactory strategyFactory = new NotificationStrategyFactory();
         AlertNotificationStrategy alertStrategy = strategyFactory.createAlertStrategy();
         WarningNotificationStrategy warningStrategy = strategyFactory.createWarningStrategy();
 
-        this.RETURN_DATE_TASK_GENERATOR = new ReturnDateNotificationTaskGenerator(alertStrategy);
+        this.RETURN_DATE_TASK_GENERATOR = new ReturnDateNotificationTaskGenerator(alertStrategy, repository);
     }
 
-    public NotificationTask createReturnDateNotificationTask(UserContactDetails contactDetails, ReturnDateNotificationTaskContext context) {
+    public NotificationTask createReturnDateNotificationTask(UserContactDetails contactDetails, Lending lending) {
         return RETURN_DATE_TASK_GENERATOR.generate(
             contactDetails,
-            context
+            lending
         );
     }
 }

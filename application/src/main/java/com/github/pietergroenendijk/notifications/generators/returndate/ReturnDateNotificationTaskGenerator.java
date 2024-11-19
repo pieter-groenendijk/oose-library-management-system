@@ -1,29 +1,38 @@
 package com.github.pietergroenendijk.notifications.generators.returndate;
 
+import com.github.pietergroenendijk.Lending;
+import com.github.pietergroenendijk.notifications.NotificationTask;
+import com.github.pietergroenendijk.notifications.NotificationTaskRepository;
+import com.github.pietergroenendijk.notifications.NotificationTaskStoreStrategy;
 import com.github.pietergroenendijk.notifications.generators.NotificationTaskGenerator;
 import com.github.pietergroenendijk.notifications.strategy.NotificationStrategy;
 
 import java.time.LocalDateTime;
 
-public class ReturnDateNotificationTaskGenerator extends NotificationTaskGenerator<ReturnDateNotificationTaskContext> {
-    public ReturnDateNotificationTaskGenerator(NotificationStrategy strategy) {
-        super(strategy);
+public class ReturnDateNotificationTaskGenerator extends NotificationTaskGenerator<Lending> {
+    public ReturnDateNotificationTaskGenerator(NotificationStrategy strategy, NotificationTaskRepository repository) {
+        super(strategy, repository);
     }
 
     @Override
-    protected String generateTitle(ReturnDateNotificationTaskContext context) {
+    protected String generateTitle(Lending lending) {
         return "A product is due today!";
     }
 
     @Override
-    protected String generateMessage(ReturnDateNotificationTaskContext context) {
+    protected String generateMessage(Lending lending) {
         return "Return the product to prevent a fine.";
     }
 
     @Override
-    protected LocalDateTime determineSendDateTime(ReturnDateNotificationTaskContext context) {
-        return context.LENDING_START_DATETIME
-                .plus(context.LENDING_DURATION)
-                .withHour(8);
+    protected LocalDateTime determineSendDateTime(Lending lending) {
+        return lending.WILL_END_ON.withHour(8);
+    }
+
+    @Override
+    protected NotificationTaskStoreStrategy generateStoreStrategy(Lending lending) {
+        return (NotificationTask task) -> {
+            super.REPOSITORY.storeLendingAssociated(lending, task);
+        };
     }
 }
