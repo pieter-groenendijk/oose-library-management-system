@@ -26,6 +26,8 @@ public abstract class ChannelNotifier implements Notifier {
         }
     }
 
+    protected abstract void attempt(NotificationTask task) throws Exception;
+
     private void handleSendingError(NotificationTask task, byte amountOfAttempts) {
         if (amountOfAttempts < this.MAXIMUM_AMOUNT_OF_ATTEMPTS) {
             ++amountOfAttempts;
@@ -38,6 +40,4 @@ public abstract class ChannelNotifier implements Notifier {
     private void logFailedSending(NotificationTask task) {
         System.out.println("Failed to send notification: " + task.toString());
     }
-
-    protected abstract void attempt(NotificationTask task) throws Exception;
 }
