@@ -21,7 +21,7 @@ public abstract class ChannelNotifier implements Notifier {
     private void send(NotificationTask task, byte amountOfAttempts) {
         try {
             this.attempt(task);
-        } catch (Exception e) {
+        } catch (Exception _) {
             this.handleSendingError(task, amountOfAttempts);
         }
     }
