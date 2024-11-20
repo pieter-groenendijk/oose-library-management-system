@@ -2,15 +2,14 @@ package com.github.pietergroenendijk.notifications.strategy;
 
 import com.github.pietergroenendijk.notifications.notifiers.AppNotifier;
 import com.github.pietergroenendijk.notifications.notifiers.EmailNotifier;
-import com.github.pietergroenendijk.notifications.notifiers.Notifier;
 import com.github.pietergroenendijk.notifications.notifiers.SMSNotifier;
 
-public class NotificationStrategyFactory {
+public class NotificationSendStrategyFactory {
     private final EmailNotifier emailNotifier;
     private final SMSNotifier smsNotifier;
     private final AppNotifier appNotifier;
 
-    public NotificationStrategyFactory() {
+    public NotificationSendStrategyFactory() {
         this(
             new EmailNotifier(),
             new SMSNotifier(),
@@ -18,29 +17,29 @@ public class NotificationStrategyFactory {
         );
     }
 
-    public NotificationStrategyFactory(EmailNotifier emailNotifier, SMSNotifier smsNotifier, AppNotifier appNotifier) {
+    public NotificationSendStrategyFactory(EmailNotifier emailNotifier, SMSNotifier smsNotifier, AppNotifier appNotifier) {
         this.emailNotifier = emailNotifier;
         this.smsNotifier = smsNotifier;
         this.appNotifier = appNotifier;
     }
 
-    public AlertNotificationStrategy createAlertStrategy() {
-        return new AlertNotificationStrategy(
+    public AlertNotificationSendStrategy createAlertStrategy() {
+        return new AlertNotificationSendStrategy(
             emailNotifier,
             smsNotifier,
             appNotifier
         );
     }
 
-    public WarningNotificationStrategy createWarningStrategy() {
-        return new WarningNotificationStrategy(
+    public WarningNotificationSendStrategy createWarningStrategy() {
+        return new WarningNotificationSendStrategy(
             emailNotifier,
             appNotifier
         );
     }
 
-    public ReminderNotificationStrategy createReminderStrategy() {
-        return new ReminderNotificationStrategy(
+    public ReminderNotificationSendStrategy createReminderStrategy() {
+        return new ReminderNotificationSendStrategy(
             emailNotifier
         );
     }

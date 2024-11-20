@@ -59,9 +59,14 @@ public class NotificationTaskScheduler {
 
     private void scheduleInMemory(NotificationTask task) {
         this.SCHEDULER.schedule(
-            task::send,
-            task.scheduledDateTime()
+            () -> this.executeTask(task),
+            task.SCHEDULED_AT
         );
+    }
+
+    private void executeTask(NotificationTask task) {
+        task.send();
+        this.REPOSITORY.markCompleted(task);
     }
 
     private boolean isHandledManually(NotificationTask task) {

@@ -17,4 +17,8 @@ public class NotificationTaskRepository implements INotificationTaskRepository {
     public void storeLendingAssociated(LendingBase lending, NotificationTask task) {
         // TODO insert using a view, so that there only one statement is sent, as to minimize latency.
     }
+
+    public void markCompleted(NotificationTask task) {
+        // TODO mark completed in database
+    }
 }

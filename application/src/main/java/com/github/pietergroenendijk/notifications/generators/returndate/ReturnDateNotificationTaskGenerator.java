@@ -5,13 +5,13 @@ import com.github.pietergroenendijk.notifications.NotificationTask;
 import com.github.pietergroenendijk.notifications.NotificationTaskRepository;
 import com.github.pietergroenendijk.notifications.NotificationTaskStoreStrategy;
 import com.github.pietergroenendijk.notifications.generators.NotificationTaskGenerator;
-import com.github.pietergroenendijk.notifications.strategy.NotificationStrategy;
+import com.github.pietergroenendijk.notifications.strategy.NotificationSendStrategy;
 
 import java.time.LocalDateTime;
 
 public class ReturnDateNotificationTaskGenerator extends NotificationTaskGenerator<Lending> {
-    public ReturnDateNotificationTaskGenerator(NotificationStrategy strategy, NotificationTaskRepository repository) {
-        super(strategy, repository);
+    public ReturnDateNotificationTaskGenerator(NotificationSendStrategy sendStrategy, NotificationTaskRepository repository) {
+        super(sendStrategy, repository);
     }
 
     @Override
@@ -25,7 +25,7 @@ public class ReturnDateNotificationTaskGenerator extends NotificationTaskGenerat
     }
 
     @Override
-    protected LocalDateTime determineSendDateTime(Lending lending) {
+    protected LocalDateTime determineScheduleDateTime(Lending lending) {
         return lending.WILL_END_ON.withHour(8);
     }
 

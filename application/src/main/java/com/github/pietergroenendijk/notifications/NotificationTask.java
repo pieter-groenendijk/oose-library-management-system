@@ -1,25 +1,41 @@
 package com.github.pietergroenendijk.notifications;
 
-import com.github.pietergroenendijk.notifications.strategy.NotificationStrategy;
+import com.github.pietergroenendijk.AccountBase;
+import com.github.pietergroenendijk.notifications.strategy.NotificationSendStrategy;
 
 import java.time.LocalDateTime;
 
-public record NotificationTask(
+public class NotificationTask
+{
+    public final Notification NOTIFICATION;
+    public final NotificationSendStrategy SEND_STRATEGY;
+    public final NotificationTaskStoreStrategy STORE_STRATEGY;
+    public final LocalDateTime SCHEDULED_AT;
+    public final AccountBase ACCOUNT;
+
+    public NotificationTask(
         Notification notification,
-        NotificationStrategy strategy,
+        NotificationSendStrategy sendStrategy,
         NotificationTaskStoreStrategy storeStrategy,
-        java.time.LocalDateTime scheduledDateTime,
-        UserContactDetails contactDetails
-){
+        java.time.LocalDateTime scheduledAt,
+        AccountBase account
+    ) {
+        this.NOTIFICATION = notification;
+        this.SEND_STRATEGY = sendStrategy;
+        this.STORE_STRATEGY = storeStrategy;
+        this.SCHEDULED_AT = scheduledAt;
+        this.ACCOUNT = account;
+    }
+
     public boolean isScheduledBefore(LocalDateTime dateTime) {
-        return this.scheduledDateTime.isBefore(dateTime);
+        return this.SCHEDULED_AT.isBefore(dateTime);
     }
 
     public void store() {
-        storeStrategy.store(this);
+        this.STORE_STRATEGY.store(this);
     }
 
     public void send() {
-        this.strategy.send(this);
+        this.SEND_STRATEGY.send(this);
     }
 }
