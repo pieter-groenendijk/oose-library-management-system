@@ -18,7 +18,7 @@
 | Als **bezoeker**,                             | wil ik een _volwassen abonnement_ kunnen aanschaffen.          | M          | FR-003 |
 | Als **bezoeker**,                             | wil ik een _selectief digitaal abonnement_ kunnen aanschaffen. | S          | FR-004 |
 | Als **bezoeker** met een kind,                | wil ik een _kinder abonnement_ kunnen aanschaffen.             | C          | FR-001 |
-
+| Als **lid**,                                  | wil ik mijn abonnement kunnen stopzetten.                      | C          | FR-063 |
 ### Catalogus
 
 | Actor                 |                                                                                                                                      | Prioriteit | Code   |
@@ -46,8 +46,11 @@
 | Als **beheerder** of **baliemedewerker**,       | wil ik een lid kunnen verwijderen.                                                          | S          | FR-022 |
 | Als **beheerder**,                              | wil ik een lid zijn account kunnen blokkeren. Het lid kan niet meer bij producten.          | S          | FR-023 |
 | Als **lid** met een gekoppeld kinderabonnement, | wil ik de leenhistorie van mijn kind kunnen inzien.                                         | C          | FR-019 |
-| Als **beheerder** of **baliemedewerker**,       | wil ik een abonnement kunnen toevoegen aan een account van een lid.                         |            |        |
-| Als **beheerder** of **baliemedewerker**,       | wil ik een abonnement kunnen verwijderen aan een account van een lid.                       |            |        |
+| Als **beheerder** of **baliemedewerker**,       | wil ik een abonnement kunnen toevoegen aan een account van een lid.                         | C          | FR-060 |
+| Als **beheerder** of **baliemedewerker**,       | wil ik een abonnement kunnen verwijderen aan een account van een lid.                       | C          | FR-061 |
+| Als **lid**,                                    | wil ik mijn gegevens kunnen aanpassen.                                                      | C          | FR-062 |
+
+[^1]: De leenhistorie is per abonnement. Een lid kan meerdere abonnementen hebben.
 
 ### Lenen
 
