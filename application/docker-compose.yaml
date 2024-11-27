@@ -13,12 +13,22 @@ services:
         ports:
             - "8080:8080"
         restart: "on-failure"
+        develop:
+            watch:
+                -   path: "src"
+                    action: sync+restart
+                    target: "/app/src"
     application-tester:
         build:
             context: "."
             dockerfile: "docker/application-tester/application-tester.dockerfile"
         depends_on:
             -   application
+        develop:
+            watch:
+                -   path: "src"
+                    action: sync+restart
+                    target: "/app/src"
     database:
         build:
             context: "."
