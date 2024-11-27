@@ -1,9 +1,9 @@
-package com.mycompany.app;
+package com.github.pieter_groenendijk;
 
 /**
  * Hello world!
  */
-public class App {
+public class Main {
     public static void main(String[] args) {
         System.out.println("Hello World!");
     }
