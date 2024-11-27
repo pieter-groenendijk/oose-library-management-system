@@ -5,4 +5,10 @@ services:
             dockerfile: "docker/application/application.dockerfile"
         ports:
             - "8080:8080"
-        restart: "always"
+        restart: "on-failure"
+    application-tester:
+        build:
+            context: "."
+            dockerfile: "docker/application-tester/application-tester.dockerfile"
+        depends_on:
+            -   application

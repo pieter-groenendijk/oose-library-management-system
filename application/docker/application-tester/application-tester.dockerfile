@@ -7,4 +7,4 @@ RUN mvn dependency:go-offline # Download dependencies so we don't have to downlo
 
 COPY src src
 
-CMD ["mvn", "clean", "compile", "exec:java"]
+CMD ["mvn", "clean", "test"]
