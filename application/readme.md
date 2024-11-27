@@ -26,6 +26,8 @@ You're required to replace any missing values (usually secrets). You may also op
 # Startup
 All system services (application, database, etc.) can be started with one command if one is in the correct directory.
 
+_Docker itself is expected to be already running_
+
 Set working directory to application directory (The folder this readme is located in)
 ```bash
 cd path/to/application
@@ -39,7 +41,10 @@ sudo docker compose up --build --watch
 `--build`: Rebuild the containers if their configuration has changed.
 `--watch`: Will watch for source code changes to sync and restart services. 
 
-
+## More automation
+I made a simple script to make life easier. It automatically starts and cleans up
+the application. When using linux I would advise adding it as a run configuration in your 
+IDE. The script is located in the `project-root/scripts` directory.
 
 # Shutdown
 The following command will stop and remove the services.
