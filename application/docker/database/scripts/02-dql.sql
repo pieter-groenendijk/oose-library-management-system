@@ -1,7 +1,7 @@
 -- Drop views if they exist
-DROP VIEW IF EXISTS "vw_Account";
-DROP VIEW IF EXISTS "vw_MembershipType";
-DROP VIEW IF EXISTS "vw_Membership";
+--DROP VIEW IF EXISTS "vw_Account";
+--DROP VIEW IF EXISTS "vw_MembershipType";
+/*--DROP VIEW IF EXISTS "vw_Membership";
 
 -- View for Account table
 CREATE VIEW "vw_Account" AS 

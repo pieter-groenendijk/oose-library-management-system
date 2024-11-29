@@ -29,3 +29,4 @@ public class Membership {
     @Column(name = "endDate")
     @Temporal(TemporalType.DATE)
     private Date endDate;
+}

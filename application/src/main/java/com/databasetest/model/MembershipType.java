@@ -21,3 +21,4 @@ public class MembershipType {
 
     @Column(name = "maxLendings", nullable = false)
     private int maxLendings;
+}

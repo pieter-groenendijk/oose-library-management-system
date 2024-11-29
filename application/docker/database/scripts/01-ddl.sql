@@ -1,7 +1,7 @@
 -- Drop tables if they exist, cascading dependencies
-DROP TABLE IF EXISTS "Membership" CASCADE;
-DROP TABLE IF EXISTS "MembershipType" CASCADE;
-DROP TABLE IF EXISTS "Account" CASCADE;
+--DROP TABLE IF EXISTS "Membership" CASCADE;
+--DROP TABLE IF EXISTS "MembershipType" CASCADE;
+--DROP TABLE IF EXISTS "Account" CASCADE;
 
 -- Create Account table
 CREATE TABLE "Account" (
