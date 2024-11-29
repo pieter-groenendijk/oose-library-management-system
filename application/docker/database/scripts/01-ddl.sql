@@ -1,7 +1,7 @@
 -- Drop tables if they exist, cascading dependencies
-DROP TABLE IF EXISTS "Membership";
-DROP TABLE IF EXISTS "MembershipType";
-DROP TABLE IF EXISTS "Account";
+DROP TABLE IF EXISTS "Membership" CASCADE;
+DROP TABLE IF EXISTS "MembershipType" CASCADE;
+DROP TABLE IF EXISTS "Account" CASCADE;
 
 -- Create Account table
 CREATE TABLE "Account" (
@@ -17,7 +17,7 @@ CREATE TABLE "Account" (
 -- Create MembershipType table
 CREATE TABLE "MembershipType" (
     "membershipTypeId" BIGSERIAL PRIMARY KEY,
-    "description" NVARCHAR(150),
+    "description" VARCHAR(150),
     "digitalProducts" BOOLEAN NOT NULL,
     "physicalProducts" BOOLEAN NOT NULL,
     "maxLendings" INT NOT NULL

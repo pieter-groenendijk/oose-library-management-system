@@ -21,6 +21,16 @@
         <version>5.10.3</version>
         <scope>test</scope>
     </dependency>
+	<dependency>
+		<groupId>org.hibernate</groupId>
+		<artifactId>hibernate-core</artifactId>
+		<version>6.6.3Final</version>
+	</dependency>
+	<dependency>
+		<groupId>org.postgresql</groupId>
+		<artifactId>postgresql</artifactId>
+		<version>42.6.0</version>
+	</dependency>
 </dependencies>
 
 <build>
