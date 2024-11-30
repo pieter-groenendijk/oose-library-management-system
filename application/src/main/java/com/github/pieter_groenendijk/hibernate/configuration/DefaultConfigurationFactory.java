@@ -1,8 +1,8 @@
-package com.databasetest.configuration;
+package com.github.pieter_groenendijk.hibernate.configuration;
 
-import com.databasetest.model.Account;
-import com.databasetest.model.Membership;
-import com.databasetest.model.MembershipType;
+import com.github.pieter_groenendijk.model.Account;
+import com.github.pieter_groenendijk.model.Membership;
+import com.github.pieter_groenendijk.model.MembershipType;
 import org.hibernate.cfg.Configuration;
 
 public class DefaultConfigurationFactory {

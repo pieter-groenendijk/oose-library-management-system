@@ -90,7 +90,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.5.0</version>
                 <configuration>
-                    <mainClass>com.databasetest.test.HibernateTest</mainClass>
+                    <mainClass>com.github.pieter_groenendijk.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>

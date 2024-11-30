@@ -1,15 +1,18 @@
-package com.databasetest.test;
+package com.github.pieter_groenendijk;
 
+import com.github.pieter_groenendijk.hibernate.SessionFactoryFactory;
+import com.github.pieter_groenendijk.model.Account;
 import org.hibernate.Session;
-import com.databasetest.model.Account;
-import com.databasetest.util.HibernateUtil;
-import java.text.SimpleDateFormat;
-import java.util.UUID;
+import org.hibernate.SessionFactory;
+
 import java.util.Date;
+import java.util.UUID;
 
 public class HibernateTest {
     public static void main(String[] args) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        SessionFactory sessionFactory = new SessionFactoryFactory().create();
+        Session session = sessionFactory.openSession();
+
         session.beginTransaction();
 
         String newEmail = UUID.randomUUID().toString();
@@ -27,7 +30,7 @@ public class HibernateTest {
         session.getTransaction().commit();
         session.close();
 
-        HibernateUtil.shutdown();
+        sessionFactory.close();
         System.out.println("Data inserted successfully!");
     }
 }

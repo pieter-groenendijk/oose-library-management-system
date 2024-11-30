@@ -1,4 +1,4 @@
-package com.databasetest.configuration;
+package com.github.pieter_groenendijk.hibernate.configuration;
 
 import org.hibernate.cfg.Configuration;
 
@@ -16,7 +16,10 @@ public class ConfigurationBuilder {
     }
 
     public ConfigurationBuilder setDriver(String driverClass) {
-        CONFIGURATION.setProperty("hibernate.connection.driver_class", driverClass);
+        CONFIGURATION.setProperty(
+            "hibernate.connection.driver_class",
+            driverClass
+        );
 
         return this;
     }

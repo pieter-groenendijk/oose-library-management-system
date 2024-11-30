@@ -1,4 +1,4 @@
-package com.databasetest.model;
+package com.github.pieter_groenendijk.model;
 
 import javax.persistence.*;
 import java.util.Date;
