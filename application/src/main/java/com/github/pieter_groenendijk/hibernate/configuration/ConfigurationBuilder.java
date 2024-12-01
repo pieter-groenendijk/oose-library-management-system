@@ -10,6 +10,7 @@ public class ConfigurationBuilder {
     }
 
     public ConfigurationBuilder addAnnotatedClass(Class annotatedClass) {
+        CONFIGURATION.addPackage("com/github/pieter_groenendijk/model");
         CONFIGURATION.addAnnotatedClass(annotatedClass);
 
         return this;
