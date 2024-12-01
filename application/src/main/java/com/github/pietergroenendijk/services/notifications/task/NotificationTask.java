@@ -1,7 +1,8 @@
-package com.github.pietergroenendijk.notifications;
+package com.github.pietergroenendijk.services.notifications.task;
 
 import com.github.pietergroenendijk.AccountBase;
-import com.github.pietergroenendijk.notifications.strategy.NotificationSendStrategy;
+import com.github.pietergroenendijk.storage.notifications.NotificationTaskStoreStrategy;
+import com.github.pietergroenendijk.services.notifications.send_strategies.NotificationSendStrategy;
 
 import java.time.LocalDateTime;
 

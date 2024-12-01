@@ -1,7 +1,7 @@
-package com.github.pietergroenendijk.notifications.strategy;
+package com.github.pietergroenendijk.services.notifications.send_strategies;
 
-import com.github.pietergroenendijk.notifications.NotificationTask;
-import com.github.pietergroenendijk.notifications.notifiers.Notifier;
+import com.github.pietergroenendijk.services.notifications.task.NotificationTask;
+import com.github.pietergroenendijk.services.notifications.notifiers.Notifier;
 
 public class NotificationSendStrategy implements Notifier {
     private final Notifier[] channels;

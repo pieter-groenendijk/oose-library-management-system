@@ -1,9 +1,11 @@
-package com.github.pietergroenendijk.notifications;
+package com.github.pietergroenendijk.services.notifications;
 
 import com.github.pietergroenendijk.AccountBase;
 import com.github.pietergroenendijk.Lending;
 import com.github.pietergroenendijk.TaskScheduler;
-import com.github.pietergroenendijk.notifications.generators.NotificationTaskFactory;
+import com.github.pietergroenendijk.storage.notifications.NotificationTaskRepository;
+import com.github.pietergroenendijk.services.notifications.scheduling.NotificationTaskScheduler;
+import com.github.pietergroenendijk.services.notifications.task.NotificationTaskFactory;
 
 public class NotificationService {
     private final NotificationTaskFactory TASK_FACTORY;

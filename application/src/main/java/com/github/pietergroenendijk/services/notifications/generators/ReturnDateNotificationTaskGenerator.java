@@ -1,11 +1,10 @@
-package com.github.pietergroenendijk.notifications.generators.returndate;
+package com.github.pietergroenendijk.services.notifications.generators;
 
 import com.github.pietergroenendijk.Lending;
-import com.github.pietergroenendijk.notifications.NotificationTask;
-import com.github.pietergroenendijk.notifications.NotificationTaskRepository;
-import com.github.pietergroenendijk.notifications.NotificationTaskStoreStrategy;
-import com.github.pietergroenendijk.notifications.generators.NotificationTaskGenerator;
-import com.github.pietergroenendijk.notifications.strategy.NotificationSendStrategy;
+import com.github.pietergroenendijk.services.notifications.task.NotificationTask;
+import com.github.pietergroenendijk.storage.notifications.NotificationTaskRepository;
+import com.github.pietergroenendijk.storage.notifications.NotificationTaskStoreStrategy;
+import com.github.pietergroenendijk.services.notifications.send_strategies.NotificationSendStrategy;
 
 import java.time.LocalDateTime;
 

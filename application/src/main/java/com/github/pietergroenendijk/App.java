@@ -1,6 +1,6 @@
 package com.github.pietergroenendijk;
 
-import com.github.pietergroenendijk.notifications.NotificationService;
+import com.github.pietergroenendijk.services.notifications.NotificationService;
 
 public class App {
     public static void main(String[] args) {

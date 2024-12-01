@@ -1,6 +1,7 @@
-package com.github.pietergroenendijk.notifications;
+package com.github.pietergroenendijk.storage.notifications;
 
 import com.github.pietergroenendijk.LendingBase;
+import com.github.pietergroenendijk.services.notifications.task.NotificationTask;
 
 import java.time.LocalDateTime;
 

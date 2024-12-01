@@ -1,4 +1,4 @@
-package com.github.pietergroenendijk.notifications;
+package com.github.pietergroenendijk.services.notifications.task;
 
 public enum NotificationTaskStatus {
     PENDING,

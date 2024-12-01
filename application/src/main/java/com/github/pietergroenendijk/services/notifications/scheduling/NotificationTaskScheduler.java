@@ -1,6 +1,8 @@
-package com.github.pietergroenendijk.notifications;
+package com.github.pietergroenendijk.services.notifications.scheduling;
 
 import com.github.pietergroenendijk.TaskScheduler;
+import com.github.pietergroenendijk.storage.notifications.NotificationTaskRepository;
+import com.github.pietergroenendijk.services.notifications.task.NotificationTask;
 
 import java.time.Duration;
 import java.time.LocalDateTime;

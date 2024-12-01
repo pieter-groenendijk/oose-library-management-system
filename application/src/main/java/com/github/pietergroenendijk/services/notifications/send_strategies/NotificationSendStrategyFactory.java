@@ -1,8 +1,8 @@
-package com.github.pietergroenendijk.notifications.strategy;
+package com.github.pietergroenendijk.services.notifications.send_strategies;
 
-import com.github.pietergroenendijk.notifications.notifiers.AppNotifier;
-import com.github.pietergroenendijk.notifications.notifiers.EmailNotifier;
-import com.github.pietergroenendijk.notifications.notifiers.SMSNotifier;
+import com.github.pietergroenendijk.services.notifications.notifiers.AppNotifier;
+import com.github.pietergroenendijk.services.notifications.notifiers.EmailNotifier;
+import com.github.pietergroenendijk.services.notifications.notifiers.SMSNotifier;
 
 public class NotificationSendStrategyFactory {
     private final EmailNotifier emailNotifier;
