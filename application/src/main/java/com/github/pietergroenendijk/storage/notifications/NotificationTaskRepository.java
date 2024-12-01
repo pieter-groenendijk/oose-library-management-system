@@ -1,7 +1,7 @@
 package com.github.pietergroenendijk.storage.notifications;
 
-import com.github.pietergroenendijk.LendingBase;
-import com.github.pietergroenendijk.services.notifications.task.NotificationTask;
+import com.github.pietergroenendijk.entities.Lending;
+import com.github.pietergroenendijk.entities.NotificationTask;
 
 import java.time.LocalDateTime;
 
@@ -15,7 +15,7 @@ public class NotificationTaskRepository implements INotificationTaskRepository {
         return new NotificationTask[]{};
     }
 
-    public void storeLendingAssociated(LendingBase lending, NotificationTask task) {
+    public void storeLendingAssociated(Lending lending, NotificationTask task) {
         // TODO insert using a view, so that there only one statement is sent, as to minimize latency.
     }
 

@@ -1,36 +1,28 @@
 package com.github.pietergroenendijk.services.notifications.generators;
 
-import com.github.pietergroenendijk.AccountBase;
-import com.github.pietergroenendijk.services.notifications.task.Notification;
-import com.github.pietergroenendijk.services.notifications.send_strategies.NotificationSendStrategy;
-import com.github.pietergroenendijk.services.notifications.task.NotificationTask;
+import com.github.pietergroenendijk.entities.Account;
+import com.github.pietergroenendijk.entities.NotificationTask;
+import com.github.pietergroenendijk.services.notifications.send_strategies.registry.SendStrategyType;
+import com.github.pietergroenendijk.services.notifications.task.INotificationTaskStorage;
+import com.github.pietergroenendijk.services.notifications.task.UnprocessedNotificationTask;
 import com.github.pietergroenendijk.storage.notifications.NotificationTaskRepository;
-import com.github.pietergroenendijk.storage.notifications.NotificationTaskStoreStrategy;
 
 import java.time.LocalDateTime;
 
 public abstract class NotificationTaskGenerator<T> {
     protected final NotificationTaskRepository REPOSITORY;
 
-    private final NotificationSendStrategy SEND_STRATEGY;
+    private final SendStrategyType SEND_STRATEGY;
 
-    protected NotificationTaskGenerator(NotificationSendStrategy sendStrategy, NotificationTaskRepository repository) {
+    protected NotificationTaskGenerator(SendStrategyType sendStrategy, NotificationTaskRepository repository) {
         this.SEND_STRATEGY = sendStrategy;
         this.REPOSITORY = repository;
     }
 
-    public final NotificationTask generate(AccountBase account, T context) {
-        Notification notification = new Notification(
-            generateTitle(context),
-            generateMessage(context)
-        );
-
-        return new NotificationTask(
-            notification,
-            this.SEND_STRATEGY,
-            this.generateStoreStrategy(context),
-            determineScheduleDateTime(context),
-            account
+    public final UnprocessedNotificationTask generate(Account account, T context) {
+        return new UnprocessedNotificationTask(
+            this.generateUnderlyingTask(account, context),
+            this.generateStorage(context)
         );
     }
 
@@ -40,5 +32,15 @@ public abstract class NotificationTaskGenerator<T> {
 
     protected abstract LocalDateTime determineScheduleDateTime(T context);
 
-    protected abstract NotificationTaskStoreStrategy generateStoreStrategy(T context);
+    protected abstract INotificationTaskStorage generateStorage(T context);
+
+    private NotificationTask generateUnderlyingTask(Account account, T context) {
+        return new NotificationTask(
+            this.generateTitle(context),
+            this.generateMessage(context),
+            this.SEND_STRATEGY,
+            account,
+            this.determineScheduleDateTime(context)
+        );
+    }
 }

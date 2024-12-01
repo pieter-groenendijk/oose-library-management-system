@@ -1,8 +1,10 @@
 package com.github.pietergroenendijk.services.notifications.scheduling;
 
 import com.github.pietergroenendijk.TaskScheduler;
+import com.github.pietergroenendijk.entities.NotificationTask;
+import com.github.pietergroenendijk.services.notifications.send_strategies.registry.NotificationSendStrategyRegistry;
+import com.github.pietergroenendijk.services.notifications.task.UnprocessedNotificationTask;
 import com.github.pietergroenendijk.storage.notifications.NotificationTaskRepository;
-import com.github.pietergroenendijk.services.notifications.task.NotificationTask;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -11,18 +13,21 @@ import java.util.HashSet;
 public class NotificationTaskScheduler {
     private final TaskScheduler SCHEDULER;
     private final NotificationTaskRepository REPOSITORY;
+    private final NotificationSendStrategyRegistry SEND_STRATEGY_REGISTRY;
+
     private final Duration RETRIEVE_INTERVAL = Duration.ofMinutes(5);
     private final HashSet<NotificationTask> handledManually = new HashSet<>();
 
-    public NotificationTaskScheduler(TaskScheduler scheduler, NotificationTaskRepository repository) {
+    public NotificationTaskScheduler(TaskScheduler scheduler, NotificationTaskRepository repository, NotificationSendStrategyRegistry sendStrategyRegistry) {
         this.SCHEDULER = scheduler;
         this.REPOSITORY = repository;
+        this.SEND_STRATEGY_REGISTRY = sendStrategyRegistry;
 
         startSchedulingFromDatabase();
     }
 
-    public void schedule(NotificationTask task) {
-        task.store();
+    public void schedule(UnprocessedNotificationTask unprocessedTask) {
+        NotificationTask task = unprocessedTask.store();
 
         if (shouldScheduleInMemory(task)) {
             scheduleDirectlyInMemory(task);
@@ -50,7 +55,9 @@ public class NotificationTaskScheduler {
     }
 
     private boolean shouldScheduleInMemory(NotificationTask task) {
-        return task.isScheduledBefore(this.getScheduledUntilDateTime());
+        return task.isScheduledBefore(
+            this.getScheduledUntilDateTime()
+        );
     }
 
     private void scheduleDirectlyInMemory(NotificationTask task) {
@@ -62,12 +69,15 @@ public class NotificationTaskScheduler {
     private void scheduleInMemory(NotificationTask task) {
         this.SCHEDULER.schedule(
             () -> this.executeTask(task),
-            task.SCHEDULED_AT
+            task.scheduledAt
         );
     }
 
     private void executeTask(NotificationTask task) {
-        task.send();
+        this.SEND_STRATEGY_REGISTRY
+            .fromStrategyType(task.sendStrategyType)
+            .send(task);
+
         this.REPOSITORY.markCompleted(task);
     }
 

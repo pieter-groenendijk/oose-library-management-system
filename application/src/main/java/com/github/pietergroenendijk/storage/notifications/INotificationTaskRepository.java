@@ -1,6 +1,6 @@
 package com.github.pietergroenendijk.storage.notifications;
 
-import com.github.pietergroenendijk.services.notifications.task.NotificationTask;
+import com.github.pietergroenendijk.entities.NotificationTask;
 
 import java.time.LocalDateTime;
 

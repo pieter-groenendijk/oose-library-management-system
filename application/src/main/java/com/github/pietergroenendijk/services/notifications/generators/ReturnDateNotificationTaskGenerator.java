@@ -1,16 +1,19 @@
 package com.github.pietergroenendijk.services.notifications.generators;
 
-import com.github.pietergroenendijk.Lending;
-import com.github.pietergroenendijk.services.notifications.task.NotificationTask;
+import com.github.pietergroenendijk.entities.Lending;
+import com.github.pietergroenendijk.entities.NotificationTask;
+import com.github.pietergroenendijk.services.notifications.send_strategies.registry.SendStrategyType;
+import com.github.pietergroenendijk.services.notifications.task.INotificationTaskStorage;
 import com.github.pietergroenendijk.storage.notifications.NotificationTaskRepository;
-import com.github.pietergroenendijk.storage.notifications.NotificationTaskStoreStrategy;
-import com.github.pietergroenendijk.services.notifications.send_strategies.NotificationSendStrategy;
 
 import java.time.LocalDateTime;
 
 public class ReturnDateNotificationTaskGenerator extends NotificationTaskGenerator<Lending> {
-    public ReturnDateNotificationTaskGenerator(NotificationSendStrategy sendStrategy, NotificationTaskRepository repository) {
-        super(sendStrategy, repository);
+    public ReturnDateNotificationTaskGenerator(NotificationTaskRepository repository) {
+        super(
+            SendStrategyType.ALERT,
+            repository
+        );
     }
 
     @Override
@@ -25,11 +28,11 @@ public class ReturnDateNotificationTaskGenerator extends NotificationTaskGenerat
 
     @Override
     protected LocalDateTime determineScheduleDateTime(Lending lending) {
-        return lending.WILL_END_ON.withHour(8);
+        return lending.mustReturnBy.withHour(8);
     }
 
     @Override
-    protected NotificationTaskStoreStrategy generateStoreStrategy(Lending lending) {
+    protected INotificationTaskStorage generateStorage(Lending lending) {
         return (NotificationTask task) -> {
             super.REPOSITORY.storeLendingAssociated(lending, task);
         };
