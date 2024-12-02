@@ -28,7 +28,7 @@ public class DefaultConfigurationFactory {
         builder
             .setDriver("org.postgresql.Driver")
             .setDialect("org.hibernate.dialect.PostgreSQLDialect")
-            .setSchemaHandlingMethod("update")
+            .setSchemaHandlingMethod("validate")
             .setPoolSize("10")
             .setFormattingOfSQL(true)
             .setShowingOfSQL(true)
