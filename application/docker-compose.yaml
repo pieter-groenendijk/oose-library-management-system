@@ -1,4 +1,15 @@
 services:
+    database:
+        build:
+            context: "."
+            dockerfile: "docker/database/database.dockerfile"
+        environment:
+            POSTGRES_USER: ${DATABASE_USER}
+            POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+            POSTGRES_DB: ${DATABASE_NAME}
+        ports:
+            - ${DATABASE_PORT}:${DATABASE_PORT}
+        restart: "on-failure"
     application:
         build:
             context: "."
@@ -8,11 +19,12 @@ services:
         environment:
             DATABASE_HOST: database
             DATABASE_NAME: ${DATABASE_NAME}
+            DATABASE_USER: ${DATABASE_USER}
             DATABASE_PASSWORD: ${DATABASE_PASSWORD}
             DATABASE_PORT: ${DATABASE_PORT}
         ports:
             - "8080:8080"
-        restart: "on-failure"
+        restart: "no"
         develop:
             watch:
                 -   path: "src"
@@ -29,13 +41,3 @@ services:
                 -   path: "src"
                     action: sync+restart
                     target: "/app/src"
-    database:
-        build:
-            context: "."
-            dockerfile: "docker/database/database.dockerfile"
-        environment:
-            POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
-            POSTGRES_DB: ${DATABASE_NAME}
-        ports:
-            - ${DATABASE_PORT}:${DATABASE_PORT}
-        restart: "on-failure"
