@@ -28,7 +28,9 @@ public class ReturnDateNotificationTaskGenerator extends NotificationTaskGenerat
 
     @Override
     protected LocalDateTime determineScheduleDateTime(Lending lending) {
-        return lending.mustReturnBy.withHour(8);
+        return lending
+            .mustReturnBy
+            .atTime(8, 0);
     }
 
     @Override

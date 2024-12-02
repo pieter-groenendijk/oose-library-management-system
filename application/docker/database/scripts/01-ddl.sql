@@ -34,3 +34,8 @@ CREATE TABLE "Membership" (
     FOREIGN KEY ("accountId") REFERENCES "Account" ("accountId") ON DELETE CASCADE,
     FOREIGN KEY ("membershipTypeId") REFERENCES "MembershipType" ("membershipTypeId") ON DELETE CASCADE
 );
+
+CREATE TABLE "Lending" (
+    "lendingId" BIGSERIAL PRIMARY KEY,
+    "mustReturnBy" DATE NOT NULL
+);
