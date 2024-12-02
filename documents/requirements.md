@@ -18,7 +18,7 @@
 | Als **bezoeker**,                             | wil ik een _volwassen abonnement_ kunnen aanschaffen.          | M          | FR-003 |
 | Als **bezoeker**,                             | wil ik een _selectief digitaal abonnement_ kunnen aanschaffen. | S          | FR-004 |
 | Als **bezoeker** met een kind,                | wil ik een _kinder abonnement_ kunnen aanschaffen.             | C          | FR-001 |
-
+| Als **lid**,                                  | wil ik mijn abonnement kunnen stopzetten.                      | C          | FR-063 |
 ### Catalogus
 
 | Actor                 |                                                                                                                                      | Prioriteit | Code   |
@@ -36,51 +36,58 @@
 
 ### Accountbeheer
 
-| Actor                                           |                                                                                    | Prioriteit | Code   |
-|:------------------------------------------------|:-----------------------------------------------------------------------------------|------------|--------|
-| Als **lid**,                                    | wil ik kunnen uitloggen. Hierna val ik in de rol _bezoeker_.                       | M          | FR-013 |
-| Als **lid**[^1],                                | wil ik de leenhistorie (per abonnement) kunnen inzien.                             | S          | FR-014 |
-| Als **beheerder** of **baliemedewerker**,       | wil ik een lid kunnen toevoegen.                                                   | S          | FR-020 |
-| Als **beheerder** of **baliemedewerker**,       | wil ik een lid zijn gegevens kunnen aanpassen.                                     | S          | FR-021 |
-| Als **beheerder** of **baliemedewerker**,       | wil ik een lid kunnen verwijderen.                                                 | S          | FR-022 |
-| Als **beheerder**,                              | wil ik een lid zijn account kunnen blokkeren. Het lid kan niet meer bij producten. | S          | FR-023 |
-| Als **lid** met een gekoppeld kinderabonnement, | wil ik de leenhistorie van mijn kind kunnen inzien.                                | C          | FR-019 |
-| Als **beheerder** of **baliemedewerker**,       | wil ik een abonnement kunnen toevoegen aan een account van een lid.                |            |        |
-| Als **beheerder** of **baliemedewerker**,       | wil ik een abonnement kunnen verwijderen aan een account van een lid.              |            |        |
+| Actor                                           |                                                                                             | Prioriteit | Code   |
+|:------------------------------------------------|:--------------------------------------------------------------------------------------------|------------|--------|
+| Als **lid**,                                    | wil ik kunnen uitloggen. Hierna val ik in de rol _bezoeker_.                                | M          | FR-013 |
+| Als **lid**[^1],                                | wil ik de leenhistorie (per abonnement) kunnen inzien.                                      | S          | FR-014 |
+| Als **beheerder** of **baliemedewerker**,       | wil ik een lid kunnen toevoegen.                                                            | S          | FR-020 |
+| Als **baliemedeweker**,                         | wil ik een overzicht van een account van een lid (d.m.v. een bibliotheekpas) kunnen inzien. | C          | FR-051 |
+| Als **beheerder** of **baliemedewerker**,       | wil ik een lid zijn gegevens kunnen aanpassen.                                              | S          | FR-021 |
+| Als **beheerder** of **baliemedewerker**,       | wil ik een lid kunnen verwijderen.                                                          | S          | FR-022 |
+| Als **beheerder**,                              | wil ik een lid zijn account kunnen blokkeren. Het lid kan niet meer bij producten.          | S          | FR-023 |
+| Als **lid** met een gekoppeld kinderabonnement, | wil ik de leenhistorie van mijn kind kunnen inzien.                                         | C          | FR-019 |
+| Als **beheerder** of **baliemedewerker**,       | wil ik een abonnement kunnen toevoegen aan een account van een lid.                         | C          | FR-060 |
+| Als **beheerder** of **baliemedewerker**,       | wil ik een abonnement kunnen verwijderen aan een account van een lid.                       | C          | FR-061 |
+| Als **lid**,                                    | wil ik mijn gegevens kunnen aanpassen.                                                      | C          | FR-062 |
+
+[^1]: De leenhistorie is per abonnement. Een lid kan meerdere abonnementen hebben.
 
 ### Lenen
 
-| Actor              |                                                                        | Prioriteit | Code   |
-|:-------------------|:-----------------------------------------------------------------------|------------|--------|
-| Als **lid**,[^1]   | wil ik een fysiek boek kunnen lenen.                                   | M          | FR-024 |
-| Als **lid**,[^1]   | wil ik een digitaal boek (ebook) kunnen lenen.                         | M          | FR-025 |
-| Als **lid**,[^1]   | wil ik een fysiek tijdschrift kunnen lenen.                            | M          | FR-026 |
-| Als **lid**,[^1]   | wil ik een digitaal tijdschrift kunnen lenen.                          | M          | FR-027 |
-| Als **lid**,       | wil ik _on demand_ een film kunnen bekijken.                           | S          | FR-028 |
-| Als **lid**,       | wil ik _on demand_ een audioboek kunnen beluisteren.                   | S          | FR-029 |
-| Als **lid**,[^1]   | wil ik het leentermijn van een geleend fysiek product kunnen verlengen | S          | FR-044 |
-| Als **beheerder**, | wil ik het leentermijn van de fysieke producten kunnen aanpassen       | C          | FR-046 |
+| Actor                    |                                                                        | Prioriteit | Code   |
+|:-------------------------|:-----------------------------------------------------------------------|------------|--------|
+| Als **lid**,[^1]         | wil ik een fysiek boek kunnen lenen.                                   | M          | FR-024 |
+| Als **lid**,[^1]         | wil ik een digitaal boek (ebook) kunnen lenen.                         | M          | FR-025 |
+| Als **lid**,[^1]         | wil ik een fysiek tijdschrift kunnen lenen.                            | M          | FR-026 |
+| Als **lid**,[^1]         | wil ik een digitaal tijdschrift kunnen lenen.                          | M          | FR-027 |
+| Als **lid**,             | wil ik _on demand_ een film kunnen bekijken.                           | S          | FR-028 |
+| Als **lid**,             | wil ik _on demand_ een audioboek kunnen beluisteren.                   | S          | FR-029 |
+| Als **lid**,[^1]         | wil ik het leentermijn van een geleend fysiek product kunnen verlengen | S          | FR-044 |
+| Als **beheerder**,       | wil ik het leentermijn van de fysieke producten kunnen aanpassen       | C          | FR-046 |
+| Als **baliemedewerker**, | wil ik de fysieke product uitleningen kunnen beheren. (CRUD)           | C          | FR-054 |
 
 [^1]: Als lid zelf of met behulp van de baliemedewerker.
 [^4]: Een lid kan zijn uitlening (oneindige keren) verlengen zolang dit product niet gereserveerd wordt.
 
 ### Reserveren
 
-| Actor              |                                                                                                                       | Prioriteit | Code   |
-|:-------------------|:----------------------------------------------------------------------------------------------------------------------|------------|--------|
-| Als **lid**,       | wil ik een momenteel uitgeleend fysiek product kunnen reserveren indien deze nog niet door een ander is gereserveerd. | M          | FR-030 |
-| Als **beheerder**, | wil ik het reserveertermijn van de fysieke producten kunnen aanpassen                                                 | C          | FR-047 |
+| Actor                    |                                                                                                                       | Prioriteit | Code   |
+|:-------------------------|:----------------------------------------------------------------------------------------------------------------------|------------|--------|
+| Als **lid**,             | wil ik een momenteel uitgeleend fysiek product kunnen reserveren indien deze nog niet door een ander is gereserveerd. | M          | FR-030 |
+| Als **beheerder**,       | wil ik het reserveertermijn van de fysieke producten kunnen aanpassen                                                 | C          | FR-047 |
+| Als **baliemedewerker**, | wil ik de fysieke product reservaties van een lid kunnen beheren (CRUD)                                               | C          | FR-053 |
 
 ### Boetes
 
-| Actor              |                                                                                                             | Prioriteit | Code   |
-|:-------------------|:------------------------------------------------------------------------------------------------------------|------------|--------|
-| Als **lid**,       | ben ik een opbouwende boete schuldig wanneer ik een geleend product niet binnen het leentermijn inlever.    | M          | FR-031 |
-| Als **lid**,       | verlies ik toegang van het gehele productaanbod wanneer mijn schuld een vastgesteld bedrag bereikt.         | M          | FR-033 |
-| Als **lid**,       | wil ik mijn schuld kunnen betalen                                                                           | M          | FR-034 |
-| Als **lid**,       | ben ik een boete schuldig wanneer ik een vastgesteld aantal in serie niet gebruik maak van een reservering. | S          | FR-032 |
-| Als **beheerder**, | wil ik het boete bedrag van FR-032 kunnen aanpassen.                                                        | C          | FR-049 |
-| Als **beheerder**, | wil ik het boete bedrag per dag van FR-031 kunnen aanpassen.                                                | C          | FR-050 |
+| Actor                    |                                                                                                             | Prioriteit | Code   |
+|:-------------------------|:------------------------------------------------------------------------------------------------------------|------------|--------|
+| Als **lid**,             | ben ik een opbouwende boete schuldig wanneer ik een geleend product niet binnen het leentermijn inlever.    | M          | FR-031 |
+| Als **lid**,             | verlies ik toegang van het gehele productaanbod wanneer mijn schuld een vastgesteld bedrag bereikt.         | M          | FR-033 |
+| Als **lid**,             | wil ik mijn schuld kunnen betalen                                                                           | M          | FR-034 |
+| Als **lid**,             | ben ik een boete schuldig wanneer ik een vastgesteld aantal in serie niet gebruik maak van een reservering. | S          | FR-032 |
+| Als **beheerder**,       | wil ik het boete bedrag van FR-032 kunnen aanpassen.                                                        | C          | FR-049 |
+| Als **beheerder**,       | wil ik het boete bedrag per dag van FR-031 kunnen aanpassen.                                                | C          | FR-050 |
+| Als **baliemedewerker**, | wil ik een lid zijn schuld laten betalen.                                                                   | C          | FR-052 |
 
 ### Limieten
 

@@ -1,0 +1,43 @@
+services:
+    database:
+        build:
+            context: "."
+            dockerfile: "docker/database/database.dockerfile"
+        environment:
+            POSTGRES_USER: ${DATABASE_USER}
+            POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+            POSTGRES_DB: ${DATABASE_NAME}
+        ports:
+            - ${DATABASE_PORT}:${DATABASE_PORT}
+        restart: "on-failure"
+    application:
+        build:
+            context: "."
+            dockerfile: "docker/application/application.dockerfile"
+        depends_on:
+            -   database
+        environment:
+            DATABASE_HOST: database
+            DATABASE_NAME: ${DATABASE_NAME}
+            DATABASE_USER: ${DATABASE_USER}
+            DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+            DATABASE_PORT: ${DATABASE_PORT}
+        ports:
+            - "8080:8080"
+        restart: "no"
+        develop:
+            watch:
+                -   path: "src"
+                    action: sync+restart
+                    target: "/app/src"
+    application-tester:
+        build:
+            context: "."
+            dockerfile: "docker/application-tester/application-tester.dockerfile"
+        depends_on:
+            -   application
+        develop:
+            watch:
+                -   path: "src"
+                    action: sync+restart
+                    target: "/app/src"

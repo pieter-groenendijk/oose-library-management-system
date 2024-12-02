@@ -55,21 +55,11 @@
                         <tr>
                             <td>
                                 4. Lid verzoekt de openstaande boete af te lossen.<br>
+                                <em>Usecase 'Betalen' begint.</em><br>
                             </td>
                             <td>
-                                5. Systeem vertelt het externe betaalsysteem dat het lid het bedrag gaat betalen.<br>
-                                6. Systeem geeft aan dat de gebruiker doorverwezen kan worden naar het externe betaalsysteem.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                7. Lid geeft aan doorverwezen te willen worden.
-                            </td>
-                            <td>
-                                8. Systeem verwijst de gebruiker door naar het externe betaalsysteem.<br> 
-                                9. Systeem wacht voor bevestiging van extern betaalsysteem.<br>
-                                10. Systeem verwerkt de betaling.<br>
-                                11. Systeem toont dat de betaling is voltooid.
+                                5. Systeem zet lid zijn schuld op nul.<br>
+                                6. Systeem geeft aan dat de schuld succesvol is betaald.
                             </td>
                         </tr>
                     </tbody>
@@ -95,71 +85,11 @@
                         <tr>
                             <td></td>
                             <td>
-                                2.A Systeem geeft een foutmelding aan dat de openstaande boete(s) niet opgehaald kan worden. → Verder naar stap 1.<br>
+                                2.A Systeem geeft een foutmelding aan dat de openstaande boete(s) niet opgehaald kan worden.<br>
                             </td>
                         </tr>
                     </tbody>
                 </table>
-                <div>Fout extern betaalsysteem</div>            
-                <table>
-                    <thead>
-                        <tr>
-                            <th scope="col">User</th>
-                            <th scope="col">System</th>
-                        </tr>
-                    </thead>
-                    <tbody> 
-                        <tr>
-                            <td></td>
-                            <td>
-                                7.B Het systeem toont een "loading" bericht en probeert in de achtergrond opnieuw verbinding te maken met het betaalsysteem.<br>
-                                8.B Systeem geeft een foutmelding aan dat de boete momenteel niet betaald kan worden. <br>                               
-                                9.B Lid krijgt een bericht dat de boete momenteel niet afbetaald kan worden - Probeer het later opnieuw. <br>
-                                10.B  Het systeem registreert het mislukte betaal poging in de logbestanden voor verdere opvolging.<br>
-                                11.B De actie 'boete betalen' wordt geannuleerd.<br>
-                        </tr>
-                    </tbody>
-                </table>
-                <div>Gefaalde betaling betaalsysteem</div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th scope="col">User</th>
-                            <th scope="col">System</th>
-                        </tr>
-                    </thead>
-                    <tbody> 
-                        <tr>
-                            <td></td>
-                            <td>
-                                10.C Systeem geeft een foutmelding aan dat de betaling mislukt is, bijvoorbeeld "Geen Saldo".  <br>
-                                11.C De gebruiker heeft de keuze om het opnieuw te proberen of te annuleren. → Verder naar 12.C <br>
-                                12.C De actie 'boete betalen' wordt geannuleerd.<br>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div>Mislukte verwerking betaling</div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th scope="col">User</th>
-                            <th scope="col">System</th>
-                        </tr>
-                    </thead>
-                    <tbody> 
-                        <tr>
-                            <td></td>
-                            <td>
-                                12.D Systeem geeft een foutmelding aan dat de betaling niet verwerkt kon worden. <br>
-                                13.D Het systeem toont een melding aan de gebruiker dat de betaling is mislukt en geeft gedetailleerde informatie over de fout (bijvoorbeeld "Interne fout, betaling kan momenteel niet worden voltooid").<br>
-                                14.D Het systeem annuleert de betaalpoging en zorgt ervoor dat er geen geld van de gebruiker wordt afgeschreven.<br>
-                                15.D Alle relevante details van de mislukte transactie worden gelogd voor verdere diagnose en probleemoplossing.<br>
-                                16.D  Het lid wordt teruggeleid naar de vorige pagina (Stap 4), waar deze opnieuw een betaling kan proberen zodra het systeem hersteld is.
-                            </td>
-                        </tr>
-                    </tbody>
-                </table> 
             </td>
         </tr>
     </tbody>
