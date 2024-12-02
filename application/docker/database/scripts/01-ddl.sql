@@ -39,3 +39,13 @@ CREATE TABLE "Lending" (
     "lendingId" BIGSERIAL PRIMARY KEY,
     "mustReturnBy" DATE NOT NULL
 );
+
+CREATE TABLE "NotificationTask" (
+    "notificationTaskId" BIGSERIAL PRIMARY KEY,
+    "account" BIGINT NOT NULL,
+    "title" VARCHAR(100) NOT NULL,
+    "message" TEXT NOT NULL,
+    "scheduledAt" TIMESTAMP NOT NULL,
+    "sendStrategy" VARCHAR(20) NOT NULL,
+    FOREIGN KEY ("account") REFERENCES "Account"("accountId") ON UPDATE CASCADE ON DELETE RESTRICT
+);
