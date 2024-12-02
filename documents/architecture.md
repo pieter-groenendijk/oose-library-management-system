@@ -1,15 +1,29 @@
 # Architecture
+Voor het ontwikkelen van het BBS is gebruikgemaakt van een techstack die bestaat uit tools, frameworks en libraries die in de onderstaande lijst worden beschreven.
 
-## Development Environment
-- Docker Compose
-  - Java (Watch for changes)
-    - Maven (build/manage tool)
-    - JTE (Templating engine)
-    - Junit (Unit testing)
+## Programmeertalen
+- Java (18)
+- HTML
+- CSS
+- JavaScript
+- PostgreSQL (SQL)
+- Bash (Shell scripting)
 
-## Version Control
-- Git
-  - Automatic (whole app) unit testing on commit?
+## Database & ORM
+- PostgreSQL (Relationele database voor dataopslag)
+- Hibernate (Object-Relational Mapping framework voor interactie met de database)
 
-# Webserver
-Java (18) provides functionality to create a simple webserver. Specifically a FileServer. 
+## Testing
+- JUnit (Unit testing framework)
+
+## Templates 
+- JTE (Templating engine voor server-side rendering)
+
+## Containerisatie
+- Docker (Containerisatie)
+- Docker Compose (Container orkestratie)
+
+## Versiebeheer & projectmanagement
+- Git (Versiebeheer)
+- GitHub (Versiebeheer)
+- Github Projects (Projectmanagement)
