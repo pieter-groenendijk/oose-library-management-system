@@ -31,7 +31,8 @@ public class DefaultConfigurationFactory {
             .setSchemaHandlingMethod("update")
             .setPoolSize("10")
             .setFormattingOfSQL(true)
-            .setShowingOfSQL(true);
+            .setShowingOfSQL(true)
+            .setQuotingOfIdentifiers(true);
     }
 
     private void setConnection(ConfigurationBuilder builder) {

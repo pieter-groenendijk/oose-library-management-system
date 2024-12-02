@@ -9,6 +9,15 @@ public class ConfigurationBuilder {
         this.CONFIGURATION = new Configuration();
     }
 
+    public ConfigurationBuilder setQuotingOfIdentifiers(boolean isQuoted) {
+        setProperty(
+            "hibernate.globally_quoted_identifiers",
+            isQuoted
+        );
+
+        return this;
+    }
+
     public ConfigurationBuilder addAnnotatedClass(Class annotatedClass) {
         CONFIGURATION.addPackage("com/github/pieter_groenendijk/model");
         CONFIGURATION.addAnnotatedClass(annotatedClass);
