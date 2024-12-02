@@ -26,7 +26,7 @@ public class ConfigurationBuilder {
     }
 
     public ConfigurationBuilder setDriver(String driverClass) {
-        CONFIGURATION.setProperty(
+        setProperty(
             "hibernate.connection.driver_class",
             driverClass
         );
