@@ -22,11 +22,11 @@ public class Loan {
     @Column(name= "loan_status", nullable = false)
     private String loanStatus;
     @OneToOne
-    @JoinColumn(name = "membership_id", nullable = false, unique = true)
+    @JoinColumn(name = "membershipId", nullable = false, unique = true)
     private Membership membership;
 
     // TODO: Check if this is correct. Just a reference to ProductId not Product entity
-    @Column(name = "product_id", nullable = false)
+    @Column(name = "productId", nullable = false)
     private long productId;
 
     // Getters and Setters
