@@ -13,23 +13,18 @@ public class Product {
     @Column(name = "productName", nullable = false, length = 100)
     private String productName;
 
-    @Column(name = "author", nullable = false, length = 100)
-    private String author;
-
     @Column (name = "genre", nullable = false, length = 50)
     private String genre;
 
-    @Column (name = "publicationYear", nullable = false, length = 4)
-    private int publicationYear;
-
-    @Column (name = "ISBN", nullable = false, unique = true, length = 13)
-    private char ISBN;
+    @Column (name = "year", nullable = false, length = 4)
+    private int year;
 
     @Column (name = "description", nullable = true, length = 250)
     private String description;
 
-    @Column (name = "totalCopies", nullable = false)
-    private int totalCopies;
+    @Column (name = "type", nullable = false, length = 10)
+    private String type;
+
 
     // Getters and Setters
     public Long getProductId() {
@@ -44,16 +39,6 @@ public class Product {
         return productName;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public String getAuthor(String author) {
-        return author;
-    }
-    public void setAuthor(String author) {
-        this.author = author;
-    }
 
     public String getGenre() {
         return genre;
@@ -63,20 +48,12 @@ public class Product {
         this.genre = genre;
     }
 
-    public int getPublicationYear() {
-        return publicationYear;
+    public int getYear() {
+        return year;
     }
 
     public void setPublicationYear(int publicationYear) {
-        this.publicationYear = publicationYear;
-    }
-
-    public char getISBN() {
-        return ISBN;
-    }
-
-    public void setISBN(char ISBN) {
-        this.ISBN = ISBN;
+        this.year = year;
     }
 
     public String getDescription() {
@@ -87,11 +64,11 @@ public class Product {
         this.description = description;
     }
 
-    public int getTotalCopies() {
-        return totalCopies;
+    public String getType() {
+        return type;
     }
 
-    public void setTotalCopies(int totalCopies) {
-        this.totalCopies = totalCopies;
+    public void setType(String type) {
+        this.type = type;
     }
 }
