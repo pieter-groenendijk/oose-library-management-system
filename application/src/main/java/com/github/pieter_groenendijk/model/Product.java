@@ -52,7 +52,7 @@ public class Product {
         return year;
     }
 
-    public void setPublicationYear(int publicationYear) {
+    public void setYear(int year) {
         this.year = year;
     }
 
