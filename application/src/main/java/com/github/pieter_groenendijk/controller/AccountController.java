@@ -6,8 +6,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api") // Base URL path
-public class MyController {
+public class AccountController {
 
+    @Operation(summary = "Get a greeting message", description = "Returns a simple greeting")
     @GetMapping("/hello")
     public String sayHello() {
         return "Hello, World!";
