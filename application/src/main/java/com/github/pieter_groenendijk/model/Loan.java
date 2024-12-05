@@ -19,7 +19,7 @@ public class Loan {
     @Column(name = "returnDate", nullable = true)
     @Temporal(TemporalType.DATE)
     private Date returnDate;
-    @Column(name= "loan_status", nullable = false)
+    @Column(name= "loanStatus", nullable = false)
     private String loanStatus;
     @OneToOne
     @JoinColumn(name = "membershipId", nullable = false, unique = true)
