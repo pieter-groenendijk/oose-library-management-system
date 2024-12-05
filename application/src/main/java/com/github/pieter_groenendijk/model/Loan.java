@@ -25,6 +25,10 @@ public class Loan {
     @JoinColumn(name = "membershipId", nullable = false, unique = true)
     private Membership membership;
 
+    @OneToOne
+    @JoinColumn(name = "loanHistoryId")
+    private LoanHistory loanHistory;
+
     // TODO: Check if this is correct. Just a reference to ProductId not Product entity
     @Column(name = "productId", nullable = false)
     private long productId;
@@ -85,5 +89,13 @@ public class Loan {
 
     public void setMembership(Membership membership) {
         this.membership = membership;
+    }
+
+    public LoanHistory getLoanHistory() {
+        return loanHistory;
+    }
+
+    public void setLoanHistory(LoanHistory loanHistory) {
+        this.loanHistory = loanHistory;
     }
 }
