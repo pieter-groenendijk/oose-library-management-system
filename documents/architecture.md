@@ -9,9 +9,13 @@ Voor het ontwikkelen van het BBS is gebruikgemaakt van een techstack die bestaat
 - PostgreSQL (SQL)
 - Bash (Shell scripting)
 
-## Database & ORM
-- PostgreSQL (Relationele database voor dataopslag)
+
+## Frameworks & Libraries
+- Spring Boot (Backend framework)
 - Hibernate (Object-Relational Mapping framework voor interactie met de database)
+
+## Database
+- PostgreSQL (Relationele database voor dataopslag)
 
 ## Testing
 - JUnit (Unit testing framework)
