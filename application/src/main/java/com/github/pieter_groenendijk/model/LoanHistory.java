@@ -19,9 +19,9 @@ public class LoanHistory {
 @JoinColumn(name = "membershipId")
     private Long membershipId;
 
-private List<LoanHistory> loanHistory;
 
 
+// Getters and Setters
 
     public void setLoanHistoryId(Long loanHistoryId) {
         this.loanHistoryId = loanHistoryId;
