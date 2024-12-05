@@ -23,7 +23,7 @@ public class DigitalProduct extends Product {
     @Column(name = "mediaType", nullable = false)
     private String mediaType;
 
-
+// Getters and Setters
     public void setDigitalProductId(Long digitalProductId) {
         this.digitalProductId = digitalProductId;
     }

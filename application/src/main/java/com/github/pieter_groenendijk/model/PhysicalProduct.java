@@ -17,7 +17,7 @@ public class PhysicalProduct extends Product {
     @Column (name = "author", nullable = false, length = 100)
     private String author;
 
-
+// Getters and Setters
     public Long getPhysicalProductId() {
         return physicalProductId;
     }
