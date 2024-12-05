@@ -2,11 +2,11 @@ package com.github.pieter_groenendijk.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "PhysicalProduct")
 public class PhysicalProduct extends Product {
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long physicalProductId;
@@ -16,6 +16,9 @@ public class PhysicalProduct extends Product {
 
     @Column (name = "author", nullable = false, length = 100)
     private String author;
+    @OneToMany(mappedBy = "physicalProduct")
+    @Column(name = "copies", nullable = false)
+    private List<Copies> copies;
 
 // Getters and Setters
     public Long getPhysicalProductId() {
@@ -40,5 +43,13 @@ public class PhysicalProduct extends Product {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public List<Copies> getCopies() {
+        return copies;
+    }
+
+    public void setCopies(List<Copies> copies) {
+        this.copies = copies;
     }
 }

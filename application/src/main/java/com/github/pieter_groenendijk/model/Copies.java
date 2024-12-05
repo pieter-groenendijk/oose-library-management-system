@@ -10,6 +10,8 @@ public class Copies {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long copyId;
 
+    @Column (name = "numberOfCopies", nullable = false)
+    private long numberOfCopies;
    @ManyToOne
     @JoinColumn(name = "productId", nullable = false)
     private PhysicalProduct physicalProduct;
@@ -19,6 +21,7 @@ public class Copies {
 
     @Column (name = "isAvailable", nullable = false)
     private boolean isAvailable;
+
 
     public void setCopyId(Long copyId) {
         this.copyId = copyId;
@@ -50,5 +53,13 @@ public class Copies {
 
     public void setPhysicalProduct(PhysicalProduct physicalProduct) {
         this.physicalProduct = physicalProduct;
+    }
+
+    public long getNumberOfCopies() {
+        return numberOfCopies;
+    }
+
+    public void setNumberOfCopies(long numberOfCopies) {
+        this.numberOfCopies = numberOfCopies;
     }
 }
