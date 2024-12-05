@@ -55,4 +55,12 @@ public class DigitalProduct extends Product {
     public void setMediaType(String mediaType) {
         this.mediaType = mediaType;
     }
+
+    public String getAccessStatus() {
+        return accessStatus;
+    }
+
+    public void setAccessStatus(String accessStatus) {
+        this.accessStatus = accessStatus;
+    }
 }
