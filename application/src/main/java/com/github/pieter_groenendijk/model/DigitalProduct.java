@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "DigitalProduct")
-public class DigitalProduct {
+public class DigitalProduct extends Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long digitalProductId;
@@ -39,7 +39,7 @@ public class DigitalProduct {
     public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
     }
-    
+
     public int getClassification() {
         return classification;
     }

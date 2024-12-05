@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "PhysicalProduct")
-public class PhysicalProduct {
+public class PhysicalProduct extends Product {
 
 
     @Id
