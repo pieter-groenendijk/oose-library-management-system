@@ -2,7 +2,7 @@
 Voor het ontwikkelen van het BBS is gebruikgemaakt van een techstack die bestaat uit tools, frameworks en libraries die in de onderstaande lijst worden beschreven.
 
 ## Programmeertalen
-- Java (18)
+- Java (21)
 - HTML
 - CSS
 - JavaScript
@@ -21,7 +21,7 @@ Voor het ontwikkelen van het BBS is gebruikgemaakt van een techstack die bestaat
 - JUnit (Unit testing framework)
 
 ## Templates 
-- JTE (Templating engine voor server-side rendering)
+- Thymeleaf (Templating engine voor server-side rendering)
 
 ## Containerisatie
 - Docker (Containerisatie)
