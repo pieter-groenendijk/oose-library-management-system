@@ -8,10 +8,17 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @RestController
-@RequestMapping("/account") // Base URL path
+@RequestMapping("/account") 
 public class AccountController {
 
-    private AccountService accountService = new AccountService();
+    private AccountService accountService;
+    private SessionFactory sessionFactory = new SessionFactoryFactory().create();
+
+    private AccountController()
+    {
+        AccountRepository accountRepository = new AccountRepository(sessionFactory);
+        accountService = new AccountService(accountRepository);
+    }
 
     @Operation(summary = "Retrieve an account", description = "Retrieve an account by Id")
     @ApiResponses(value = {

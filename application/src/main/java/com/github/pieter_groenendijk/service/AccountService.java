@@ -13,10 +13,9 @@ import java.util.Optional;
 public class AccountService {
 
     private IAccountRepository accountRepository;
-    private SessionFactory sessionFactory = new SessionFactoryFactory().create();
 
-    public AccountService() {
-        accountRepository = new AccountRepository(sessionFactory);
+    public AccountService(IAccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
     }
 
     public Account retrieveById(long id) {
