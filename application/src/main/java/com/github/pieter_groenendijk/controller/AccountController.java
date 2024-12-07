@@ -3,9 +3,12 @@ package com.github.pieter_groenendijk.controller;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.Operation;
 import com.github.pieter_groenendijk.service.AccountService;
+import com.github.pieter_groenendijk.repository.AccountRepository;
 import com.github.pieter_groenendijk.model.Account;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import com.github.pieter_groenendijk.hibernate.SessionFactoryFactory;
+import org.hibernate.SessionFactory;
 
 @RestController
 @RequestMapping("/account") 
