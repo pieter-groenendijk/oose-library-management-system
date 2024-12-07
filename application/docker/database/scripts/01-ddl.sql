@@ -49,3 +49,9 @@ CREATE TABLE "NotificationTask" (
     "sendStrategy" VARCHAR(20) NOT NULL,
     FOREIGN KEY ("account") REFERENCES "Account"("accountId") ON UPDATE CASCADE ON DELETE RESTRICT
 );
+
+CREATE TABLE "LendingAssociatedNotificationTask" (
+    "lendingId" BIGINT NOT NULL,
+    "notificationTaskId" BIGINT NOT NULL,
+    PRIMARY KEY ("lendingId", "notificationTaskId")
+);
