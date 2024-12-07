@@ -47,8 +47,6 @@ public class NotificationTaskRepository implements INotificationTaskRepository {
     /**
      * Stores the task AND the association with a lending
      * NOTE: It expects the lending to be already persisted.
-     * @param lending
-     * @param task
      */
     public void storeLendingAssociated(Lending lending, NotificationTask task) {
         // TODO insert using a view, so that there only one statement is sent, as to minimize latency.

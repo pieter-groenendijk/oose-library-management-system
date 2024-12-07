@@ -38,9 +38,9 @@ public abstract class NotificationTaskGenerator<T> {
         return new NotificationTask(
             this.generateTitle(context),
             this.generateMessage(context),
-            this.SEND_STRATEGY,
             account,
-            this.determineScheduleDateTime(context)
+            this.determineScheduleDateTime(context),
+            this.SEND_STRATEGY
         );
     }
 }

@@ -47,6 +47,7 @@ CREATE TABLE "NotificationTask" (
     "message" TEXT NOT NULL,
     "scheduledAt" TIMESTAMP NOT NULL, -- TODO: Add index; is used quite a bit
     "sendStrategy" VARCHAR(20) NOT NULL,
+    "status" VARCHAR(20) NOT NULL,
     FOREIGN KEY ("account") REFERENCES "Account"("accountId") ON UPDATE CASCADE ON DELETE RESTRICT
 );
 

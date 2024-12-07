@@ -1,6 +1,7 @@
 package com.github.pieter_groenendijk.model;
 
 import com.github.pieter_groenendijk.services.notifications.send_strategies.registry.SendStrategyType;
+import com.github.pieter_groenendijk.services.notifications.task.NotificationTaskStatus;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -51,18 +52,44 @@ public class NotificationTask {
     )
     public SendStrategyType sendStrategyType;
 
+    @Enumerated(EnumType.STRING)
+    @Column(
+        name = "status",
+        nullable = false
+    )
+    public NotificationTaskStatus status;
+
     public NotificationTask(
         String title,
         String message,
-        SendStrategyType sendStrategyType,
         Account account,
-        LocalDateTime scheduledAt
+        LocalDateTime scheduledAt,
+        SendStrategyType sendStrategyType,
+        NotificationTaskStatus status
     ) {
         this.title = title;
         this.message = message;
         this.sendStrategyType = sendStrategyType;
         this.account = account;
         this.scheduledAt = scheduledAt;
+        this.status = status;
+    }
+
+    public NotificationTask(
+        String title,
+        String message,
+        Account account,
+        LocalDateTime scheduledAt,
+        SendStrategyType sendStrategyType
+    ) {
+        this(
+            title,
+            message,
+            account,
+            scheduledAt,
+            sendStrategyType,
+            NotificationTaskStatus.PENDING
+        );
     }
 
     public NotificationTask() {} // Needed for ORM
