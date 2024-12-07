@@ -1,6 +1,7 @@
 package com.github.pieter_groenendijk.storage.notifications;
 
 import com.github.pieter_groenendijk.model.Lending;
+import com.github.pieter_groenendijk.model.LendingAssociatedNotificationTask;
 import com.github.pieter_groenendijk.model.NotificationTask;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -17,6 +18,7 @@ public class NotificationTaskRepository implements INotificationTaskRepository {
         this.SESSION_FACTORY = sessionFactory;
     }
 
+    // TODO: Do something with a status so that it will not retrieve already previously retrieved items.
     @Override
     public List<NotificationTask> retrieve(LocalDateTime scheduledUntil) {
         List<NotificationTask> tasks;
@@ -42,8 +44,30 @@ public class NotificationTaskRepository implements INotificationTaskRepository {
         return tasks;
     }
 
+    /**
+     * Stores the task AND the association with a lending
+     * NOTE: It expects the lending to be already persisted.
+     * @param lending
+     * @param task
+     */
     public void storeLendingAssociated(Lending lending, NotificationTask task) {
         // TODO insert using a view, so that there only one statement is sent, as to minimize latency.
+
+        try (Session session = this.SESSION_FACTORY.openSession()) {
+            Transaction transaction = session.beginTransaction();
+
+            try {
+                session.persist(task);
+                session.persist(new LendingAssociatedNotificationTask(
+                    lending,
+                    task
+                ));
+
+                transaction.commit();
+            } catch(Exception exception) {
+                transaction.rollback();
+            }
+        }
     }
 
     public void markCompleted(NotificationTask task) {
