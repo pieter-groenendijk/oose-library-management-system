@@ -5,21 +5,26 @@ import java.util.UUID;
 import com.github.pieter_groenendijk.model.Account;
 import com.github.pieter_groenendijk.repository.AccountRepository;
 import com.github.pieter_groenendijk.repository.IAccountRepository;
+import com.github.pieter_groenendijk.hibernate.SessionFactoryFactory;
+import org.hibernate.SessionFactory;
+import com.github.pieter_groenendijk.exception.EntityNotFoundException;
+import java.util.Optional;
 
 public class AccountService {
 
-    private IAccountRepository _accountRepository;
+    private IAccountRepository accountRepository;
+    private SessionFactory sessionFactory = new SessionFactoryFactory().create();
 
     public AccountService() {
-        _accountRepository = new AccountRepository();
-        System.out.println("Serv 1");
+        accountRepository = new AccountRepository(sessionFactory);
     }
 
-    public Account retrieveById(long id){
-        return _accountRepository.retrieveById(id);
-    }
+    public Account retrieveById(long id) {
+    return accountRepository.retrieveById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Account with ID " + id + " not found."));
+}
 
     public Account storeAccount(Account account) {
-        return _accountRepository.store(account);
+        return accountRepository.store(account);
     }
 }
