@@ -11,11 +11,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 @RequestMapping("/account") // Base URL path
 public class AccountController {
 
-    private AccountService accountService;
-
-    public AccountController() {
-        accountService = new AccountService();
-    }
+    private AccountService accountService = new AccountService();
 
     @Operation(summary = "Retrieve an account", description = "Retrieve an account by Id")
     @ApiResponses(value = {
