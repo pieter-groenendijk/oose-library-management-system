@@ -21,7 +21,8 @@ public class DefaultConfigurationFactory {
             .addAnnotatedClass(Membership.class)
             .addAnnotatedClass(MembershipType.class)
             .addAnnotatedClass(Lending.class)
-            .addAnnotatedClass(NotificationTask.class);
+            .addAnnotatedClass(NotificationTask.class)
+            .addAnnotatedClass(LendingAssociatedNotificationTask.class);
     }
 
     private void setMisc(ConfigurationBuilder builder) {
