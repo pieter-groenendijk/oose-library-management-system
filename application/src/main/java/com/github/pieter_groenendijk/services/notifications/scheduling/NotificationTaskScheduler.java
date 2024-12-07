@@ -9,6 +9,7 @@ import com.github.pieter_groenendijk.storage.notifications.NotificationTaskRepos
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 
 public class NotificationTaskScheduler {
     private final TaskScheduler SCHEDULER;
@@ -42,16 +43,18 @@ public class NotificationTaskScheduler {
     }
 
     private void scheduleFromDatabase() {
-        NotificationTask[] tasks = this.REPOSITORY.retrieve(this.getScheduledUntilDateTime());
+        List<NotificationTask> tasks = this.REPOSITORY.retrieve(this.getScheduledUntilDateTime());
 
-        for(NotificationTask task: tasks) {
-            if (isHandledManually(task)) {
-                handledManually.remove(task);
-                continue;
-            }
+        tasks.forEach(this::maybeScheduleFromDatabase);
+    }
 
-            scheduleInMemory(task);
+    private void maybeScheduleFromDatabase(NotificationTask task) {
+        if (isHandledManually(task)) { // TODO: Maybe it's worth not having directScheduling(.scheduleDirectlyInMemory()), a low enough retrieve interval could make it okay.
+            handledManually.remove(task);
+            return;
         }
+
+        scheduleInMemory(task);
     }
 
     private boolean shouldScheduleInMemory(NotificationTask task) {

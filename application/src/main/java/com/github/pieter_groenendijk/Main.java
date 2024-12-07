@@ -1,6 +1,8 @@
 package com.github.pieter_groenendijk;
 
+import com.github.pieter_groenendijk.hibernate.SessionFactoryFactory;
 import com.github.pieter_groenendijk.services.notifications.NotificationService;
+import org.hibernate.SessionFactory;
 
 /**
  * Hello world!
@@ -8,10 +10,13 @@ import com.github.pieter_groenendijk.services.notifications.NotificationService;
 public class Main {
     public static void main(String[] args) {
         TaskScheduler taskScheduler = new TaskScheduler(1);
+        SessionFactory sessionFactory = new SessionFactoryFactory().create();
 
-        new NotificationService(taskScheduler);
+        NotificationService notificationService = new NotificationService(
+            taskScheduler,
+            sessionFactory
+        );
 
 
-        HibernateTest.main(args);
     }
 }
