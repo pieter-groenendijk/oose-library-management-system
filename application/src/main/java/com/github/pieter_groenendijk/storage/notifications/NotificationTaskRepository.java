@@ -3,6 +3,7 @@ package com.github.pieter_groenendijk.storage.notifications;
 import com.github.pieter_groenendijk.model.Lending;
 import com.github.pieter_groenendijk.model.LendingAssociatedNotificationTask;
 import com.github.pieter_groenendijk.model.NotificationTask;
+import com.github.pieter_groenendijk.services.notifications.task.NotificationTaskStatus;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -68,7 +69,18 @@ public class NotificationTaskRepository implements INotificationTaskRepository {
         }
     }
 
-    public void markCompleted(NotificationTask task) {
-        // TODO mark completed in database
+    public void updateStatus(NotificationTask task, NotificationTaskStatus status) {
+        try (Session session = this.SESSION_FACTORY.openSession()) {
+            Transaction transaction = session.beginTransaction();
+
+            try {
+                task.status = status;
+                session.merge(task);
+
+                transaction.commit();
+            } catch(Exception exception) {
+                transaction.rollback();
+            }
+        }
     }
 }

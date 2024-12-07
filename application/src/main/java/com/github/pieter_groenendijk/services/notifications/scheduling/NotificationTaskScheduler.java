@@ -3,6 +3,7 @@ package com.github.pieter_groenendijk.services.notifications.scheduling;
 import com.github.pieter_groenendijk.TaskScheduler;
 import com.github.pieter_groenendijk.model.NotificationTask;
 import com.github.pieter_groenendijk.services.notifications.send_strategies.registry.NotificationSendStrategyRegistry;
+import com.github.pieter_groenendijk.services.notifications.task.NotificationTaskStatus;
 import com.github.pieter_groenendijk.services.notifications.task.UnprocessedNotificationTask;
 import com.github.pieter_groenendijk.storage.notifications.NotificationTaskRepository;
 
@@ -81,7 +82,7 @@ public class NotificationTaskScheduler {
             .fromStrategyType(task.sendStrategyType)
             .send(task);
 
-        this.REPOSITORY.markCompleted(task);
+        this.REPOSITORY.updateStatus(task, NotificationTaskStatus.EXECUTED);
     }
 
     private boolean isHandledManually(NotificationTask task) {
