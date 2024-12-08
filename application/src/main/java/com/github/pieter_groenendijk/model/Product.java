@@ -17,8 +17,8 @@ public abstract class Product {
     @Column (name = "genre", nullable = false, length = 50)
     private String genre;
 
-    @Column (name = "year", nullable = false, length = 4)
-    private int year;
+    @Column (name = "yearOfRelease", nullable = false, length = 4)
+    private int yearOfRelease;
 
     @Column (name = "description", nullable = true, length = 250)
     private String description;
@@ -50,11 +50,11 @@ public abstract class Product {
     }
 
     public int getYear() {
-        return year;
+        return yearOfRelease;
     }
 
-    public void setYear(int year) {
-        this.year = year;
+    public void setYear(int yeaOfReleaser) {
+        this.yearOfRelease = yearOfRelease;
     }
 
     public String getDescription() {
