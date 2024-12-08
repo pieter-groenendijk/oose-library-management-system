@@ -11,8 +11,8 @@ public class DigitalProduct extends Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long digitalProductId;
 
-    @Column(name = "title", nullable = false, length = 100)
-    private String accessStatus;
+    @Column(name = "isAvailable", nullable = false, length = 100)
+    private String isAvailable;
 
     @Column(name = "releaseDate", nullable = true)
     private Date releaseDate;
@@ -56,11 +56,11 @@ public class DigitalProduct extends Product {
         this.mediaType = mediaType;
     }
 
-    public String getAccessStatus() {
-        return accessStatus;
+    public String getIsAvailable() {
+        return isAvailable;
     }
 
-    public void setAccessStatus(String accessStatus) {
-        this.accessStatus = accessStatus;
+    public void setIsAvailable(String isAvailable) {
+        this.isAvailable = isAvailable;
     }
 }
