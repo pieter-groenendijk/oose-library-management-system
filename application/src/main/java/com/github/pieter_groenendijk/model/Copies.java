@@ -19,9 +19,6 @@ public class Copies {
     @Column (name = "availabilityStatus", nullable = false, length = 50)
     private String availabilityStatus;
 
-    @Column (name = "isAvailable", nullable = false)
-    private boolean isAvailable;
-
 
     public void setCopyId(Long copyId) {
         this.copyId = copyId;
@@ -37,14 +34,6 @@ public class Copies {
 
     public void setAvailabilityStatus(String availabilityStatus) {
         this.availabilityStatus = availabilityStatus;
-    }
-
-    public boolean isAvailable() {
-        return isAvailable;
-    }
-
-    public void setAvailable(boolean available) {
-        isAvailable = available;
     }
 
     public PhysicalProduct getPhysicalProduct() {

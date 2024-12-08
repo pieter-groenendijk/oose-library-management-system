@@ -13,7 +13,7 @@ public class Reservation {
     @Column(name = "reservationDate", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date reservationDate;
-    
+
     @Column(name = "productId", nullable = false)
     private long productId;
     @ManyToOne
