@@ -1,13 +1,8 @@
 package com.github.pieter_groenendijk.repository;
 
-import java.util.Date;
-import java.util.UUID;
 import com.github.pieter_groenendijk.model.Account;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-import java.util.List;
-import com.github.pieter_groenendijk.hibernate.SessionFactoryFactory;
 import java.util.Optional;
 
 public class AccountRepository implements IAccountRepository {

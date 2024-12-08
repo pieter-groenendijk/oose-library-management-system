@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
-import com.github.pieter_groenendijk.controller.error.ErrorResponse;
 import com.github.pieter_groenendijk.exception.EntityNotFoundException;
 
 @ControllerAdvice
