@@ -11,9 +11,8 @@ public class ConfigurationBuilder {
 
     public ConfigurationBuilder setQuotingOfIdentifiers(boolean isQuoted) {
         setProperty(
-            "hibernate.globally_quoted_identifiers",
-            isQuoted
-        );
+                "hibernate.globally_quoted_identifiers",
+                isQuoted);
 
         return this;
     }
@@ -26,98 +25,85 @@ public class ConfigurationBuilder {
 
     public ConfigurationBuilder setDriver(String driverClass) {
         setProperty(
-            "hibernate.connection.driver_class",
-            driverClass
-        );
+                "hibernate.connection.driver_class",
+                driverClass);
 
         return this;
     }
 
     public ConfigurationBuilder setDialect(String dialectClass) {
         setProperty(
-            "hibernate.dialect",
-            dialectClass
-        );
+                "hibernate.dialect",
+                dialectClass);
 
         return this;
     }
 
     public ConfigurationBuilder setSchemaHandlingMethod(String schemaHandlingMethod) {
         setProperty(
-            "hibernate.hbm2ddl.auto",
-            schemaHandlingMethod
-        );
+                "hibernate.hbm2ddl.auto",
+                schemaHandlingMethod);
 
         return this;
     }
 
     public ConfigurationBuilder setShowingOfSQL(boolean isShown) {
         setProperty(
-            "hibernate.show_sql",
-            isShown
-        );
+                "hibernate.show_sql",
+                isShown);
 
         return this;
     }
 
     public ConfigurationBuilder setFormattingOfSQL(boolean isFormatted) {
         setProperty(
-            "hibernate.format_sql",
-            isFormatted
-        );
+                "hibernate.format_sql",
+                isFormatted);
 
         return this;
     }
 
     public ConfigurationBuilder setConnectionAuthentication(String username, String password) {
         setProperty(
-            "hibernate.connection.username",
-            username
-        );
+                "hibernate.connection.username",
+                username);
 
         setProperty(
-            "hibernate.connection.password",
-            password
-        );
+                "hibernate.connection.password",
+                password);
 
         return this;
     }
 
-
     public ConfigurationBuilder setConnectionURL(
-        String subProtocol,
-        String hostName,
-        String port,
-        String databaseName
-    ) {
+            String subProtocol,
+            String hostName,
+            String port,
+            String databaseName) {
         setProperty(
-            "hibernate.connection.url",
-            generateConnectionURL(subProtocol, hostName, port, databaseName)
-        );
+                "hibernate.connection.url",
+                generateConnectionURL(subProtocol, hostName, port, databaseName));
 
         return this;
     }
 
     private String generateConnectionURL(
-        String subProtocol,
-        String hostName,
-        String port,
-        String databaseName
-    ) {
+            String subProtocol,
+            String hostName,
+            String port,
+            String databaseName) {
         return String.format(
-            "jdbc:%s://%s:%s/%s",
-            subProtocol,
-            hostName,
-            port,
-            databaseName
-        );
+                "jdbc:%s://%s:%s/%s",
+                subProtocol,
+                hostName,
+                port,
+                databaseName);
     }
 
     public ConfigurationBuilder setPoolSize(String poolSize) {
         setProperty(
-            "hibernate.connection.pool_size",
-            poolSize
-        );
+                "hibernate.connection.pool_size",
+                poolSize);
 
         return this;
     }
