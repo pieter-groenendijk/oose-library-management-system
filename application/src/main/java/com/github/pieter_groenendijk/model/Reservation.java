@@ -14,10 +14,9 @@ public class Reservation {
     @Temporal(TemporalType.DATE)
     private Date reservationDate;
     
-    // TODO: Check if this is correct. Just a reference to ProductId not Product entity
     @Column(name = "productId", nullable = false)
     private long productId;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "membershipId", nullable = false, unique = true)
     private Membership membershipId;
 
