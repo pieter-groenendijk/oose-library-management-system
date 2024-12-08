@@ -11,7 +11,7 @@ public class PhysicalProduct extends Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long physicalProductId;
 
-    @Column(name = "title", nullable = false, length = 100)
+    @Column(name = "location", nullable = false, length = 100)
     private String location;
 
     @Column (name = "author", nullable = false, length = 100)

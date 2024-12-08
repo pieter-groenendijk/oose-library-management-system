@@ -28,7 +28,7 @@ public class DigitalProduct extends Product {
     public Long getDigitalProductId() {
         return digitalProductId;
     }
-    
+
     public int getClassification() {
         return classification;
     }
