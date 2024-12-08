@@ -11,8 +11,8 @@ public abstract class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productId;
 
-    @Column(name = "productName", nullable = false, length = 100)
-    private String productName;
+    @Column(name = "name", nullable = false, length = 100)
+    private String name;
 
     @Column (name = "genre", nullable = false, length = 50)
     private String genre;
@@ -36,8 +36,8 @@ public abstract class Product {
         this.productId = productId;
     }
 
-    public String getProductName() {
-        return productName;
+    public String getName() {
+        return name;
     }
 
 
