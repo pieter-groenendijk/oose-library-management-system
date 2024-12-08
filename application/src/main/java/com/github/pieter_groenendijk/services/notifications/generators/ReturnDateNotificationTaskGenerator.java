@@ -4,12 +4,13 @@ import com.github.pieter_groenendijk.model.Lending;
 import com.github.pieter_groenendijk.model.NotificationTask;
 import com.github.pieter_groenendijk.services.notifications.send_strategies.registry.SendStrategyType;
 import com.github.pieter_groenendijk.services.notifications.task.INotificationTaskStorage;
+import com.github.pieter_groenendijk.storage.notifications.INotificationTaskRepository;
 import com.github.pieter_groenendijk.storage.notifications.NotificationTaskRepository;
 
 import java.time.LocalDateTime;
 
 public class ReturnDateNotificationTaskGenerator extends NotificationTaskGenerator<Lending> {
-    public ReturnDateNotificationTaskGenerator(NotificationTaskRepository repository) {
+    public ReturnDateNotificationTaskGenerator(INotificationTaskRepository repository) {
         super(
             SendStrategyType.ALERT,
             repository

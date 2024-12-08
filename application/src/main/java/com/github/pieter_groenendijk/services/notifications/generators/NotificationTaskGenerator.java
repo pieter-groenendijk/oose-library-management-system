@@ -5,16 +5,16 @@ import com.github.pieter_groenendijk.model.NotificationTask;
 import com.github.pieter_groenendijk.services.notifications.send_strategies.registry.SendStrategyType;
 import com.github.pieter_groenendijk.services.notifications.task.INotificationTaskStorage;
 import com.github.pieter_groenendijk.services.notifications.task.UnprocessedNotificationTask;
-import com.github.pieter_groenendijk.storage.notifications.NotificationTaskRepository;
+import com.github.pieter_groenendijk.storage.notifications.INotificationTaskRepository;
 
 import java.time.LocalDateTime;
 
 public abstract class NotificationTaskGenerator<T> {
-    protected final NotificationTaskRepository REPOSITORY;
+    protected final INotificationTaskRepository REPOSITORY;
 
     private final SendStrategyType SEND_STRATEGY;
 
-    protected NotificationTaskGenerator(SendStrategyType sendStrategy, NotificationTaskRepository repository) {
+    protected NotificationTaskGenerator(SendStrategyType sendStrategy, INotificationTaskRepository repository) {
         this.SEND_STRATEGY = sendStrategy;
         this.REPOSITORY = repository;
     }
