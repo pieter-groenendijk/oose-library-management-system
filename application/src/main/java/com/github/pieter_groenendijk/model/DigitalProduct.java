@@ -14,9 +14,6 @@ public class DigitalProduct extends Product {
     @Column(name = "isAvailable", nullable = false, length = 100)
     private String isAvailable;
 
-    @Column(name = "releaseDate", nullable = true)
-    private Date releaseDate;
-
     @Column(name = "classification", nullable = true)
     private int classification;
 
@@ -31,15 +28,7 @@ public class DigitalProduct extends Product {
     public Long getDigitalProductId() {
         return digitalProductId;
     }
-
-    public Date getReleaseDate() {
-        return releaseDate;
-    }
-
-    public void setReleaseDate(Date releaseDate) {
-        this.releaseDate = releaseDate;
-    }
-
+    
     public int getClassification() {
         return classification;
     }
