@@ -50,11 +50,11 @@ public abstract class Product {
         this.genre = genre;
     }
 
-    public int getYear() {
+    public int getYearOfRelease() {
         return yearOfRelease;
     }
 
-    public void setYear(int yearOfReleaser) {
+    public void setYearOfRelease(int yearOfRelease) {
         this.yearOfRelease = yearOfRelease;
     }
 
