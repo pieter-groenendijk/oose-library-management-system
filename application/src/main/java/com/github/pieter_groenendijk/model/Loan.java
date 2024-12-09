@@ -26,10 +26,6 @@ public class Loan {
     private Membership membership;
 
     @OneToOne
-    @JoinColumn(name = "loanHistoryId")
-    private LoanHistory loanHistory;
-
-    @OneToOne
     @JoinColumn(name = "productId")
     private Product product;
 
@@ -82,11 +78,4 @@ public class Loan {
         this.membership = membership;
     }
 
-    public LoanHistory getLoanHistory() {
-        return loanHistory;
-    }
-
-    public void setLoanHistory(LoanHistory loanHistory) {
-        this.loanHistory = loanHistory;
-    }
 }
