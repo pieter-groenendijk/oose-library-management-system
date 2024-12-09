@@ -25,7 +25,8 @@ public abstract class Product {
 
     @Column (name = "type", nullable = false, length = 10)
     private String type;
-
+    @Column(name = "ageClassification", nullable = true)
+    private int ageClassification;
 
     // Getters and Setters
     public Long getProductId() {
@@ -71,5 +72,13 @@ public abstract class Product {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public int getAgeClassification() {
+        return ageClassification;
+    }
+
+    public void setAgeClassification(int ageClassification) {
+        this.ageClassification = ageClassification;
     }
 }

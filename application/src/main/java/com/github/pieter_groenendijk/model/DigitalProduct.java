@@ -11,12 +11,6 @@ public class DigitalProduct extends Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long digitalProductId;
 
-    @Column(name = "isAvailable", nullable = false, length = 100)
-    private String isAvailable;
-
-    @Column(name = "classification", nullable = true)
-    private int classification;
-
     @Column(name = "mediaType", nullable = false)
     private String mediaType;
 
@@ -28,15 +22,7 @@ public class DigitalProduct extends Product {
     public Long getDigitalProductId() {
         return digitalProductId;
     }
-
-    public int getClassification() {
-        return classification;
-    }
-
-    public void setClassification(int classification) {
-        this.classification = classification;
-    }
-
+    
     public String getMediaType() {
         return mediaType;
     }
@@ -45,11 +31,5 @@ public class DigitalProduct extends Product {
         this.mediaType = mediaType;
     }
 
-    public String getIsAvailable() {
-        return isAvailable;
-    }
 
-    public void setIsAvailable(String isAvailable) {
-        this.isAvailable = isAvailable;
-    }
 }
