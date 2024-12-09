@@ -31,6 +31,6 @@ public class Membership {
     @Temporal(TemporalType.DATE)
     private Date endDate;
 
-    @Column(name = "canLoan", nullable = false)
-    private boolean canLoan; //CanLoan is different to isActive. isActive is for the membership itself (digital, physical ect), canLoan is thats its not blocked because of fines
+    @Column(name = "isBlocked", nullable = false)
+    private boolean isBlocked;
 }
