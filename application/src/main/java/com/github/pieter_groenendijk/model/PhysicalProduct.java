@@ -6,7 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "PhysicalProduct")
-public class PhysicalProduct extends Product {
+public abstract class PhysicalProduct extends Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long physicalProductId;
