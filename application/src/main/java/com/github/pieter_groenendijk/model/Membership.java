@@ -2,6 +2,7 @@ package com.github.pieter_groenendijk.model;
 
 import jakarta.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "Membership")
@@ -13,11 +14,11 @@ public class Membership {
 
     @ManyToOne
     @JoinColumn(name = "accountId", nullable = false)
-    private Account account;  // Reference to Account entity
+    private Account account;  
 
     @ManyToOne
     @JoinColumn(name = "membershipTypeId", nullable = false)
-    private MembershipType membershipType;  // Reference to MembershipType entity
+    private MembershipType membershipType;
 
     @Column(name = "isActive", nullable = false)
     private boolean isActive;
@@ -29,4 +30,7 @@ public class Membership {
     @Column(name = "endDate")
     @Temporal(TemporalType.DATE)
     private Date endDate;
+
+    @Column(name = "isBlocked", nullable = false)
+    private boolean isBlocked;
 }
