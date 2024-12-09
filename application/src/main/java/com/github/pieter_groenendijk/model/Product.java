@@ -54,7 +54,7 @@ public abstract class Product {
         return yearOfRelease;
     }
 
-    public void setYear(int yeaOfReleaser) {
+    public void setYear(int yearOfReleaser) {
         this.yearOfRelease = yearOfRelease;
     }
 
