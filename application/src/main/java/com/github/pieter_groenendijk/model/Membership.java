@@ -14,11 +14,11 @@ public class Membership {
 
     @ManyToOne
     @JoinColumn(name = "accountId", nullable = false)
-    private Account account;  // Reference to Account entity
+    private Account account;  
 
     @ManyToOne
     @JoinColumn(name = "membershipTypeId", nullable = false)
-    private MembershipType membershipType;  // Reference to MembershipType entity
+    private MembershipType membershipType;
 
     @Column(name = "isActive", nullable = false)
     private boolean isActive;
