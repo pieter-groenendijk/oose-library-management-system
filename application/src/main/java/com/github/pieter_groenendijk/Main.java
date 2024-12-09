@@ -2,6 +2,7 @@ package com.github.pieter_groenendijk;
 
 import com.github.pieter_groenendijk.hibernate.SessionFactoryFactory;
 import com.github.pieter_groenendijk.services.notifications.NotificationService;
+import com.github.pieter_groenendijk.storage.notifications.NotificationTaskRepository;
 import org.hibernate.SessionFactory;
 
 /**
@@ -14,9 +15,7 @@ public class Main {
 
         NotificationService notificationService = new NotificationService(
             taskScheduler,
-            sessionFactory
+            new NotificationTaskRepository(sessionFactory)
         );
-
-
     }
 }

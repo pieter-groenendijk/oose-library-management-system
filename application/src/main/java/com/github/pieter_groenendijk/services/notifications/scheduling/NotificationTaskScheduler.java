@@ -5,7 +5,7 @@ import com.github.pieter_groenendijk.model.NotificationTask;
 import com.github.pieter_groenendijk.services.notifications.send_strategies.registry.NotificationSendStrategyRegistry;
 import com.github.pieter_groenendijk.services.notifications.task.NotificationTaskStatus;
 import com.github.pieter_groenendijk.services.notifications.task.UnprocessedNotificationTask;
-import com.github.pieter_groenendijk.storage.notifications.NotificationTaskRepository;
+import com.github.pieter_groenendijk.storage.notifications.INotificationTaskRepository;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -14,13 +14,13 @@ import java.util.List;
 
 public class NotificationTaskScheduler {
     private final TaskScheduler SCHEDULER;
-    private final NotificationTaskRepository REPOSITORY;
+    private final INotificationTaskRepository REPOSITORY;
     private final NotificationSendStrategyRegistry SEND_STRATEGY_REGISTRY;
 
     private final Duration RETRIEVE_INTERVAL = Duration.ofMinutes(5);
     private final HashSet<NotificationTask> handledManually = new HashSet<>();
 
-    public NotificationTaskScheduler(TaskScheduler scheduler, NotificationTaskRepository repository, NotificationSendStrategyRegistry sendStrategyRegistry) {
+    public NotificationTaskScheduler(TaskScheduler scheduler, INotificationTaskRepository repository, NotificationSendStrategyRegistry sendStrategyRegistry) {
         this.SCHEDULER = scheduler;
         this.REPOSITORY = repository;
         this.SEND_STRATEGY_REGISTRY = sendStrategyRegistry;
