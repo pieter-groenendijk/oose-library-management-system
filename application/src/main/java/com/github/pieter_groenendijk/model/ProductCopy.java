@@ -24,7 +24,7 @@ public class ProductCopy {
         this.productCopyId = productCopyId;
     }
 
-    public Long getCopyId() {
+    public Long getProductCopyId() {
         return productCopyId;
     }
 
