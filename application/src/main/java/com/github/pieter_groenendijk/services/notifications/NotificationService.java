@@ -11,13 +11,13 @@ import com.github.pieter_groenendijk.services.notifications.task.NotificationTas
 import org.hibernate.SessionFactory;
 
 public class NotificationService {
-    private final NotificationTaskFactory TASK_FACTORY;
+    private final NotificationTaskFactory FACTORY;
     private final NotificationTaskScheduler SCHEDULER;
 
     public NotificationService(TaskScheduler scheduler, SessionFactory sessionFactory) {
         NotificationTaskRepository repository = new NotificationTaskRepository(sessionFactory);
 
-        this.TASK_FACTORY = new NotificationTaskFactory(repository);
+        this.FACTORY = new NotificationTaskFactory(repository);
         this.SCHEDULER = new NotificationTaskScheduler(
             scheduler,
             repository,
@@ -33,7 +33,7 @@ public class NotificationService {
 
     private void scheduleReturnDateNotification(Account account, Lending lending) {
         this.SCHEDULER.schedule(
-            this.TASK_FACTORY.createReturnDateNotificationTask(account, lending)
+            this.FACTORY.createReturnDateNotificationTask(account, lending)
         );
     }
 }
