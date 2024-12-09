@@ -29,9 +29,9 @@ public class Loan {
     @JoinColumn(name = "loanHistoryId")
     private LoanHistory loanHistory;
 
-    // TODO: Check if this is correct. Just a reference to ProductId not Product entity
-    @Column(name = "productId", nullable = false)
-    private long productId;
+    @OneToOne
+    @JoinColumn(name = "productId")
+    private Product product;
 
     // Getters and Setters
     public void setLoanId(Long loanId) {
@@ -72,15 +72,6 @@ public class Loan {
 
     public void setLoanStatus(String loanStatus) {
         this.loanStatus = loanStatus;
-    }
-
-
-    public long getProductId() {
-        return productId;
-    }
-
-    public void setProductId(long productId) {
-        this.productId = productId;
     }
 
     public Membership getMembership() {
