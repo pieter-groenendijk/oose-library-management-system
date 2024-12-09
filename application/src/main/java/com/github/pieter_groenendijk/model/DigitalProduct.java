@@ -22,7 +22,7 @@ public class DigitalProduct extends Product {
     public Long getDigitalProductId() {
         return digitalProductId;
     }
-    
+
     public String getMediaType() {
         return mediaType;
     }

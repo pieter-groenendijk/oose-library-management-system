@@ -4,14 +4,12 @@ import jakarta.persistence.*;
 
 
 @Entity
-@Table (name = "Copies")
-public class Copies {
+@Table (name = "ProductCopy")
+public class ProductCopy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long copyId;
+    private Long productCopyId;
 
-    @Column (name = "numberOfCopies", nullable = false)
-    private long numberOfCopies;
    @ManyToOne
     @JoinColumn(name = "productId", nullable = false)
     private PhysicalProduct physicalProduct;
@@ -19,13 +17,15 @@ public class Copies {
     @Column (name = "availabilityStatus", nullable = false, length = 50)
     private String availabilityStatus;
 
+    @Column (name = "isDamaged", nullable = false)
+    private boolean isDamaged;
 
-    public void setCopyId(Long copyId) {
-        this.copyId = copyId;
+    public void setCopyId(Long productCopyId) {
+        this.productCopyId = productCopyId;
     }
 
     public Long getCopyId() {
-        return copyId;
+        return productCopyId;
     }
 
     public String getAvailabilityStatus() {
@@ -44,11 +44,11 @@ public class Copies {
         this.physicalProduct = physicalProduct;
     }
 
-    public long getNumberOfCopies() {
-        return numberOfCopies;
+    public boolean isDamaged() {
+        return isDamaged;
     }
 
-    public void setNumberOfCopies(long numberOfCopies) {
-        this.numberOfCopies = numberOfCopies;
+    public void setDamaged(boolean damaged) {
+        isDamaged = damaged;
     }
 }

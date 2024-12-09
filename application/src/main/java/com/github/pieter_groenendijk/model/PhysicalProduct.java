@@ -18,7 +18,7 @@ public class PhysicalProduct extends Product {
     private String author;
     @OneToMany(mappedBy = "physicalProduct")
     @Column(name = "copies", nullable = false)
-    private List<Copies> copies;
+    private List<ProductCopy> copies;
 
 // Getters and Setters
     public Long getPhysicalProductId() {
@@ -45,11 +45,11 @@ public class PhysicalProduct extends Product {
         this.author = author;
     }
 
-    public List<Copies> getCopies() {
+    public List<ProductCopy> getCopies() {
         return copies;
     }
 
-    public void setCopies(List<Copies> copies) {
+    public void setCopies(List<ProductCopy> copies) {
         this.copies = copies;
     }
 }
