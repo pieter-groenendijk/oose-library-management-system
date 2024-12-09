@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "loan")
+@Table(name = "Loan")
 public class Loan {
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
@@ -13,12 +13,12 @@ public class Loan {
     @Column(name = "startDate", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date startDate;
-    @Column(name = "endDate", nullable = true)
+    @Column(name = "returnBy", nullable = true)
     @Temporal(TemporalType.DATE)
-    private Date endDate;
-    @Column(name = "returnDate", nullable = true)
+    private Date returnBy;
+    @Column(name = "returnedOn", nullable = true)
     @Temporal(TemporalType.DATE)
-    private Date returnDate;
+    private Date returnedOn;
     @Column(name= "loanStatus", nullable = false)
     private String loanStatus;
     @OneToOne
@@ -50,20 +50,20 @@ public class Loan {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
-        return endDate;
+    public Date getReturnBy() {
+        return returnBy;
     }
 
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+    public void setReturnBy(Date returnBy) {
+        this.returnBy = returnBy;
     }
 
-    public Date getReturnDate() {
-        return returnDate;
+    public Date getReturnedOn() {
+        return returnedOn;
     }
 
-    public void setReturnDate(Date returnDate) {
-        this.returnDate = returnDate;
+    public void setReturnedOn(Date returnedOn) {
+        this.returnedOn = returnedOn;
     }
 
     public String getLoanStatus() {
