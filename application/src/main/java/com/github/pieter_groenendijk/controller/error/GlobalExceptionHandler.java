@@ -24,6 +24,17 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleInputValidationException(
+        EntityNotFoundException ex, 
+            WebRequest request) {
+        
+        ErrorResponse error = new ErrorResponse(
+            ex.getMessage(),
+            HttpStatus.BAD_REQUEST.value(),
+            request.getDescription(false)
+    )
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleAllUncaughtException(
             Exception ex, 

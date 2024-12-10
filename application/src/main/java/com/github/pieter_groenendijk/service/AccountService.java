@@ -2,8 +2,9 @@ package com.github.pieter_groenendijk.service;
 
 import com.github.pieter_groenendijk.model.Account;
 import com.github.pieter_groenendijk.repository.IAccountRepository;
-import com.github.pieter_groenendijk.exception.EntityNotFoundException;
-
+import com.github.pieter_groenendijk.exception.*;
+import com.github.pieter_groenendijk.validator.*;
+import java.time.LocalDate;
 
 public class AccountService {
 
@@ -19,6 +20,26 @@ public class AccountService {
 }
 
     public Account storeAccount(Account account) {
-        return accountRepository.store(account);
+        if (inputIsValid(Account account))
+        {
+            return accountRepository.store(account);
+        } 
+    }
+
+    private boolean inputIsValid(Account account)
+    {
+        if (!EmailValidator.IsValidEmail(account.getEmail()))
+        {
+            throw new InputValidationExpection("Email " + account.getEmail() + "is not valid");
+        } 
+        else if (!GenderCheck.exists(account.getGender())
+        {
+            throw new InputValidationExpection("Unknown gender identifier: " + account.getGender());
+        }
+        else if (!account.getDateOfBirth().isBefore.LocalDate.now())
+        {
+            throw new InputValidationExpection("Date of birth " + account.getDateOfBirth().toString() + " is in the future");
+        }
+        return true;
     }
 }
