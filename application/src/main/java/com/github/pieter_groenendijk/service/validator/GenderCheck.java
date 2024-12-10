@@ -1,11 +1,17 @@
-package com.github.pieter_groenendijk.validator;
+package com.github.pieter_groenendijk.service.validator;
 
-    public static class GenderCheck
+    public class GenderCheck
     {
         public enum Gender {
             MALE('M'),
             FEMALE('F'),
             OTHER('O');
+
+            private final char code;
+
+            Gender(char code) {
+                this.code = code;
+            }
         }
 
         public static boolean exists(char code) {

@@ -1,16 +1,16 @@
 package com.github.pieter_groenendijk.exception;
 
-public class EntityNotFoundException extends RuntimeException {
+public class InputValidationException extends RuntimeException {
     
-    public EntityNotFoundException(String message) {
+    public InputValidationException(String message) {
         super(message);
     }
     
-    public EntityNotFoundException(String message, Throwable cause) {
+    public InputValidationException(String message, Throwable cause) {
         super(message, cause);
     }
     
-    public EntityNotFoundException(String entityName, Object identifier) {
-        super(String.format("%s with identifier '%s' not found", entityName, identifier));
+    public InputValidationException(String entityName, Object identifier) {
+        super(String.format("Input invalid", entityName, identifier));
     }
 }

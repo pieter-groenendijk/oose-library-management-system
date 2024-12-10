@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import com.github.pieter_groenendijk.exception.EntityNotFoundException;
+import com.github.pieter_groenendijk.exception.InputValidationException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -24,16 +25,19 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(EntityNotFoundException.class)
+    @ExceptionHandler(InputValidationException.class)
     public ResponseEntity<ErrorResponse> handleInputValidationException(
-        EntityNotFoundException ex, 
+        InputValidationException ex, 
             WebRequest request) {
         
         ErrorResponse error = new ErrorResponse(
             ex.getMessage(),
             HttpStatus.BAD_REQUEST.value(),
             request.getDescription(false)
-    )
+        );
+
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleAllUncaughtException(
