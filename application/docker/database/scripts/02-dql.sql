@@ -35,5 +35,6 @@ SELECT
     "membershipTypeId",
     "isActive",
     "startDate",
-    "endDate"
+    "endDate",
+    "isBlocked"
 FROM "Membership";
