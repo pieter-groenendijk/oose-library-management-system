@@ -1,4 +1,4 @@
-package com.github.pieter_groenendijk.model;
+package com.github.pieter_groenendijk.model.product;
 
 import jakarta.persistence.*;
 

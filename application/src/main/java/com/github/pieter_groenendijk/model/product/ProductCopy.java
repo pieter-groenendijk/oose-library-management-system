@@ -1,5 +1,6 @@
-package com.github.pieter_groenendijk.model;
+package com.github.pieter_groenendijk.model.product;
 
+import com.github.pieter_groenendijk.model.product.PhysicalProductTemplate;
 import jakarta.persistence.*;
 
 

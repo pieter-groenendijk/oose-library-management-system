@@ -1,5 +1,6 @@
 package com.github.pieter_groenendijk.model;
 
+import com.github.pieter_groenendijk.model.product.ProductTemplate;
 import jakarta.persistence.*;
 
 import java.util.Date;
