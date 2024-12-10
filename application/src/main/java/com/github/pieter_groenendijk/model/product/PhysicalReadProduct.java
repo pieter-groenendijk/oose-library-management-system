@@ -6,7 +6,7 @@ import jakarta.persistence.Entity;
 @Entity
 public class PhysicalReadProduct extends PhysicalProductTemplate{
 
-    @Column(name = "ISBN", nullable = false)
+    @Column(name = "ISBN", nullable = true)
     public int ISBN;
 
     @Column(name = "author", nullable = false, length = 100)
