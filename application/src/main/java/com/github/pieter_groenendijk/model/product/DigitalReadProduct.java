@@ -5,10 +5,9 @@ import jakarta.persistence.Entity;
 
 @Entity
 public class DigitalReadProduct extends DigitalProductTemplate{
+    @Column (name = "author", nullable = true, length = 100)
+    public String author;
 
-    @Column(name = "type", nullable = false)
-    public int type; //TODO: Magazine, ebook, newspaper
-
-    @Column(name = "language", nullable = true)
-    public String language;
+    @Column(name = "edition", nullable = true)
+    public int edition;
 }

@@ -11,10 +11,4 @@ public class DigitalVideoProduct extends DigitalProductTemplate{
 
     @Column(name = "director", nullable = true, length = 100)
     public String director;
-
-    @Column(name = "language", nullable = true, length = 100)
-    public String language;
-
-    @Column(name = "videoType", nullable = true, length = 100)
-    public String videoType; //TODO: Enum: Movie, series, documentary, other
 }

@@ -27,6 +27,9 @@ public abstract class ProductTemplate {
     @Column(name = "ageClassification", nullable = true)
     private int ageClassification;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "mediaType", nullable = false)
+    private String mediaType;
 
 
     public String getName() {

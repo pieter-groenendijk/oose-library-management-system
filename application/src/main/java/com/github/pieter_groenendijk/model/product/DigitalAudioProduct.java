@@ -9,7 +9,7 @@ public class DigitalAudioProduct extends DigitalProductTemplate {
     @Column(name = "duration", nullable = true)
     private int duration;
 
-    @Column(name = "language", nullable = true, length = 100)
-    private String language;
+    @Column(name = "artist", nullable = true, length = 100)
+    private String artist;
 
 }

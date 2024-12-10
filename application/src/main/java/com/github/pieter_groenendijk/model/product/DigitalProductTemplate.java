@@ -5,18 +5,7 @@ import jakarta.persistence.*;
 @Entity
 public abstract class DigitalProductTemplate extends ProductTemplate {
 
-    @Column(name = "mediaType", nullable = false)
-    private String mediaType;
-
-// Getters and Setters
-
-    public String getMediaType() {
-        return mediaType;
-    }
-
-    public void setMediaType(String mediaType) {
-        this.mediaType = mediaType;
-    }
-
+    @Column(name = "language", nullable = true)
+    public String language;
 
 }
