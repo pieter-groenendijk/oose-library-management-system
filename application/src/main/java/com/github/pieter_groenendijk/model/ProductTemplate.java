@@ -3,12 +3,11 @@ package com.github.pieter_groenendijk.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table (name = "Product")
-@Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Product {
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class ProductTemplate {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "productId")
     private Long productId;
 
     @Column(name = "name", nullable = false, length = 100)
@@ -28,19 +27,11 @@ public abstract class Product {
     @Column(name = "ageClassification", nullable = true)
     private int ageClassification;
 
-    // Getters and Setters
-    public Long getProductId() {
-        return productId;
-    }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
-    }
 
     public String getName() {
         return name;
     }
-
 
     public String getGenre() {
         return genre;
@@ -80,5 +71,13 @@ public abstract class Product {
 
     public void setAgeClassification(int ageClassification) {
         this.ageClassification = ageClassification;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
+
+    public Long getProductId() {
+        return productId;
     }
 }

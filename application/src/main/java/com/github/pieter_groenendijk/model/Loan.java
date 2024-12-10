@@ -27,7 +27,7 @@ public class Loan {
 
     @OneToOne
     @JoinColumn(name = "productId")
-    private Product product;
+    private ProductTemplate productTemplate;
 
     // Getters and Setters
     public void setLoanId(Long loanId) {

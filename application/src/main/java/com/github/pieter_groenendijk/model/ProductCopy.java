@@ -5,14 +5,14 @@ import jakarta.persistence.*;
 
 @Entity
 @Table (name = "ProductCopy")
-public class ProductCopy {
+public class ProductCopy extends PhysicalProductTemplate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productCopyId;
 
    @ManyToOne
     @JoinColumn(name = "productId", nullable = false)
-    private PhysicalProduct physicalProduct;
+    private PhysicalProductTemplate physicalProduct;
 
     @Column (name = "availabilityStatus", nullable = false, length = 50)
     private String availabilityStatus;
@@ -36,11 +36,11 @@ public class ProductCopy {
         this.availabilityStatus = availabilityStatus;
     }
 
-    public PhysicalProduct getPhysicalProduct() {
+    public PhysicalProductTemplate getPhysicalProduct() {
         return physicalProduct;
     }
 
-    public void setPhysicalProduct(PhysicalProduct physicalProduct) {
+    public void setPhysicalProduct(PhysicalProductTemplate physicalProduct) {
         this.physicalProduct = physicalProduct;
     }
 

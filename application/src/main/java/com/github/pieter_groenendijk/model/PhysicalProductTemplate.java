@@ -5,11 +5,7 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "PhysicalProduct")
-public abstract class PhysicalProduct extends Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long physicalProductId;
+public abstract class PhysicalProductTemplate extends ProductTemplate {
 
     @Column(name = "location", nullable = false, length = 100)
     private String location;
@@ -21,14 +17,6 @@ public abstract class PhysicalProduct extends Product {
     private List<ProductCopy> copies;
 
 // Getters and Setters
-    public Long getPhysicalProductId() {
-        return physicalProductId;
-    }
-
-    public void setPhysicalProductId(Long physicalProductId) {
-        this.physicalProductId = physicalProductId;
-    }
-
     public String getLocation() {
         return location;
     }
