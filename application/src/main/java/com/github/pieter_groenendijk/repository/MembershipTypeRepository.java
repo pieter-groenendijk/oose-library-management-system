@@ -1,36 +1,36 @@
 package com.github.pieter_groenendijk.repository;
 
-import com.github.pieter_groenendijk.model.Account;
+import com.github.pieter_groenendijk.model.MembershipType;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import java.util.Optional;
 
-public class AccountRepository implements IAccountRepository {
+public class MembershipTypeRepository implements IMembershipTypeRepository {
 
     private SessionFactory sessionFactory;
 
-    public AccountRepository (SessionFactory sessionFactory) {
+    public MembershipTypeRepository (SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
-    public Optional<Account> retrieveAccountById(long id) {
+    public Optional<MembershipType> retrieveMembershipTypeById(long id) {
         Session session = sessionFactory.openSession();
-        Account account;
+        MembershipType membershipType;
 
         try {
-            account = session.get(Account.class, id);
+            membershipType = session.get(MembershipType.class, id);
         } finally {
             session.close();
         }
-        return Optional.ofNullable(account);
+        return Optional.ofNullable(membershipType);
     }
 
-    public Account store(Account account) {
+    public MembershipType store(MembershipType membershipType) {
         Session session = sessionFactory.openSession();
 
         try {
             session.beginTransaction();
-            session.persist(account);
+            session.persist(membershipType);
             session.flush();
 
             session.getTransaction().commit();
@@ -43,6 +43,6 @@ public class AccountRepository implements IAccountRepository {
         } finally {
             session.close();
         }
-        return account;
+        return membershipType;
     }
 }

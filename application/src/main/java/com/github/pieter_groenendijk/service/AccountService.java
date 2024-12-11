@@ -1,7 +1,9 @@
 package com.github.pieter_groenendijk.service;
 
 import com.github.pieter_groenendijk.model.Account;
+import com.github.pieter_groenendijk.model.MembershipType;
 import com.github.pieter_groenendijk.repository.IAccountRepository;
+import com.github.pieter_groenendijk.repository.IMembershipTypeRepository;
 import com.github.pieter_groenendijk.exception.EntityNotFoundException;
 import com.github.pieter_groenendijk.exception.InputValidationException;
 import com.github.pieter_groenendijk.service.validator.EmailValidator;
@@ -12,24 +14,35 @@ import java.time.ZoneId;
 public class AccountService {
 
     private final IAccountRepository accountRepository;
+    private final IMembershipTypeRepository membershipTypeRepository;
 
-    public AccountService(IAccountRepository accountRepository) {
+    public AccountService(IAccountRepository accountRepository, IMembershipTypeRepository membershipTypeRepository) {
         this.accountRepository = accountRepository;
+        this.membershipTypeRepository = membershipTypeRepository;
     }
 
-    public Account retrieveById(long id) {
-        return accountRepository.retrieveById(id)
+    public Account retrieveAccountById(long id) {
+        return accountRepository.retrieveAccountById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Account with ID " + id + " not found."));
     }
 
-    public Account storeAccount(Account account) {
-        if (inputIsValid(account)) {
+    public MembershipType retrieveMembershipTypeById(long id){
+        return membershipTypeRepository.retrieveMembershipTypeById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Membershiptype with ID " + id + " not found."));
+    }
+
+    public Account store(Account account) {
+        if ( isAccountInputValid(account)) {
             return accountRepository.store(account);
         }
         throw new InputValidationException("Account input is not valid");
     }
 
-    private boolean inputIsValid(Account account) {
+    public MembershipType store(MembershipType membershipType){
+        return membershipTypeRepository.store(membershipType);
+    }
+
+    private boolean isAccountInputValid(Account account) {
         if (!EmailValidator.isValidEmail(account.getEmail())) {
             throw new InputValidationException("Email " + account.getEmail() + " is not valid");
         } else if (!GenderCheck.exists(account.getGender())) {
