@@ -12,6 +12,11 @@ public class ReservationRepository implements IReservationRepository {
     }
 
     @Override
+    public Optional<Reservation> retrieveReservationByMembershipId(long customerId) {
+        return Optional.empty();
+    }
+
+    @Override
     public Reservation store(Reservation reservation) {
         return null;
     }
