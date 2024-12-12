@@ -7,6 +7,7 @@ import java.util.Optional;
 public interface ILoanRepository {
 
     Optional<Loan> retrieveLoanByLoanId(long loanId);
+    Optional<Loan> retrieveLoanByMembershipId(long MembershipId);
     Loan store(Loan loan);
     Loan updateLoan(Loan loan);
     Loan deleteLoanByLoanId(long loanId);

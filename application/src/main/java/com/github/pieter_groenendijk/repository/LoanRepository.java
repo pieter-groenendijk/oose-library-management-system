@@ -12,6 +12,11 @@ public class LoanRepository implements ILoanRepository {
     }
 
     @Override
+    public Optional<Loan> retrieveLoanByMembershipId(long MembershipId) {
+        return Optional.empty();
+    }
+
+    @Override
     public Loan store(Loan loan) {
         return null;
     }
