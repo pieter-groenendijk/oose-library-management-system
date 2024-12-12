@@ -22,6 +22,7 @@ public class NotificationService {
                 new NotificationSendStrategyFactory()
             )
         );
+        this.SCHEDULER.start();
     }
 
     public void scheduleNewLendingBundle(Account account, Lending lending) {

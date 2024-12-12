@@ -24,8 +24,10 @@ public class NotificationTaskScheduler {
         this.SCHEDULER = scheduler;
         this.REPOSITORY = repository;
         this.SEND_STRATEGY_REGISTRY = sendStrategyRegistry;
+    }
 
-        startSchedulingFromDatabase();
+    public void start() {
+        this.startSchedulingFromDatabase();
     }
 
     public void schedule(UnprocessedNotificationTask unprocessedTask) {
