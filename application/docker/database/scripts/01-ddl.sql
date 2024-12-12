@@ -35,3 +35,25 @@ CREATE TABLE "Membership" (
     FOREIGN KEY ("accountId") REFERENCES "Account" ("accountId") ON DELETE CASCADE,
     FOREIGN KEY ("membershipTypeId") REFERENCES "MembershipType" ("membershipTypeId") ON DELETE CASCADE
 );
+
+CREATE TABLE "Lending" (
+    "lendingId" BIGSERIAL PRIMARY KEY,
+    "mustReturnBy" DATE NOT NULL
+);
+
+CREATE TABLE "NotificationTask" (
+    "notificationTaskId" BIGSERIAL PRIMARY KEY,
+    "account" BIGINT NOT NULL,
+    "title" VARCHAR(100) NOT NULL,
+    "message" TEXT NOT NULL,
+    "scheduledAt" TIMESTAMP NOT NULL, -- TODO: Add index; is used quite a bit
+    "sendStrategy" VARCHAR(20) NOT NULL,
+    "status" VARCHAR(20) NOT NULL,
+    FOREIGN KEY ("account") REFERENCES "Account"("accountId") ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+CREATE TABLE "LendingAssociatedNotificationTask" (
+    "lendingId" BIGINT NOT NULL,
+    "notificationTaskId" BIGINT NOT NULL,
+    PRIMARY KEY ("lendingId", "notificationTaskId")
+);

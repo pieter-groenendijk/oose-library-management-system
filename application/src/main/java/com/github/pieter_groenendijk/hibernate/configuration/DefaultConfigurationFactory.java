@@ -1,8 +1,6 @@
 package com.github.pieter_groenendijk.hibernate.configuration;
 
-import com.github.pieter_groenendijk.model.Account;
-import com.github.pieter_groenendijk.model.Membership;
-import com.github.pieter_groenendijk.model.MembershipType;
+import com.github.pieter_groenendijk.model.*;
 import org.hibernate.cfg.Configuration;
 
 public class DefaultConfigurationFactory {
@@ -21,7 +19,10 @@ public class DefaultConfigurationFactory {
         builder
             .addAnnotatedClass(Account.class)
             .addAnnotatedClass(Membership.class)
-            .addAnnotatedClass(MembershipType.class);
+            .addAnnotatedClass(MembershipType.class)
+            .addAnnotatedClass(Lending.class)
+            .addAnnotatedClass(NotificationTask.class)
+            .addAnnotatedClass(LendingAssociatedNotificationTask.class);
     }
 
     private void setMisc(ConfigurationBuilder builder) {
