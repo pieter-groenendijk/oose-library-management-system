@@ -1,6 +1,8 @@
 package com.github.pieter_groenendijk.hibernate.configuration;
 
 import com.github.pieter_groenendijk.model.*;
+import com.github.pieter_groenendijk.model.notification.LendingAssociatedNotificationTask;
+import com.github.pieter_groenendijk.model.notification.NotificationTask;
 import org.hibernate.cfg.Configuration;
 
 public class DefaultConfigurationFactory {

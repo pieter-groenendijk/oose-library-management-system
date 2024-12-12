@@ -21,4 +21,45 @@ public class MembershipType {
 
     @Column(name = "maxLendings", nullable = false)
     private int maxLendings;
+
+    // Getters and Setters
+    public Long getMembershipTypeId() {
+        return membershipTypeId;
+    }
+
+    public void setMembershipTypeId(Long membershipTypeId) {
+        this.membershipTypeId = membershipTypeId;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public boolean isDigitalProducts() {
+        return digitalProducts;
+    }
+
+    public void setDigitalProducts(boolean digitalProducts) {
+        this.digitalProducts = digitalProducts;
+    }
+
+    public boolean isPhysicalProducts() {
+        return physicalProducts;
+    }
+
+    public void setPhysicalProducts(boolean physicalProducts) {
+        this.physicalProducts = physicalProducts;
+    }
+
+    public int getMaxLendings() {
+        return maxLendings;
+    }
+
+    public void setMaxLendings(int maxLendings) {
+        this.maxLendings = maxLendings;
+    }
 }
