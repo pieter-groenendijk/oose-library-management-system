@@ -1,15 +1,14 @@
-package com.github.pieter_groenendijk.services.send_strategies;
+package com.github.pieter_groenendijk.service.send_strategies;
 
 import com.github.pieter_groenendijk.model.Account;
-import com.github.pieter_groenendijk.model.NotificationTask;
-import com.github.pieter_groenendijk.services.notifications.notifiers.Notifier;
-import com.github.pieter_groenendijk.services.notifications.send_strategies.NotificationSendStrategy;
-import com.github.pieter_groenendijk.services.notifications.send_strategies.registry.SendStrategyType;
+import com.github.pieter_groenendijk.model.notification.NotificationTask;
+import com.github.pieter_groenendijk.service.notification.notifiers.Notifier;
+import com.github.pieter_groenendijk.service.notification.send_strategies.NotificationSendStrategy;
+import com.github.pieter_groenendijk.service.notification.send_strategies.registry.SendStrategyType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
 
 public class TestNotificationSendStrategy {
     private final NotificationTask MOCK_NOTIFICATION_TASK = new NotificationTask(

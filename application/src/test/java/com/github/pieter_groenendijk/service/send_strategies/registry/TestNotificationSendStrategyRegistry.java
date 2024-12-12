@@ -1,11 +1,11 @@
-package com.github.pieter_groenendijk.services.send_strategies.registry;
+package com.github.pieter_groenendijk.service.send_strategies.registry;
 
-import com.github.pieter_groenendijk.services.notifications.send_strategies.AlertNotificationSendStrategy;
-import com.github.pieter_groenendijk.services.notifications.send_strategies.NotificationSendStrategyFactory;
-import com.github.pieter_groenendijk.services.notifications.send_strategies.ReminderNotificationSendStrategy;
-import com.github.pieter_groenendijk.services.notifications.send_strategies.WarningNotificationSendStrategy;
-import com.github.pieter_groenendijk.services.notifications.send_strategies.registry.NotificationSendStrategyRegistry;
-import com.github.pieter_groenendijk.services.notifications.send_strategies.registry.SendStrategyType;
+import com.github.pieter_groenendijk.service.notification.send_strategies.AlertNotificationSendStrategy;
+import com.github.pieter_groenendijk.service.notification.send_strategies.NotificationSendStrategyFactory;
+import com.github.pieter_groenendijk.service.notification.send_strategies.ReminderNotificationSendStrategy;
+import com.github.pieter_groenendijk.service.notification.send_strategies.WarningNotificationSendStrategy;
+import com.github.pieter_groenendijk.service.notification.send_strategies.registry.NotificationSendStrategyRegistry;
+import com.github.pieter_groenendijk.service.notification.send_strategies.registry.SendStrategyType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
