@@ -1,6 +1,7 @@
 package com.github.pieter_groenendijk.repository;
 
 import com.github.pieter_groenendijk.model.Loan;
+import com.github.pieter_groenendijk.model.Reservation;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -13,7 +14,13 @@ public class LoanRepository implements ILoanRepository {
 
     @Override
     public Optional<Loan> retrieveLoanByLoanId(long loanId) {
-        return Optional.empty();
+        try (Session session = sessionFactory.openSession()) {
+            Loan loan = session.get(Loan.class, loanId);
+            return Optional.ofNullable(loan);
+        } catch (HibernateException e) {
+            e.printStackTrace();
+            return Optional.empty();
+        }
     }
 
     @Override
