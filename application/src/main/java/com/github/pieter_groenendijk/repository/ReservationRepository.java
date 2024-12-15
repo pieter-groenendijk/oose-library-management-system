@@ -56,19 +56,19 @@ public class ReservationRepository implements IReservationRepository {
     }
 
     @Override
-    public Reservation updateReservation(Reservation reservation) {
+    public String updateReservation(Reservation reservation) {
         Session session = sessionFactory.openSession();
         try {
             session.beginTransaction();
             session.merge(reservation);
             session.getTransaction().commit();
-            return reservation;
+            return "Reservation updated successfully";
         } catch (Exception e) {
             if (session.getTransaction() != null) {
                 session.getTransaction().rollback();
             }
             e.printStackTrace();
-            throw new RuntimeException("Failed to update reservation", e);
+            return "Failed to update reservation";
         } finally {
             session.close();
         }
