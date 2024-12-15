@@ -11,6 +11,10 @@ public class LoanRepository implements ILoanRepository {
 
     SessionFactory sessionFactory;
 
+    public LoanRepository(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
     @Override
     public Optional<Loan> retrieveLoanByLoanId(long loanId) {
         try (Session session = sessionFactory.openSession()) {
