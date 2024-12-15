@@ -22,10 +22,10 @@ public class LoanController {
     private SessionFactory sessionFactory = new SessionFactoryFactory().create();
     LoanRepository loanRepository = new LoanRepository(sessionFactory);
     LoanService loanService = new LoanService(loanRepository);
-    public LoanController() {}
 
 
     @Operation(summary = "Create a Loan", description = "Create a new Loan")
+    @PostMapping
     public ResponseEntity<Loan> store(@RequestParam long membershipId, @RequestParam long copyId) {
         Loan loan = loanService.store(membershipId, copyId);
         return new ResponseEntity<>(loan, HttpStatus.CREATED);

@@ -21,7 +21,8 @@ import java.util.Date;
 
         // Create a new reservation
         @Operation(summary = "Create a reservation", description = "Create a new reservation")
-        public ResponseEntity<Reservation> createReservation(@RequestParam long membershipId, @RequestParam long copyId) {
+        @PostMapping
+        public ResponseEntity<Reservation> store(@RequestParam long membershipId, @RequestParam long copyId) {
             Reservation reservation = reservationService.store(membershipId, copyId);
             return new ResponseEntity<>(reservation, HttpStatus.CREATED);
         }
