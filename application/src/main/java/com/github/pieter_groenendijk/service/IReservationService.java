@@ -7,12 +7,12 @@ import java.util.List;
 
 public interface IReservationService {
     Reservation createReservation(Reservation reservation);
-    Reservation getReservationById(int id);
+    Reservation getReservationById(long ReservationId);
     Reservation updateReservation(Reservation reservation);
-    void deleteReservation(int reservationId);
-    boolean readyForPickup(int reservationId);
+    void deleteReservation(long reservationId);
+    boolean readyForPickup(long reservationId);
     List<Reservation> getAllReservations();
-    List<Reservation> getReservationsByMembershipId(int membershipId);
+    List<Reservation> getReservationsByMembershipId(long membershipId);
 
     void handleExpiredReservations();
     void logUncollectedReservations();
