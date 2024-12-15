@@ -4,6 +4,7 @@ import com.github.pieter_groenendijk.hibernate.SessionFactoryFactory;
 import com.github.pieter_groenendijk.model.Account;
 import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.repository.LoanRepository;
+import com.github.pieter_groenendijk.service.LoanService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -18,13 +19,9 @@ import java.util.List;
 public class LoanController {
 
     private SessionFactory sessionFactory = new SessionFactoryFactory().create();
-
-    private LoanController()
-    {
-        LoanRepository loanRepository = new LoanRepository(sessionFactory);
-
-
-    }
+    LoanRepository loanRepository = new LoanRepository(sessionFactory);
+    LoanService loanService = new LoanService(loanRepository);
+    public LoanController() {}
 
     @Operation(summary = "Retrieve a loan", description = "Retrieve a loan by Id")
     @ApiResponses(value = {
@@ -49,8 +46,8 @@ public class LoanController {
 
     @Operation(summary = "Create a loan", description = "Add a new loan to the database")
     @PostMapping
-    public Loan createLoan(@RequestBody Account account) {
-        return loanService.storeLoan(long membershipId, long copyId);
+    public Loan createLoan(@RequestBody Loan loan) {
+        return loanService.store(loan);
     }
 }
 

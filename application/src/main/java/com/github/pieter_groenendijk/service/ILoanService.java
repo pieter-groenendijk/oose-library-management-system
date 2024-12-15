@@ -7,17 +7,18 @@ import java.util.List;
 
 
 public interface ILoanService {
-    Loan storeLoan(long membershipId, long copyId, Date newDueDate);
+    Loan store(Loan loan);
+
     Loan getLoanById(long loanId);
     Loan extendLoan(long loanId, Date dueDate);
     void cancelLoan(long loanId);
 
 
-    void generateDueDate(long membershipId, long copyId, Date dueDate);
+    void generateReturnByDate(long membershipId, long copyId, Date returnBy);
     void returnToCatalogue(long CopyId);
 
     void handleOverdueLoans();
-    boolean checkIsLate(long loanId, Date currentDate, Date dueDate);
+    boolean checkIsLate(long loanId, Date currentDate, Date returnBy);
     boolean checkIsDamaged(long loanId);
 
    List<Loan> retrieveLoanByMembershipId(long membershipId);
