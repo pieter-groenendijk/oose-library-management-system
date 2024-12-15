@@ -39,7 +39,7 @@ public class ReservationRepository implements IReservationRepository {
     @Override
     public Reservation store(Reservation reservation) {
         Session session = sessionFactory.openSession();
-        try {
+        try  {
             session.beginTransaction();
             session.persist(reservation);
             session.flush();

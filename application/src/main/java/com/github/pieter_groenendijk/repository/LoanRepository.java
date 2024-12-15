@@ -26,7 +26,7 @@ public class LoanRepository implements ILoanRepository {
     @Override
     public Optional<Loan> retrieveLoanByMembershipId(long membershipId) {
         try (Session session = sessionFactory.openSession()) {
-            Loan loan = session.get(Loan.class,membershipId);
+            Loan loan = session.get(Loan.class, membershipId);
             return Optional.ofNullable(loan);
         } catch (HibernateException e) {
             e.printStackTrace();
@@ -76,7 +76,7 @@ public class LoanRepository implements ILoanRepository {
     }
 
     @Override
-    public Loan deleteLoanByLoanId(long loanId) {
+    public void deleteLoanByLoanId(long loanId) {
         Session session = sessionFactory.openSession();
         try {
             session.beginTransaction();
@@ -87,7 +87,6 @@ public class LoanRepository implements ILoanRepository {
             } else {
                 System.out.println("Loan not found with LoanID: " + loanId);
             }
-            return loan;
         } catch (Exception e) {
             if (session.getTransaction() != null) {
                 session.getTransaction().rollback();
@@ -99,3 +98,4 @@ public class LoanRepository implements ILoanRepository {
         }
     }
 }
+
