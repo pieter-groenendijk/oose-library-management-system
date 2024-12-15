@@ -80,18 +80,13 @@ public class LoanRepository implements ILoanRepository {
         try {
             session.beginTransaction();
             Loan loan = session.get(Loan.class, loanId);
-            if (loan != null) {
-                session.remove(loan);
-                session.getTransaction().commit();
-            } else {
-                System.out.println("Loan not found with LoanID: " + loanId);
-            }
+            session.remove(loan);
+            session.getTransaction().commit();
         } catch (HibernateException e) {
             if (session.getTransaction() != null) {
                 session.getTransaction().rollback();
             }
             e.printStackTrace();
-            throw new RuntimeException("Failed to delete loan", e);
         } finally {
             session.close();
         }
