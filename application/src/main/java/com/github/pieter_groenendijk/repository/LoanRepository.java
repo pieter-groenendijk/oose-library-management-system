@@ -1,7 +1,6 @@
 package com.github.pieter_groenendijk.repository;
 
 import com.github.pieter_groenendijk.model.Loan;
-import com.github.pieter_groenendijk.model.Reservation;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -57,19 +56,19 @@ public class LoanRepository implements ILoanRepository {
     }
 
     @Override
-    public Loan updateLoan(Loan loan) {
+    public String updateLoan(Loan loan) {
         Session session = sessionFactory.openSession();
         try {
             session.beginTransaction();
             session.merge(loan);
             session.getTransaction().commit();
-            return loan;
+            return "Loan with LoanID: " + loan.getLoanId() + " updated successfully";
         } catch (HibernateException e) {
             if (session.getTransaction() != null) {
                 session.getTransaction().rollback();
             }
             e.printStackTrace();
-            throw new RuntimeException("Failed to update loan", e);
+            return "Failed to update loan";
         } finally {
             session.close();
         }
