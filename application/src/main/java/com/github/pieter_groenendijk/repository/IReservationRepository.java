@@ -7,7 +7,7 @@ import java.util.Optional;
 public interface IReservationRepository {
 
     Optional<Reservation> retrieveReservationById(long reservationId);
-    Optional<Reservation> retrieveReservationByMembershipId(long customerId);
+    Optional<Reservation> retrieveReservationByMembershipId(long membershipId);
 
     Reservation store(Reservation reservation);
     Reservation updateReservation(Reservation reservation);
