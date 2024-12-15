@@ -45,7 +45,7 @@ public class LoanRepository implements ILoanRepository {
 
             session.getTransaction().commit();
 
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (session.getTransaction() != null) {
                 session.getTransaction().rollback();
             }
@@ -64,7 +64,7 @@ public class LoanRepository implements ILoanRepository {
             session.merge(loan);
             session.getTransaction().commit();
             return loan;
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (session.getTransaction() != null) {
                 session.getTransaction().rollback();
             }
@@ -87,7 +87,7 @@ public class LoanRepository implements ILoanRepository {
             } else {
                 System.out.println("Loan not found with LoanID: " + loanId);
             }
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (session.getTransaction() != null) {
                 session.getTransaction().rollback();
             }
