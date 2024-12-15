@@ -52,4 +52,8 @@ public class Reservation {
     public void setMembershipId(Membership membershipId) {
         this.membershipId = membershipId;
     }
+
+    public void setId(long reservationId) {
+
+    }
 }

@@ -9,6 +9,8 @@ import java.util.List;
 public interface ILoanService {
     Loan store(Loan loan);
 
+    Loan store(long membershipId, long copyId);
+
     Loan getLoanById(long loanId);
     Loan extendLoan(long loanId, Date dueDate);
     void cancelLoan(long loanId);

@@ -5,7 +5,7 @@ import java.util.Date;
 
 
 public interface IReservationService {
-    Reservation createReservation(long membershipId, long copyId);
+    Reservation store(long membershipId, long copyId);
     Reservation getReservationById(long reservationId);
     Reservation updateReservation(Reservation reservation);
     void cancelReservation(long reservationId);
@@ -17,9 +17,11 @@ public interface IReservationService {
 
 
     void handleUncollectedReservations(long membershipId, Date currentDate);
+
     void logUncollectedReservations(long membershipId, Date currentDate);
 
 
+    void removeReservation(long reservationId);
 
-
+    Date getPickupDate(long reservationId);
 }

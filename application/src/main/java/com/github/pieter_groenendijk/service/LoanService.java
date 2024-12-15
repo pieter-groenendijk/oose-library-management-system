@@ -16,6 +16,12 @@ public class LoanService implements ILoanService {
     }
 
     @Override
+    public Loan store(long membershipId, long copyId) {
+        return null;
+    }
+
+
+    @Override
     public Loan getLoanById(long loanId) {
         return null;
     }
@@ -64,5 +70,6 @@ public class LoanService implements ILoanService {
     public Loan retrieveLoanByLoanId(long loanId) {
         return null;
     }
+
 
 }
