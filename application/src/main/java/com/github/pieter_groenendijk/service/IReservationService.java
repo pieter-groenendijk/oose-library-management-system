@@ -1,23 +1,25 @@
 package com.github.pieter_groenendijk.service;
-
-import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.model.Reservation;
 
-import java.util.List;
+import java.util.Date;
+
 
 public interface IReservationService {
-    Reservation createReservation(Reservation reservation);
-    Reservation getReservationById(long ReservationId);
+    Reservation createReservation(long membershipId, long copyId);
+    Reservation getReservationById(long reservationId);
     Reservation updateReservation(Reservation reservation);
-    void deleteReservation(long reservationId);
+    void cancelReservation(long reservationId);
+
+
     boolean readyForPickup(long reservationId);
-    List<Reservation> getAllReservations();
-    List<Reservation> getReservationsByMembershipId(long membershipId);
+    Date generateReservationPickUpDate(long reservationId);
 
-    void handleExpiredReservations();
-    void logUncollectedReservations();
 
-    Loan convertReservationToLoan(long reservationId);
+
+    void handleUncollectedReservations(long membershipId, Date currentDate);
+    void logUncollectedReservations(long membershipId, Date currentDate);
+
+
 
 
 }

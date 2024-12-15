@@ -9,7 +9,7 @@ public interface ILoanService {
     Loan createLoan(long membershipId, long copyId, Date newDueDate);
     Loan getLoanById(long loanId);
     Loan extendLoan(long loanId, Date dueDate);
-    void deleteLoan(long loanId);
+    void cancelLoan(long loanId);
 
 
     void generateDueDate(long membershipId, long copyId, Date dueDate);
