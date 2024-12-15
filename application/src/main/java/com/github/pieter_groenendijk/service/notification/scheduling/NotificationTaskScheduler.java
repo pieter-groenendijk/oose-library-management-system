@@ -18,7 +18,7 @@ public class NotificationTaskScheduler {
     private final NotificationSendStrategyRegistry SEND_STRATEGY_REGISTRY;
 
     private final Duration RETRIEVE_INTERVAL = Duration.ofMinutes(5);
-    private final HashSet<NotificationTask> handledManually = new HashSet<>();
+    private final HashSet<NotificationTask> HANDLED_MANUALLY = new HashSet<>();
 
     public NotificationTaskScheduler(TaskScheduler scheduler, INotificationTaskRepository repository, NotificationSendStrategyRegistry sendStrategyRegistry) {
         this.SCHEDULER = scheduler;
@@ -51,7 +51,7 @@ public class NotificationTaskScheduler {
 
     private void maybeScheduleFromDatabase(NotificationTask task) {
         if (isHandledManually(task)) { // TODO: Maybe it's worth not having directScheduling(.scheduleDirectlyInMemory()), a low enough retrieve interval could make it okay.
-            handledManually.remove(task);
+            HANDLED_MANUALLY.remove(task);
             return;
         }
 
@@ -65,7 +65,7 @@ public class NotificationTaskScheduler {
     }
 
     private void scheduleDirectlyInMemory(NotificationTask task) {
-        this.handledManually.add(task);
+        this.HANDLED_MANUALLY.add(task);
 
         this.scheduleInMemory(task);
     }
@@ -86,7 +86,7 @@ public class NotificationTaskScheduler {
     }
 
     private boolean isHandledManually(NotificationTask task) {
-        return handledManually.contains(task);
+        return HANDLED_MANUALLY.contains(task);
     }
 
     private LocalDateTime getScheduledUntilDateTime() {

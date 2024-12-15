@@ -4,23 +4,23 @@ package com.github.pieter_groenendijk.service.notification.send_strategies.regis
 import com.github.pieter_groenendijk.service.notification.send_strategies.*;
 
 public class NotificationSendStrategyRegistry {
-    private final AlertNotificationSendStrategy alertNotificationSendStrategy;
-    private final WarningNotificationSendStrategy warningNotificationSendStrategy;
-    private final ReminderNotificationSendStrategy reminderNotificationSendStrategy;
+    private final AlertNotificationSendStrategy ALERT_STRATEGY;
+    private final WarningNotificationSendStrategy WARNING_STRATEGY;
+    private final ReminderNotificationSendStrategy REMINDER_STRATEGY;
 
     public NotificationSendStrategyRegistry(
         NotificationSendStrategyFactory factory
     ) {
-        this.alertNotificationSendStrategy = factory.createAlertStrategy();
-        this.warningNotificationSendStrategy = factory.createWarningStrategy();
-        this.reminderNotificationSendStrategy = factory.createReminderStrategy();
+        this.ALERT_STRATEGY = factory.createAlertStrategy();
+        this.WARNING_STRATEGY = factory.createWarningStrategy();
+        this.REMINDER_STRATEGY = factory.createReminderStrategy();
     }
 
     public NotificationSendStrategy fromStrategyType(SendStrategyType type) {
         return switch (type) {
-            case ALERT -> alertNotificationSendStrategy;
-            case WARNING -> warningNotificationSendStrategy;
-            case REMINDER -> reminderNotificationSendStrategy;
+            case ALERT -> ALERT_STRATEGY;
+            case WARNING -> WARNING_STRATEGY;
+            case REMINDER -> REMINDER_STRATEGY;
         };
     }
 }
