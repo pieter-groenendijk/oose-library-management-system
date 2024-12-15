@@ -37,14 +37,14 @@ public class ReservationRepository implements IReservationRepository {
     }
 
     @Override
-    public Reservation store(Reservation reservation) {
+    public void store(Reservation reservation) {
         Session session = sessionFactory.openSession();
-        try  {
+        try {
             session.beginTransaction();
             session.persist(reservation);
             session.flush();
             session.getTransaction().commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (session.getTransaction() != null) {
                 session.getTransaction().rollback();
             }
@@ -52,9 +52,7 @@ public class ReservationRepository implements IReservationRepository {
         } finally {
             session.close();
         }
-        return reservation;
     }
-
     @Override
     public String updateReservation(Reservation reservation) {
         Session session = sessionFactory.openSession();
@@ -75,26 +73,20 @@ public class ReservationRepository implements IReservationRepository {
     }
 
     @Override
-    public Reservation deleteReservationById(long reservationId) {
+    public void deleteReservationById(long reservationId) {
         Session session = sessionFactory.openSession();
         try {
             session.beginTransaction();
             Reservation reservation = session.get(Reservation.class, reservationId);
-            if (reservation != null) {
-                session.remove(reservation);
-                session.getTransaction().commit();
-            } else {
-                System.out.println("Reservation not found with ReservationID: " + reservationId);
-            }
-            return reservation;
-        } catch (Exception e) {
-            if (session.getTransaction() != null) {
-                session.getTransaction().rollback();
-            }
-            e.printStackTrace();
-            throw new RuntimeException("Failed to delete reservation", e);
-        } finally {
-            session.close();
+            session.remove(reservation);
+            session.getTransaction().commit();
+            } catch (HibernateException e) {
+                if (session.getTransaction() != null) {
+                    session.getTransaction().rollback();
+                }
+                e.printStackTrace();
+            } finally {
+                session.close();
         }
     }
 }

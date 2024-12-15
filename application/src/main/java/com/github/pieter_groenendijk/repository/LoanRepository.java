@@ -38,16 +38,13 @@ public class LoanRepository implements ILoanRepository {
     }
 
     @Override
-    public Loan store(Loan loan) {
+    public void store(Loan loan) {
         Session session = sessionFactory.openSession();
-
         try {
             session.beginTransaction();
             session.persist(loan);
             session.flush();
-
             session.getTransaction().commit();
-
         } catch (HibernateException e) {
             if (session.getTransaction() != null) {
                 session.getTransaction().rollback();
@@ -56,7 +53,6 @@ public class LoanRepository implements ILoanRepository {
         } finally {
             session.close();
         }
-        return loan;
     }
 
     @Override

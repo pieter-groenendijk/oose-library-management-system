@@ -8,7 +8,7 @@ public interface ILoanRepository {
 
     Optional<Loan> retrieveLoanByLoanId(long loanId);
     Optional<Loan> retrieveLoanByMembershipId(long MembershipId);
-    Loan store(Loan loan);
+    void store(Loan loan);
     String updateLoan(Loan loan);
     void deleteLoanByLoanId(long loanId);
 
