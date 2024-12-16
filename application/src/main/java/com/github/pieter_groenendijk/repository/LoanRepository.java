@@ -56,19 +56,19 @@ public class LoanRepository implements ILoanRepository {
     }
 
     @Override
-    public String updateLoan(Loan loan) {
+    public void updateLoan(Loan loan) {
         Session session = sessionFactory.openSession();
         try {
             session.beginTransaction();
             session.merge(loan);
             session.getTransaction().commit();
-            return "Loan with LoanID: " + loan.getLoanId() + " updated successfully";
+
         } catch (HibernateException e) {
             if (session.getTransaction() != null) {
                 session.getTransaction().rollback();
             }
             e.printStackTrace();
-            return "Failed to update loan";
+     
         } finally {
             session.close();
         }

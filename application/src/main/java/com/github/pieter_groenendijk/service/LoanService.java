@@ -2,9 +2,11 @@ package com.github.pieter_groenendijk.service;
 
 import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.repository.LoanRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+
 
 public class LoanService implements ILoanService {
     public LoanService(LoanRepository loanRepository) {
@@ -68,6 +70,11 @@ public class LoanService implements ILoanService {
 
     @Override
     public Loan retrieveLoanByLoanId(long loanId) {
+        return null;
+    }
+
+    @Override
+    public List<Loan> retrieveActiveLoansByMembershipId(long membershipId) {
         return null;
     }
 

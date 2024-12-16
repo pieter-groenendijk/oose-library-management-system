@@ -47,7 +47,7 @@ public class LoanController {
         if (loan != null) {
             return new ResponseEntity<>(loan, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(null, HttpStatus.OK);
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         }
     }
 
@@ -57,12 +57,12 @@ public class LoanController {
             @ApiResponse(responseCode = "204", description = "No loans found for the given membershipId\"")
     })
     @GetMapping("/member/{membershipId}")
-    public ResponseEntity<List<Loan>> retrieveLoanByMembershipId(@PathVariable("membershipId") long membershipId) {
-        List<Loan> loans = loanService.retrieveLoanByMembershipId(membershipId);
+    public ResponseEntity<List<Loan>> retrieveActiveLoansByMembershipId(@PathVariable("membershipId") long membershipId) {
+        List<Loan> loans = loanService.retrieveActiveLoansByMembershipId(membershipId);
         if (!loans.isEmpty()) {
             return new ResponseEntity<>(loans, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         }
     }
 }

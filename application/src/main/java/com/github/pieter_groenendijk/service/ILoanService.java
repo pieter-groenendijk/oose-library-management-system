@@ -26,4 +26,6 @@ public interface ILoanService {
    List<Loan> retrieveLoanByMembershipId(long membershipId);
 
     Loan retrieveLoanByLoanId(long loanId);
+
+    List<Loan> retrieveActiveLoansByMembershipId(long membershipId);
 }
