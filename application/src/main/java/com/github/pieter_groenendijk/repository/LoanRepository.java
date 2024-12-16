@@ -68,7 +68,7 @@ public class LoanRepository implements ILoanRepository {
                 session.getTransaction().rollback();
             }
             e.printStackTrace();
-     
+
         } finally {
             session.close();
         }
