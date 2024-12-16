@@ -2,16 +2,19 @@ package com.github.pieter_groenendijk.service;
 
 import com.github.pieter_groenendijk.model.Account;
 import com.github.pieter_groenendijk.model.MembershipType;
+import com.github.pieter_groenendijk.model.Membership;
 import com.github.pieter_groenendijk.repository.IAccountRepository;
 import com.github.pieter_groenendijk.repository.IMembershipTypeRepository;
+import com.github.pieter_groenendijk.repository.IMembershipRepository;
 import com.github.pieter_groenendijk.exception.EntityNotFoundException;
 import com.github.pieter_groenendijk.exception.InputValidationException;
 import com.github.pieter_groenendijk.service.validator.EmailValidator;
 import com.github.pieter_groenendijk.service.validator.GenderCheck;
+import com.github.pieter_groenendijk.service.IAccountService;
 import java.time.LocalDate;
 import java.time.ZoneId;
 
-public class AccountService {
+public class AccountService implements IAccountService {
 
     private final IAccountRepository accountRepository;
     private final IMembershipTypeRepository membershipTypeRepository;

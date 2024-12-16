@@ -7,13 +7,17 @@ import com.github.pieter_groenendijk.repository.IMembershipTypeRepository;
 import com.github.pieter_groenendijk.model.Membership;
 import com.github.pieter_groenendijk.repository.IMembershipRepository;
 
-public interface IAccountService(IAccountRepository accountRepository, IMembershipTypeRepository membershipTypeRepository) 
-{
-	public Account retrieveAccountById(long id);
-	public MembershipType retrieveMembershipTypeById(long id);
-	public Account store(Account account);
-	public MembershipType store(MembershipType membershipType);
-	private boolean isAccountInputValid(Account account);
-	public Membership retrieveMembershipById(long id);
-	public Membership store(Membership membership);
+public interface IAccountService {
+
+    Account retrieveAccountById(long id);
+    
+    MembershipType retrieveMembershipTypeById(long id);
+    
+    Account store(Account account);
+    
+    MembershipType store(MembershipType membershipType);
+    
+    Membership retrieveMembershipById(long id);
+    
+    Membership store(Membership membership);
 }

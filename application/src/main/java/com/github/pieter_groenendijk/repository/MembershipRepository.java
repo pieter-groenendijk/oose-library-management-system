@@ -5,14 +5,14 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import java.util.Optional;
 
-public class MembershipRepository {
+public class MembershipRepository implements IMembershipRepository{
 	private SessionFactory sessionFactory;
 
 	public MembershipRepository(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
 
-	public Optional<MembershipType> retrieveMembershipById(long id) {
+	public Optional<Membership> retrieveMembershipById(long id) {
 		Session session = sessionFactory.openSession();
 		Membership membership;
 
