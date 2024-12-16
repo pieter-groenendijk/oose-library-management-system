@@ -15,10 +15,12 @@ public class AccountService {
 
     private final IAccountRepository accountRepository;
     private final IMembershipTypeRepository membershipTypeRepository;
+    private final IMembershipRepository membershipRepository;
 
-    public AccountService(IAccountRepository accountRepository, IMembershipTypeRepository membershipTypeRepository) {
+    public AccountService(IAccountRepository accountRepository, IMembershipTypeRepository membershipTypeRepository, IMembershipRepository membershipRepository) {
         this.accountRepository = accountRepository;
         this.membershipTypeRepository = membershipTypeRepository;
+        this.membershipRepository = membershipRepository;
     }
 
     public Account retrieveAccountById(long id) {
