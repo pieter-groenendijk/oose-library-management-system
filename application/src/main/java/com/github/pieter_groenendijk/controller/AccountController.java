@@ -5,6 +5,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import com.github.pieter_groenendijk.service.AccountService;
 import com.github.pieter_groenendijk.repository.AccountRepository;
 import com.github.pieter_groenendijk.repository.MembershipTypeRepository;
+import com.github.pieter_groenendijk.repository.IAccountRepository;
+import com.github.pieter_groenendijk.repository.IMembershipTypeRepository;
 import com.github.pieter_groenendijk.model.Account;
 import com.github.pieter_groenendijk.model.MembershipType;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -21,8 +23,8 @@ public class AccountController {
 
     private AccountController()
     {
-        AccountRepository accountRepository = new AccountRepository(sessionFactory);
-        MembershipTypeRepository membershipTypeRepository = new MembershipTypeRepository(sessionFactory);
+        IAccountRepository accountRepository = new AccountRepository(sessionFactory);
+        IMembershipTypeRepository membershipTypeRepository = new MembershipTypeRepository(sessionFactory);
         accountService = new AccountService(accountRepository, membershipTypeRepository);
     }
 
