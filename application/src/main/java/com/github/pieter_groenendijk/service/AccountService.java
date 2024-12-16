@@ -55,4 +55,13 @@ public class AccountService {
         }
         return true;
     }
+
+    public Membership retrieveMembershipById(long id){
+        return membershipRepository.retrieveMembershipById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Membership with ID " + id + " not found."));
+    }
+
+    public Membership store(Membership membership){
+        return membershipRepository.store(membership);
+    }
 }

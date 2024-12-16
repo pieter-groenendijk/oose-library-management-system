@@ -2,8 +2,10 @@ package com.github.pieter_groenendijk.service;
 
 import com.github.pieter_groenendijk.model.Account;
 import com.github.pieter_groenendijk.model.MembershipType;
-import com.github.pieter_groenendijk.model.IAccountRepository;
-import com.github.pieter_groenendijk.model.IMembershipTypeRepository;
+import com.github.pieter_groenendijk.repository.IAccountRepository;
+import com.github.pieter_groenendijk.repository.IMembershipTypeRepository;
+import com.github.pieter_groenendijk.model.Membership;
+import com.github.pieter_groenendijk.repository.IMembershipRepository;
 
 public interface IAccountService(IAccountRepository accountRepository, IMembershipTypeRepository membershipTypeRepository) 
 {
@@ -12,4 +14,6 @@ public interface IAccountService(IAccountRepository accountRepository, IMembersh
 	public Account store(Account account);
 	public MembershipType store(MembershipType membershipType);
 	private boolean isAccountInputValid(Account account);
+	public Membership retrieveMembershipById(long id);
+	public Membership store(Membership membership);
 }
