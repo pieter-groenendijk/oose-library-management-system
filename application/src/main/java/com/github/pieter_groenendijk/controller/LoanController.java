@@ -3,7 +3,7 @@ package com.github.pieter_groenendijk.controller;
 import com.github.pieter_groenendijk.hibernate.SessionFactoryFactory;
 import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.repository.LoanRepository;
-import com.github.pieter_groenendijk.service.LoanService;
+import com.github.pieter_groenendijk.service.ILoanService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -13,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -21,8 +20,8 @@ import java.util.List;
 public class LoanController {
 
     private SessionFactory sessionFactory = new SessionFactoryFactory().create();
-    LoanRepository loanRepository = new LoanRepository(sessionFactory);
-    LoanService loanService = new LoanService(loanRepository);
+    private LoanRepository loanRepository = new LoanRepository(sessionFactory);
+    private ILoanService loanService;
 
 
     @Operation(summary = "Create a Loan", description = "Create a new Loan")

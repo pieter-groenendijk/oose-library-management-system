@@ -3,6 +3,7 @@ package com.github.pieter_groenendijk.controller;
 
 import com.github.pieter_groenendijk.model.Reservation;
 import com.github.pieter_groenendijk.service.IReservationService;
+import com.github.pieter_groenendijk.service.ReservationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
