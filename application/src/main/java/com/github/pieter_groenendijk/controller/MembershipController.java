@@ -10,6 +10,7 @@ import com.github.pieter_groenendijk.repository.MembershipRepository;
 import com.github.pieter_groenendijk.repository.IAccountRepository;
 import com.github.pieter_groenendijk.repository.IMembershipTypeRepository;
 import com.github.pieter_groenendijk.repository.IMembershipRepository;
+import com.github.pieter_groenendijk.model.DTO.MembershipRequestDTO;
 import com.github.pieter_groenendijk.model.Account;
 import com.github.pieter_groenendijk.model.MembershipType;
 import com.github.pieter_groenendijk.model.Membership;
