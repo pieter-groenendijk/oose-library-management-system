@@ -1,15 +1,22 @@
 package com.github.pieter_groenendijk.service;
 
 import com.github.pieter_groenendijk.model.Reservation;
+import com.github.pieter_groenendijk.repository.IReservationRepository;
 import com.github.pieter_groenendijk.repository.ReservationRepository;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 
 public class ReservationService implements IReservationService {
+    private static final long PICKUP_DAYS = 7;
+    private static final long PICKUP_EXPIRY_DAYS = 14;
+    private IReservationRepository reservationRepository;
 
-    public ReservationService(ReservationRepository reservationRepository) {
-
+    public ReservationService(IReservationRepository reservationRepository) {
+        this.reservationRepository = reservationRepository;
     }
+
 
     @Override
     public Reservation store(long membershipId, long copyId) {
@@ -33,12 +40,29 @@ public class ReservationService implements IReservationService {
 
     @Override
     public boolean readyForPickup(long reservationId) {
-        return false;
+        return reservationRepository.retrieveReservationById(reservationId)
+                .map(reservation -> {
+                    LocalDate reservationDate = toLocalDate(reservation.getReservationDate());
+                    LocalDate pickUpStartDate = reservationDate.plusDays(PICKUP_DAYS);
+                    LocalDate pickUpEndDate = reservationDate.plusDays(PICKUP_EXPIRY_DAYS);
+                    LocalDate today = LocalDate.now();
+
+                    System.out.println("pickUpStartDate: " + pickUpStartDate);
+                    System.out.println("pickUpEndDate: " + pickUpEndDate);
+                    System.out.println("today: " + today);
+                    return !today.isBefore(pickUpStartDate) && !today.isAfter(pickUpEndDate);
+                })
+                .orElse(false);
+    }
+
+    private LocalDate toLocalDate(Date date) {
+        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     }
 
     @Override
     public Date generateReservationPickUpDate(long reservationId) {
-        return null;
+        LocalDate localDate = LocalDate.now().plusDays(PICKUP_DAYS);
+        return java.util.Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 
     @Override
@@ -58,6 +82,6 @@ public class ReservationService implements IReservationService {
 
     @Override
     public Date getPickupDate(long reservationId) {
-        return null;
+        return generateReservationPickUpDate(reservationId);
     }
 }
