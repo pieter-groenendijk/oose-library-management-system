@@ -27,7 +27,7 @@ services:
         restart: "no"
         develop:
             watch:
-                - path: "src"
+                - path: "core/src"
                   action: sync+restart
                   target: "/app/src"
     core-tester:
@@ -38,6 +38,6 @@ services:
             - core
         develop:
             watch:
-                - path: "src"
+                - path: "core/src"
                   action: sync+restart
                   target: "/app/src"
