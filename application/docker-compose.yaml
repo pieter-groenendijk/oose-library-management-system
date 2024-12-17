@@ -2,7 +2,7 @@ services:
     database:
         build:
             context: "."
-            dockerfile: "docker/database/database.dockerfile"
+            dockerfile: "_docker/database/database.dockerfile"
         environment:
             POSTGRES_USER: ${DATABASE_USER}
             POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
@@ -13,7 +13,7 @@ services:
     core:
         build:
             context: "."
-            dockerfile: "docker/core/core.dockerfile"
+            dockerfile: "_docker/core/core.dockerfile"
         depends_on:
             - database
         environment:
@@ -33,7 +33,7 @@ services:
     core-tester:
         build:
             context: "."
-            dockerfile: "docker/core-tester/core-tester.dockerfile"
+            dockerfile: "_docker/core-tester/core-tester.dockerfile"
         depends_on:
             - core
         develop:
