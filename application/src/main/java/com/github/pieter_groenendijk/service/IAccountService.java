@@ -19,5 +19,5 @@ public interface IAccountService {
     
     Membership retrieveMembershipById(long id);
     
-    Membership store(Membership membership);
+    Membership store(MembershipDTO request);
 }

@@ -25,7 +25,7 @@ public class MembershipController{
 	private IAccountService accountService;
 	private SessionFactory sessionFactory = new SessionFactoryFactory().create();
 
-	private MembershipController()
+	public MembershipController()
 	{
 		IAccountRepository accountRepository = new AccountRepository(sessionFactory);
         IMembershipTypeRepository membershipTypeRepository = new MembershipTypeRepository(sessionFactory);
@@ -46,7 +46,7 @@ public class MembershipController{
 
     @Operation(summary = "Create a membership", description = "Add a new membership to the database")
     @PostMapping
-    public Membership createMembership(@RequestBody Membership membership) {
-        return accountService.store(membership);
+    public Membership createMembership(@RequestBody MembershipDTO request) {
+        return accountService.store(request);
     }
 }
