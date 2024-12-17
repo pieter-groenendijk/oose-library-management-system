@@ -10,10 +10,10 @@ services:
         ports:
             - ${DATABASE_PORT}:${DATABASE_PORT}
         restart: "on-failure"
-    service-data-layer:
+    core:
         build:
             context: "."
-            dockerfile: "docker/service-data-layer/service-data-layer.dockerfile"
+            dockerfile: "docker/core/core.dockerfile"
         depends_on:
             - database
         environment:
@@ -30,12 +30,12 @@ services:
                 - path: "src"
                   action: sync+restart
                   target: "/app/src"
-    application-tester:
+    core-tester:
         build:
             context: "."
-            dockerfile: "docker/application-tester/application-tester.dockerfile"
+            dockerfile: "docker/core-tester/core-tester.dockerfile"
         depends_on:
-            - service-data-layer
+            - core
         develop:
             watch:
                 - path: "src"
