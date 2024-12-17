@@ -41,3 +41,9 @@ services:
                 - path: "core/src"
                   action: sync+restart
                   target: "/app/src"
+    web-ui:
+        build:
+            context: "."
+            dockerfile: "_docker/web-ui/web-ui.dockerfile"
+        depends_on:
+            -   core
