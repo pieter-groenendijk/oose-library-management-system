@@ -4,10 +4,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.pieter_groenendijk</groupId>
-    <artifactId>library-management</artifactId>
+    <artifactId>library-management-core</artifactId>
     <version>1.0-SNAPSHOT</version>
-
-    <name>library-management</name>
+    <name>Library Management Core Service</name>
 
 <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
