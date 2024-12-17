@@ -52,3 +52,14 @@ services:
                 -   path: "web-ui/src"
                     action: sync+restart
                     target: "/app/src"
+    web-ui-tester:
+        build:
+            context: "."
+            dockerfile: "_docker/web-ui-tester/web-ui-tester.dockerfile"
+        depends_on:
+            -   web-ui
+        develop:
+            watch:
+                -   path: "web-ui/src"
+                    action: sync+restart
+                    target: "/app/src"
