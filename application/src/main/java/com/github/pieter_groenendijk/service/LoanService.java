@@ -12,11 +12,13 @@ public class LoanService implements ILoanService {
 
 
     public LoanService(ILoanRepository loanRepository) {
+        this.loanRepository = loanRepository;
     }
 
     @Override
     public Loan store(Loan loan) {
         return null;
+        //return loanRepository.store(new Loan());
     }
 
     @Override

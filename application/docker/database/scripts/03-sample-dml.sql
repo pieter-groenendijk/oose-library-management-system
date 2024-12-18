@@ -41,3 +41,8 @@ INSERT INTO "Membership" ("accountId", "membershipTypeId", "isActive", "startDat
 (1, 5, TRUE, '2023-06-01', '2024-05-31'),
 (6, 3, TRUE, '2023-03-15', '2024-03-14'),
 (3, 4, FALSE, '2022-08-01', '2023-07-31');
+
+INSERT INTO "Loan" ("startDate", "returnBy", "returnedOn", "loanStatus", "membershipId", "productId") VALUES
+('2024-01-01', '2024-01-15', NULL, 'Borrowed', 1, 1),
+('2024-02-01', '2024-02-14', '2024-02-10', 'Returned', 1, 2),
+('2024-03-01', '2024-03-15', NULL, 'Overdue', 1, 3);
