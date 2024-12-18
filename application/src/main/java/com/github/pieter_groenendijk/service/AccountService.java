@@ -68,7 +68,7 @@ public class AccountService implements IAccountService {
                 .orElseThrow(() -> new EntityNotFoundException("Membership with ID " + id + " not found."));
     }
 
-    public Membership store(MembershipDTO request){
+    public Membership store(MembershipRequestDTO request){
         //Validate input
         Account account = accountRepository.retrieveAccountById(request.getAccountId())
         .orElseThrow(() -> new EntityNotFoundException("Account with ID " + request.getAccountId() + "not found."));
