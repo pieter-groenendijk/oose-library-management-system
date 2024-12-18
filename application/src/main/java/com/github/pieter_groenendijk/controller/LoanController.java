@@ -1,9 +1,12 @@
 package com.github.pieter_groenendijk.controller;
 
+import com.github.pieter_groenendijk.exception.EntityNotFoundException;
 import com.github.pieter_groenendijk.hibernate.SessionFactoryFactory;
 import com.github.pieter_groenendijk.model.Loan;
+import com.github.pieter_groenendijk.repository.ILoanRepository;
 import com.github.pieter_groenendijk.repository.LoanRepository;
 import com.github.pieter_groenendijk.service.ILoanService;
+import com.github.pieter_groenendijk.service.LoanService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -13,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -20,18 +24,31 @@ import java.util.List;
 public class LoanController {
 
     private SessionFactory sessionFactory = new SessionFactoryFactory().create();
-    private LoanRepository loanRepository = new LoanRepository(sessionFactory);
+
     private ILoanService loanService;
 
+    private LoanController() {
+        ILoanRepository loanRepository = new LoanRepository(sessionFactory);
+        loanService = new LoanService(loanRepository);
+
+    }
 
     @Operation(summary = "Create a Loan", description = "Create a new Loan")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Loan created")
+            @ApiResponse(responseCode = "201", description = "Loan created"),
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "404", description = "Membership or Product not found")
     })
-    @PostMapping
-    public ResponseEntity<Loan> store(@RequestParam long membershipId, @RequestParam long copyId) {
-        Loan loan = loanService.store(membershipId, copyId);
-        return new ResponseEntity<>(loan, HttpStatus.CREATED);
+    @PostMapping("/loans/{membershipId}/{copyId}")
+    public ResponseEntity<Loan> store(@PathVariable long membershipId, @PathVariable long copyId) {
+        try {
+            Loan loan = loanService.store(membershipId, copyId);
+            return new ResponseEntity<>(loan, HttpStatus.CREATED);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
     }
 
 
@@ -52,16 +69,16 @@ public class LoanController {
 
     @Operation(summary = "Retrieve all loans for a member", description = "Retrieve loans by membershipId")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Account found"),
+            @ApiResponse(responseCode = "200", description = "Loan(s) for MembershipId found"),
             @ApiResponse(responseCode = "204", description = "No loans found for the given membershipId\"")
     })
-    @GetMapping("/member/{membershipId}")
+    @GetMapping("/{membershipId}")
     public ResponseEntity<List<Loan>> retrieveActiveLoansByMembershipId(@PathVariable("membershipId") long membershipId) {
         List<Loan> loans = loanService.retrieveActiveLoansByMembershipId(membershipId);
         if (!loans.isEmpty()) {
             return new ResponseEntity<>(loans, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(Collections.emptyList(), HttpStatus.NO_CONTENT);
         }
     }
 }

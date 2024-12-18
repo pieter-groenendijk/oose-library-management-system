@@ -1,15 +1,17 @@
 package com.github.pieter_groenendijk.service;
 
 import com.github.pieter_groenendijk.model.Loan;
-import com.github.pieter_groenendijk.repository.LoanRepository;
-import org.springframework.stereotype.Service;
-
+import com.github.pieter_groenendijk.repository.ILoanRepository;
 import java.util.Date;
 import java.util.List;
 
 
 public class LoanService implements ILoanService {
-    public LoanService(LoanRepository loanRepository) {
+
+    private ILoanRepository loanRepository;
+
+
+    public LoanService(ILoanRepository loanRepository) {
     }
 
     @Override
@@ -19,7 +21,7 @@ public class LoanService implements ILoanService {
 
     @Override
     public Loan store(long membershipId, long copyId) {
-        return null;
+return null;
     }
 
 
