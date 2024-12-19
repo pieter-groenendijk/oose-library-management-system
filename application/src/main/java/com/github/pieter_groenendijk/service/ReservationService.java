@@ -10,8 +10,8 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 
-import static com.github.pieter_groenendijk.service.LibraryConstants.PICKUP_DAYS;
-import static com.github.pieter_groenendijk.service.LibraryConstants.PICKUP_EXPIRY_DAYS;
+import static com.github.pieter_groenendijk.service.ServiceUtils.PICKUP_DAYS;
+import static com.github.pieter_groenendijk.service.ServiceUtils.PICKUP_EXPIRY_DAYS;
 
 public class ReservationService implements IReservationService {
 

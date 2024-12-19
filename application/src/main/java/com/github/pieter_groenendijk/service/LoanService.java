@@ -9,9 +9,8 @@ import java.time.ZoneId;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import static com.github.pieter_groenendijk.service.LibraryConstants.LOAN_LENGTH;
+import static com.github.pieter_groenendijk.service.ServiceUtils.LOAN_LENGTH;
 
 
 public class LoanService implements ILoanService {
