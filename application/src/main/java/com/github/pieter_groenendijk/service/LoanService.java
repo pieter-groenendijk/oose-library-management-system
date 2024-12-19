@@ -79,7 +79,7 @@ return null;
     @Override
     public List<Loan> retrieveActiveLoansByMembershipId(long membershipId) {
         try {
-            List<Loan> loans = loanRepository.retrieveLoansByMembershipId(membershipId);
+            List<Loan> loans = loanRepository.retrieveActiveLoansByMembershipId(membershipId);
             return loans.stream()
                     .filter(loan -> "ACTIVE".equalsIgnoreCase(loan.getLoanStatus()))
                     .collect(Collectors.toList());
