@@ -2,8 +2,11 @@ package com.github.pieter_groenendijk.service;
 
 import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.repository.ILoanRepository;
+
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class LoanService implements ILoanService {
@@ -67,10 +70,6 @@ return null;
         return false;
     }
 
-    @Override
-    public List<Loan> retrieveLoanByMembershipId(long membershipId) {
-        return null;
-    }
 
     @Override
     public Loan retrieveLoanByLoanId(long loanId) {
@@ -79,8 +78,14 @@ return null;
 
     @Override
     public List<Loan> retrieveActiveLoansByMembershipId(long membershipId) {
-        return null;
+        try {
+            List<Loan> loans = loanRepository.retrieveLoansByMembershipId(membershipId);
+            return loans.stream()
+                    .filter(loan -> "ACTIVE".equalsIgnoreCase(loan.getLoanStatus()))
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
     }
-
-
 }

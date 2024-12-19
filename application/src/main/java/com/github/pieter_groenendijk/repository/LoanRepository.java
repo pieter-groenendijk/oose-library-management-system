@@ -5,6 +5,9 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 public class LoanRepository implements ILoanRepository {
@@ -27,15 +30,18 @@ public class LoanRepository implements ILoanRepository {
     }
 
     @Override
-    public Optional<Loan> retrieveLoanByMembershipId(long membershipId) {
+    public List<Loan> retrieveActiveLoansByMembershipId(long membershipId) {
         try (Session session = sessionFactory.openSession()) {
-            Loan loan = session.get(Loan.class, membershipId);
-            return Optional.ofNullable(loan);
+            return session.createQuery(
+                    "FROM Loan l WHERE l.membership.membershipId = :membershipId", Loan.class)
+                    .setParameter("membershipId", membershipId)
+                    .list();
         } catch (HibernateException e) {
             e.printStackTrace();
-            return Optional.empty();
+            return Collections.emptyList();
         }
     }
+
 
     @Override
     public void store(Loan loan) {

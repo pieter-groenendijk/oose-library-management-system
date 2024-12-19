@@ -67,13 +67,13 @@ public class LoanController {
         }
     }
 
-    @Operation(summary = "Retrieve all loans for a member", description = "Retrieve loans by membershipId")
+    @Operation(summary = "Retrieve all loans for a membership", description = "Retrieve loans by membershipId")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Loan(s) for MembershipId found"),
             @ApiResponse(responseCode = "204", description = "No loans found for the given membershipId\"")
     })
-    @GetMapping("/{membershipId}")
-    public ResponseEntity<List<Loan>> retrieveActiveLoansByMembershipId(@PathVariable("membershipId") long membershipId) {
+    @GetMapping("/{Id}")
+    public ResponseEntity<List<Loan>> retrieveActiveLoansByMembershipId(@PathVariable("Id") long membershipId) {
         List<Loan> loans = loanService.retrieveActiveLoansByMembershipId(membershipId);
         if (!loans.isEmpty()) {
             return new ResponseEntity<>(loans, HttpStatus.OK);
