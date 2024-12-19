@@ -8,7 +8,6 @@ public interface IReservationService {
     Reservation store(long membershipId, long copyId);
     Reservation getReservationById(long reservationId);
     Reservation updateReservation(Reservation reservation);
-    void cancelReservation(long reservationId);
 
     boolean readyForPickup(long reservationId);
     Date generateReservationPickUpDate(long reservationId);
@@ -17,5 +16,4 @@ public interface IReservationService {
 
     void removeReservation(long reservationId);
 
-    Date getPickupDate(long reservationId);
 }

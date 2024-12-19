@@ -4,6 +4,8 @@ import com.github.pieter_groenendijk.model.Reservation;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+
+import java.util.Date;
 import java.util.Optional;
 
 public class ReservationRepository implements IReservationRepository {
@@ -53,6 +55,7 @@ public class ReservationRepository implements IReservationRepository {
             session.close();
         }
     }
+
     @Override
     public void updateReservation(Reservation reservation) {
         Session session = sessionFactory.openSession();
@@ -78,13 +81,17 @@ public class ReservationRepository implements IReservationRepository {
             Reservation reservation = session.get(Reservation.class, reservationId);
             session.remove(reservation);
             session.getTransaction().commit();
-            } catch (HibernateException e) {
-                if (session.getTransaction() != null) {
-                    session.getTransaction().rollback();
-                }
-                e.printStackTrace();
-            } finally {
-                session.close();
+        } catch (HibernateException e) {
+            if (session.getTransaction() != null) {
+                session.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
         }
     }
+
 }
+
+
+

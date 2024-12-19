@@ -18,6 +18,10 @@ public class Reservation {
     @Column(name ="readyForPickup", nullable = false)
     private boolean readyForPickup;
 
+    @Column(name = "reservationPickUpDate", nullable = false)
+    @Temporal(TemporalType.DATE)
+    private Date reservationPickUpDate;
+
     @ManyToOne
     @JoinColumn(name = "productCopyId", nullable = false)
     private ProductCopy productCopy;
@@ -53,4 +57,5 @@ public class Reservation {
     public void setId(long reservationId) {
 
     }
+
 }

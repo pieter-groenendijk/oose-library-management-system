@@ -38,11 +38,7 @@ public class ReservationService implements IReservationService {
         return null;
     }
 
-    @Override
-    public void cancelReservation(long reservationId) {
-
-    }
-
+    
     @Override
     public boolean readyForPickup(long reservationId) {
         return reservationRepository.retrieveReservationById(reservationId)
@@ -78,10 +74,5 @@ public class ReservationService implements IReservationService {
     @Override
     public void removeReservation(long reservationId) {
 
-    }
-
-    @Override
-    public Date getPickupDate(long reservationId) {
-        return generateReservationPickUpDate(reservationId);
     }
 }
