@@ -1,5 +1,6 @@
 package com.github.pieter_groenendijk.model;
 
+import com.github.pieter_groenendijk.model.product.ProductCopy;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -14,11 +15,12 @@ public class Reservation {
     @Temporal(TemporalType.DATE)
     private Date reservationDate;
 
-    @Column(name = "productId", nullable = false)
-    private long productId;
+    @ManyToOne
+    @Column(name = "productCopyId", nullable = false)
+    private ProductCopy productCopy;
     @ManyToOne
     @JoinColumn(name = "membershipId", nullable = false, unique = true)
-    private Membership membershipId;
+    private Membership membership;
 
     public void setReservationId(Long reservationId) {
         this.reservationId = reservationId;
@@ -36,21 +38,13 @@ public class Reservation {
         this.reservationDate = reservationDate;
     }
 
-    public long getProductId() {
-        return productId;
-    }
-
-    public void setProductId(long productId) {
-        this.productId = productId;
-    }
-
 
     public Membership getMembershipId() {
-        return membershipId;
+        return membership;
     }
 
     public void setMembershipId(Membership membershipId) {
-        this.membershipId = membershipId;
+        this.membership = membershipId;
     }
 
     public void setId(long reservationId) {

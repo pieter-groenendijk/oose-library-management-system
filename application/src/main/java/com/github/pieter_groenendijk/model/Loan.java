@@ -1,5 +1,6 @@
 package com.github.pieter_groenendijk.model;
 
+import com.github.pieter_groenendijk.model.product.ProductCopy;
 import com.github.pieter_groenendijk.model.product.ProductTemplate;
 import jakarta.persistence.*;
 
@@ -27,8 +28,8 @@ public class Loan {
     private Membership membership;
 
     @OneToOne
-    @JoinColumn(name = "productId")
-    private ProductTemplate productTemplate;
+    @JoinColumn(name = "productCopyId")
+    private ProductCopy productCopy;
 
     // Getters and Setters
     public void setLoanId(Long loanId) {
