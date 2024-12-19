@@ -4,13 +4,18 @@ import com.github.pieter_groenendijk.exception.EntityNotFoundException;
 import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.repository.ILoanRepository;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.github.pieter_groenendijk.service.LibraryConstants.LOAN_LENGTH;
+
 
 public class LoanService implements ILoanService {
+
 
     private ILoanRepository loanRepository;
 
@@ -48,7 +53,9 @@ return null;
 
     @Override
     public void generateReturnByDate(long membershipId, long copyId, Date returnBy) {
-
+        LocalDate loanDate = LocalDate.now();
+        LocalDate dueDate = loanDate.plusDays(LOAN_LENGTH);
+        returnBy.setTime(Date.from(dueDate.atStartOfDay(ZoneId.systemDefault()).toInstant()).getTime());
     }
 
     @Override
@@ -63,7 +70,7 @@ return null;
 
     @Override
     public boolean checkIsLate(long loanId, Date currentDate, Date dueDate) {
-        return false;
+        return currentDate.after(dueDate);
     }
 
     @Override
