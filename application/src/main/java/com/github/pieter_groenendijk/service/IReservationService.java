@@ -10,16 +10,10 @@ public interface IReservationService {
     Reservation updateReservation(Reservation reservation);
     void cancelReservation(long reservationId);
 
-
     boolean readyForPickup(long reservationId);
     Date generateReservationPickUpDate(long reservationId);
 
-
-
     void handleUncollectedReservations(long membershipId, Date currentDate);
-
-    void logUncollectedReservations(long membershipId, Date currentDate);
-
 
     void removeReservation(long reservationId);
 

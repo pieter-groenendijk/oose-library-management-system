@@ -1,7 +1,10 @@
 package com.github.pieter_groenendijk.service;
 
+import com.github.pieter_groenendijk.exception.EntityNotFoundException;
 import com.github.pieter_groenendijk.model.Reservation;
+import com.github.pieter_groenendijk.repository.IMembershipRepository;
 import com.github.pieter_groenendijk.repository.IReservationRepository;
+import com.github.pieter_groenendijk.repository.ReservationRepository;
 
 
 import java.time.LocalDate;
@@ -12,11 +15,12 @@ public class ReservationService implements IReservationService {
     private static final long PICKUP_DAYS = 7;
     private static final long PICKUP_EXPIRY_DAYS = 14;
     private IReservationRepository reservationRepository;
+    private IMembershipRepository membershipRepository;
 
     public ReservationService(IReservationRepository reservationRepository) {
         this.reservationRepository = reservationRepository;
+        this.membershipRepository = membershipRepository;
     }
-
 
     @Override
     public Reservation store(long membershipId, long copyId) {
@@ -25,7 +29,8 @@ public class ReservationService implements IReservationService {
 
     @Override
     public Reservation getReservationById(long reservationId) {
-        return null;
+        return reservationRepository.retrieveReservationById(reservationId)
+                .orElseThrow(() -> new EntityNotFoundException("Membership with ID " + reservationId + " not found."));
     }
 
     @Override
@@ -67,11 +72,6 @@ public class ReservationService implements IReservationService {
 
     @Override
     public void handleUncollectedReservations(long membershipId, Date currentDate) {
-
-    }
-
-    @Override
-    public void logUncollectedReservations(long membershipId, Date currentDate) {
 
     }
 

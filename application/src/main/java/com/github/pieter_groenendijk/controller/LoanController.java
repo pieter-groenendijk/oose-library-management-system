@@ -40,10 +40,10 @@ public class LoanController {
             @ApiResponse(responseCode = "400", description = "Invalid input"),
             @ApiResponse(responseCode = "404", description = "Membership or Product not found")
     })
-    @PostMapping("/loans/{membershipId}/{copyId}")
-    public ResponseEntity<Loan> store(@PathVariable long membershipId, @PathVariable long copyId) {
+    @PostMapping("/loans/{membershipId}/{productCopyId}")
+    public ResponseEntity<Loan> store(@PathVariable("membershipId")long membershipId, @PathVariable("productCopyId") long productCopyId) {
         try {
-            Loan loan = loanService.store(membershipId, copyId);
+            Loan loan = loanService.store(membershipId, productCopyId);
             return new ResponseEntity<>(loan, HttpStatus.CREATED);
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
