@@ -15,11 +15,14 @@ public class Reservation {
     @Temporal(TemporalType.DATE)
     private Date reservationDate;
 
+    @Column(name ="readyForPickup", nullable = false)
+    private boolean readyForPickup;
+
     @ManyToOne
-    @Column(name = "productCopyId", nullable = false)
+    @JoinColumn(name = "productCopyId", nullable = false)
     private ProductCopy productCopy;
     @ManyToOne
-    @JoinColumn(name = "membershipId", nullable = false, unique = true)
+    @JoinColumn(name = "membershipId", nullable = false)
     private Membership membership;
 
     public void setReservationId(Long reservationId) {

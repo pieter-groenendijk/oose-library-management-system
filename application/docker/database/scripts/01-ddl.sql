@@ -64,7 +64,19 @@ CREATE TABLE Loan (
     "startDate" DATE NOT NULL,
     "returnBy" DATE,
     "returnedOn" DATE,
-    "loanStatus" VARCHAR(50) NOT NULL,
-    "membershipId" BIGINT NOT NULL REFERENCES Membership(membershipId),
-    "productId" BIGINT REFERENCES ProductTemplate(productId)
+    "loanStatus" VARCHAR(50),
+    "membershipId" BIGINT NOT NULL,
+    "productCopyId" BIGINT NOT NULL,
+    FOREIGN KEY ("membershipId") REFERENCES "Membership"("membershipId") ON UPDATE CASCADE ON DELETE RESTRICT,
+    FOREIGN KEY ("productCopyId") REFERENCES "ProductCopy"("productCopyId") ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+CREATE TABLE "Reservation" (
+    "reservationId" BIGSERIAL PRIMARY KEY,
+    "membershipId" BIGINT NOT NULL,
+    "productCopyId" BIGINT NOT NULL,
+    "reservationDate" DATE NOT NULL,
+    "readyForPickUp" BOOLEAN NOT NULL,
+    FOREIGN KEY ("membershipId") REFERENCES "Membership" ("membershipId") ON UPDATE CASCADE ON DELETE RESTRICT,
+    FOREIGN KEY ("productCopyId") REFERENCES "ProductCopy" ("productCopyId") ON UPDATE CASCADE ON DELETE RESTRICT
 );

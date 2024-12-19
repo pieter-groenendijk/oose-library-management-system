@@ -15,13 +15,13 @@ public class Loan {
     @Column(name = "startDate", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date startDate;
-    @Column(name = "returnBy", nullable = true)
+    @Column(name = "returnBy")
     @Temporal(TemporalType.DATE)
     private Date returnBy;
-    @Column(name = "returnedOn", nullable = true)
+    @Column(name = "returnedOn")
     @Temporal(TemporalType.DATE)
     private Date returnedOn;
-    @Column(name= "loanStatus", nullable = false)
+    @Column(name= "loanStatus")
     private String loanStatus;
     @OneToOne
     @JoinColumn(name = "membershipId", nullable = false, unique = true)

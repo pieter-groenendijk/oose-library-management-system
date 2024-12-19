@@ -42,7 +42,21 @@ INSERT INTO "Membership" ("accountId", "membershipTypeId", "isActive", "startDat
 (6, 3, TRUE, '2023-03-15', '2024-03-14'),
 (3, 4, FALSE, '2022-08-01', '2023-07-31');
 
-INSERT INTO "Loan" ("startDate", "returnBy", "returnedOn", "loanStatus", "membershipId", "productId") VALUES
-('2024-01-01', '2024-01-15', NULL, 'Borrowed', 1, 1),
-('2024-02-01', '2024-02-14', '2024-02-10', 'Returned', 1, 2),
-('2024-03-01', '2024-03-15', NULL, 'Overdue', 1, 3);
+-- Insert data into Loan table
+INSERT INTO "Loan" ("loanId", "startDate", "returnBy", "returnedOn", "loanStatus", "membershipId", "productCopyId") VALUES
+(1, '2024-01-01', '2024-01-15', NULL, 'Borrowed', 1, 1),
+(2, '2024-02-01', '2024-02-14', '2024-02-10', 'Returned', 1, 2),
+(3, '2024-03-01', '2024-03-15', NULL, 'Overdue', 1, 3);
+
+-- Insert data into Reservation table
+INSERT INTO "Reservation" ("reservationId", "reservationDate", "isActive", "membershipId", "productCopyId") VALUES
+(1, '2024-12-09', FALSE, 1, 1),
+(2, '2024-12-10', FALSE, 2, 2),
+(3, '2024-12-11', FALSE, 3, 3),
+(4, '2024-12-12', FALSE, 4, 4),
+(5, '2024-12-13', FALSE, 5, 5),
+(6, '2024-12-14', FALSE, 6, 6),
+(7, '2024-12-15', TRUE, 7, 7),
+(8, '2024-12-16', TRUE, 8, 8),
+(9, '2024-12-17', TRUE, 1, 9),
+(10, '2024-12-18', TRUE, 1, 10);

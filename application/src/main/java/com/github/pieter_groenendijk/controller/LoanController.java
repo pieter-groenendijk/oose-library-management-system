@@ -8,6 +8,7 @@ import com.github.pieter_groenendijk.repository.LoanRepository;
 import com.github.pieter_groenendijk.service.ILoanService;
 import com.github.pieter_groenendijk.service.LoanService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.hibernate.SessionFactory;
@@ -72,8 +73,9 @@ public class LoanController {
             @ApiResponse(responseCode = "200", description = "Loan(s) for MembershipId found"),
             @ApiResponse(responseCode = "204", description = "No loans found for the given membershipId\"")
     })
-    @GetMapping("/{Id}")
-    public ResponseEntity<List<Loan>> retrieveActiveLoansByMembershipId(@PathVariable("Id") long membershipId) {
+    @GetMapping("/membership/{membershipId}")
+    public ResponseEntity<List<Loan>> retrieveActiveLoansByMembershipId(@Parameter(description = "ID of the membership to retrieve loans for", required = true)
+                                                                                 @PathVariable("membershipId") long membershipId) {
         List<Loan> loans = loanService.retrieveActiveLoansByMembershipId(membershipId);
         if (!loans.isEmpty()) {
             return new ResponseEntity<>(loans, HttpStatus.OK);
