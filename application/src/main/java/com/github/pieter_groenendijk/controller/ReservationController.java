@@ -3,6 +3,7 @@ package com.github.pieter_groenendijk.controller;
 
 import com.github.pieter_groenendijk.hibernate.SessionFactoryFactory;
 import com.github.pieter_groenendijk.model.Reservation;
+import com.github.pieter_groenendijk.repository.IMembershipRepository;
 import com.github.pieter_groenendijk.repository.IReservationRepository;
 import com.github.pieter_groenendijk.repository.ReservationRepository;
 import com.github.pieter_groenendijk.service.IReservationService;
@@ -15,18 +16,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
+
 
 @RestController
-@RequestMapping("/api/reservations")
+@RequestMapping("/reservation")
 public class ReservationController {
 
-    private SessionFactory sessionFactory = new SessionFactoryFactory().create();
-    private IReservationService reservationService;
+    private final SessionFactory sessionFactory = new SessionFactoryFactory().create();
+    private final IReservationService reservationService;
+    IMembershipRepository membershipRepository;
 
     private ReservationController() {
         IReservationRepository reservationRepository = new ReservationRepository(sessionFactory);
-        reservationService = new ReservationService(reservationRepository);
+        reservationService = new ReservationService(reservationRepository, membershipRepository);
     }
 
     @Operation(summary = "Create a reservation", description = "Create a new reservation")
@@ -90,20 +92,7 @@ public class ReservationController {
         return new ResponseEntity<>(isReady, HttpStatus.OK);
     }
 
-    @Operation(summary = "Get pickup date for reservation", description = "Get pickup date for reservation by reservationId")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Date found"),
-            @ApiResponse(responseCode = "204", description = "No PickupDate for the given reservationId\"")
-    })
-    @GetMapping("/{reservationId}/pickup-date")
-    public ResponseEntity<Date> getPickupDate(@PathVariable("reservationId") long reservationId) {
-        Date pickupDate = reservationService.getPickupDate(reservationId);
-        if (pickupDate != null) {
-            return new ResponseEntity<>(pickupDate, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
-    }
+
 }
 
 

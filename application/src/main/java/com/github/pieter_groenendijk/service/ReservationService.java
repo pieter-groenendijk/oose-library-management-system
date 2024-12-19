@@ -4,7 +4,6 @@ import com.github.pieter_groenendijk.exception.EntityNotFoundException;
 import com.github.pieter_groenendijk.model.Reservation;
 import com.github.pieter_groenendijk.repository.IMembershipRepository;
 import com.github.pieter_groenendijk.repository.IReservationRepository;
-import com.github.pieter_groenendijk.repository.ReservationRepository;
 
 
 import java.time.LocalDate;
@@ -14,10 +13,11 @@ import java.util.Date;
 public class ReservationService implements IReservationService {
     private static final long PICKUP_DAYS = 7;
     private static final long PICKUP_EXPIRY_DAYS = 14;
-    private IReservationRepository reservationRepository;
-    private IMembershipRepository membershipRepository;
+    private final IReservationRepository reservationRepository;
+    private Date pickupDate;
+    IMembershipRepository membershipRepository;
 
-    public ReservationService(IReservationRepository reservationRepository) {
+    public ReservationService(IReservationRepository reservationRepository, IMembershipRepository membershipRepository) {
         this.reservationRepository = reservationRepository;
         this.membershipRepository = membershipRepository;
     }
@@ -38,7 +38,7 @@ public class ReservationService implements IReservationService {
         return null;
     }
 
-    
+
     @Override
     public boolean readyForPickup(long reservationId) {
         return reservationRepository.retrieveReservationById(reservationId)
@@ -63,7 +63,7 @@ public class ReservationService implements IReservationService {
     @Override
     public Date generateReservationPickUpDate(long reservationId) {
         LocalDate localDate = LocalDate.now().plusDays(PICKUP_DAYS);
-        return java.util.Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 
     @Override
@@ -74,5 +74,11 @@ public class ReservationService implements IReservationService {
     @Override
     public void removeReservation(long reservationId) {
 
+    }
+
+    @Override
+    public Date getPickupDate(long l) {
+       Date pickupDate = generateReservationPickUpDate(l);
+        return pickupDate;
     }
 }

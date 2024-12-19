@@ -16,4 +16,5 @@ public interface IReservationService {
 
     void removeReservation(long reservationId);
 
+    Date getPickupDate(long reservationId);
 }
