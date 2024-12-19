@@ -80,3 +80,11 @@ CREATE TABLE "Reservation" (
     FOREIGN KEY ("membershipId") REFERENCES "Membership" ("membershipId") ON UPDATE CASCADE ON DELETE RESTRICT,
     FOREIGN KEY ("productCopyId") REFERENCES "ProductCopy" ("productCopyId") ON UPDATE CASCADE ON DELETE RESTRICT
 );
+
+CREATE TABLE "ProductCopy" (
+    "productCopyId" BIGSERIAL PRIMARY KEY,
+    "availabilityStatus" VARCHAR(100) NOT NULL,
+    "isDamaged" BOOLEAN NOT NULL,
+    "physicalProductId" BIGINT NOT NULL,
+    FOREIGN KEY ("PhysicalProductId") REFERENCES "PhysicalProuct" ("physicalProductId") ON UPDATE CASCADE ON DELETE RESTRICT
+);
