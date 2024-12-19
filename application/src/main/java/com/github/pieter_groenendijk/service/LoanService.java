@@ -1,5 +1,6 @@
 package com.github.pieter_groenendijk.service;
 
+import com.github.pieter_groenendijk.exception.EntityNotFoundException;
 import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.repository.ILoanRepository;
 
@@ -73,16 +74,15 @@ return null;
 
     @Override
     public Loan retrieveLoanByLoanId(long loanId) {
-        return null;
+        return loanRepository.retrieveLoanByLoanId(loanId)
+                .orElseThrow(() -> new EntityNotFoundException("Loan with ID " + loanId + " not found."));
     }
 
     @Override
     public List<Loan> retrieveActiveLoansByMembershipId(long membershipId) {
         try {
             List<Loan> loans = loanRepository.retrieveActiveLoansByMembershipId(membershipId);
-            return loans.stream()
-                    .filter(loan -> "ACTIVE".equalsIgnoreCase(loan.getLoanStatus()))
-                    .collect(Collectors.toList());
+            return loanRepository.retrieveActiveLoansByMembershipId(membershipId);
         } catch (Exception e) {
             e.printStackTrace();
             return Collections.emptyList();

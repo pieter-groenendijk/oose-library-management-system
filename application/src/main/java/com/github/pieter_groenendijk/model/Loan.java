@@ -23,7 +23,7 @@ public class Loan {
     private Date returnedOn;
     @Column(name= "loanStatus")
     private String loanStatus;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "membershipId", nullable = false, unique = true)
     private Membership membership;
 

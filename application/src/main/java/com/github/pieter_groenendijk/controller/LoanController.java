@@ -59,13 +59,9 @@ public class LoanController {
             @ApiResponse(responseCode = "204", description = "No loan found for the given loanId\"")
     })
     @GetMapping("/{loanId}")
-    public ResponseEntity<Loan> retrieveLoanByLoanId(@PathVariable("loanId") long loanId) {
+    public Loan retrieveLoanByLoanId(@PathVariable("loanId") long loanId) {
         Loan loan = loanService.retrieveLoanByLoanId(loanId);
-        if (loan != null) {
-            return new ResponseEntity<>(loan, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
-        }
+        return loan;
     }
 
     @Operation(summary = "Retrieve all loans for a membership", description = "Retrieve loans by membershipId")

@@ -20,14 +20,16 @@ public class LoanRepository implements ILoanRepository {
 
     @Override
     public Optional<Loan> retrieveLoanByLoanId(long loanId) {
-        try (Session session = sessionFactory.openSession()) {
-            Loan loan = session.get(Loan.class, loanId);
-            return Optional.ofNullable(loan);
-        } catch (HibernateException e) {
-            e.printStackTrace();
-            return Optional.empty();
+        Session session = sessionFactory.openSession();
+        Loan loan;
+        try {
+            loan = session.get(Loan.class, loanId);
+        } finally {
+            session.close();
         }
+        return Optional.ofNullable(loan);
     }
+
 
     @Override
     public List<Loan> retrieveActiveLoansByMembershipId(long membershipId) {
