@@ -23,8 +23,6 @@ public interface ILoanService {
     boolean checkIsLate(long loanId, Date currentDate, Date returnBy);
     boolean checkIsDamaged(long loanId);
 
-   List<Loan> retrieveLoanByMembershipId(long membershipId);
-
     Loan retrieveLoanByLoanId(long loanId);
 
     List<Loan> retrieveActiveLoansByMembershipId(long membershipId);

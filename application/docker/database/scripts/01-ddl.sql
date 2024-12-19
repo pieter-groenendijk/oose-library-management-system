@@ -2,6 +2,7 @@
 --DROP TABLE IF EXISTS "Membership" CASCADE;
 --DROP TABLE IF EXISTS "MembershipType" CASCADE;
 --DROP TABLE IF EXISTS "Account" CASCADE;
+--DROP TABLE IF EXISTS "Loan" CASCADE;
 
 -- Create Account table
 CREATE TABLE "Account" (
@@ -56,4 +57,34 @@ CREATE TABLE "LendingAssociatedNotificationTask" (
     "lendingId" BIGINT NOT NULL,
     "notificationTaskId" BIGINT NOT NULL,
     PRIMARY KEY ("lendingId", "notificationTaskId")
+);
+
+CREATE TABLE Loan (
+    "loanId" BIGINT PRIMARY KEY,
+    "startDate" DATE NOT NULL,
+    "returnBy" DATE,
+    "returnedOn" DATE,
+    "loanStatus" VARCHAR(50),
+    "membershipId" BIGINT NOT NULL,
+    "productCopyId" BIGINT NOT NULL,
+    FOREIGN KEY ("membershipId") REFERENCES "Membership"("membershipId") ON UPDATE CASCADE ON DELETE RESTRICT,
+    FOREIGN KEY ("productCopyId") REFERENCES "ProductCopy"("productCopyId") ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+CREATE TABLE "Reservation" (
+    "reservationId" BIGSERIAL PRIMARY KEY,
+    "membershipId" BIGINT NOT NULL,
+    "productCopyId" BIGINT NOT NULL,
+    "reservationDate" DATE NOT NULL,
+    "readyForPickUp" BOOLEAN NOT NULL,
+    FOREIGN KEY ("membershipId") REFERENCES "Membership" ("membershipId") ON UPDATE CASCADE ON DELETE RESTRICT,
+    FOREIGN KEY ("productCopyId") REFERENCES "ProductCopy" ("productCopyId") ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+CREATE TABLE "ProductCopy" (
+    "productCopyId" BIGSERIAL PRIMARY KEY,
+    "availabilityStatus" VARCHAR(100) NOT NULL,
+    "isDamaged" BOOLEAN NOT NULL,
+    "physicalProductId" BIGINT NOT NULL,
+    FOREIGN KEY ("PhysicalProductId") REFERENCES "PhysicalProuct" ("physicalProductId") ON UPDATE CASCADE ON DELETE RESTRICT
 );
