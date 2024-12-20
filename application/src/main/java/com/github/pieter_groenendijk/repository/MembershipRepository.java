@@ -24,6 +24,22 @@ public class MembershipRepository implements IMembershipRepository{
 		return Optional.ofNullable(membership);
 	}
 
+	public List<Membership> retrieveMembershipsByAccountId(long accountId) {
+    Session session = sessionFactory.openSession();
+    List<Membership> memberships;
+
+    try {
+        String hql = "FROM Membership WHERE accountId = :accountId";
+        memberships = session.createQuery(hql, Membership.class)
+                             .setParameter("accountId", accountId)
+                             .getResultList();
+    } finally {
+        session.close();
+    }
+    return memberships;
+}
+
+
 	public Membership store (Membership membership) {
 		Session session = sessionFactory.openSession();
 

@@ -21,4 +21,6 @@ public interface IAccountService {
     Membership retrieveMembershipById(long id);
     
     Membership store(MembershipRequestDTO request);
+
+    List<Membership> retrieveMembershipsByAccountId (long id);
 }

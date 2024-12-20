@@ -45,6 +45,18 @@ public class MembershipController{
         return membership;
     }
 
+    @Operation(summary = "Retrieve memberships", description = "Retrieve memberships by Account Id")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Memberships found"),
+        @ApiResponse(responseCode = "404", description = "No memberships found for the given Account Id")
+    })
+    @GetMapping("/account/{accountId}")
+    public List<Membership> retrieveMembershipsByAccountId(@PathVariable("accountId") long accountId) {
+    List<Membership> memberships = accountService.retrieveMembershipsByAccountId(accountId);
+    return memberships;
+}
+
+
     @Operation(summary = "Create a membership", description = "Add a new membership to the database")
     @PostMapping
     public Membership createMembership(@RequestBody MembershipRequestDTO request) {

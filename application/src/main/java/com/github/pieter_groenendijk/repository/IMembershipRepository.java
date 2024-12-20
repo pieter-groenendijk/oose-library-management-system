@@ -6,4 +6,5 @@ import java.util.Optional;
 public interface IMembershipRepository {
     Optional<Membership> retrieveMembershipById(long id);
     Membership store(Membership membership);
+    List<Membership> retrieveMembershipsByAccountId(long id);
 }
