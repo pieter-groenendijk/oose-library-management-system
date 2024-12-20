@@ -4,6 +4,10 @@ import com.github.pieter_groenendijk.model.Membership;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import java.util.Optional;
+import java.util.List;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 
 public class MembershipRepository implements IMembershipRepository{
 	private SessionFactory sessionFactory;
@@ -23,6 +27,25 @@ public class MembershipRepository implements IMembershipRepository{
 		}
 		return Optional.ofNullable(membership);
 	}
+
+	public List<Membership> retrieveMembershipsByAccountId(long accountId) {
+		Session session = sessionFactory.openSession();
+		try {
+			CriteriaBuilder cb = session.getCriteriaBuilder();
+			CriteriaQuery<Membership> cr = cb.createQuery(Membership.class);
+			Root<Membership> root = cr.from(Membership.class);
+
+			cr.select(root).where(cb.equal(root.get("account").get("id"), accountId));
+
+			return session.createQuery(cr).getResultList();
+		} catch (Exception e) {
+			e.printStackTrace(); 
+			throw new RuntimeException("Database query failed", e);
+		} finally {
+			session.close();
+		}
+	}
+
 
 	public Membership store (Membership membership) {
 		Session session = sessionFactory.openSession();

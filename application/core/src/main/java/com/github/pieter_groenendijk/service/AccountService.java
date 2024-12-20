@@ -11,8 +11,11 @@ import com.github.pieter_groenendijk.exception.InputValidationException;
 import com.github.pieter_groenendijk.service.validator.EmailValidator;
 import com.github.pieter_groenendijk.service.validator.GenderCheck;
 import com.github.pieter_groenendijk.service.IAccountService;
+import com.github.pieter_groenendijk.model.DTO.MembershipRequestDTO;
+import java.util.Date;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.List;
 
 public class AccountService implements IAccountService {
 
@@ -66,7 +69,31 @@ public class AccountService implements IAccountService {
                 .orElseThrow(() -> new EntityNotFoundException("Membership with ID " + id + " not found."));
     }
 
-    public Membership store(Membership membership){
+    public List<Membership> retrieveMembershipsByAccountId(long id) {
+    List<Membership> memberships = membershipRepository.retrieveMembershipsByAccountId(id);
+    if (memberships.isEmpty()) {
+        throw new EntityNotFoundException("No memberships found for this accountId");
+    } 
+    return memberships;
+}
+
+
+    public Membership store(MembershipRequestDTO request){
+        //Validate input
+        Account account = accountRepository.retrieveAccountById(request.getAccountId())
+        .orElseThrow(() -> new EntityNotFoundException("Account with ID " + request.getAccountId() + "not found."));
+        MembershipType membershipType = membershipTypeRepository.retrieveMembershipTypeById(request.getMembershipTypeId())
+        .orElseThrow(() -> new EntityNotFoundException("MembershipType with ID" + request.getMembershipTypeId() + " not found."));
+
+        //Create membership
+        Membership membership = new Membership();
+        membership.setAccount(account);
+        membership.setMembershipType(membershipType);
+        membership.setStartDate(new Date());
+        membership.setActive(true);
+        membership.setBlocked(false);
+
+        //Persist
         return membershipRepository.store(membership);
     }
 }
