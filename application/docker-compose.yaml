@@ -2,20 +2,20 @@ services:
     database:
         build:
             context: "."
-            dockerfile: "docker/database/database.dockerfile"
+            dockerfile: "_docker/database/database.dockerfile"
         environment:
             POSTGRES_USER: ${DATABASE_USER}
             POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
             POSTGRES_DB: ${DATABASE_NAME}
         ports:
-            - ${DATABASE_PORT}:${DATABASE_PORT}
+            -   ${DATABASE_PORT}:${DATABASE_PORT}
         restart: "on-failure"
-    service-data-layer:
+    core:
         build:
             context: "."
-            dockerfile: "docker/service-data-layer/service-data-layer.dockerfile"
+            dockerfile: "_docker/core/core.dockerfile"
         depends_on:
-            - database
+            -   database
         environment:
             DATABASE_HOST: database
             DATABASE_NAME: ${DATABASE_NAME}
@@ -23,21 +23,43 @@ services:
             DATABASE_PASSWORD: ${DATABASE_PASSWORD}
             DATABASE_PORT: ${DATABASE_PORT}
         ports:
-            - "8080:8080"
+            -   "8080:8080"
         restart: "no"
         develop:
             watch:
-                - path: "src"
-                  action: sync+restart
-                  target: "/app/src"
-    application-tester:
+                -   path: "core/src"
+                    action: sync+restart
+                    target: "/app/src"
+    core-tester:
         build:
             context: "."
-            dockerfile: "docker/application-tester/application-tester.dockerfile"
+            dockerfile: "_docker/core-tester/core-tester.dockerfile"
         depends_on:
-            - service-data-layer
+            -   core
         develop:
             watch:
-                - path: "src"
-                  action: sync+restart
-                  target: "/app/src"
+                -   path: "core/src"
+                    action: sync+restart
+                    target: "/app/src"
+    web-ui:
+        build:
+            context: "."
+            dockerfile: "_docker/web-ui/web-ui.dockerfile"
+        depends_on:
+            -   core
+        develop:
+            watch:
+                -   path: "web-ui/src"
+                    action: sync+restart
+                    target: "/app/src"
+    web-ui-tester:
+        build:
+            context: "."
+            dockerfile: "_docker/web-ui-tester/web-ui-tester.dockerfile"
+        depends_on:
+            -   web-ui
+        develop:
+            watch:
+                -   path: "web-ui/src"
+                    action: sync+restart
+                    target: "/app/src"
