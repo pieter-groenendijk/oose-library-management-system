@@ -4,6 +4,7 @@ import com.github.pieter_groenendijk.model.Membership;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import java.util.Optional;
+import java.util.List;
 
 public class MembershipRepository implements IMembershipRepository{
 	private SessionFactory sessionFactory;

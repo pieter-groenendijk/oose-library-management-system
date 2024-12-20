@@ -15,6 +15,7 @@ import com.github.pieter_groenendijk.model.DTO.MembershipRequestDTO;
 import java.util.Date;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.List;
 
 public class AccountService implements IAccountService {
 

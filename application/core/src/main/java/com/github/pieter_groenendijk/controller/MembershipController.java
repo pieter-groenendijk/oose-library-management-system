@@ -18,6 +18,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import com.github.pieter_groenendijk.hibernate.SessionFactoryFactory;
 import org.hibernate.SessionFactory;
+import java.util.List;
 
 @RestController
 @RequestMapping("/membership")
