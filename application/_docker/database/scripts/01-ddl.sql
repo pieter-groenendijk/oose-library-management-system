@@ -57,3 +57,58 @@ CREATE TABLE "LendingAssociatedNotificationTask" (
     "notificationTaskId" BIGINT NOT NULL,
     PRIMARY KEY ("lendingId", "notificationTaskId")
 );
+CREATE TABLE Loan
+(
+    "loanId"        BIGINT PRIMARY KEY,
+    "startDate"     DATE   NOT NULL,
+    "returnBy"      DATE,
+    "returnedOn"    DATE,
+    "loanStatus"    VARCHAR(50),
+    "membershipId"  BIGINT NOT NULL,
+    "productCopyId" BIGINT NOT NULL,
+    FOREIGN KEY ("membershipId") REFERENCES "Membership" ("membershipId") ON UPDATE CASCADE ON DELETE RESTRICT,
+    FOREIGN KEY ("productCopyId") REFERENCES "ProductCopy" ("productCopyId") ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+CREATE TABLE "Reservation"
+(
+    "reservationId"   BIGSERIAL PRIMARY KEY,
+    "membershipId"    BIGINT  NOT NULL,
+    "productCopyId"   BIGINT  NOT NULL,
+    "reservationDate" DATE    NOT NULL,
+    "readyForPickUp"  BOOLEAN NOT NULL,
+    FOREIGN KEY ("membershipId") REFERENCES "Membership" ("membershipId") ON UPDATE CASCADE ON DELETE RESTRICT,
+    FOREIGN KEY ("productCopyId") REFERENCES "ProductCopy" ("productCopyId") ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+CREATE TABLE ProductTemplate (
+                                 productId BIGSERIAL PRIMARY KEY,
+                                 name VARCHAR(100) NOT NULL,
+                                 genre VARCHAR(50) NOT NULL,
+                                 yearOfRelease INT NOT NULL,
+                                 description VARCHAR(250),
+                                 type VARCHAR(10) NOT NULL,
+                                 ageClassification INT,
+                                 mediaType VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE PhysicalProductTemplate (
+                                         productId BIGSERIAL PRIMARY KEY,
+                                         location VARCHAR(100) NOT NULL,
+                                         author VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE PhysicalReadProduct (
+                                     productId BIGSERIAL PRIMARY KEY,
+                                     ISBN BIGINT,
+                                     author VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE "ProductCopy"
+(
+    "productCopyId"      BIGSERIAL PRIMARY KEY,
+    "availabilityStatus" VARCHAR(100) NOT NULL,
+    "isDamaged"          BOOLEAN      NOT NULL,
+    "productId"          BIGSERIAL      NOT NULL,
+    CONSTRAINT fk_physical_product_template FOREIGN KEY ("productId") REFERENCES PhysicalProductTemplate (productId)
+);

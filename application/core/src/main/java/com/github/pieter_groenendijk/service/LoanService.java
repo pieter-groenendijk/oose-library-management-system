@@ -1,27 +1,31 @@
 package com.github.pieter_groenendijk.service;
 
+import com.github.pieter_groenendijk.exception.EntityNotFoundException;
+import com.github.pieter_groenendijk.exception.InputValidationException;
 import com.github.pieter_groenendijk.model.Loan;
-import com.github.pieter_groenendijk.repository.LoanRepository;
-import org.springframework.stereotype.Service;
+import com.github.pieter_groenendijk.repository.ILoanRepository;
+import static com.github.pieter_groenendijk.service.ServiceUtils.LOAN_LENGTH;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 
 public class LoanService implements ILoanService {
-    public LoanService(LoanRepository loanRepository) {
-    }
 
-    @Override
+    private ILoanRepository loanRepository;
+    public LoanService(ILoanRepository loanRepository) {
+            this.loanRepository = loanRepository;
+        }
+        @Override
     public Loan store(Loan loan) {
-        return null;
-    }
-
-    @Override
-    public Loan store(long membershipId, long copyId) {
-        return null;
-    }
-
+        if (loan == null) {
+            throw new InputValidationException("Loan cannot be null");
+        }
+        return loanRepository.store(loan);
+}
 
     @Override
     public Loan getLoanById(long loanId) {
@@ -40,8 +44,12 @@ public class LoanService implements ILoanService {
 
     @Override
     public void generateReturnByDate(long membershipId, long copyId, Date returnBy) {
-
+        LocalDate loanDate = LocalDate.now();
+        LocalDate dueDate = loanDate.plusDays(LOAN_LENGTH);
+        returnBy.setTime(Date.from(dueDate.atStartOfDay(ZoneId.systemDefault()).toInstant()).getTime());
     }
+
+
 
     @Override
     public void returnToCatalogue(long CopyId) {
@@ -55,7 +63,7 @@ public class LoanService implements ILoanService {
 
     @Override
     public boolean checkIsLate(long loanId, Date currentDate, Date dueDate) {
-        return false;
+        return currentDate.after(dueDate);
     }
 
     @Override
@@ -63,19 +71,22 @@ public class LoanService implements ILoanService {
         return false;
     }
 
-    @Override
-    public List<Loan> retrieveLoanByMembershipId(long membershipId) {
-        return null;
-    }
 
     @Override
     public Loan retrieveLoanByLoanId(long loanId) {
-        return null;
+        return loanRepository.retrieveLoanByLoanId(loanId)
+                .orElseThrow(() -> new EntityNotFoundException("Loan with ID " + loanId + " not found."));
     }
 
     @Override
     public List<Loan> retrieveActiveLoansByMembershipId(long membershipId) {
-        return null;
+        try {
+            List<Loan> loans = loanRepository.retrieveActiveLoansByMembershipId(membershipId);
+            return loanRepository.retrieveActiveLoansByMembershipId(membershipId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
     }
 
 
