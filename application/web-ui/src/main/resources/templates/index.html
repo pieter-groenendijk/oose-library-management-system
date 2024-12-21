@@ -8,9 +8,12 @@
 </head>
 <body>
 
-<div th:replace="~{fragments/nav :: navbar}"></div>
+<div th:replace="~{fragments/nav :: navbar}"></div> <!-- Stopt de navigatie balk in de pagina (fragment zit in nav.html) -->
+<p>Today is: <span th:text="${today}">21 December 2024</span></p> <!-- Als in de backend ${today} bestaat dan wordt die meegegeven, en anders wordt de placeholder
+tekst 21 December 2024 weergegeven -->
 
-<!-- Main Body -->
+
+<!-- Main/Body -->
 <div class="container">
     <h1>Welcome to the Library Management System!</h1>
     <p>This is a system to manage books, loans, and members, and other fun stuff.</p>
