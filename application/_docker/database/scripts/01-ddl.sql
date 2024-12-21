@@ -1,11 +1,6 @@
--- Drop tables if they exist, cascading dependencies
---DROP TABLE IF EXISTS "Membership" CASCADE;
---DROP TABLE IF EXISTS "MembershipType" CASCADE;
---DROP TABLE IF EXISTS "Account" CASCADE;
-
--- Create Account table
 CREATE TABLE "Account" (
     "accountId" BIGSERIAL PRIMARY KEY,
+    "mollieCustomerId" VARCHAR(255) NULL, -- TODO: Can an account exist without being registered as a customer at mollie?
     "email" VARCHAR(50) NOT NULL UNIQUE,
     "firstName" VARCHAR(50) NOT NULL,
     "lastName" VARCHAR(50) NOT NULL,
@@ -14,7 +9,6 @@ CREATE TABLE "Account" (
     "isActive" BOOLEAN NOT NULL
 );
 
--- Create MembershipType table
 CREATE TABLE "MembershipType" (
     "membershipTypeId" BIGSERIAL PRIMARY KEY,
     "description" VARCHAR(150),
@@ -23,7 +17,6 @@ CREATE TABLE "MembershipType" (
     "maxLendings" INT NOT NULL
 );
 
--- Create Membership table
 CREATE TABLE "Membership" (
     "membershipId" BIGSERIAL PRIMARY KEY,
     "accountId" BIGINT NOT NULL,
@@ -57,3 +50,44 @@ CREATE TABLE "LendingAssociatedNotificationTask" (
     "notificationTaskId" BIGINT NOT NULL,
     PRIMARY KEY ("lendingId", "notificationTaskId")
 );
+
+CREATE TABLE "PaymentStatus" (
+    "paymentStatusId" SMALLINT NOT NULL,
+    "title" VARCHAR(50) NOT NULL,
+    PRIMARY KEY ("paymentStatusId"),
+    UNIQUE ("title")
+);
+
+CREATE TABLE "Payment" (
+    "paymentId" BIGINT NOT NULL,
+    "molliePaymentId" BIGINT NOT NULL,
+    "amountInCents" BIGINT NOT NULL,
+    "status" SMALLINT NOT NULL,
+    "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    "paidAt" TIMESTAMP,
+    PRIMARY KEY ("paymentId")
+);
+
+-- region: Fine Related
+CREATE TABLE "FineType" (
+    "fineTypeId" SMALLINT NOT NULL,
+    "title" VARCHAR(50) NOT NULL,
+    "amountInCents" BIGINT NOT NULL,
+    PRIMARY KEY ("fineTypeId"),
+    UNIQUE ("title")
+);
+
+CREATE TABLE "Fine" (
+    "fineId" BIGINT NOT NULL,
+    "fineType" SMALLINT NOT NULL,
+    "account" BIGINT NOT NULL,
+    "amountInCents" BIGINT NOT NULL,
+    "declaredOn" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    "paidBy" BIGINT,
+    PRIMARY KEY ("fineId"),
+    FOREIGN KEY ("fineType") REFERENCES "FineType"("fineTypeId") ON UPDATE CASCADE ON DELETE RESTRICT,
+    FOREIGN KEY ("account") REFERENCES "Account"("accountId") ON UPDATE CASCADE ON DELETE RESTRICT,
+    FOREIGN KEY ("paidBy") REFERENCES "Payment"("paymentId") ON UPDATE CASCADE ON DELETE RESTRICT
+)
+-- endregion
+
