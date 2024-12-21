@@ -1,6 +1,7 @@
 package com.github.pieter_groenendijk.model.payment;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 
 import java.time.LocalDateTime;
 
@@ -24,6 +25,7 @@ public class Payment {
         name = "amountInCents",
         nullable = false
     )
+    @Min(0) // TODO: Maybe change this to something higher in the future, to prevent unnecessary commissions and just data bloat.
     private Long amountInCents;
 
     @ManyToOne

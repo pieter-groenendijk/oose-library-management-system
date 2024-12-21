@@ -1,6 +1,7 @@
 package com.github.pieter_groenendijk.model.fine;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 
 /**
  * This is not an enum since it's very important that it's always consistent. We don't want stored fines for which
@@ -27,6 +28,7 @@ public class FineType {
         name = "amountInCents",
         nullable = false
     )
+    @Min(0)
     private Long amountInCents;
 
     public FineType() {}

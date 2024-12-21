@@ -3,6 +3,7 @@ package com.github.pieter_groenendijk.model.fine;
 import com.github.pieter_groenendijk.model.Account;
 import com.github.pieter_groenendijk.model.payment.Payment;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 
 import java.time.LocalDateTime;
 
@@ -32,6 +33,7 @@ public class Fine {
         name = "amountInCents",
         nullable = false
     )
+    @Min(0)
     private Long amountInCents;
 
     @Column(
