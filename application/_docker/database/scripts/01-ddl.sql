@@ -66,7 +66,8 @@ CREATE TABLE "Payment" (
     "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     "paidAt" TIMESTAMP,
     PRIMARY KEY ("paymentId"),
-    UNIQUE ("molliePaymentId")
+    UNIQUE ("molliePaymentId"),
+    CHECK ("amountInCents" >= 0)
 );
 
 -- region: Fine Related
@@ -75,7 +76,8 @@ CREATE TABLE "FineType" (
     "title" VARCHAR(50) NOT NULL,
     "amountInCents" BIGINT NOT NULL,
     PRIMARY KEY ("fineTypeId"),
-    UNIQUE ("title")
+    UNIQUE ("title"),
+    CHECK ("amountInCents" >= 0)
 );
 
 CREATE TABLE "Fine" (
@@ -88,7 +90,8 @@ CREATE TABLE "Fine" (
     PRIMARY KEY ("fineId"),
     FOREIGN KEY ("fineType") REFERENCES "FineType"("fineTypeId") ON UPDATE CASCADE ON DELETE RESTRICT,
     FOREIGN KEY ("account") REFERENCES "Account"("accountId") ON UPDATE CASCADE ON DELETE RESTRICT,
-    FOREIGN KEY ("paidBy") REFERENCES "Payment"("paymentId") ON UPDATE CASCADE ON DELETE RESTRICT
+    FOREIGN KEY ("paidBy") REFERENCES "Payment"("paymentId") ON UPDATE CASCADE ON DELETE RESTRICT,
+    CHECK ("amountInCents" >= 0)
 )
 -- endregion
 
