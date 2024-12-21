@@ -1,5 +1,6 @@
 package com.github.pieter_groenendijk.model;
 
+import com.github.pieter_groenendijk.model.product.ProductCopy;
 import com.github.pieter_groenendijk.model.product.ProductTemplate;
 import jakarta.persistence.*;
 
@@ -14,21 +15,21 @@ public class Loan {
     @Column(name = "startDate", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date startDate;
-    @Column(name = "returnBy", nullable = true)
+    @Column(name = "returnBy")
     @Temporal(TemporalType.DATE)
     private Date returnBy;
-    @Column(name = "returnedOn", nullable = true)
+    @Column(name = "returnedOn")
     @Temporal(TemporalType.DATE)
     private Date returnedOn;
-    @Column(name= "loanStatus", nullable = false)
+    @Column(name= "loanStatus")
     private String loanStatus;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "membershipId", nullable = false, unique = true)
     private Membership membership;
 
     @OneToOne
-    @JoinColumn(name = "productId")
-    private ProductTemplate productTemplate;
+    @JoinColumn(name = "productCopyId")
+    private ProductCopy productCopy;
 
     // Getters and Setters
     public void setLoanId(Long loanId) {

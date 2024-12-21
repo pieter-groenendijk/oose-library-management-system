@@ -9,7 +9,7 @@ import java.util.List;
 public interface ILoanService {
     Loan store(Loan loan);
 
-    Loan store(long membershipId, long copyId);
+
 
     Loan getLoanById(long loanId);
     Loan extendLoan(long loanId, Date dueDate);
@@ -23,7 +23,6 @@ public interface ILoanService {
     boolean checkIsLate(long loanId, Date currentDate, Date returnBy);
     boolean checkIsDamaged(long loanId);
 
-   List<Loan> retrieveLoanByMembershipId(long membershipId);
 
     Loan retrieveLoanByLoanId(long loanId);
 
