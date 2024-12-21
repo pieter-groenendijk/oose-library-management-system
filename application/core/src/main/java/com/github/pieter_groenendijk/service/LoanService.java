@@ -18,9 +18,8 @@ public class LoanService implements ILoanService {
     public LoanService(ILoanRepository loanRepository) {
             this.loanRepository = loanRepository;
         }
-
         @Override
-    public static Loan store(Loan loan) {
+    public Loan store(Loan loan) {
         return null;
     }
 
