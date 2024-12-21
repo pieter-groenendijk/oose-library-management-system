@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System</title>
+    <style>
+        /* Put stylesheet names here */
+        .navbar {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<!-- Navbar -->
+<nav class="**css class here**">
+    <a class="navbar-brand" href="#" th:text="'Library Management System'">Library Management System</a>
+        <ul class="navbar">
+            <li class="nav-item active">
+                <a class="nav-link" href="/" th:text="'Home'">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/loan/" th:text="'Loans'">Loans</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/membership" th:text="'Members'">Members</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/reservations" th:text="'Reservations'">Contact</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/account" th:text="'Account">Contact</a>
+            </li>
+        </ul>
+</nav>
+
