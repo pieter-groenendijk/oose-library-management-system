@@ -52,25 +52,26 @@ CREATE TABLE "LendingAssociatedNotificationTask" (
 );
 
 CREATE TABLE "PaymentStatus" (
-    "paymentStatusId" SMALLINT NOT NULL,
+    "paymentStatusId" SMALLSERIAL NOT NULL,
     "title" VARCHAR(50) NOT NULL,
     PRIMARY KEY ("paymentStatusId"),
     UNIQUE ("title")
 );
 
 CREATE TABLE "Payment" (
-    "paymentId" BIGINT NOT NULL,
-    "molliePaymentId" BIGINT NOT NULL,
+    "paymentId" BIGSERIAL NOT NULL,
+    "molliePaymentId" VARCHAR(255) NOT NULL,
     "amountInCents" BIGINT NOT NULL,
     "status" SMALLINT NOT NULL,
     "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     "paidAt" TIMESTAMP,
-    PRIMARY KEY ("paymentId")
+    PRIMARY KEY ("paymentId"),
+    UNIQUE ("molliePaymentId")
 );
 
 -- region: Fine Related
 CREATE TABLE "FineType" (
-    "fineTypeId" SMALLINT NOT NULL,
+    "fineTypeId" BIGSERIAL NOT NULL,
     "title" VARCHAR(50) NOT NULL,
     "amountInCents" BIGINT NOT NULL,
     PRIMARY KEY ("fineTypeId"),
@@ -78,7 +79,7 @@ CREATE TABLE "FineType" (
 );
 
 CREATE TABLE "Fine" (
-    "fineId" BIGINT NOT NULL,
+    "fineId" BIGSERIAL NOT NULL,
     "fineType" SMALLINT NOT NULL,
     "account" BIGINT NOT NULL,
     "amountInCents" BIGINT NOT NULL,
