@@ -1,6 +1,7 @@
 package com.github.pieter_groenendijk.service;
 
 import com.github.pieter_groenendijk.exception.EntityNotFoundException;
+import com.github.pieter_groenendijk.exception.InputValidationException;
 import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.repository.ILoanRepository;
 import static com.github.pieter_groenendijk.service.ServiceUtils.LOAN_LENGTH;
@@ -20,8 +21,11 @@ public class LoanService implements ILoanService {
         }
         @Override
     public Loan store(Loan loan) {
-        return null;
-    }
+        if (loan == null) {
+            throw new InputValidationException("Loan cannot be null");
+        }
+        return loanRepository.store(loan);
+}
 
     @Override
     public Loan getLoanById(long loanId) {

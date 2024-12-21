@@ -26,6 +26,7 @@ public class LoanController {
     private SessionFactory sessionFactory = new SessionFactoryFactory().create();
     private ILoanService loanService;
 
+
     public LoanController() {
         ILoanRepository loanRepository = new LoanRepository(sessionFactory);
         loanService = new LoanService (loanRepository);
@@ -41,7 +42,7 @@ public class LoanController {
     })
     @PostMapping
     public Loan store(@RequestBody Loan loan) {
-      return LoanService.store(loan);
+      return loanService.store(loan);
     }
 
     @Operation(summary = "Retrieve a loan", description = "Retrieve a loan by Id")
