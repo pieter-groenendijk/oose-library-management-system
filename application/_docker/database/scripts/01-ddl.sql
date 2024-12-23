@@ -26,7 +26,7 @@ CREATE TABLE "MembershipType" (
 -- Create Membership table
 CREATE TABLE "Membership" (
     "membershipId" BIGSERIAL PRIMARY KEY,
-    "accountId" BIGINT NOT NULL,
+    "accountId" BIGSERIAL NOT NULL,
     "membershipTypeId" BIGINT NOT NULL,
     "isActive" BOOLEAN NOT NULL,
     "startDate" DATE NOT NULL,
@@ -53,19 +53,19 @@ CREATE TABLE "NotificationTask" (
 );
 
 CREATE TABLE "LendingAssociatedNotificationTask" (
-    "lendingId" BIGINT NOT NULL,
+                                                     "lendingId" BIGSERIAL NOT NULL,
     "notificationTaskId" BIGINT NOT NULL,
     PRIMARY KEY ("lendingId", "notificationTaskId")
 );
 CREATE TABLE Loan
 (
-    "loanId"        BIGINT PRIMARY KEY,
+    "loanId" BIGSERIAL PRIMARY KEY,
     "startDate"     DATE   NOT NULL,
     "returnBy"      DATE,
     "returnedOn"    DATE,
     "loanStatus"    VARCHAR(50),
-    "membershipId"  BIGINT NOT NULL,
-    "productCopyId" BIGINT NOT NULL,
+    "membershipId"  BIGSERIAL NOT NULL,
+    "productCopyId" BIGSERIAL NOT NULL,
     FOREIGN KEY ("membershipId") REFERENCES "Membership" ("membershipId") ON UPDATE CASCADE ON DELETE RESTRICT,
     FOREIGN KEY ("productCopyId") REFERENCES "ProductCopy" ("productCopyId") ON UPDATE CASCADE ON DELETE RESTRICT
 );
@@ -73,8 +73,8 @@ CREATE TABLE Loan
 CREATE TABLE "Reservation"
 (
     "reservationId"   BIGSERIAL PRIMARY KEY,
-    "membershipId"    BIGINT  NOT NULL,
-    "productCopyId"   BIGINT  NOT NULL,
+    "membershipId"    BIGSERIAL  NOT NULL,
+    "productCopyId"   BIGSERIAL  NOT NULL,
     "reservationDate" DATE    NOT NULL,
     "readyForPickUp"  BOOLEAN NOT NULL,
     FOREIGN KEY ("membershipId") REFERENCES "Membership" ("membershipId") ON UPDATE CASCADE ON DELETE RESTRICT,
