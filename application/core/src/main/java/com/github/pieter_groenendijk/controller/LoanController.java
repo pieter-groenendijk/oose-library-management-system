@@ -36,7 +36,6 @@ public class LoanController {
     @Operation(summary = "Create a Loan", description = "Create a new Loan")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Loan created"),
-            @ApiResponse(responseCode = "201", description = "Loan created"),
             @ApiResponse(responseCode = "400", description = "Invalid input"),
             @ApiResponse(responseCode = "404", description = "Membership or Product not found")
     })
