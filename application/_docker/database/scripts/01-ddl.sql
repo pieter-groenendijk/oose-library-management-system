@@ -82,26 +82,26 @@ CREATE TABLE "Reservation"
 );
 
 CREATE TABLE ProductTemplate (
-                                 productId BIGSERIAL PRIMARY KEY,
-                                 name VARCHAR(100) NOT NULL,
-                                 genre VARCHAR(50) NOT NULL,
-                                 yearOfRelease INT NOT NULL,
-                                 description VARCHAR(250),
-                                 type VARCHAR(10) NOT NULL,
-                                 ageClassification INT,
-                                 mediaType VARCHAR(255) NOT NULL
+    productId BIGSERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    genre VARCHAR(50) NOT NULL,
+    yearOfRelease INT NOT NULL,
+    description VARCHAR(250),
+    type VARCHAR(10) NOT NULL,
+    ageClassification INT,
+    mediaType VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE PhysicalProductTemplate (
-                                         productId BIGSERIAL PRIMARY KEY,
-                                         location VARCHAR(100) NOT NULL,
-                                         author VARCHAR(100) NOT NULL
+    productId BIGSERIAL PRIMARY KEY,
+    location VARCHAR(100) NOT NULL,
+    author VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE PhysicalReadProduct (
-                                     productId BIGSERIAL PRIMARY KEY,
-                                     ISBN BIGINT,
-                                     author VARCHAR(100) NOT NULL
+    productId BIGSERIAL PRIMARY KEY,
+    ISBN BIGINT,
+    author VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE "ProductCopy"
