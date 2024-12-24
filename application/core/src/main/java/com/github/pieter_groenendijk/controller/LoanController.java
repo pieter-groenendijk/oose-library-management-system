@@ -23,13 +23,13 @@ import java.util.List;
 @RequestMapping("/loan")
 public class LoanController {
 
-    private SessionFactory sessionFactory = new SessionFactoryFactory().create();
+    private SessionFactory sessionFactory;
     private ILoanService loanService;
 
-
-    public LoanController() {
+    public LoanController(SessionFactory sessionFactory, ILoanService loanService) {
+        this.sessionFactory = sessionFactory;
+        this.loanService = loanService;
         ILoanRepository loanRepository = new LoanRepository(sessionFactory);
-        loanService = new LoanService (loanRepository);
     }
 
 

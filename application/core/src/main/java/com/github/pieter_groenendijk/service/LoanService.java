@@ -43,12 +43,11 @@ public class LoanService implements ILoanService {
     }
 
     @Override
-    public void generateReturnByDate(long membershipId, long copyId, Date returnBy) {
+    public void generateReturnByDate(long copyId, Date returnBy) {
         LocalDate loanDate = LocalDate.now();
         LocalDate dueDate = loanDate.plusDays(LOAN_LENGTH);
         returnBy.setTime(Date.from(dueDate.atStartOfDay(ZoneId.systemDefault()).toInstant()).getTime());
     }
-
 
 
     @Override
@@ -62,7 +61,7 @@ public class LoanService implements ILoanService {
     }
 
     @Override
-    public boolean checkIsLate(long loanId, Date currentDate, Date dueDate) {
+    public boolean checkIsLate(Date currentDate, Date dueDate) {
         return currentDate.after(dueDate);
     }
 

@@ -4,7 +4,6 @@ import com.github.pieter_groenendijk.exception.EntityNotFoundException;
 import com.github.pieter_groenendijk.model.Reservation;
 import com.github.pieter_groenendijk.repository.IMembershipRepository;
 import com.github.pieter_groenendijk.repository.IReservationRepository;
-import com.github.pieter_groenendijk.repository.ReservationRepository;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -18,12 +17,10 @@ public class ReservationService implements IReservationService {
     private Date pickupDate;
     IMembershipRepository membershipRepository;
 
-    public ReservationService(ReservationRepository reservationRepository) {
-        this.reservationRepository = reservationRepository;
-        this.membershipRepository = membershipRepository;
-    }
 
     public ReservationService(IReservationRepository reservationRepository, IMembershipRepository membershipRepository) {
+        this.reservationRepository = reservationRepository;
+        this.membershipRepository = membershipRepository;
     }
 
     @Override
@@ -67,8 +64,9 @@ public class ReservationService implements IReservationService {
     private LocalDate toLocalDate(Date date) {
         return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     }
+
     @Override
-    public Date generateReservationPickUpDate(long reservationId) {
+    public Date generateReservationPickUpDate() {
         LocalDate localDate = LocalDate.now().plusDays(PICKUP_DAYS);
         return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
@@ -86,7 +84,7 @@ public class ReservationService implements IReservationService {
 
     @Override
     public Date getPickupDate(long reservationId) {
-        Date pickupDate = generateReservationPickUpDate(reservationId);
+        Date pickupDate = generateReservationPickUpDate();
         return pickupDate;
     }
 }

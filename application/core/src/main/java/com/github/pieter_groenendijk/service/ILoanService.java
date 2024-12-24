@@ -16,11 +16,11 @@ public interface ILoanService {
     void cancelLoan(long loanId);
 
 
-    void generateReturnByDate(long membershipId, long copyId, Date returnBy);
+    void generateReturnByDate(long copyId, Date returnBy);
     void returnToCatalogue(long CopyId);
 
     void handleOverdueLoans();
-    boolean checkIsLate(long loanId, Date currentDate, Date returnBy);
+    boolean checkIsLate(Date currentDate, Date returnBy);
     boolean checkIsDamaged(long loanId);
 
 
