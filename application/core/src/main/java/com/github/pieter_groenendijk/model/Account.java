@@ -30,6 +30,9 @@ public class Account {
     @Column(name = "isActive", nullable = false)
     private boolean isActive;
 
+    @Column(name = "uncollectedReservations", nullable = false)
+    private int uncollectedReservations;
+
     // Getters and Setters
     public Long getAccountId() {
         return accountId;
@@ -85,5 +88,8 @@ public class Account {
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    public void incrementUncollectedReservationCount() {
     }
 }

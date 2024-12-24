@@ -14,4 +14,5 @@ public interface IReservationRepository {
     void updateReservation(Reservation reservation);
     void deleteReservationById(long reservationId);
 
+    List<Reservation> retrieveReservationsByMembershipId(long membershipId);
 }

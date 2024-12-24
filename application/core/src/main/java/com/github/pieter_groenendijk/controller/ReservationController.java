@@ -3,6 +3,7 @@ package com.github.pieter_groenendijk.controller;
 
 import com.github.pieter_groenendijk.hibernate.SessionFactoryFactory;
 import com.github.pieter_groenendijk.model.Reservation;
+import com.github.pieter_groenendijk.repository.IAccountRepository;
 import com.github.pieter_groenendijk.repository.IMembershipRepository;
 import com.github.pieter_groenendijk.repository.IReservationRepository;
 import com.github.pieter_groenendijk.repository.ReservationRepository;
@@ -24,11 +25,14 @@ public class ReservationController {
 
     private final SessionFactory sessionFactory = new SessionFactoryFactory().create();
     private final IReservationService reservationService;
-    IMembershipRepository membershipRepository;
+    private final IAccountRepository accountRepository;
+    private final IMembershipRepository membershipRepository;
 
-    public ReservationController() {
+    public ReservationController(IAccountRepository accountRepository, IMembershipRepository membershipRepository) {
+        this.accountRepository = accountRepository;
+        this.membershipRepository = membershipRepository;
         IReservationRepository reservationRepository = new ReservationRepository(sessionFactory);
-        reservationService = new ReservationService(reservationRepository, membershipRepository);
+        reservationService = new ReservationService(reservationRepository, membershipRepository, accountRepository);
     }
     @Operation(summary = "Create a reservation", description = "Create a new reservation")
     @ApiResponses(value = {
