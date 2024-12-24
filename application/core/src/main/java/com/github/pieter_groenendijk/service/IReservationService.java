@@ -22,8 +22,5 @@ public interface IReservationService {
 
     void handleUncollectedReservations(long membershipId, Date currentDate);
 
-
-    void removeReservation(long reservationId);
-
     Date getPickupDate(long reservationId);
 }

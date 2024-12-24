@@ -82,7 +82,7 @@ public class ReservationService implements IReservationService {
         Membership membership = membershipRepository.retrieveMembershipById(membershipId)
                 .orElseThrow(() -> new EntityNotFoundException("Membership with ID " + membershipId + " not found."));
 
-        Account account = membership.getAccount();  // Assuming Membership has a reference to Account
+        Account account = membership.getAccount();
 
         List<Reservation> reservations = reservationRepository.retrieveReservationsByMembershipId(membershipId);
 
@@ -100,12 +100,6 @@ public class ReservationService implements IReservationService {
 
 
         accountRepository.store(account);
-    }
-
-
-    @Override
-    public void removeReservation(long reservationId) {
-
     }
 
     @Override
