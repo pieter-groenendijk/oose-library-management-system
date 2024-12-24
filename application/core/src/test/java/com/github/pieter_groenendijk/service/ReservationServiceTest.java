@@ -30,7 +30,7 @@ class ReservationServiceTest {
     @Mock
     private IAccountRepository accountRepository;
 
-    @Mock
+    @InjectMocks
     private ReservationService reservationService;
 
     @BeforeEach
@@ -47,7 +47,7 @@ class ReservationServiceTest {
     @Test
     void readyForPickup() {
         Reservation reservation = new Reservation();
-        reservation.setReservationDate(Date.from(LocalDate.now().minusDays(10).atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        reservation.setReservationDate(Date.from(LocalDate.now().minusDays(5).atStartOfDay(ZoneId.systemDefault()).toInstant()));
         when(reservationRepository.retrieveReservationById(1L)).thenReturn(Optional.of(reservation));
 
         assertTrue(reservationService.readyForPickup(1L));
@@ -55,7 +55,7 @@ class ReservationServiceTest {
 
     @Test
     void generateReservationPickUpDate() {
-        int pickupDays = 5;
+        int pickupDays = 7;
         Date generatedDate = reservationService.generateReservationPickUpDate();
 
         LocalDate expectedDate = LocalDate.now().plusDays(pickupDays);

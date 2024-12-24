@@ -102,12 +102,12 @@ public class ReservationService implements IReservationService {
                 });
 
         accountRepository.store(account);
+        //TODO: Update status reservationRepository.updateReservation(reservation);
     }
 
     @Override
     public Date getPickupDate(long reservationId) {
-        Date pickupDate = generateReservationPickUpDate();
-        return pickupDate;
+        return generateReservationPickUpDate();
     }
 
     public void markReservationAsLoaned(long reservationId) {
