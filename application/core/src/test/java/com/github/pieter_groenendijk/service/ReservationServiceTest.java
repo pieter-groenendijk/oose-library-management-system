@@ -1,7 +1,7 @@
 package com.github.pieter_groenendijk.service;
 
 import com.github.pieter_groenendijk.model.Reservation;
-import com.github.pieter_groenendijk.repository.ReservationRepository;
+import com.github.pieter_groenendijk.repository.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -12,18 +12,25 @@ import org.mockito.MockitoAnnotations;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @Nested
 class ReservationServiceTest {
 
     @Mock
-    private ReservationRepository reservationRepository;
+    private IReservationRepository reservationRepository;
+    @Mock
+    private IMembershipRepository membershipRepository;
 
-    @InjectMocks
+    @Mock
+    private IAccountRepository accountRepository;
+
+    @Mock
     private ReservationService reservationService;
 
     @BeforeEach
@@ -48,6 +55,15 @@ class ReservationServiceTest {
 
     @Test
     void generateReservationPickUpDate() {
+        int pickupDays = 5;
+        Date generatedDate = reservationService.generateReservationPickUpDate();
+
+        LocalDate expectedDate = LocalDate.now().plusDays(pickupDays);
+        LocalDate actualDate = generatedDate.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+
+            assertEquals(expectedDate, actualDate, "The generated pickup date is not correct.");
     }
 
     @Test
@@ -58,4 +74,38 @@ class ReservationServiceTest {
         assertEquals(expectedDate, actualDate);
     }
 
+    @Test
+    void handleUncollectedReservations() {
+        Date currentDate = new Date();
+        Reservation reservation = new Reservation();
+        reservation.setReservationPickUpDate(Date.from(LocalDate.now().minusDays(10).atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        reservation.getIsCollected(false);
+
+        when(reservationRepository.retrieveReservationsByMembershipId(1L)).thenReturn(List.of(reservation));
+
+        reservationService.handleUncollectedReservations(1L, currentDate);
+
+        verify(reservationRepository).updateReservation(reservation);
+        assertTrue(reservation.getExpired(true), "The reservation should be marked as expired.");
+    }
+
+    @Test
+    void store() {
+    }
+
+    @Test
+    void getReservationById() {
+    }
+
+    @Test
+    void updateReservation() {
+    }
+
+    @Test
+    void cancelReservation() {
+    }
+
+    @Test
+    void markReservationAsLoaned() {
+    }
 }

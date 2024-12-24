@@ -26,12 +26,11 @@ public class Reservation {
     @JoinColumn(name = "membershipId", nullable = false)
     private Membership membership;
 
-    @Column(name = "expired", nullable = false)
-    private boolean expired = false;
+    @Column(name = "isExpired", nullable = false)
+    private boolean isExpired = false;
 
-    @Column(name = "collected", nullable = false)
-    private boolean collected = false;
-
+    @Column(name = "isCollected", nullable = false)
+    private boolean isCollected = false;
 
 
     public void setReservationId(Long reservationId) {
@@ -70,11 +69,15 @@ public class Reservation {
     public Date getReservationPickUpDate() {
         return reservationPickUpDate;
     }
-
-    public boolean isCollected() {
-        return false;
+    public void setReservationPickUpDate(Date reservationPickUpDate) {
+        this.reservationPickUpDate = reservationPickUpDate;
     }
 
-    public void setExpired(boolean expired) {
+    public boolean getIsCollected(boolean b) {
+        return isCollected;
+    }
+
+    public boolean getExpired(boolean isExpired) {
+        return isExpired;
     }
 }

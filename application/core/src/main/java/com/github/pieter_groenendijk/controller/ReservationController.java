@@ -2,6 +2,7 @@ package com.github.pieter_groenendijk.controller;
 
 
 import com.github.pieter_groenendijk.hibernate.SessionFactoryFactory;
+import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.model.Reservation;
 import com.github.pieter_groenendijk.repository.IAccountRepository;
 import com.github.pieter_groenendijk.repository.IMembershipRepository;
@@ -39,9 +40,8 @@ public class ReservationController {
             @ApiResponse(responseCode = "201", description = "Reservation created")
     })
     @PostMapping
-    public ResponseEntity<Reservation> store(@RequestParam("MembershipId") long membershipId, @RequestParam("ProductCopyId")  long productCopyId) {
-        Reservation reservation = reservationService.store(membershipId, productCopyId);
-        return new ResponseEntity<>(reservation, HttpStatus.CREATED);
+    public Reservation store(@RequestBody Reservation reservation) {
+        return reservationService.store(reservation);
     }
 
 
@@ -82,7 +82,7 @@ public class ReservationController {
     })
     @DeleteMapping("/{reservationId}")
     public ResponseEntity<Void> deleteReservation(@PathVariable("reservationId") long reservationId) {
-        reservationService.removeReservation(reservationId);
+        //reservationService.removeReservation(reservationId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

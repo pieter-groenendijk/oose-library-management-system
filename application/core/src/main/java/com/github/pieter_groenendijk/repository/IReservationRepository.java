@@ -8,7 +8,6 @@ import java.util.Optional;
 public interface IReservationRepository {
 
     Optional<Reservation> retrieveReservationById(long reservationId);
-    List<Reservation> retrieveReservationByMembershipId(long membershipId);
 
     void store(Reservation reservation);
     void updateReservation(Reservation reservation);

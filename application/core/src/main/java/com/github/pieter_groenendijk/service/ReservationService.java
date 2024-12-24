@@ -29,6 +29,7 @@ public class ReservationService implements IReservationService {
         this.accountRepository = accountRepository;
     }
 
+
     @Override
     public Reservation store(Reservation reservation) {
         //TODO: set status to active
@@ -93,9 +94,9 @@ public class ReservationService implements IReservationService {
         List<Reservation> reservations = reservationRepository.retrieveReservationsByMembershipId(membershipId);
 
         reservations.stream()
-                .filter(reservation -> !reservation.isCollected() && reservation.getReservationPickUpDate().before(currentDate))
+                .filter(reservation -> !reservation.getIsCollected(false) && reservation.getReservationPickUpDate().before(currentDate))
                 .forEach(reservation -> {
-                    reservation.setExpired(true);
+                    reservation.getExpired(true);
 //TODO: Set status Expired
                     AccountService.incrementUncollectedReservationCount();
                 });
