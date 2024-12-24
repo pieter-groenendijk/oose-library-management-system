@@ -48,6 +48,11 @@ public class ReservationService implements IReservationService {
 
     @Override
     public void cancelReservation(long reservationId) {
+        Reservation reservation = reservationRepository.retrieveReservationById(reservationId)
+                .orElseThrow(() -> new EntityNotFoundException("Reservation with ID " + reservationId + " not found."));
+
+        //reservation.setStatus(ReservationStatus.CANCELLED);
+        reservationRepository.updateReservation(reservation);
 
     }
 
@@ -106,7 +111,7 @@ public class ReservationService implements IReservationService {
 
     public void markReservationAsLoaned(long reservationId) {
         Reservation reservation = getReservationById(reservationId);
-        //reservation.setStatus(LOAN);
+        //TODO: reservation.setStatus(LOAN);
         reservationRepository.updateReservation(reservation);
     }
 

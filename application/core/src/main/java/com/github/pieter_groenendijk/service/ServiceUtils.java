@@ -19,4 +19,5 @@ public class ServiceUtils {
     public static final String RESERVATION_ACTIVE = "ACTIVE";
     public static final String RESERVATION_LOAN = "LOANED";
     public static final String RESERVATION_EXPIRED = "EXPIRED";
+    public static final String RESERVATION_CANCELLED = "CANCELLED";
 }
