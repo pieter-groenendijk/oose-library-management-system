@@ -24,4 +24,9 @@ public interface IAccountService {
     Membership store(MembershipRequestDTO request);
 
     List<Membership> retrieveMembershipsByAccountId (long id);
+
+    static void incrementUncollectedReservationCount() {
+        int uncollectedReservationCount = 0;
+        uncollectedReservationCount++;
+    }
 }

@@ -10,7 +10,6 @@ import com.github.pieter_groenendijk.exception.EntityNotFoundException;
 import com.github.pieter_groenendijk.exception.InputValidationException;
 import com.github.pieter_groenendijk.service.validator.EmailValidator;
 import com.github.pieter_groenendijk.service.validator.GenderCheck;
-import com.github.pieter_groenendijk.service.IAccountService;
 import com.github.pieter_groenendijk.model.DTO.MembershipRequestDTO;
 import java.util.Date;
 import java.time.LocalDate;
@@ -19,6 +18,7 @@ import java.util.List;
 
 public class AccountService implements IAccountService {
 
+    private static int uncollectedReservationCount = 0;
     private final IAccountRepository accountRepository;
     private final IMembershipTypeRepository membershipTypeRepository;
     private final IMembershipRepository membershipRepository;
@@ -95,5 +95,9 @@ public class AccountService implements IAccountService {
 
         //Persist
         return membershipRepository.store(membership);
+    }
+
+    public static void incrementUncollectedReservationCount() {
+      uncollectedReservationCount++;
     }
 }

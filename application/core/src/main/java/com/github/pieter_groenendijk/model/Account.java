@@ -90,6 +90,5 @@ public class Account {
         isActive = active;
     }
 
-    public void incrementUncollectedReservationCount() {
-    }
+
 }

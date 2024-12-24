@@ -30,7 +30,7 @@ public class ReservationService implements IReservationService {
     }
 
     @Override
-    public Reservation store(long membershipId, long copyId) {
+    public Reservation store(Reservation reservation) {
         return null;
     }
 
@@ -91,13 +91,8 @@ public class ReservationService implements IReservationService {
                 .forEach(reservation -> {
                     reservation.setExpired(true);
 
-
-                    account.incrementUncollectedReservationCount();
-
-
-                    reservationRepository.updateReservation(reservation);
+                    AccountService.incrementUncollectedReservationCount();
                 });
-
 
         accountRepository.store(account);
     }
