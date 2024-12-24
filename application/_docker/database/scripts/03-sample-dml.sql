@@ -60,3 +60,19 @@ VALUES (1, '2024-12-09', FALSE, 1, 1),
        (8, '2024-12-16', TRUE, 8, 8),
        (9, '2024-12-17', TRUE, 1, 9),
        (10, '2024-12-18', TRUE, 1, 10);
+
+-- Insert a product in to database
+INSERT INTO ProductTemplate (productId, name, genre, yearOfRelease, description, type, ageClassification, mediaType)
+VALUES (2, 'The Great Gatsby', 'Classic', 1925, 'A novel by F. Scott Fitzgerald', 'BOOK', 18, 'PHYSICAL');
+
+INSERT INTO PhysicalProductTemplate (productId, location, author)
+VALUES
+    (2, 'A1', 'F. Scott Fitzgerald');
+
+INSERT INTO PhysicalReadProduct (productId, ISBN, author)
+VALUES
+    (2, 1234567890, 'F. Scott Fitzgerald');
+
+INSERT INTO ProductCopy (productId, availabilityStatus, isDamaged)
+VALUES
+    (2, 'Available', false);
