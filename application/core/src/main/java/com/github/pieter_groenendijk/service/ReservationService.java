@@ -31,6 +31,7 @@ public class ReservationService implements IReservationService {
 
     @Override
     public Reservation store(Reservation reservation) {
+        //TODO: set status to active
         return null;
     }
 
@@ -90,7 +91,7 @@ public class ReservationService implements IReservationService {
                 .filter(reservation -> !reservation.isCollected() && reservation.getReservationPickUpDate().before(currentDate))
                 .forEach(reservation -> {
                     reservation.setExpired(true);
-
+//TODO: Set status Expired
                     AccountService.incrementUncollectedReservationCount();
                 });
 
@@ -102,4 +103,11 @@ public class ReservationService implements IReservationService {
         Date pickupDate = generateReservationPickUpDate();
         return pickupDate;
     }
+
+    public void markReservationAsLoaned(long reservationId) {
+        Reservation reservation = getReservationById(reservationId);
+        //reservation.setStatus(LOAN);
+        reservationRepository.updateReservation(reservation);
+    }
+
 }

@@ -17,5 +17,6 @@ public class ServiceUtils {
     public static final String DAMAGED = "DAMAGED";
 
     public static final String RESERVATION_ACTIVE = "ACTIVE";
+    public static final String RESERVATION_LOAN = "LOANED";
     public static final String RESERVATION_EXPIRED = "EXPIRED";
 }
