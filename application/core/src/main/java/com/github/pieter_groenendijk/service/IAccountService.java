@@ -16,6 +16,10 @@ public interface IAccountService {
     MembershipType retrieveMembershipTypeById(long id);
     
     Account store(Account account);
+
+    Account update(Account account);
+
+    Account deleteAccount(long id);
     
     MembershipType store(MembershipType membershipType);
     
@@ -24,4 +28,5 @@ public interface IAccountService {
     Membership store(MembershipRequestDTO request);
 
     List<Membership> retrieveMembershipsByAccountId (long id);
+
 }
