@@ -11,7 +11,7 @@ import com.github.pieter_groenendijk.repository.IAccountRepository;
 import com.github.pieter_groenendijk.repository.IMembershipTypeRepository;
 import com.github.pieter_groenendijk.repository.IMembershipRepository;
 import com.github.pieter_groenendijk.model.Account;
-import com.github.pieter_groenendijk.model.MembershipType;
+
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import com.github.pieter_groenendijk.hibernate.SessionFactoryFactory;
@@ -39,13 +39,24 @@ public class AccountController {
     })
     @GetMapping("/{id}")
     public Account retrieveAccountById(@PathVariable("id") long id) {
-        Account account = accountService.retrieveAccountById(id);
-        return account;
+        return accountService.retrieveAccountById(id);
     }
 
     @Operation(summary = "Create an account", description = "Add a new account to the database")
     @PostMapping
     public Account createAccount(@RequestBody Account account) {
         return accountService.store(account);
+    }
+
+    @Operation(summary = "Update an account", description = "Update an account in the database")
+    @PutMapping
+    public Account updateAccount(@RequestBody Account account){
+        return accountService.update(account);
+    }
+
+    @Operation(summary = "Delete an account", description = "Delete an account from the database")
+    @DeleteMapping("/{id}")
+    public Account deleteAccount(@PathVariable("id") long id){
+        return accountService.deleteAccount(id);
     }
 }
