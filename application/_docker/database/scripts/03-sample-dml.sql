@@ -41,3 +41,13 @@ INSERT INTO "Membership" ("accountId", "membershipTypeId", "isActive", "startDat
 (1, 5, TRUE, '2023-06-01', '2024-05-31'),
 (6, 3, TRUE, '2023-03-15', '2024-03-14'),
 (3, 4, FALSE, '2022-08-01', '2023-07-31');
+
+-- region: Fines
+INSERT INTO
+    "FineType" ("title", "amountInCents")
+VALUES
+    ('day-overdue-lending', 20),
+    ('uncollected-reservation-pattern', 1000)
+
+
+-- endregion
