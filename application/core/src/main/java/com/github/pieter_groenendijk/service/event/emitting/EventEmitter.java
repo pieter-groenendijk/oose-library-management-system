@@ -1,4 +1,4 @@
-package com.github.pieter_groenendijk.service.event;
+package com.github.pieter_groenendijk.service.event.emitting;
 
 import java.util.ArrayList;
 
