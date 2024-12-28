@@ -11,7 +11,8 @@ CREATE TABLE "Account" (
     "lastName" VARCHAR(50) NOT NULL,
     "dateOfBirth" DATE NOT NULL,
     "gender" CHAR(1) NOT NULL,
-    "isActive" BOOLEAN NOT NULL
+    "isActive" BOOLEAN NOT NULL,
+    "uncollectedReservations" INT DEFAULT 0
 );
 
 -- Create MembershipType table
