@@ -3,7 +3,9 @@ package com.github.pieter_groenendijk.controller;
 import com.github.pieter_groenendijk.hibernate.SessionFactoryFactory;
 import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.repository.ILoanRepository;
+import com.github.pieter_groenendijk.repository.IMembershipRepository;
 import com.github.pieter_groenendijk.repository.LoanRepository;
+import com.github.pieter_groenendijk.repository.MembershipRepository;
 import com.github.pieter_groenendijk.service.ILoanService;
 import com.github.pieter_groenendijk.service.LoanService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,13 +25,14 @@ import java.util.List;
 @RequestMapping("/loan")
 public class LoanController {
 
-    private SessionFactory sessionFactory;
     private ILoanService loanService;
+    private SessionFactory sessionFactory = new SessionFactoryFactory().create();
 
-    public LoanController(SessionFactory sessionFactory, ILoanService loanService) {
-        this.sessionFactory = sessionFactory;
-        this.loanService = loanService;
+    public LoanController() {
+        IMembershipRepository membershipRepository = new MembershipRepository(sessionFactory);
         ILoanRepository loanRepository = new LoanRepository(sessionFactory);
+        ILoanService loanService = new LoanService(loanRepository);
+
     }
 
 

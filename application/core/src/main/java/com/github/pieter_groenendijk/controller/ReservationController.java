@@ -4,10 +4,7 @@ package com.github.pieter_groenendijk.controller;
 import com.github.pieter_groenendijk.hibernate.SessionFactoryFactory;
 import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.model.Reservation;
-import com.github.pieter_groenendijk.repository.IAccountRepository;
-import com.github.pieter_groenendijk.repository.IMembershipRepository;
-import com.github.pieter_groenendijk.repository.IReservationRepository;
-import com.github.pieter_groenendijk.repository.ReservationRepository;
+import com.github.pieter_groenendijk.repository.*;
 import com.github.pieter_groenendijk.service.IReservationService;
 import com.github.pieter_groenendijk.service.ReservationService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,12 +23,10 @@ public class ReservationController {
 
     private final SessionFactory sessionFactory = new SessionFactoryFactory().create();
     private final IReservationService reservationService;
-    private final IAccountRepository accountRepository;
-    private final IMembershipRepository membershipRepository;
 
-    public ReservationController(IAccountRepository accountRepository, IMembershipRepository membershipRepository) {
-        this.accountRepository = accountRepository;
-        this.membershipRepository = membershipRepository;
+    public ReservationController() {
+        IAccountRepository accountRepository = new AccountRepository(sessionFactory);
+        IMembershipRepository membershipRepository = new MembershipRepository(sessionFactory);
         IReservationRepository reservationRepository = new ReservationRepository(sessionFactory);
         reservationService = new ReservationService(reservationRepository, membershipRepository, accountRepository);
     }
