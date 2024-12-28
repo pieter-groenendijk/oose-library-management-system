@@ -18,7 +18,7 @@ import java.util.List;
 
 public class AccountService implements IAccountService {
 
-    private static int uncollectedReservationCount = 0;
+    private static int uncollectedReservations = 0;
     private final IAccountRepository accountRepository;
     private final IMembershipTypeRepository membershipTypeRepository;
     private final IMembershipRepository membershipRepository;
@@ -98,6 +98,6 @@ public class AccountService implements IAccountService {
     }
 
     public static void incrementUncollectedReservationCount() {
-      uncollectedReservationCount++;
+      uncollectedReservations++;
     }
 }

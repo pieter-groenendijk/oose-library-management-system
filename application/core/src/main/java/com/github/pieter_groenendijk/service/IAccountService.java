@@ -11,6 +11,7 @@ import java.util.List;
 
 public interface IAccountService {
 
+
     Account retrieveAccountById(long id);
     
     MembershipType retrieveMembershipTypeById(long id);
@@ -25,8 +26,5 @@ public interface IAccountService {
 
     List<Membership> retrieveMembershipsByAccountId (long id);
 
-    static void incrementUncollectedReservationCount() {
-        int uncollectedReservationCount = 0;
-        uncollectedReservationCount++;
-    }
+
 }
