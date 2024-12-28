@@ -54,32 +54,8 @@ public class ReservationController {
             return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         }
     }
+    
 
-    @Operation(summary = "Update a reservation by reservationId", description = "Get reservation by reservationId")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Reservation found"),
-            @ApiResponse(responseCode = "204", description = "No reservation found for the given reservationId\"")
-    })
-    @PutMapping("/{reservationId}")
-    public ResponseEntity<Reservation> updateReservation(@PathVariable("reservationId") long reservationId, @RequestBody Reservation reservation) {
-        reservation.setId(reservationId);
-        Reservation updatedReservation = reservationService.updateReservation(reservation);
-        if (updatedReservation != null) {
-            return new ResponseEntity<>(updatedReservation, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-    }
-
-    @Operation(summary = "Delete a reservation by reservationId", description = "Delete reservation by reservationId")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Reservation deleted")
-    })
-    @DeleteMapping("/{reservationId}")
-    public ResponseEntity<Void> deleteReservation(@PathVariable("reservationId") long reservationId) {
-        //reservationService.removeReservation(reservationId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
 
     @Operation(summary = "Check if reservation is ready for pickup", description = "Check if reservation is ready for pickup by reservationId")
     @ApiResponses(value = {
