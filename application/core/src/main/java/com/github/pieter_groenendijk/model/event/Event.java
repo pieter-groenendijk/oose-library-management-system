@@ -26,11 +26,4 @@ public class Event<T> {
         this.type = type;
     }
 
-    public T getContext() {
-        return context;
-    }
-
-    public void setContext(T context) {
-        this.context = context;
-    }
 }

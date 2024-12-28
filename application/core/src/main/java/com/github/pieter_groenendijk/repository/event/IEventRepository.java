@@ -1,13 +1,14 @@
 package com.github.pieter_groenendijk.repository.event;
 
-import com.github.pieter_groenendijk.model.event.DayOverdueLoanEvent;
+import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.model.event.Event;
+import com.github.pieter_groenendijk.model.event.LoanEvent;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 public interface IEventRepository {
-    void storeDayOverdueEvent(DayOverdueLoanEvent event);
+    void storeLoanEvent(Event<Loan> event);
 
     List<Event<?>> retrieveUntil(LocalDateTime scheduledAt);
 }
