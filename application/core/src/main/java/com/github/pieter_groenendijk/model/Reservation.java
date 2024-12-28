@@ -73,11 +73,20 @@ public class Reservation {
         this.reservationPickUpDate = reservationPickUpDate;
     }
 
-    public boolean getIsCollected(boolean b) {
+    public boolean getIsCollected(boolean isCollected) {
         return isCollected;
     }
 
-    public boolean getExpired(boolean isExpired) {
+    public boolean getIsExpired(boolean isExpired) {
         return isExpired;
     }
+
+    public void setIsCollected(boolean isCollected) {
+        this.isCollected = isCollected;
+    }
+
+    public void setIsExpired() {
+        this.isExpired = true;
+    }
+
 }

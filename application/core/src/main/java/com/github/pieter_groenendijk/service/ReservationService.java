@@ -85,26 +85,24 @@ public class ReservationService implements IReservationService {
     }
 
     @Override
-    public void handleUncollectedReservations(long membershipId, Date currentDate) {
-        Membership membership = membershipRepository.retrieveMembershipById(membershipId)
-                .orElseThrow(() -> new EntityNotFoundException("Membership with ID " + membershipId + " not found."));
+    public void handleUncollectedReservations(long accountId, Date currentDate) {
+        Membership membership = membershipRepository.retrieveMembershipById(accountId)
+                .orElseThrow(() -> new EntityNotFoundException("Account with ID " + accountId + " not found."));
 
         Account account = membership.getAccount();
 
-        List<Reservation> reservations = reservationRepository.retrieveReservationsByMembershipId(membershipId);
+        List<Reservation> reservations = reservationRepository.retrieveReservationsByMembershipId(membership.getMembershipId());
 
         reservations.stream()
-                .filter(reservation -> !reservation.getIsCollected(false) && reservation.getReservationPickUpDate().before(currentDate))
+                .filter(reservation -> !reservation.getIsCollected(true) && reservation.getReservationPickUpDate().before(currentDate))
                 .forEach(reservation -> {
-                    reservation.getExpired(true);
-//TODO: Set status Expired
+                    reservation.setIsExpired();
                     AccountService.incrementUncollectedReservationCount();
+                    reservationRepository.updateReservation(reservation);
                 });
 
         accountRepository.store(account);
-        //TODO: Update status reservationRepository.updateReservation(reservation);
     }
-
     @Override
     public Date getPickupDate(long reservationId) {
         return generateReservationPickUpDate();
