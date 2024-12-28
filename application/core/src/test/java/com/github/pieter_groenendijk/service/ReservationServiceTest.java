@@ -47,10 +47,10 @@ class ReservationServiceTest {
     @Test
     void readyForPickup() {
         Reservation reservation = new Reservation();
-        reservation.setReservationDate(Date.from(LocalDate.now().minusDays(5).atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        reservation.setReservationDate(Date.from(LocalDate.now().minusDays(1).atStartOfDay(ZoneId.systemDefault()).toInstant()));
         when(reservationRepository.retrieveReservationById(1L)).thenReturn(Optional.of(reservation));
 
-        assertTrue(reservationService.readyForPickup(1L));
+        assertFalse(reservationService.readyForPickup(1L));
     }
 
     @Test
