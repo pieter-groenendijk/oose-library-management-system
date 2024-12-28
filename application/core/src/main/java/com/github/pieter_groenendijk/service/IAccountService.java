@@ -11,7 +11,6 @@ import java.util.List;
 
 public interface IAccountService {
 
-
     Account retrieveAccountById(long id);
     
     MembershipType retrieveMembershipTypeById(long id);
@@ -25,5 +24,4 @@ public interface IAccountService {
     Membership store(MembershipRequestDTO request);
 
     List<Membership> retrieveMembershipsByAccountId (long id);
-    
 }
