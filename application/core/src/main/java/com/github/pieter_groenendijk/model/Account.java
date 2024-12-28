@@ -91,4 +91,7 @@ public class Account {
     }
 
 
+    public void incrementUncollectedReservationCount() {
+        this.uncollectedReservations++;
+    }
 }

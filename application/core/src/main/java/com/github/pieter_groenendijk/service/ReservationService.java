@@ -97,7 +97,7 @@ public class ReservationService implements IReservationService {
                 .filter(reservation -> !reservation.getIsCollected(true) && reservation.getReservationPickUpDate().before(currentDate))
                 .forEach(reservation -> {
                     reservation.setIsExpired();
-                    AccountService.incrementUncollectedReservationCount();
+                    account.incrementUncollectedReservationCount();
                     reservationRepository.updateReservation(reservation);
                 });
 
