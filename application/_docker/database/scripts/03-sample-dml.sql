@@ -1,12 +1,11 @@
 -- Insert data into MembershipType table
-INSERT INTO "MembershipType" ("description", "digitalProducts", "physicalProducts", "maxLendings") VALUES
-('Basic Membership', TRUE, FALSE, 2),
-('Premium Membership', TRUE, TRUE, 5),
-('Digital Only', TRUE, FALSE, 3),
-('Physical Only', FALSE, TRUE, 4),
-('VIP Membership', TRUE, TRUE, 10);
+INSERT INTO "MembershipType" ("membershipTypeId", "description", "digitalProducts", "physicalProducts", "maxLendings") VALUES
+(1, 'Basic Membership', TRUE, FALSE, 2),
+(2, 'Premium Membership', TRUE, TRUE, 5),
+(3, 'Digital Only', TRUE, FALSE, 3),
+(4, 'Physical Only', FALSE, TRUE, 4),
+(5, 'VIP Membership', TRUE, TRUE, 10);
 
--- Insert data into Account table
 INSERT INTO "Account" ("email", "firstName", "lastName", "dateOfBirth", "gender", "isActive", "uncollectedReservations") VALUES
 ('john.doe@example.com', 'John', 'Doe', '1990-01-01', 'M', TRUE, 0),
 ('jane.smith@example.com', 'Jane', 'Smith', '1985-03-15', 'F', TRUE, 0),
@@ -62,17 +61,17 @@ VALUES (1, '2024-12-09', FALSE, 1, 1),
        (10, '2024-12-18', TRUE, 1, 10);
 
 -- Insert a product in to database
-INSERT INTO ProductTemplate (productId, name, genre, yearOfRelease, description, type, ageClassification, mediaType)
+INSERT INTO "ProductTemplate" ("productId", "name", "genre", "yearOfRelease", "description", "type", "ageClassification", "mediaType")
 VALUES (2, 'The Great Gatsby', 'Classic', 1925, 'A novel by F. Scott Fitzgerald', 'BOOK', 18, 'PHYSICAL');
 
-INSERT INTO PhysicalProductTemplate (productId, location, author)
+INSERT INTO "PhysicalProductTemplate" ("productId", "location", "author")
 VALUES
     (2, 'A1', 'F. Scott Fitzgerald');
 
-INSERT INTO PhysicalReadProduct (productId, ISBN, author)
+INSERT INTO "PhysicalReadProduct" ("productId", "ISBN", "author")
 VALUES
     (2, 1234567890, 'F. Scott Fitzgerald');
 
-INSERT INTO ProductCopy (productId, availabilityStatus, isDamaged)
+INSERT INTO "ProductCopy" ("productId", "availabilityStatus", "isDamaged")
 VALUES
     (2, 'Available', false);

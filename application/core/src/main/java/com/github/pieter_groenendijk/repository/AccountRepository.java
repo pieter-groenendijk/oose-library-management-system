@@ -45,4 +45,27 @@ public class AccountRepository implements IAccountRepository {
         }
         return account;
     }
+
+    public Optional<Account> deleteAccountById(long id) {
+        Session session = null;  // Initialize to null
+        Account account = null;  // Initialize to null
+
+        try {
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+
+            account = session.get(Account.class, id);
+            if (account != null) {
+                session.delete(account);
+                session.getTransaction().commit();
+            } else {
+                session.getTransaction().rollback();
+            }
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return Optional.ofNullable(account);  // Now account is definitely initialized
+    }
 }
