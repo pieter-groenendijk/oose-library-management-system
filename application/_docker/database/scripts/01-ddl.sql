@@ -66,7 +66,7 @@ CREATE TABLE "LendingAssociatedNotificationTask" (
     PRIMARY KEY ("lendingId", "notificationTaskId")
 );
 
-CREATE TABLE ProductTemplate (
+CREATE TABLE "ProductTemplate" (
     "productId" BIGSERIAL PRIMARY KEY,
     "name" VARCHAR(100) NOT NULL,
     "genre" VARCHAR(50) NOT NULL,
@@ -77,18 +77,18 @@ CREATE TABLE ProductTemplate (
     "mediaType" VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE PhysicalProductTemplate (
+CREATE TABLE "PhysicalProductTemplate" (
     "productId" BIGSERIAL PRIMARY KEY,
     "location" VARCHAR(100) NOT NULL,
     "author" VARCHAR(100) NOT NULL,
-    FOREIGN KEY ("productId") REFERENCES ProductTemplate ("productId")
+    FOREIGN KEY ("productId") REFERENCES "ProductTemplate" ("productId")
 );
 
-CREATE TABLE PhysicalReadProduct (
+CREATE TABLE "PhysicalReadProduct" (
     "productId" BIGSERIAL PRIMARY KEY,
     "ISBN" BIGINT,
     "author" VARCHAR(100) NOT NULL,
-    FOREIGN KEY ("productId") REFERENCES ProductTemplate ("productId")
+    FOREIGN KEY ("productId") REFERENCES "ProductTemplate" ("productId")
 );
 
 CREATE TABLE "ProductCopy"
@@ -97,7 +97,7 @@ CREATE TABLE "ProductCopy"
     "availabilityStatus" VARCHAR(100) NOT NULL,
     "isDamaged"          BOOLEAN      NOT NULL,
     "productId"          BIGSERIAL      NOT NULL,
-    CONSTRAINT fk_physical_product_template FOREIGN KEY ("productId") REFERENCES PhysicalProductTemplate ("productId")
+    CONSTRAINT fk_physical_product_template FOREIGN KEY ("productId") REFERENCES "PhysicalProductTemplate" ("productId")
 );
 
 CREATE TABLE "Loan"
