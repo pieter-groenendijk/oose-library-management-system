@@ -1,13 +1,15 @@
 -- Drop tables if they exist, cascading dependencies
+/* 
 DROP TABLE IF EXISTS "Membership" CASCADE;
 DROP TABLE IF EXISTS "MembershipType" CASCADE;
 DROP TABLE IF EXISTS "Account" CASCADE;
 DROP TABLE IF EXISTS "Lending" CASCADE;
 DROP TABLE IF EXISTS "NotificationTask" CASCADE;
 DROP TABLE IF EXISTS "LendingAssociatedNotificationTask" CASCADE;
-DROP TABLE IF EXISTS Loan CASCADE;
+DROP TABLE IF EXISTS "Loan" CASCADE;
 DROP TABLE IF EXISTS "Reservation" CASCADE;
 DROP TABLE IF EXISTS "Lending" CASCADE;
+*/
 
 -- Create Account table
 CREATE TABLE "Account" (
