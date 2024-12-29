@@ -1,9 +1,9 @@
 package com.github.pieter_groenendijk.model;
 
 import com.github.pieter_groenendijk.model.product.ProductCopy;
-import com.github.pieter_groenendijk.model.product.ProductTemplate;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -17,7 +17,11 @@ public class Loan {
     private Date startDate;
     @Column(name = "returnBy")
     @Temporal(TemporalType.DATE)
-    private Date returnBy;
+    private LocalDate returnBy;
+
+    @Column(name = "extendedReturnBy")
+    @Temporal(TemporalType.DATE)
+    private Date extendedReturnBy;
     @Column(name = "returnedOn")
     @Temporal(TemporalType.DATE)
     private Date returnedOn;
@@ -30,6 +34,9 @@ public class Loan {
     @OneToOne
     @JoinColumn(name = "productCopyId")
     private ProductCopy productCopy;
+
+    @Column(name = "isExtended")
+    private boolean isExtended;
 
     // Getters and Setters
     public void setLoanId(Long loanId) {
@@ -48,11 +55,11 @@ public class Loan {
         this.startDate = startDate;
     }
 
-    public Date getReturnBy() {
+    public LocalDate getReturnBy() {
         return returnBy;
     }
 
-    public void setReturnBy(Date returnBy) {
+    public void setReturnBy(LocalDate returnBy) {
         this.returnBy = returnBy;
     }
 
@@ -79,5 +86,11 @@ public class Loan {
     public void setMembership(Membership membership) {
         this.membership = membership;
     }
+
+    public void setExtended(boolean isExtended) {
+        this.isExtended = isExtended;
+    }
+
+    public boolean isExtended() { return isExtended; }
 
 }

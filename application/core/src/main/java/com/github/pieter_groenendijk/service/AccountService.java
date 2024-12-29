@@ -10,7 +10,6 @@ import com.github.pieter_groenendijk.exception.EntityNotFoundException;
 import com.github.pieter_groenendijk.exception.InputValidationException;
 import com.github.pieter_groenendijk.service.validator.EmailValidator;
 import com.github.pieter_groenendijk.service.validator.GenderCheck;
-import com.github.pieter_groenendijk.service.IAccountService;
 import com.github.pieter_groenendijk.model.DTO.MembershipRequestDTO;
 import java.util.Date;
 import java.time.LocalDate;
@@ -112,4 +111,5 @@ public class AccountService implements IAccountService {
         //Persist
         return membershipRepository.store(membership);
     }
+
 }

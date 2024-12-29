@@ -9,20 +9,15 @@ import java.util.List;
 public interface ILoanService {
     Loan store(Loan loan);
 
-
-
-    Loan getLoanById(long loanId);
     Loan extendLoan(long loanId, Date dueDate);
-    void cancelLoan(long loanId);
 
+    Date generateReturnByDate(long copyId, Date returnBy);
 
-    void generateReturnByDate(long copyId, Date returnBy);
     void returnToCatalogue(long CopyId);
 
     void handleOverdueLoans();
     boolean checkIsLate(Date currentDate, Date returnBy);
     boolean checkIsDamaged(long loanId);
-
 
     Loan retrieveLoanByLoanId(long loanId);
 

@@ -6,18 +6,17 @@ INSERT INTO "MembershipType" ("membershipTypeId", "description", "digitalProduct
 (4, 'Physical Only', FALSE, TRUE, 4),
 (5, 'VIP Membership', TRUE, TRUE, 10);
 
--- Insert data into Account table
-INSERT INTO "Account" ("accountId", "email", "firstName", "lastName", "dateOfBirth", "gender", "isActive") VALUES
-(1, 'john.doe@example.com', 'John', 'Doe', '1990-01-01', 'M', TRUE),
-(2, 'jane.smith@example.com', 'Jane', 'Smith', '1985-03-15', 'F', TRUE),
-(3, 'sam.wilson@example.com', 'Sam', 'Wilson', '1995-07-22', 'M', FALSE),
-(4, 'lisa.brown@example.com', 'Lisa', 'Brown', '1982-10-05', 'F', TRUE),
-(5, 'paul.jones@example.com', 'Paul', 'Jones', '2000-06-12', 'M', TRUE),
-(6, 'emily.davis@example.com', 'Emily', 'Davis', '1993-08-30', 'F', TRUE),
-(7, 'david.miller@example.com', 'David', 'Miller', '1998-02-17', 'M', FALSE),
-(8, 'susan.clark@example.com', 'Susan', 'Clark', '1978-12-23', 'F', TRUE),
-(9, 'mike.roberts@example.com', 'Mike', 'Roberts', '1991-09-14', 'M', TRUE),
-(10, 'anna.jackson@example.com', 'Anna', 'Jackson', '1987-11-11', 'F', TRUE);
+INSERT INTO "Account" ("email", "firstName", "lastName", "dateOfBirth", "gender", "isActive", "uncollectedReservations") VALUES
+('john.doe@example.com', 'John', 'Doe', '1990-01-01', 'M', TRUE, 0),
+('jane.smith@example.com', 'Jane', 'Smith', '1985-03-15', 'F', TRUE, 0),
+('sam.wilson@example.com', 'Sam', 'Wilson', '1995-07-22', 'M', FALSE, 0),
+('lisa.brown@example.com', 'Lisa', 'Brown', '1982-10-05', 'F', TRUE, 0),
+('paul.jones@example.com', 'Paul', 'Jones', '2000-06-12', 'M', TRUE, 0),
+('emily.davis@example.com', 'Emily', 'Davis', '1993-08-30', 'F', TRUE, 1),
+('david.miller@example.com', 'David', 'Miller', '1998-02-17', 'M', FALSE, 1),
+('susan.clark@example.com', 'Susan', 'Clark', '1978-12-23', 'F', TRUE, 1),
+('mike.roberts@example.com', 'Mike', 'Roberts', '1991-09-14', 'M', TRUE,2),
+('anna.jackson@example.com', 'Anna', 'Jackson', '1987-11-11', 'F', TRUE, 2);
 
 -- Insert data into Membership table
 INSERT INTO "Membership" ("accountId", "membershipTypeId", "isActive", "startDate", "endDate") VALUES

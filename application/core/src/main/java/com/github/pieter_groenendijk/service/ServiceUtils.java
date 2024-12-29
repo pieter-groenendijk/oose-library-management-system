@@ -11,11 +11,13 @@ public class ServiceUtils {
     public static final String LOAN_OVERDUE = "OVERDUE";
 
 
-    public static final String PRODUCT_COPY_AVAILABLE = "AVAILABLE";
-    public static final String PRODUCT_COPY_LOANED = "LOANED";
-    public static final String PRODUCT_COPY_RESERVED = "RESERVED";
-    public static final String PRODUCT_COPY_DAMAGED = "DAMAGED";
+    public static final String AVAILABLE = "AVAILABLE";
+    public static final String LOANED = "LOANED";
+    public static final String RESERVED = "RESERVED";
+    public static final String DAMAGED = "DAMAGED";
 
     public static final String RESERVATION_ACTIVE = "ACTIVE";
+    public static final String RESERVATION_LOAN = "LOANED";
     public static final String RESERVATION_EXPIRED = "EXPIRED";
+    public static final String RESERVATION_CANCELLED = "CANCELLED";
 }
