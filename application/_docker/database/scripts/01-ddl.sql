@@ -1,7 +1,13 @@
 -- Drop tables if they exist, cascading dependencies
---DROP TABLE IF EXISTS "Membership" CASCADE;
---DROP TABLE IF EXISTS "MembershipType" CASCADE;
---DROP TABLE IF EXISTS "Account" CASCADE;
+DROP TABLE IF EXISTS "Membership" CASCADE;
+DROP TABLE IF EXISTS "MembershipType" CASCADE;
+DROP TABLE IF EXISTS "Account" CASCADE;
+DROP TABLE IF EXISTS "Lending" CASCADE;
+DROP TABLE IF EXISTS "NotificationTask" CASCADE;
+DROP TABLE IF EXISTS "LendingAssociatedNotificationTask" CASCADE;
+DROP TABLE IF EXISTS Loan CASCADE;
+DROP TABLE IF EXISTS "Reservation" CASCADE;
+DROP TABLE IF EXISTS "Lending" CASCADE;
 
 -- Create Account table
 CREATE TABLE "Account" (
@@ -57,29 +63,6 @@ CREATE TABLE "LendingAssociatedNotificationTask" (
     "notificationTaskId" BIGINT NOT NULL,
     PRIMARY KEY ("lendingId", "notificationTaskId")
 );
-CREATE TABLE Loan
-(
-    "loanId" BIGSERIAL PRIMARY KEY,
-    "startDate"     DATE   NOT NULL,
-    "returnBy"      DATE,
-    "returnedOn"    DATE,
-    "loanStatus"    VARCHAR(50),
-    "membershipId"  BIGSERIAL NOT NULL,
-    "productCopyId" BIGSERIAL NOT NULL,
-    FOREIGN KEY ("membershipId") REFERENCES "Membership" ("membershipId") ON UPDATE CASCADE ON DELETE RESTRICT,
-    FOREIGN KEY ("productCopyId") REFERENCES "ProductCopy" ("productCopyId") ON UPDATE CASCADE ON DELETE RESTRICT
-);
-
-CREATE TABLE "Reservation"
-(
-    "reservationId"   BIGSERIAL PRIMARY KEY,
-    "membershipId"    BIGSERIAL  NOT NULL,
-    "productCopyId"   BIGSERIAL  NOT NULL,
-    "reservationDate" DATE    NOT NULL,
-    "readyForPickUp"  BOOLEAN NOT NULL,
-    FOREIGN KEY ("membershipId") REFERENCES "Membership" ("membershipId") ON UPDATE CASCADE ON DELETE RESTRICT,
-    FOREIGN KEY ("productCopyId") REFERENCES "ProductCopy" ("productCopyId") ON UPDATE CASCADE ON DELETE RESTRICT
-);
 
 CREATE TABLE ProductTemplate (
     "productId" BIGSERIAL PRIMARY KEY,
@@ -113,4 +96,28 @@ CREATE TABLE "ProductCopy"
     "isDamaged"          BOOLEAN      NOT NULL,
     "productId"          BIGSERIAL      NOT NULL,
     CONSTRAINT fk_physical_product_template FOREIGN KEY ("productId") REFERENCES PhysicalProductTemplate ("productId")
+);
+
+CREATE TABLE "Loan"
+(
+    "loanId" BIGSERIAL PRIMARY KEY,
+    "startDate"     DATE   NOT NULL,
+    "returnBy"      DATE,
+    "returnedOn"    DATE,
+    "loanStatus"    VARCHAR(50),
+    "membershipId"  BIGSERIAL NOT NULL,
+    "productCopyId" BIGSERIAL NOT NULL,
+    FOREIGN KEY ("membershipId") REFERENCES "Membership" ("membershipId") ON UPDATE CASCADE ON DELETE RESTRICT,
+    FOREIGN KEY ("productCopyId") REFERENCES "ProductCopy" ("productCopyId") ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+CREATE TABLE "Reservation"
+(
+    "reservationId"   BIGSERIAL PRIMARY KEY,
+    "membershipId"    BIGSERIAL  NOT NULL,
+    "productCopyId"   BIGSERIAL  NOT NULL,
+    "reservationDate" DATE    NOT NULL,
+    "readyForPickUp"  BOOLEAN NOT NULL,
+    FOREIGN KEY ("membershipId") REFERENCES "Membership" ("membershipId") ON UPDATE CASCADE ON DELETE RESTRICT,
+    FOREIGN KEY ("productCopyId") REFERENCES "ProductCopy" ("productCopyId") ON UPDATE CASCADE ON DELETE RESTRICT
 );
