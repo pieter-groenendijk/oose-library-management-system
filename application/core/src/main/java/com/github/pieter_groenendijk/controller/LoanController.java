@@ -23,15 +23,13 @@ import java.util.List;
 @RequestMapping("/loan")
 public class LoanController {
 
-    private SessionFactory sessionFactory;
-    private ILoanService loanService;
+    private final SessionFactory sessionFactory = new SessionFactoryFactory().create();
+    private final ILoanService loanService;
 
-    public LoanController(SessionFactory sessionFactory, ILoanService loanService) {
-        this.sessionFactory = sessionFactory;
-        this.loanService = loanService;
+    public LoanController() {
         ILoanRepository loanRepository = new LoanRepository(sessionFactory);
+        this.loanService = new LoanService(loanRepository);
     }
-
 
     @Operation(summary = "Create a Loan", description = "Create a new Loan")
     @ApiResponses(value = {
