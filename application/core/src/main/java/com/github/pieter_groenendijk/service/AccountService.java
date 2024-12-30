@@ -10,7 +10,6 @@ import com.github.pieter_groenendijk.exception.EntityNotFoundException;
 import com.github.pieter_groenendijk.exception.InputValidationException;
 import com.github.pieter_groenendijk.service.validator.EmailValidator;
 import com.github.pieter_groenendijk.service.validator.GenderCheck;
-import com.github.pieter_groenendijk.service.IAccountService;
 import com.github.pieter_groenendijk.model.DTO.MembershipRequestDTO;
 import java.util.Date;
 import java.time.LocalDate;
@@ -44,6 +43,22 @@ public class AccountService implements IAccountService {
             return accountRepository.store(account);
         }
         throw new InputValidationException("Account input is not valid");
+    }
+
+    public Account update(Account account) {
+        Account retrievedAccount =  retrieveAccountById(account.getAccountId());
+        if (retrievedAccount == null) {
+            throw new EntityNotFoundException("Account with ID " + account.getAccountId() + " not found.");
+        } else if (!isAccountInputValid(account)){
+            throw new InputValidationException("Account input is not valid");
+        } else {
+            return accountRepository.store(account);
+        }
+    }
+
+    public Account deleteAccount(long id) {
+        return accountRepository.deleteAccountById(id)
+        .orElseThrow(() -> new EntityNotFoundException("Account with ID " + id + " not found."));
     }
 
     public MembershipType store(MembershipType membershipType){
@@ -96,4 +111,5 @@ public class AccountService implements IAccountService {
         //Persist
         return membershipRepository.store(membership);
     }
+
 }
