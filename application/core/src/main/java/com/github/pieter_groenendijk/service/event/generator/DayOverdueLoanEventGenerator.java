@@ -4,7 +4,7 @@ import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.model.event.EventType;
 import com.github.pieter_groenendijk.model.event.LoanEvent;
 import com.github.pieter_groenendijk.repository.event.IEventRepository;
-import com.github.pieter_groenendijk.service.event.detached.EventStorage;
+import com.github.pieter_groenendijk.utils.scheduling.TaskStorage;
 
 import java.time.LocalDateTime;
 
@@ -30,7 +30,7 @@ public class DayOverdueLoanEventGenerator extends EventGenerator<Loan, LoanEvent
     }
 
     @Override
-    protected EventStorage<LoanEvent> generateEventStorage() {
+    protected TaskStorage<LoanEvent> generateEventStorage() {
         return this.REPOSITORY::storeLoanEvent;
     }
 }
