@@ -4,6 +4,9 @@ import com.github.pieter_groenendijk.model.event.EventType;
 
 import java.util.HashMap;
 
+/**
+ * This class adds a centralized way to emit events. Handy for classes that emit multiple events.
+ */
 public class EventEmitterPool {
     private final HashMap<EventType, EventEmitter<?>> EMITTERS;
 
@@ -22,6 +25,9 @@ public class EventEmitterPool {
         this.EMITTERS.remove(eventType);
     }
 
+    /**
+     * May throw an exception if there is EventEmitter found.
+     */
     public <T> void emit(EventType type, T context) {
         EventEmitter<T> emitter = this.get(type);
 
