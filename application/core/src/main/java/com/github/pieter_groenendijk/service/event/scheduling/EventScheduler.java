@@ -36,8 +36,8 @@ public class EventScheduler {
      * Expects to schedule events that are at least the retrieve interval of this scheduler, otherwise a delay is
      * introduced.
      */
-    public void schedule(DetachedEvent event) {
-        event.store(this.REPOSITORY);
+    public void schedule(DetachedEvent<?> event) {
+        event.store();
     }
 
     private void startSchedulingFromDatabase() {
@@ -75,7 +75,7 @@ public class EventScheduler {
     private void executeEvent(Event<?> event) {
         this.EMITTER_POOL.emit(
             event.getType(),
-            event.getContext()
+            event.getAssociation()
         );
     }
 

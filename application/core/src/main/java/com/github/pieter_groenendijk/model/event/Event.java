@@ -3,8 +3,8 @@ package com.github.pieter_groenendijk.model.event;
 import java.time.LocalDateTime;
 
 // TODO: Make actual entity
-public class Event<T> {
-    protected T context;
+public class Event<Association> {
+    protected Association association;
     protected LocalDateTime scheduledAt;
     protected EventType type;
 
@@ -26,4 +26,11 @@ public class Event<T> {
         this.type = type;
     }
 
+    public Association getAssociation() {
+        return association;
+    }
+
+    public void setAssociation(Association association) {
+        this.association = association;
+    }
 }
