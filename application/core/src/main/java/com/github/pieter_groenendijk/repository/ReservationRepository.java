@@ -17,7 +17,6 @@ public class ReservationRepository implements IReservationRepository {
 
     public ReservationRepository(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
-
     }
 
     @Override
@@ -35,7 +34,7 @@ public class ReservationRepository implements IReservationRepository {
 
 
     @Override
-    public List<Reservation> retrieveReservationByMembershipId(long membershipId) {
+    public List<Reservation> retrieveReservationsByMembershipId(long membershipId) {
         Session session = sessionFactory.openSession();
         try {
             CriteriaBuilder cb = session.getCriteriaBuilder();
@@ -104,4 +103,5 @@ public class ReservationRepository implements IReservationRepository {
                 session.close();
         }
     }
+
 }

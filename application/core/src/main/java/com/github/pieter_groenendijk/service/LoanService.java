@@ -3,7 +3,10 @@ package com.github.pieter_groenendijk.service;
 import com.github.pieter_groenendijk.exception.EntityNotFoundException;
 import com.github.pieter_groenendijk.exception.InputValidationException;
 import com.github.pieter_groenendijk.model.Loan;
+import com.github.pieter_groenendijk.model.product.ProductCopy;
 import com.github.pieter_groenendijk.repository.ILoanRepository;
+
+import static com.github.pieter_groenendijk.service.ServiceUtils.AVAILABLE;
 import static com.github.pieter_groenendijk.service.ServiceUtils.LOAN_LENGTH;
 
 import java.time.LocalDate;
@@ -26,32 +29,35 @@ public class LoanService implements ILoanService {
         }
         return loanRepository.store(loan);
 }
-
     @Override
-    public Loan getLoanById(long loanId) {
-        return null;
+    public Loan extendLoan(long loanId, Date returnBy) {
+        Loan loan = loanRepository.retrieveLoanByLoanId(loanId)
+                .orElseThrow(() -> new IllegalArgumentException("Loan not found with id: " + loanId));
+
+        if (loan.isExtended()) {
+            throw new IllegalStateException("Loan can only be extended once.");
+        }
+
+        LocalDate extendedReturnBy = loan.getReturnBy().plusDays(LOAN_LENGTH);
+
+        loan.setReturnBy(extendedReturnBy);
+        loan.setExtended(true);
+
+        return loanRepository.store(loan);
     }
 
     @Override
-    public Loan extendLoan(long loanId, Date dueDate) {
-        return null;
-    }
-
-    @Override
-    public void cancelLoan(long loanId) {
-
-    }
-
-    @Override
-    public void generateReturnByDate(long copyId, Date returnBy) {
+    public Date generateReturnByDate(long copyId, Date returnBy) {
         LocalDate loanDate = LocalDate.now();
-        LocalDate dueDate = loanDate.plusDays(LOAN_LENGTH);
-        returnBy.setTime(Date.from(dueDate.atStartOfDay(ZoneId.systemDefault()).toInstant()).getTime());
+
+        LocalDate extendedReturnByDate= loanDate.plusDays(LOAN_LENGTH);
+
+         Date extendedReturnBy = Date.from(extendedReturnByDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+         return extendedReturnBy;
     }
 
-
     @Override
-    public void returnToCatalogue(long CopyId) {
+    public void returnToCatalogue(long productId) {
 
     }
 
@@ -66,7 +72,15 @@ public class LoanService implements ILoanService {
     }
 
     @Override
-    public boolean checkIsDamaged(long loanId) {
+    public boolean checkIsDamaged(long productId) {
+        //ProductCopy productCopy = productCopyRepository.findByProductId(productId);
+
+       // if (productCopy.isDamaged()) {
+        //    System.out.println("Product is damaged. Will not be returned to catalogue.");
+           // return true;
+       // }
+        //returnToCatalogue(productId);
+       // productCopy.setStatus(AVAILABLE);
         return false;
     }
 
