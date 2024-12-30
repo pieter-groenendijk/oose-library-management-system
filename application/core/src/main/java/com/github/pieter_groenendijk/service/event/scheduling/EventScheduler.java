@@ -1,6 +1,6 @@
 package com.github.pieter_groenendijk.service.event.scheduling;
 
-import com.github.pieter_groenendijk.TaskScheduler;
+import com.github.pieter_groenendijk.utils.scheduling.TaskScheduler;
 import com.github.pieter_groenendijk.model.event.Event;
 import com.github.pieter_groenendijk.repository.event.IEventRepository;
 import com.github.pieter_groenendijk.service.event.detached.DetachedEvent;
