@@ -1,22 +1,14 @@
 package com.github.pieter_groenendijk.model.event;
 
-import java.time.LocalDateTime;
+import com.github.pieter_groenendijk.utils.scheduling.Task;
 
 // TODO: Make actual entity
-public class Event<Association> {
+// TODO: Use `scheduledAt` of super
+public class Event<Association> extends Task {
     protected Association association;
-    protected LocalDateTime scheduledAt;
     protected EventType type;
 
     public Event() {}
-
-    public LocalDateTime getScheduledAt() {
-        return scheduledAt;
-    }
-
-    public void setScheduledAt(LocalDateTime scheduledAt) {
-        this.scheduledAt = scheduledAt;
-    }
 
     public EventType getType() {
         return type;

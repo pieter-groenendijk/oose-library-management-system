@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 
+// TODO: Use new LongTermTaskScheduler
 public class NotificationTaskScheduler {
     private final TaskScheduler SCHEDULER;
     private final INotificationTaskRepository REPOSITORY;

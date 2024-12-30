@@ -1,85 +1,51 @@
 package com.github.pieter_groenendijk.service.event.scheduling;
 
-import com.github.pieter_groenendijk.utils.scheduling.TaskScheduler;
 import com.github.pieter_groenendijk.model.event.Event;
 import com.github.pieter_groenendijk.repository.event.IEventRepository;
-import com.github.pieter_groenendijk.service.event.detached.DetachedEvent;
 import com.github.pieter_groenendijk.service.event.emitting.EventEmitterPool;
+import com.github.pieter_groenendijk.utils.scheduling.LongTermTaskScheduler;
+import com.github.pieter_groenendijk.utils.scheduling.TaskScheduler;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.List;
 
-/**
- * This event scheduler can, and expects to, schedule for the LONG TERM. Meaning at least a day usually.
- */
-public class EventScheduler {
-    private final TaskScheduler SCHEDULER;
+public class EventScheduler extends LongTermTaskScheduler<Event<?>> {
     private final IEventRepository REPOSITORY;
     private final EventEmitterPool EMITTER_POOL;
-
-    private final Duration RETRIEVE_INTERVAL = Duration.ofMinutes(5);
 
     public EventScheduler(
         TaskScheduler scheduler,
         IEventRepository repository,
-        EventEmitterPool emitterPool
+        EventEmitterPool eventEmitterPool
     ) {
-        this.SCHEDULER = scheduler;
+        super(scheduler);
+
         this.REPOSITORY = repository;
-        this.EMITTER_POOL = emitterPool;
-
-        startSchedulingFromDatabase();
+        this.EMITTER_POOL = eventEmitterPool;
     }
 
-    /**
-     * Expects to schedule events that are at least the retrieve interval of this scheduler, otherwise a delay is
-     * introduced.
-     */
-    public void schedule(DetachedEvent<?> event) {
-        event.store();
+    public EventScheduler(
+        int amountOfThreads,
+        IEventRepository repository,
+        EventEmitterPool eventEmitterPool
+    ) {
+        super(amountOfThreads);
+
+        this.REPOSITORY = repository;
+        this.EMITTER_POOL = eventEmitterPool;
     }
 
-    private void startSchedulingFromDatabase() {
-        this.SCHEDULER.scheduleRecurring(
-            this::scheduleFromDatabase,
-            this.RETRIEVE_INTERVAL
-        );
-    }
-
-    private void scheduleFromDatabase() {
-        this.scheduleInMemory(
-            this.retrieveDueSoonEvents()
-        );
-    }
-
-    private List<Event<?>> retrieveDueSoonEvents() {
-        return this.REPOSITORY.retrieveUntil(
-            this.getScheduledUntilDateTime()
-        );
-    }
-
-    private void scheduleInMemory(List<Event<?>> events) {
-        for(Event<?> event : events) {
-            this.scheduleInMemory(event);
-        }
-    }
-
-    private void scheduleInMemory(Event<?> event) {
-        this.SCHEDULER.schedule(
-            () -> executeEvent(event),
-            event.getScheduledAt()
-        );
-    }
-
-    private void executeEvent(Event<?> event) {
+    @Override
+    protected void executeTask(Event<?> event) {
         this.EMITTER_POOL.emit(
             event.getType(),
             event.getAssociation()
         );
     }
 
-    private LocalDateTime getScheduledUntilDateTime() {
-        return LocalDateTime.now().plus(this.RETRIEVE_INTERVAL);
+    @Override
+    protected List<Event<?>> retrieveDueSoonTasks() {
+        return this.REPOSITORY.retrieveUntil(
+            this.getScheduledUntilDateTime()
+        );
     }
 }
