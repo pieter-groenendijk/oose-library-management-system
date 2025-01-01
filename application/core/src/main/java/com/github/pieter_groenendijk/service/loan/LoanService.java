@@ -1,12 +1,12 @@
-package com.github.pieter_groenendijk.service;
+package com.github.pieter_groenendijk.service.loan;
 
 import com.github.pieter_groenendijk.exception.EntityNotFoundException;
 import com.github.pieter_groenendijk.exception.InputValidationException;
 import com.github.pieter_groenendijk.model.Loan;
-import com.github.pieter_groenendijk.model.product.ProductCopy;
 import com.github.pieter_groenendijk.repository.ILoanRepository;
+import com.github.pieter_groenendijk.service.loan.event.ILoanEventService;
+import com.github.pieter_groenendijk.service.loan.event.LoanEventService;
 
-import static com.github.pieter_groenendijk.service.ServiceUtils.AVAILABLE;
 import static com.github.pieter_groenendijk.service.ServiceUtils.LOAN_LENGTH;
 
 import java.time.LocalDate;
@@ -17,18 +17,29 @@ import java.util.List;
 
 
 public class LoanService implements ILoanService {
-
     private ILoanRepository loanRepository;
-    public LoanService(ILoanRepository loanRepository) {
-            this.loanRepository = loanRepository;
-        }
-        @Override
+    private final ILoanEventService EVENT_SERVICE;
+
+    public LoanService(
+        ILoanRepository loanRepository,
+        ILoanEventService eventService
+    ) {
+        this.loanRepository = loanRepository;
+        this.EVENT_SERVICE = eventService;
+    }
+
+    // TODO: Implement correct error handling. Is a loan still successful if we failed to schedule events for it, or the other way around?
+    @Override
     public Loan store(Loan loan) {
         if (loan == null) {
             throw new InputValidationException("Loan cannot be null");
         }
-        return loanRepository.store(loan);
-}
+        loanRepository.store(loan);
+        EVENT_SERVICE.scheduleEventsForNewLoan(loan);
+
+        return loan;
+    }
+
     @Override
     public Loan extendLoan(long loanId, Date returnBy) {
         Loan loan = loanRepository.retrieveLoanByLoanId(loanId)
