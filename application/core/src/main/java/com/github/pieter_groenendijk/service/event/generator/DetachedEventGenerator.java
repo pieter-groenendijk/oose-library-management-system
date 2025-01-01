@@ -18,12 +18,12 @@ import java.time.LocalDateTime;
  * - For that reason the generator also needs to know what it will generate. Since it passes the mechanism to store the
  * generated (wrapped) event.
  */
-public abstract class EventGenerator<Association, AssociatedEvent extends Event<Association>> {
+public abstract class DetachedEventGenerator<Association, AssociatedEvent extends Event<Association>> {
     protected final IEventRepository REPOSITORY;
 
     private final EventType TYPE;
 
-    protected EventGenerator(IEventRepository repository, EventType type) {
+    protected DetachedEventGenerator(IEventRepository repository, EventType type) {
         this.REPOSITORY = repository;
         this.TYPE = type;
     }

@@ -8,8 +8,9 @@ import com.github.pieter_groenendijk.utils.scheduling.TaskStorage;
 
 import java.time.LocalDateTime;
 
-public class DayOverdueLoanEventGenerator extends EventGenerator<Loan, LoanEvent> {
-    protected DayOverdueLoanEventGenerator(IEventRepository repository) {
+// TODO: Shorter name?
+public class DayOverdueLoanDetachedEventGenerator extends DetachedEventGenerator<Loan, LoanEvent> {
+    public DayOverdueLoanDetachedEventGenerator(IEventRepository repository) {
         super(
             repository,
             EventType.DAY_OVERDUE_LOAN_EVENT

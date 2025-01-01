@@ -26,10 +26,12 @@ public class EventEmitterPool {
     }
 
     /**
-     * May throw an exception if there is EventEmitter found.
+     * Fails silently if the emitter is not found in the pool.
      */
     public <T> void emit(EventType type, T context) {
         EventEmitter<T> emitter = this.get(type);
+
+        if (emitter == null) return;
 
         emitter.emit(context);
     }
