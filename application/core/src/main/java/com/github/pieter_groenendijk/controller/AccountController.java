@@ -44,7 +44,7 @@ public class AccountController {
 
     @Operation(summary = "Create an account", description = "Add a new account to the database")
     @PostMapping
-    public Account createAccount(@RequestBody Account account) {
+    public Account createAccount(@RequestBody AccountRequestDTO account) {
         return accountService.store(account);
     }
 

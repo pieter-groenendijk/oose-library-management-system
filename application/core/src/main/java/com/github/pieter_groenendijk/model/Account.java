@@ -90,6 +90,9 @@ public class Account {
         isActive = active;
     }
 
+    public int getUncollectedReservations() { return uncollectedReservations; }
+
+    public void setUncollectedReservations (int uncollectedReservations) { this.uncollectedReservations = uncollectedReservations; }
 
     public void incrementUncollectedReservationCount() {
         this.uncollectedReservations++;

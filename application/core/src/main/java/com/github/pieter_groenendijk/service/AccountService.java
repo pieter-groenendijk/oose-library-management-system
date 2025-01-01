@@ -11,6 +11,7 @@ import com.github.pieter_groenendijk.exception.InputValidationException;
 import com.github.pieter_groenendijk.service.validator.EmailValidator;
 import com.github.pieter_groenendijk.service.validator.GenderCheck;
 import com.github.pieter_groenendijk.model.DTO.MembershipRequestDTO;
+import com.github.pieter_groenendijk.model.DTO.AccountRequestDTO;
 import java.util.Date;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -38,11 +39,30 @@ public class AccountService implements IAccountService {
                 .orElseThrow(() -> new EntityNotFoundException("Membershiptype with ID " + id + " not found."));
     }
 
-    public Account store(Account account) {
+//    public Account store(Account account) {
+//        if ( isAccountInputValid(account)) {
+//            return accountRepository.store(account);
+//        }
+//        throw new InputValidationException("Account input is not valid");
+//    }
+
+    public Account store(AccountRequestDTO request){
+        //Create membership
+        Account account = new Account();
+        account.setEmail(request.getEmail();
+        account.setFirstName(request.getFirstName());
+        account.setLastName(request.getLastName());
+        account.setDateOfBirth(request.getDateOfBirth());
+        account.setGender(request.getGender());
+        account.setActive(true);
+        account.setUncollectedReservations(0);
+
+        //Validate + Persist
         if ( isAccountInputValid(account)) {
             return accountRepository.store(account);
+        } else {
+            throw new InputValidationException("Account input is not valid");
         }
-        throw new InputValidationException("Account input is not valid");
     }
 
     public Account update(Account account) {
@@ -52,7 +72,7 @@ public class AccountService implements IAccountService {
         } else if (!isAccountInputValid(account)){
             throw new InputValidationException("Account input is not valid");
         } else {
-            return accountRepository.store(account);
+            return accountRepository.update(account);
         }
     }
 
