@@ -136,6 +136,7 @@ CREATE TABLE "Loan"
     "startDate"     DATE   NOT NULL,
     "returnBy"      DATE,
     "returnedOn"    DATE,
+    "extendedReturnBy" DATE,
     "loanStatus"    VARCHAR(50),
     "membershipId"  BIGSERIAL NOT NULL,
     "productCopyId" BIGSERIAL NOT NULL,
