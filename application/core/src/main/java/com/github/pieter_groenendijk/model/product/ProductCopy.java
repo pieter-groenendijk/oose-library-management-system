@@ -6,13 +6,13 @@ import jakarta.persistence.*;
 
 @Entity
 @Table (name = "ProductCopy")
-public class ProductCopy extends PhysicalProductTemplate {
+public class ProductCopy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productCopyId;
 
    @ManyToOne
-    @JoinColumn(name = "productId", nullable = false)
+    @JoinColumn(name = "physicalProductId", nullable = false)
     private PhysicalProductTemplate physicalProduct;
 
     @Column (name = "availabilityStatus", nullable = false, length = 50)
@@ -20,6 +20,7 @@ public class ProductCopy extends PhysicalProductTemplate {
 
     @Column (name = "isDamaged", nullable = false)
     private boolean isDamaged;
+
 
     public void setCopyId(Long productCopyId) {
         this.productCopyId = productCopyId;

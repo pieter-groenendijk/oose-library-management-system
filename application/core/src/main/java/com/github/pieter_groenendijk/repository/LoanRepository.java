@@ -22,15 +22,23 @@ public class LoanRepository implements ILoanRepository {
     @Override
     public Optional<Loan> retrieveLoanByLoanId(long loanId) {
         Session session = sessionFactory.openSession();
-        Loan loan;
-
         try {
-            loan = session.get(Loan.class, loanId);
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<Loan> cr = cb.createQuery(Loan.class);
+            Root<Loan> root = cr.from(Loan.class);
+
+            cr.select(root).where(cb.equal(root.get("id"), loanId));
+
+            Loan loan = session.createQuery(cr).uniqueResult();
+            return Optional.ofNullable(loan);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Database query failed for Loan ID: " + loanId, e);
         } finally {
             session.close();
         }
-        return Optional.ofNullable(loan);
     }
+
 
     @Override
     public List<Loan> retrieveActiveLoansByMembershipId(long membershipId) {

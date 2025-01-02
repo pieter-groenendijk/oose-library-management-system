@@ -17,4 +17,5 @@ public interface IProductRepository {
     Optional<ProductCopy> retrieveProductCopyById(long productCopyId);
 
 
+    void updateProductCopy(ProductCopy productCopy);
 }

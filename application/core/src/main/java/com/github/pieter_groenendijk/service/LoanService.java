@@ -13,6 +13,7 @@ import java.time.ZoneId;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 import static com.github.pieter_groenendijk.service.ServiceUtils.*;
@@ -29,29 +30,32 @@ public class LoanService implements ILoanService {
 
     @Override
     public Loan store(Loan loan) {
-        if (loan == null) {
-            throw new InputValidationException("Loan cannot be null");
+            if (loan == null) {
+                throw new InputValidationException("Loan cannot be null");
+            }
+
+            if (loan.getLoanStatus() == null) {
+                loan.setLoanStatus(LoanStatus.ACTIVE);
+            }
+
+            Long productCopyId = loan.getProductCopy();
+            if (productCopyId == null) {
+                throw new EntityNotFoundException("ProductCopy ID not found in the loan");
+            }
+
+            ProductCopy productCopy = productRepository.retrieveProductCopyById(productCopyId)
+                    .orElseThrow(() -> new EntityNotFoundException("ProductCopy not found with ID: " + productCopyId));
+
+
+            productCopy.setAvailabilityStatus(LOANED);
+
+            productRepository.updateProductCopy(productCopy);
+
+            return loanRepository.store(loan);
         }
 
-        if (loan.getLoanStatus() == null) {
-            loan.setLoanStatus(LoanStatus.ACTIVE);
-        }
 
-        Long productCopyId = loan.getProductCopy();
-        if (productCopyId == null) {
-            throw new EntityNotFoundException("ProductCopy ID not found in the loan");
-        }
-
-        ProductCopy productCopy = (ProductCopy) productRepository.retrieveProductById(productCopyId)
-                .orElseThrow(() -> new EntityNotFoundException("ProductCopy not found with this ID"));
-        productCopy.setAvailabilityStatus(LOANED);
-        productRepository.updateProduct(productCopy);
-
-
-        return loanRepository.store(loan);
-    }
-
-    @Override
+        @Override
     public Loan extendLoan(long loanId, Date returnBy) {
             Loan loan = loanRepository.retrieveLoanByLoanId(loanId)
                     .orElseThrow(() -> new IllegalArgumentException("Loan not found with id: " + loanId));
@@ -97,7 +101,7 @@ public class LoanService implements ILoanService {
                 .orElseThrow(() -> new EntityNotFoundException("ProductCopy not found with ID: " + productCopyId));
 
         productCopy.setAvailabilityStatus(AVAILABLE);
-        productRepository.updateProduct(productCopy);
+        productRepository.updateProductCopy(productCopy);
     }
 
     @Override
@@ -128,7 +132,9 @@ public class LoanService implements ILoanService {
     public List<Loan> retrieveActiveLoansByMembershipId(long membershipId) {
         try {
             List<Loan> loans = loanRepository.retrieveActiveLoansByMembershipId(membershipId);
-            return loanRepository.retrieveActiveLoansByMembershipId(membershipId);
+            return loans.stream()
+                    .filter(loan -> loan.getLoanStatus() == LoanStatus.ACTIVE)
+                    .collect(Collectors.toList());
         } catch (Exception e) {
             e.printStackTrace();
             return Collections.emptyList();

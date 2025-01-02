@@ -95,6 +95,35 @@ public class ProductRepository implements IProductRepository {
         return product;
     }
 
+    public Optional<ProductCopy> retrieveProductById(Long productCopyId) {
+        Session session = sessionFactory.openSession();
+        ProductCopy productCopy = null;
+
+        try {
+            productCopy = session.get(ProductCopy.class, productCopyId);
+        } finally {
+            session.close();
+        }
+        return Optional.ofNullable(productCopy);
+    }
+
+    public void updateProductCopy(ProductCopy productCopy) {
+        Session session = sessionFactory.openSession();
+
+        try {
+            session.beginTransaction();
+            session.merge(productCopy); // Merge the productCopy object
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            if (session.getTransaction() != null) {
+                session.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+
     @Override
     public Optional<ProductCopy> retrieveProductCopyById(long productCopyId) {
         Session session = sessionFactory.openSession();
