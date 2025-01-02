@@ -30,7 +30,7 @@ public class LoanController {
     public LoanController() {
         ILoanRepository loanRepository = new LoanRepository(sessionFactory);
         IProductRepository productRepository = new ProductRepository(sessionFactory);
-        this.loanService = new LoanService(loanRepository, productRepository);
+        this.loanService = new LoanService(loanRepository);
     }
 
     @Operation(summary = "Create a Loan", description = "Create a new Loan")

@@ -95,4 +95,8 @@ public class Loan {
         this.extendedReturnBy = extendedReturnBy;
     }
 
+    public Long getProductCopy() {
+        return productCopy.getProductCopyId();
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.github.pieter_groenendijk.repository;
 
+import com.github.pieter_groenendijk.model.product.ProductCopy;
 import com.github.pieter_groenendijk.model.product.ProductTemplate;
 
 import java.util.Optional;
@@ -11,8 +12,9 @@ public interface IProductRepository {
 
     Optional<ProductTemplate> retrieveProductById(long productId);
 
-    Optional<ProductTemplate> retrieveProductByCopyId(long productCopyId);
-
     ProductTemplate updateProduct(ProductTemplate product);
+
+    Optional<ProductCopy> retrieveProductCopyById(long productCopyId);
+
 
 }

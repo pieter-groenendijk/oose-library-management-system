@@ -75,18 +75,6 @@ public class ProductRepository implements IProductRepository {
         return Optional.ofNullable(product);
     }
 
-    @Override
-    public Optional<ProductTemplate> retrieveProductByCopyId(long productCopyId) {
-        Session session = sessionFactory.openSession();
-        ProductTemplate product;
-
-        try {
-            product = session.get(ProductCopy.class, productCopyId);
-        } finally {
-            session.close();
-        }
-        return Optional.ofNullable(product);
-    }
 
     @Override
     public ProductTemplate updateProduct(ProductTemplate product) {
@@ -105,6 +93,19 @@ public class ProductRepository implements IProductRepository {
             session.close();
         }
         return product;
+    }
+
+    @Override
+    public Optional<ProductCopy> retrieveProductCopyById(long productCopyId) {
+        Session session = sessionFactory.openSession();
+        ProductCopy productCopy;
+
+        try {
+            productCopy = session.get(ProductCopy.class, productCopyId);
+        } finally {
+            session.close();
+        }
+        return Optional.ofNullable(productCopy);
     }
 }
 

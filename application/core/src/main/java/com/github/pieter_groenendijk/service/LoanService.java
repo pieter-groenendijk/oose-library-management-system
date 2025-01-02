@@ -4,6 +4,7 @@ import com.github.pieter_groenendijk.exception.EntityNotFoundException;
 import com.github.pieter_groenendijk.exception.InputValidationException;
 import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.model.LoanStatus;
+import com.github.pieter_groenendijk.model.product.ProductCopy;
 import com.github.pieter_groenendijk.repository.ILoanRepository;
 import com.github.pieter_groenendijk.repository.IProductRepository;
 
@@ -22,12 +23,8 @@ public class LoanService implements ILoanService {
     private ILoanRepository loanRepository;
     private IProductRepository productRepository;
 
-
-
-
-    public LoanService(ILoanRepository loanRepository, IProductRepository productRepository) {
+    public LoanService(ILoanRepository loanRepository) {
         this.loanRepository = loanRepository;
-        this.productRepository = productRepository;
     }
 
     @Override
@@ -36,12 +33,24 @@ public class LoanService implements ILoanService {
             throw new InputValidationException("Loan cannot be null");
         }
 
-            if (loan.getLoanStatus() == null) {
-                loan.setLoanStatus(LoanStatus.ACTIVE);
-            }
+        if (loan.getLoanStatus() == null) {
+            loan.setLoanStatus(LoanStatus.ACTIVE);
+        }
+
+        Long productCopyId = loan.getProductCopy();
+        if (productCopyId == null) {
+            throw new EntityNotFoundException("ProductCopy ID not found in the loan");
+        }
+
+        ProductCopy productCopy = (ProductCopy) productRepository.retrieveProductById(productCopyId)
+                .orElseThrow(() -> new EntityNotFoundException("ProductCopy not found with this ID"));
+        productCopy.setAvailabilityStatus(LOANED);
+        productRepository.updateProduct(productCopy);
+
 
         return loanRepository.store(loan);
-}
+    }
+
     @Override
     public Loan extendLoan(long loanId, Date returnBy) {
             Loan loan = loanRepository.retrieveLoanByLoanId(loanId)
@@ -78,21 +87,21 @@ public class LoanService implements ILoanService {
 
         loan.setLoanStatus(LoanStatus.RETURNED);
         loanRepository.updateLoan(loan);
+        returnToCatalogue(loan.getProductCopy());
     }
 
 
     @Override
     public void returnToCatalogue(long productCopyId) {
-    //ProductCopy productCopy = productRepository.retrieveProductById(productCopyId);
-      //productCopy.setStatus(AVAILABLE);
-        //productRepository.store(productCopy);
+        ProductCopy productCopy = productRepository.retrieveProductCopyById(productCopyId)
+                .orElseThrow(() -> new EntityNotFoundException("ProductCopy not found with ID: " + productCopyId));
+
+        productCopy.setAvailabilityStatus(AVAILABLE);
+        productRepository.updateProduct(productCopy);
     }
+
     @Override
     public void handleOverdueLoans() {
-        //if LOAN_OVERDUE.equals(loan.getLoanStatus()) {
-        //  loan.setLoanStatus(LOAN_RETURNED);
-        //    loanRepository.updateLoan(loan);
-        // }
     }
     @Override
     public boolean checkIsLate(Loan loan) {
