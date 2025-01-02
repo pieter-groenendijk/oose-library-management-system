@@ -65,16 +65,16 @@ public class LoanService implements ILoanService {
         Loan loan = loanRepository.retrieveLoanByLoanId(loanId)
                 .orElseThrow(() -> new EntityNotFoundException("Loan not found with id: " + loanId));
 
-        if (Objects.equals(loan.getLoanStatus(), "RETURNED")) {
+        if (loan.getLoanStatus() == LoanStatus.RETURNED) {
             throw new IllegalStateException("Loan has already been returned.");
         }
 
         loan.setLoanStatus(LoanStatus.RETURNED);
-
-        loanRepository.store(loan);
+        loanRepository.updateLoan(loan);
     }
 
-@Override
+
+    @Override
     public void returnToCatalogue(long productId) {
     //ProductCopy productCopy = productCopyRepository.findByProductId(productId);
       //  productCopy.setStatus(AVAILABLE);
@@ -87,28 +87,20 @@ public class LoanService implements ILoanService {
         //    loanRepository.updateLoan(loan);
         // }
     }
-
     @Override
     public boolean checkIsLate(Loan loan) {
         Date currentDate = new Date();
 
-        boolean isLate;
+        boolean isLate = loan.getLoanStatus().isOverdue(currentDate, loan);
 
-        if (loan.getLoanStatus().equals(LoanStatus.ACTIVE)) {
-            isLate = currentDate.after(loan.getReturnBy());
-        } else if (loan.getLoanStatus().equals(LoanStatus.EXTENDED)) {
-            isLate = currentDate.after(loan.getExtendedReturnBy());
-        } else {
-            throw new IllegalStateException("Invalid loan status: " + loan.getLoanStatus());
-        }
-
-        if (isLate) {
+        if (isLate && loan.getLoanStatus() != LoanStatus.OVERDUE) {
             loan.setLoanStatus(LoanStatus.OVERDUE);
             loanRepository.updateLoan(loan);
         }
 
         return isLate;
     }
+
 
     @Override
     public Loan retrieveLoanByLoanId(long loanId) {
