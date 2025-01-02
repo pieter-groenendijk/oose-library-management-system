@@ -44,7 +44,7 @@ public class LoanService implements ILoanService {
             loan.setReturnBy(extendedReturnBy);
             loan.setLoanStatus(LOAN_EXTENDED);
 
-            return loanRepository.store(loan);
+            return loanRepository.updateLoan(loan);
         }
 
 
@@ -84,7 +84,7 @@ public class LoanService implements ILoanService {
     public boolean checkIsLate(Loan loan) {
         Date currentDate = new Date();
 
-        boolean isLate = false;
+        boolean isLate;
 
         if (loan.getLoanStatus().equals(LOAN_ACTIVE)) {
             isLate = currentDate.after(loan.getReturnBy());
@@ -96,7 +96,7 @@ public class LoanService implements ILoanService {
 
         if (isLate) {
             loan.setLoanStatus(LOAN_OVERDUE);
-            loanRepository.store(loan);
+            loanRepository.updateLoan(loan);
         }
 
         return isLate;
