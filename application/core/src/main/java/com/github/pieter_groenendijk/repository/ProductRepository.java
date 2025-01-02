@@ -1,5 +1,4 @@
 package com.github.pieter_groenendijk.repository;
-
 import com.github.pieter_groenendijk.model.product.ProductTemplate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -32,8 +31,9 @@ public class ProductRepository implements IProductRepository {
 
     }
 
+
     @Override
-    public Optional<ProductTemplate> DeleteProductById(long productId) {
+    public Optional<ProductTemplate> deleteProductById(long productId) {
         Session session = null;
         ProductTemplate product = null;
 
@@ -58,8 +58,16 @@ public class ProductRepository implements IProductRepository {
     }
 
     @Override
-    public ProductTemplate retrieveProductById(long productId) {
-        return null;
+    public Optional<ProductTemplate> retrieveProductById(long productId) {
+        Session session = sessionFactory.openSession();
+        ProductTemplate product;
+
+        try {
+            product = session.get(ProductTemplate.class, productId);
+        } finally {
+            session.close();
+        }
+        return Optional.ofNullable(product);
     }
 
     @Override
