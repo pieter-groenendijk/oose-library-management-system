@@ -5,11 +5,11 @@ import com.github.pieter_groenendijk.exception.InputValidationException;
 import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.repository.ILoanRepository;
 
-import static com.github.pieter_groenendijk.service.ServiceUtils.LOAN_LENGTH;
-
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
+
+import static com.github.pieter_groenendijk.service.ServiceUtils.*;
 
 
 public class LoanService implements ILoanService {
@@ -25,7 +25,7 @@ public class LoanService implements ILoanService {
         }
 
             if (loan.getLoanStatus() == null) {
-                loan.setLoanStatus(ServiceUtils.LOAN_ACTIVE);
+                loan.setLoanStatus(LOAN_ACTIVE);
             }
 
         return loanRepository.store(loan);
@@ -35,14 +35,14 @@ public class LoanService implements ILoanService {
             Loan loan = loanRepository.retrieveLoanByLoanId(loanId)
                     .orElseThrow(() -> new IllegalArgumentException("Loan not found with id: " + loanId));
 
-            if (loan.getLoanStatus().equals("EXTENDED")) {
+            if (loan.getLoanStatus().equals(LOAN_EXTENDED)) {
                 throw new IllegalStateException("Loan can only be extended once.");
             }
 
             Date extendedReturnBy = generateReturnByDate(loan.getReturnBy());
 
             loan.setReturnBy(extendedReturnBy);
-            loan.setLoanStatus("EXTENDED");
+            loan.setLoanStatus(LOAN_EXTENDED);
 
             return loanRepository.store(loan);
         }
@@ -64,7 +64,7 @@ public class LoanService implements ILoanService {
             throw new IllegalStateException("Loan has already been returned.");
         }
 
-        loan.setLoanStatus("RETURNED");
+        loan.setLoanStatus(LOAN_RETURNED);
 
         loanRepository.store(loan);
     }
@@ -86,16 +86,16 @@ public class LoanService implements ILoanService {
 
         boolean isLate = false;
 
-        if (loan.getLoanStatus().equals("ACTIVE")) {
+        if (loan.getLoanStatus().equals(LOAN_ACTIVE)) {
             isLate = currentDate.after(loan.getReturnBy());
-        } else if (loan.getLoanStatus().equals("EXTENDED")) {
+        } else if (loan.getLoanStatus().equals(LOAN_EXTENDED)) {
             isLate = currentDate.after(loan.getExtendedReturnBy());
         } else {
             throw new IllegalStateException("Invalid loan status: " + loan.getLoanStatus());
         }
 
         if (isLate) {
-            loan.setLoanStatus("OVERDUE");
+            loan.setLoanStatus(LOAN_OVERDUE);
             loanRepository.store(loan);
         }
 
