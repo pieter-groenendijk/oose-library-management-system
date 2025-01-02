@@ -5,13 +5,6 @@ public class ServiceUtils {
     public static final long PICKUP_DAYS = 7;
     public static final long PICKUP_EXPIRY_DAYS = 14;
 
-
-    public static final String LOAN_ACTIVE = "ACTIVE";
-    public static final String LOAN_RETURNED = "RETURNED";
-    public static final String LOAN_OVERDUE = "OVERDUE";
-    public static final String LOAN_EXTENDED = "EXTENDED";
-
-
     public static final String AVAILABLE = "AVAILABLE";
     public static final String LOANED = "LOANED";
     public static final String RESERVED = "RESERVED";

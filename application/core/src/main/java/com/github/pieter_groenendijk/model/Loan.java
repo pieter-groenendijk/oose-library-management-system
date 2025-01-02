@@ -3,7 +3,6 @@ package com.github.pieter_groenendijk.model;
 import com.github.pieter_groenendijk.model.product.ProductCopy;
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -25,8 +24,10 @@ public class Loan {
     @Column(name = "returnedOn")
     @Temporal(TemporalType.DATE)
     private Date returnedOn;
+
+    @Enumerated(EnumType.STRING)
     @Column(name= "loanStatus")
-    private String loanStatus;
+    private LoanStatus loanStatus;
     @ManyToOne
     @JoinColumn(name = "membershipId", nullable = false, unique = true)
     private Membership membership;
@@ -62,11 +63,11 @@ public class Loan {
         this.returnedOn = returnedOn;
     }
 
-    public String getLoanStatus() {
+    public LoanStatus getLoanStatus() {
         return loanStatus;
     }
 
-    public void setLoanStatus(String loanStatus) {
+    public void setLoanStatus(LoanStatus loanStatus) {
         this.loanStatus = loanStatus;
     }
 
