@@ -7,7 +7,10 @@ import com.github.pieter_groenendijk.repository.ILoanRepository;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.*;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 
 import static com.github.pieter_groenendijk.service.ServiceUtils.*;
 
@@ -18,6 +21,7 @@ public class LoanService implements ILoanService {
     public LoanService(ILoanRepository loanRepository) {
             this.loanRepository = loanRepository;
         }
+
         @Override
     public Loan store(Loan loan) {
         if (loan == null) {
@@ -77,7 +81,10 @@ public class LoanService implements ILoanService {
     }
     @Override
     public void handleOverdueLoans() {
-
+        //if LOAN_OVERDUE.equals(loan.getLoanStatus()) {
+        //  loan.setLoanStatus(LOAN_RETURNED);
+        //    loanRepository.updateLoan(loan);
+        // }
     }
 
     @Override
@@ -101,19 +108,6 @@ public class LoanService implements ILoanService {
 
         return isLate;
     }
-    @Override
-    public boolean checkIsDamaged(long productId) {
-        //ProductCopy productCopy = productCopyRepository.findByProductId(productId);
-
-       // if (productCopy.isDamaged()) {
-        //    System.out.println("Product is damaged. Will not be returned to catalogue.");
-           // return true;
-       // }
-        //returnToCatalogue(productId);
-       // productCopy.setStatus(AVAILABLE);
-        return false;
-    }
-
 
     @Override
     public Loan retrieveLoanByLoanId(long loanId) {

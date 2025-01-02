@@ -18,7 +18,6 @@ public interface ILoanService {
 
     void handleOverdueLoans();
     boolean checkIsLate(Loan loan);
-    boolean checkIsDamaged(long loanId);
 
     Loan retrieveLoanByLoanId(long loanId);
 
