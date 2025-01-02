@@ -3,10 +3,7 @@ package com.github.pieter_groenendijk.controller;
 import com.github.pieter_groenendijk.hibernate.SessionFactoryFactory;
 import com.github.pieter_groenendijk.model.DTO.ExtendLoanDTO;
 import com.github.pieter_groenendijk.model.Loan;
-import com.github.pieter_groenendijk.repository.ILoanRepository;
-import com.github.pieter_groenendijk.repository.IMembershipRepository;
-import com.github.pieter_groenendijk.repository.LoanRepository;
-import com.github.pieter_groenendijk.repository.MembershipRepository;
+import com.github.pieter_groenendijk.repository.*;
 import com.github.pieter_groenendijk.service.ILoanService;
 import com.github.pieter_groenendijk.service.LoanService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,7 +29,8 @@ public class LoanController {
 
     public LoanController() {
         ILoanRepository loanRepository = new LoanRepository(sessionFactory);
-        this.loanService = new LoanService(loanRepository);
+        IProductRepository productRepository = new ProductRepository(sessionFactory);
+        this.loanService = new LoanService(loanRepository, productRepository);
     }
 
     @Operation(summary = "Create a Loan", description = "Create a new Loan")

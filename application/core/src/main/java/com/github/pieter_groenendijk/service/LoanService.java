@@ -4,7 +4,6 @@ import com.github.pieter_groenendijk.exception.EntityNotFoundException;
 import com.github.pieter_groenendijk.exception.InputValidationException;
 import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.model.LoanStatus;
-import com.github.pieter_groenendijk.model.product.ProductCopy;
 import com.github.pieter_groenendijk.repository.ILoanRepository;
 import com.github.pieter_groenendijk.repository.IProductRepository;
 
@@ -23,12 +22,15 @@ public class LoanService implements ILoanService {
     private ILoanRepository loanRepository;
     private IProductRepository productRepository;
 
-    public LoanService(ILoanRepository loanRepository, IProductRepository productRepository) {
-            this.loanRepository = loanRepository;
-            this.productRepository = productRepository;
-        }
 
-        @Override
+
+
+    public LoanService(ILoanRepository loanRepository, IProductRepository productRepository) {
+        this.loanRepository = loanRepository;
+        this.productRepository = productRepository;
+    }
+
+    @Override
     public Loan store(Loan loan) {
         if (loan == null) {
             throw new InputValidationException("Loan cannot be null");

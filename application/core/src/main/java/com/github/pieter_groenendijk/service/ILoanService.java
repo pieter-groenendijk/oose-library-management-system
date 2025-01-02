@@ -9,11 +9,11 @@ import java.util.List;
 public interface ILoanService {
     Loan store(Loan loan);
 
-    Loan extendLoan(long loanId, Date dueDate);
+    Loan extendLoan(long loanId, Date returnBy);
 
     Date generateReturnByDate(Date returnBy);
 
-    void returnToCatalogue(long CopyId);
+    void returnToCatalogue(long productCopyId);
     void returnLoan(long loanId);
 
     void handleOverdueLoans();
