@@ -3,10 +3,7 @@ package com.github.pieter_groenendijk.service;
 import com.github.pieter_groenendijk.exception.EntityNotFoundException;
 import com.github.pieter_groenendijk.exception.InputValidationException;
 import com.github.pieter_groenendijk.model.Loan;
-import com.github.pieter_groenendijk.model.product.ProductCopy;
 import com.github.pieter_groenendijk.repository.ILoanRepository;
-
-import static com.github.pieter_groenendijk.service.ServiceUtils.AVAILABLE;
 import static com.github.pieter_groenendijk.service.ServiceUtils.LOAN_LENGTH;
 
 import java.time.LocalDate;
@@ -31,29 +28,27 @@ public class LoanService implements ILoanService {
 }
     @Override
     public Loan extendLoan(long loanId, Date returnBy) {
-        Loan loan = loanRepository.retrieveLoanByLoanId(loanId)
-                .orElseThrow(() -> new IllegalArgumentException("Loan not found with id: " + loanId));
+            Loan loan = loanRepository.retrieveLoanByLoanId(loanId)
+                    .orElseThrow(() -> new IllegalArgumentException("Loan not found with id: " + loanId));
 
-        if (loan.isExtended()) {
-            throw new IllegalStateException("Loan can only be extended once.");
+            if (loan.isExtended()) {
+                throw new IllegalStateException("Loan can only be extended once.");
+            }
+
+            Date extendedReturnBy = generateReturnByDate(loan.getReturnBy());
+
+            loan.setReturnBy(extendedReturnBy);
+            loan.setExtended(true);
+
+            return loanRepository.store(loan);
         }
 
-        LocalDate extendedReturnBy = loan.getReturnBy().plusDays(LOAN_LENGTH);
-
-        loan.setReturnBy(extendedReturnBy);
-        loan.setExtended(true);
-
-        return loanRepository.store(loan);
-    }
 
     @Override
-    public Date generateReturnByDate(long copyId, Date returnBy) {
+    public Date generateReturnByDate(Date returnBy) {
         LocalDate loanDate = LocalDate.now();
-
-        LocalDate extendedReturnByDate= loanDate.plusDays(LOAN_LENGTH);
-
-         Date extendedReturnBy = Date.from(extendedReturnByDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-         return extendedReturnBy;
+        LocalDate returnByDate = loanDate.plusDays(LOAN_LENGTH);
+        return Date.from(returnByDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 
     @Override

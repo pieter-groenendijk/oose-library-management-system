@@ -17,7 +17,7 @@ public class Loan {
     private Date startDate;
     @Column(name = "returnBy")
     @Temporal(TemporalType.DATE)
-    private LocalDate returnBy;
+    private Date returnBy;
 
     @Column(name = "extendedReturnBy")
     @Temporal(TemporalType.DATE)
@@ -55,13 +55,6 @@ public class Loan {
         this.startDate = startDate;
     }
 
-    public LocalDate getReturnBy() {
-        return returnBy;
-    }
-
-    public void setReturnBy(LocalDate returnBy) {
-        this.returnBy = returnBy;
-    }
 
     public Date getReturnedOn() {
         return returnedOn;
@@ -92,5 +85,22 @@ public class Loan {
     }
 
     public boolean isExtended() { return isExtended; }
+
+
+    public Date getReturnBy() {
+        return returnBy;
+    }
+
+    public void setReturnBy(Date returnBy) {
+        this.returnBy = returnBy;
+    }
+
+    public Date getExtendedReturnBy() {
+        return extendedReturnBy;
+    }
+
+    public void setExtendedReturnBy(Date extendedReturnBy) {
+        this.extendedReturnBy = extendedReturnBy;
+    }
 
 }

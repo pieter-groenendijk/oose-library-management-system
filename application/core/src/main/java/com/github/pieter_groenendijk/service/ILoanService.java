@@ -11,7 +11,7 @@ public interface ILoanService {
 
     Loan extendLoan(long loanId, Date dueDate);
 
-    Date generateReturnByDate(long copyId, Date returnBy);
+    Date generateReturnByDate(Date returnBy);
 
     void returnToCatalogue(long CopyId);
 
