@@ -52,4 +52,7 @@ public class ProductCopy extends PhysicalProductTemplate {
     public void setDamaged(boolean damaged) {
         isDamaged = damaged;
     }
+
+    public void setStatus(String available) {
+    }
 }

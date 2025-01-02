@@ -4,13 +4,12 @@ import com.github.pieter_groenendijk.exception.EntityNotFoundException;
 import com.github.pieter_groenendijk.exception.InputValidationException;
 import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.repository.ILoanRepository;
+
 import static com.github.pieter_groenendijk.service.ServiceUtils.LOAN_LENGTH;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 public class LoanService implements ILoanService {
@@ -24,6 +23,11 @@ public class LoanService implements ILoanService {
         if (loan == null) {
             throw new InputValidationException("Loan cannot be null");
         }
+
+            if (loan.getLoanStatus() == null) {
+                loan.setLoanStatus(ServiceUtils.LOAN_ACTIVE);
+            }
+
         return loanRepository.store(loan);
 }
     @Override
@@ -31,14 +35,14 @@ public class LoanService implements ILoanService {
             Loan loan = loanRepository.retrieveLoanByLoanId(loanId)
                     .orElseThrow(() -> new IllegalArgumentException("Loan not found with id: " + loanId));
 
-            if (loan.isExtended()) {
+            if (loan.getLoanStatus().equals("EXTENDED")) {
                 throw new IllegalStateException("Loan can only be extended once.");
             }
 
             Date extendedReturnBy = generateReturnByDate(loan.getReturnBy());
 
             loan.setReturnBy(extendedReturnBy);
-            loan.setExtended(true);
+            loan.setLoanStatus("EXTENDED");
 
             return loanRepository.store(loan);
         }
@@ -52,20 +56,51 @@ public class LoanService implements ILoanService {
     }
 
     @Override
-    public void returnToCatalogue(long productId) {
+    public void returnLoan(long loanId) {
+        Loan loan = loanRepository.retrieveLoanByLoanId(loanId)
+                .orElseThrow(() -> new EntityNotFoundException("Loan not found with id: " + loanId));
 
+        if (Objects.equals(loan.getLoanStatus(), "RETURNED")) {
+            throw new IllegalStateException("Loan has already been returned.");
+        }
+
+        loan.setLoanStatus("RETURNED");
+
+        loanRepository.store(loan);
     }
 
+@Override
+    public void returnToCatalogue(long productId) {
+    //ProductCopy productCopy = productCopyRepository.findByProductId(productId);
+      //  productCopy.setStatus(AVAILABLE);
+        //productCopyRepository.store(productCopy);
+    }
     @Override
     public void handleOverdueLoans() {
 
     }
 
     @Override
-    public boolean checkIsLate(Date currentDate, Date dueDate) {
-        return currentDate.after(dueDate);
-    }
+    public boolean checkIsLate(Loan loan) {
+        Date currentDate = new Date();
 
+        boolean isLate = false;
+
+        if (loan.getLoanStatus().equals("ACTIVE")) {
+            isLate = currentDate.after(loan.getReturnBy());
+        } else if (loan.getLoanStatus().equals("EXTENDED")) {
+            isLate = currentDate.after(loan.getExtendedReturnBy());
+        } else {
+            throw new IllegalStateException("Invalid loan status: " + loan.getLoanStatus());
+        }
+
+        if (isLate) {
+            loan.setLoanStatus("OVERDUE");
+            loanRepository.store(loan);
+        }
+
+        return isLate;
+    }
     @Override
     public boolean checkIsDamaged(long productId) {
         //ProductCopy productCopy = productCopyRepository.findByProductId(productId);

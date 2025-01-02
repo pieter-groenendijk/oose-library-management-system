@@ -9,6 +9,7 @@ public class ServiceUtils {
     public static final String LOAN_ACTIVE = "ACTIVE";
     public static final String LOAN_RETURNED = "RETURNED";
     public static final String LOAN_OVERDUE = "OVERDUE";
+    public static final String LOAN_EXTENDED = "EXTENDED";
 
 
     public static final String AVAILABLE = "AVAILABLE";

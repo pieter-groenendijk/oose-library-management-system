@@ -35,8 +35,6 @@ public class Loan {
     @JoinColumn(name = "productCopyId")
     private ProductCopy productCopy;
 
-    @Column(name = "isExtended")
-    private boolean isExtended;
 
     // Getters and Setters
     public void setLoanId(Long loanId) {
@@ -79,13 +77,6 @@ public class Loan {
     public void setMembership(Membership membership) {
         this.membership = membership;
     }
-
-    public void setExtended(boolean isExtended) {
-        this.isExtended = isExtended;
-    }
-
-    public boolean isExtended() { return isExtended; }
-
 
     public Date getReturnBy() {
         return returnBy;

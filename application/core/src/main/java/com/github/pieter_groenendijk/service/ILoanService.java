@@ -14,9 +14,10 @@ public interface ILoanService {
     Date generateReturnByDate(Date returnBy);
 
     void returnToCatalogue(long CopyId);
+    void returnLoan(long loanId);
 
     void handleOverdueLoans();
-    boolean checkIsLate(Date currentDate, Date returnBy);
+    boolean checkIsLate(Loan loan);
     boolean checkIsDamaged(long loanId);
 
     Loan retrieveLoanByLoanId(long loanId);
