@@ -10,6 +10,9 @@ public interface IProductRepository {
     Optional<ProductTemplate> deleteProductById(long productId);
 
     Optional<ProductTemplate> retrieveProductById(long productId);
+
+    Optional<ProductTemplate> retrieveProductByCopyId(long productCopyId);
+
     ProductTemplate updateProduct(ProductTemplate product);
 
 }

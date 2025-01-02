@@ -4,7 +4,9 @@ import com.github.pieter_groenendijk.exception.EntityNotFoundException;
 import com.github.pieter_groenendijk.exception.InputValidationException;
 import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.model.LoanStatus;
+import com.github.pieter_groenendijk.model.product.ProductCopy;
 import com.github.pieter_groenendijk.repository.ILoanRepository;
+import com.github.pieter_groenendijk.repository.IProductRepository;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -19,8 +21,11 @@ import static com.github.pieter_groenendijk.service.ServiceUtils.*;
 public class LoanService implements ILoanService {
 
     private ILoanRepository loanRepository;
-    public LoanService(ILoanRepository loanRepository) {
+    private IProductRepository productRepository;
+
+    public LoanService(ILoanRepository loanRepository, IProductRepository productRepository) {
             this.loanRepository = loanRepository;
+            this.productRepository = productRepository;
         }
 
         @Override
@@ -75,10 +80,10 @@ public class LoanService implements ILoanService {
 
 
     @Override
-    public void returnToCatalogue(long productId) {
-    //ProductCopy productCopy = productCopyRepository.findByProductId(productId);
-      //  productCopy.setStatus(AVAILABLE);
-        //productCopyRepository.store(productCopy);
+    public void returnToCatalogue(long productCopyId) {
+    //ProductCopy productCopy = productRepository.retrieveProductById(productCopyId);
+      //productCopy.setStatus(AVAILABLE);
+        //productRepository.store(productCopy);
     }
     @Override
     public void handleOverdueLoans() {

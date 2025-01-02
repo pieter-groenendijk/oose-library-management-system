@@ -1,4 +1,5 @@
 package com.github.pieter_groenendijk.repository;
+import com.github.pieter_groenendijk.model.product.ProductCopy;
 import com.github.pieter_groenendijk.model.product.ProductTemplate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -8,6 +9,10 @@ import java.util.Optional;
 public class ProductRepository implements IProductRepository {
 
     private SessionFactory sessionFactory;
+
+    public ProductRepository(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public ProductTemplate store(ProductTemplate product) {
@@ -64,6 +69,19 @@ public class ProductRepository implements IProductRepository {
 
         try {
             product = session.get(ProductTemplate.class, productId);
+        } finally {
+            session.close();
+        }
+        return Optional.ofNullable(product);
+    }
+
+    @Override
+    public Optional<ProductTemplate> retrieveProductByCopyId(long productCopyId) {
+        Session session = sessionFactory.openSession();
+        ProductTemplate product;
+
+        try {
+            product = session.get(ProductCopy.class, productCopyId);
         } finally {
             session.close();
         }
