@@ -1,6 +1,6 @@
 package com.github.pieter_groenendijk.model.event;
 
-import com.github.pieter_groenendijk.utils.scheduling.Task;
+import com.github.pieter_groenendijk.model.Task;
 
 // TODO: Make actual entity
 // TODO: Use `scheduledAt` of super
