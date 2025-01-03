@@ -1,6 +1,6 @@
 package com.github.pieter_groenendijk.service.notification.scheduling;
 
-import com.github.pieter_groenendijk.TaskScheduler;
+import com.github.pieter_groenendijk.utils.scheduling.TaskScheduler;
 import com.github.pieter_groenendijk.model.notification.NotificationTask;
 import com.github.pieter_groenendijk.repository.notification.INotificationTaskRepository;
 import com.github.pieter_groenendijk.service.notification.send_strategies.registry.NotificationSendStrategyRegistry;
@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 
+// TODO: Use new LongTermTaskScheduler
 public class NotificationTaskScheduler {
     private final TaskScheduler SCHEDULER;
     private final INotificationTaskRepository REPOSITORY;

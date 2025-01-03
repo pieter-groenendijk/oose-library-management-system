@@ -3,11 +3,16 @@ package com.github.pieter_groenendijk.controller;
 import com.github.pieter_groenendijk.hibernate.SessionFactoryFactory;
 import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.repository.ILoanRepository;
-import com.github.pieter_groenendijk.repository.IMembershipRepository;
 import com.github.pieter_groenendijk.repository.LoanRepository;
-import com.github.pieter_groenendijk.repository.MembershipRepository;
-import com.github.pieter_groenendijk.service.ILoanService;
-import com.github.pieter_groenendijk.service.LoanService;
+import com.github.pieter_groenendijk.repository.event.EventRepository;
+import com.github.pieter_groenendijk.repository.event.IEventRepository;
+import com.github.pieter_groenendijk.service.event.emitting.EventEmitterPool;
+import com.github.pieter_groenendijk.service.event.scheduling.EventScheduler;
+import com.github.pieter_groenendijk.service.loan.ILoanService;
+import com.github.pieter_groenendijk.service.loan.LoanService;
+import com.github.pieter_groenendijk.service.loan.event.ILoanEventService;
+import com.github.pieter_groenendijk.service.loan.event.LoanEventService;
+import com.github.pieter_groenendijk.utils.scheduling.TaskScheduler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -30,7 +35,18 @@ public class LoanController {
 
     public LoanController() {
         ILoanRepository loanRepository = new LoanRepository(sessionFactory);
-        this.loanService = new LoanService(loanRepository);
+
+        // TODO: Make this mess work with beans or dependency injection
+        IEventRepository eventRepository = new EventRepository();
+        ILoanEventService eventService = new LoanEventService(
+            eventRepository,
+            new EventScheduler(
+                new TaskScheduler(1),
+                eventRepository,
+                new EventEmitterPool()
+            )
+        );
+        this.loanService = new LoanService(loanRepository, eventService);
     }
 
     @Operation(summary = "Create a Loan", description = "Create a new Loan")
@@ -41,7 +57,9 @@ public class LoanController {
     })
     @PostMapping
     public Loan store(@RequestBody Loan loan) {
-      return loanService.store(loan);
+        loanService.store(loan);
+
+        return loan;
     }
 
     @Operation(summary = "Retrieve a loan", description = "Retrieve a loan by Id")

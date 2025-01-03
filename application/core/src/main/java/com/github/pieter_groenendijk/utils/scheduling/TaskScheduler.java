@@ -1,4 +1,4 @@
-package com.github.pieter_groenendijk;
+package com.github.pieter_groenendijk.utils.scheduling;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -11,8 +11,8 @@ public class TaskScheduler {
 
     private final ScheduledExecutorService SCHEDULER;
 
-    public TaskScheduler(int threadAmount) {
-        this.SCHEDULER = Executors.newScheduledThreadPool(threadAmount);
+    public TaskScheduler(int amountOfThreads) {
+        this.SCHEDULER = Executors.newScheduledThreadPool(amountOfThreads);
     }
 
     public void schedule(Runnable task, LocalDateTime scheduledAt) {
