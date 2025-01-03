@@ -52,6 +52,16 @@ CREATE TABLE "LendingAssociatedNotificationTask" (
     PRIMARY KEY ("lendingId", "notificationTaskId")
 );
 
+-- region: Event related
+CREATE TABLE "Event" (
+    "eventId" BIGSERIAL NOT NULL,
+    "type" VARCHAR(50) NOT NULL,
+    "scheduledAt" TIMESTAMP NOT NULL,
+    "associationType" VARCHAR(50) NOT NULL,
+    PRIMARY KEY ("eventId")
+);
+-- endregion
+
 CREATE TABLE "PaymentStatus" (
     "paymentStatusId" SMALLSERIAL NOT NULL,
     "title" VARCHAR(50) NOT NULL,

@@ -1,11 +1,30 @@
 package com.github.pieter_groenendijk.model.event;
 
 import com.github.pieter_groenendijk.model.Task;
+import jakarta.persistence.*;
 
-// TODO: Make actual entity
-// TODO: Use `scheduledAt` of super
-public class Event<Association> extends Task {
-    protected Association association;
+@Entity
+@Table(name = "Event")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE) // Instances are usually retrieved together as Events. Keeping it in one table keeps this process fast.
+@DiscriminatorColumn(
+    name = "associationType",
+    discriminatorType = DiscriminatorType.STRING,
+    length = 50
+)
+public abstract class Event<Association> extends Task {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(
+        name = "eventId",
+        nullable = false
+    )
+    private Long eventId;
+
+    @Enumerated(EnumType.STRING)
+    @Column(
+        name = "type",
+        nullable = false
+    )
     protected EventType type;
 
     public Event() {}
@@ -18,11 +37,7 @@ public class Event<Association> extends Task {
         this.type = type;
     }
 
-    public Association getAssociation() {
-        return association;
-    }
+    public abstract Association getAssociation();
 
-    public void setAssociation(Association association) {
-        this.association = association;
-    }
+    public abstract void setAssociation(Association association);
 }
