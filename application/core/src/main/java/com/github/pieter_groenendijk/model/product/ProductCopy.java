@@ -5,14 +5,13 @@ import jakarta.persistence.*;
 
 
 @Entity
-@Table (name = "ProductCopy")
 public class ProductCopy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productCopyId;
 
    @ManyToOne
-    @JoinColumn(name = "physicalProductId", nullable = false)
+    @JoinColumn(name = "productId", nullable = false)
     private PhysicalProductTemplate physicalProduct;
 
     @Column (name = "availabilityStatus", nullable = false, length = 50)

@@ -3,6 +3,7 @@ package com.github.pieter_groenendijk.hibernate.configuration;
 import com.github.pieter_groenendijk.model.*;
 import com.github.pieter_groenendijk.model.notification.LendingAssociatedNotificationTask;
 import com.github.pieter_groenendijk.model.notification.NotificationTask;
+import com.github.pieter_groenendijk.model.product.PhysicalProductTemplate;
 import com.github.pieter_groenendijk.model.product.ProductCopy;
 import com.github.pieter_groenendijk.model.product.ProductTemplate;
 import org.hibernate.cfg.Configuration;
@@ -29,7 +30,9 @@ public class DefaultConfigurationFactory {
             .addAnnotatedClass(LendingAssociatedNotificationTask.class)
             .addAnnotatedClass(Loan.class)
             .addAnnotatedClass(ProductCopy.class)
-                .addAnnotatedClass(ProductTemplate.class);
+            .addAnnotatedClass(ProductTemplate.class)
+            .addAnnotatedClass(PhysicalProductTemplate.class);
+
 
     }
 
