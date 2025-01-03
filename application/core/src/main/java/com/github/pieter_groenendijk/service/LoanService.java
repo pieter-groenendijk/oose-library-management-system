@@ -3,85 +3,122 @@ package com.github.pieter_groenendijk.service;
 import com.github.pieter_groenendijk.exception.EntityNotFoundException;
 import com.github.pieter_groenendijk.exception.InputValidationException;
 import com.github.pieter_groenendijk.model.Loan;
+import com.github.pieter_groenendijk.model.LoanStatus;
 import com.github.pieter_groenendijk.model.product.ProductCopy;
 import com.github.pieter_groenendijk.repository.ILoanRepository;
-
-import static com.github.pieter_groenendijk.service.ServiceUtils.AVAILABLE;
-import static com.github.pieter_groenendijk.service.ServiceUtils.LOAN_LENGTH;
+import com.github.pieter_groenendijk.repository.IProductRepository;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+
+
+import static com.github.pieter_groenendijk.service.ServiceUtils.*;
 
 
 public class LoanService implements ILoanService {
 
     private ILoanRepository loanRepository;
+    private IProductRepository productRepository;
+
     public LoanService(ILoanRepository loanRepository) {
-            this.loanRepository = loanRepository;
-        }
-        @Override
+        this.loanRepository = loanRepository;
+    }
+
+    @Override
     public Loan store(Loan loan) {
-        if (loan == null) {
-            throw new InputValidationException("Loan cannot be null");
+            if (loan == null) {
+                throw new InputValidationException("Loan cannot be null");
+            }
+
+            if (loan.getLoanStatus() == null) {
+                loan.setLoanStatus(LoanStatus.ACTIVE);
+            }
+
+            Long productCopyId = loan.getProductCopy();
+            if (productCopyId == null) {
+                throw new EntityNotFoundException("ProductCopy ID not found in the loan");
+            }
+
+            ProductCopy productCopy = productRepository.retrieveProductCopyById(productCopyId)
+                    .orElseThrow(() -> new EntityNotFoundException("ProductCopy not found with ID: " + productCopyId));
+
+
+            productCopy.setAvailabilityStatus(LOANED);
+
+            productRepository.updateProductCopy(productCopy);
+
+            return loanRepository.store(loan);
         }
-        return loanRepository.store(loan);
-}
-    @Override
+
+
+        @Override
     public Loan extendLoan(long loanId, Date returnBy) {
-        Loan loan = loanRepository.retrieveLoanByLoanId(loanId)
-                .orElseThrow(() -> new IllegalArgumentException("Loan not found with id: " + loanId));
+            Loan loan = loanRepository.retrieveLoanByLoanId(loanId)
+                    .orElseThrow(() -> new IllegalArgumentException("Loan not found with id: " + loanId));
 
-        if (loan.isExtended()) {
-            throw new IllegalStateException("Loan can only be extended once.");
+            if (loan.getLoanStatus().equals(LoanStatus.EXTENDED)) {
+                throw new IllegalStateException("Loan can only be extended once.");
+            }
+
+            Date extendedReturnBy = generateReturnByDate(loan.getReturnBy());
+
+            loan.setReturnBy(extendedReturnBy);
+            loan.setLoanStatus(LoanStatus.EXTENDED);
+
+            return loanRepository.updateLoan(loan);
         }
 
-        LocalDate extendedReturnBy = loan.getReturnBy().plusDays(LOAN_LENGTH);
-
-        loan.setReturnBy(extendedReturnBy);
-        loan.setExtended(true);
-
-        return loanRepository.store(loan);
-    }
 
     @Override
-    public Date generateReturnByDate(long copyId, Date returnBy) {
+    public Date generateReturnByDate(Date returnBy) {
         LocalDate loanDate = LocalDate.now();
-
-        LocalDate extendedReturnByDate= loanDate.plusDays(LOAN_LENGTH);
-
-         Date extendedReturnBy = Date.from(extendedReturnByDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-         return extendedReturnBy;
+        LocalDate returnByDate = loanDate.plusDays(LOAN_LENGTH);
+        return Date.from(returnByDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 
     @Override
-    public void returnToCatalogue(long productId) {
+    public void returnLoan(long loanId) {
+        Loan loan = loanRepository.retrieveLoanByLoanId(loanId)
+                .orElseThrow(() -> new EntityNotFoundException("Loan not found with id: " + loanId));
 
+        if (loan.getLoanStatus() == LoanStatus.RETURNED) {
+            throw new IllegalStateException("Loan has already been returned.");
+        }
+
+        loan.setLoanStatus(LoanStatus.RETURNED);
+        loanRepository.updateLoan(loan);
+        returnToCatalogue(loan.getProductCopy());
+    }
+
+
+    @Override
+    public void returnToCatalogue(long productCopyId) {
+        ProductCopy productCopy = productRepository.retrieveProductCopyById(productCopyId)
+                .orElseThrow(() -> new EntityNotFoundException("ProductCopy not found with ID: " + productCopyId));
+
+        productCopy.setAvailabilityStatus(AVAILABLE);
+        productRepository.updateProductCopy(productCopy);
     }
 
     @Override
     public void handleOverdueLoans() {
-
     }
-
     @Override
-    public boolean checkIsLate(Date currentDate, Date dueDate) {
-        return currentDate.after(dueDate);
-    }
+    public boolean checkIsLate(Loan loan) {
+        Date currentDate = new Date();
 
-    @Override
-    public boolean checkIsDamaged(long productId) {
-        //ProductCopy productCopy = productCopyRepository.findByProductId(productId);
+        boolean isLate = loan.getLoanStatus().isOverdue(currentDate, loan);
 
-       // if (productCopy.isDamaged()) {
-        //    System.out.println("Product is damaged. Will not be returned to catalogue.");
-           // return true;
-       // }
-        //returnToCatalogue(productId);
-       // productCopy.setStatus(AVAILABLE);
-        return false;
+        if (isLate && loan.getLoanStatus() != LoanStatus.OVERDUE) {
+            loan.setLoanStatus(LoanStatus.OVERDUE);
+            loanRepository.updateLoan(loan);
+        }
+
+        return isLate;
     }
 
 
@@ -95,7 +132,9 @@ public class LoanService implements ILoanService {
     public List<Loan> retrieveActiveLoansByMembershipId(long membershipId) {
         try {
             List<Loan> loans = loanRepository.retrieveActiveLoansByMembershipId(membershipId);
-            return loanRepository.retrieveActiveLoansByMembershipId(membershipId);
+            return loans.stream()
+                    .filter(loan -> loan.getLoanStatus() == LoanStatus.ACTIVE)
+                    .collect(Collectors.toList());
         } catch (Exception e) {
             e.printStackTrace();
             return Collections.emptyList();

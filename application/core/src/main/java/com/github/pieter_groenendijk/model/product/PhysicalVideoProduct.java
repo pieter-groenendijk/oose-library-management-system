@@ -14,4 +14,5 @@ public class PhysicalVideoProduct extends PhysicalProductTemplate{
     @Column(name = "language", nullable = true, length = 100)
     public String language;
 
+
 }

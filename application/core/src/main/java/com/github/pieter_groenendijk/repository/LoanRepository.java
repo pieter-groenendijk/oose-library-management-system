@@ -22,15 +22,23 @@ public class LoanRepository implements ILoanRepository {
     @Override
     public Optional<Loan> retrieveLoanByLoanId(long loanId) {
         Session session = sessionFactory.openSession();
-        Loan loan;
-
         try {
-            loan = session.get(Loan.class, loanId);
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<Loan> cr = cb.createQuery(Loan.class);
+            Root<Loan> root = cr.from(Loan.class);
+
+            cr.select(root).where(cb.equal(root.get("id"), loanId));
+
+            Loan loan = session.createQuery(cr).uniqueResult();
+            return Optional.ofNullable(loan);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Database query failed for Loan ID: " + loanId, e);
         } finally {
             session.close();
         }
-        return Optional.ofNullable(loan);
     }
+
 
     @Override
     public List<Loan> retrieveActiveLoansByMembershipId(long membershipId) {
@@ -40,7 +48,11 @@ public class LoanRepository implements ILoanRepository {
             CriteriaQuery<Loan> cr = cb.createQuery(Loan.class);
             Root<Loan> root = cr.from(Loan.class);
 
-            cr.select(root).where(cb.equal(root.get("membership").get("id"), membershipId));
+            cr.select(root)
+                    .where(
+                            cb.equal(root.get("membership").get("id"), membershipId),
+                            cb.equal(root.get("loanStatus"), "ACTIVE")
+                    );
 
             return session.createQuery(cr).getResultList();
         } catch (Exception e) {
@@ -53,27 +65,27 @@ public class LoanRepository implements ILoanRepository {
 
     @Override
     public Loan store(Loan loan) {
-            Session session = sessionFactory.openSession();
+        Session session = sessionFactory.openSession();
 
-            try {
-                session.beginTransaction();
-                session.persist(loan);
-                session.flush();
+        try {
+            session.beginTransaction();
+            session.persist(loan);
+            session.flush();
 
-                session.getTransaction().commit();
-            } catch (Exception e) {
-                if (session.getTransaction() != null) {
-                    session.getTransaction().rollback();
-                }
-                e.printStackTrace();
-            } finally {
-                session.close();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            if (session.getTransaction() != null) {
+                session.getTransaction().rollback();
             }
-            return loan;
+            e.printStackTrace();
+        } finally {
+            session.close();
         }
+        return loan;
+    }
 
     @Override
-    public void updateLoan(Loan loan) {
+    public Loan updateLoan(Loan loan) {
         Session session = sessionFactory.openSession();
         try {
             session.beginTransaction();
@@ -89,24 +101,7 @@ public class LoanRepository implements ILoanRepository {
         } finally {
             session.close();
         }
-    }
-
-    @Override
-    public void deleteLoanByLoanId(long loanId) {
-        Session session = sessionFactory.openSession();
-        try {
-            session.beginTransaction();
-            Loan loan = session.get(Loan.class, loanId);
-            session.remove(loan);
-            session.getTransaction().commit();
-        } catch (HibernateException e) {
-            if (session.getTransaction() != null) {
-                session.getTransaction().rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
+        return loan;
     }
 }
 

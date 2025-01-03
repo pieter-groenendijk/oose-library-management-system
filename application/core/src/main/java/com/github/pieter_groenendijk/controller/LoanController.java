@@ -1,11 +1,9 @@
 package com.github.pieter_groenendijk.controller;
 
 import com.github.pieter_groenendijk.hibernate.SessionFactoryFactory;
+import com.github.pieter_groenendijk.model.DTO.ExtendLoanDTO;
 import com.github.pieter_groenendijk.model.Loan;
-import com.github.pieter_groenendijk.repository.ILoanRepository;
-import com.github.pieter_groenendijk.repository.IMembershipRepository;
-import com.github.pieter_groenendijk.repository.LoanRepository;
-import com.github.pieter_groenendijk.repository.MembershipRepository;
+import com.github.pieter_groenendijk.repository.*;
 import com.github.pieter_groenendijk.service.ILoanService;
 import com.github.pieter_groenendijk.service.LoanService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -25,20 +23,17 @@ import java.util.List;
 @RequestMapping("/loan")
 public class LoanController {
 
-    private final SessionFactory sessionFactory = new SessionFactoryFactory().create();
     private final ILoanService loanService;
+    private final SessionFactory sessionFactory = new SessionFactoryFactory().create();
+
 
     public LoanController() {
         ILoanRepository loanRepository = new LoanRepository(sessionFactory);
+        IProductRepository productRepository = new ProductRepository(sessionFactory);
         this.loanService = new LoanService(loanRepository);
     }
 
     @Operation(summary = "Create a Loan", description = "Create a new Loan")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Loan created"),
-            @ApiResponse(responseCode = "400", description = "Invalid input"),
-            @ApiResponse(responseCode = "404", description = "Membership or Product not found")
-    })
     @PostMapping
     public Loan store(@RequestBody Loan loan) {
       return loanService.store(loan);
@@ -51,8 +46,7 @@ public class LoanController {
     })
     @GetMapping("/{loanId}")
     public Loan retrieveLoanByLoanId(@PathVariable("loanId") long loanId) {
-        Loan loan = loanService.retrieveLoanByLoanId(loanId);
-            return loan;
+        return loanService.retrieveLoanByLoanId(loanId);
     }
 
     @Operation(summary = "Retrieve all loans for a membership", description = "Retrieve loans by membershipId")
@@ -69,6 +63,12 @@ public class LoanController {
         } else {
             return new ResponseEntity<>(Collections.emptyList(), HttpStatus.NO_CONTENT);
         }
+    }
+
+    @Operation(summary = "Extend a loan", description = "Extend a loan by loanId")
+    @PutMapping("/{loanId}")
+    public Loan extendLoan(@PathVariable("loanId") long loanId, @RequestBody ExtendLoanDTO extendLoanDTO) {
+        return loanService.extendLoan(loanId, extendLoanDTO.getReturnBy());
     }
 }
 

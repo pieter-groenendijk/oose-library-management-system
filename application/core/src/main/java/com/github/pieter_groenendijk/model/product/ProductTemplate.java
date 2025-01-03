@@ -1,9 +1,10 @@
 package com.github.pieter_groenendijk.model.product;
 
+import com.github.pieter_groenendijk.model.MediaType;
 import jakarta.persistence.*;
 
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class ProductTemplate {
 
     @Id
@@ -29,7 +30,7 @@ public abstract class ProductTemplate {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "mediaType", nullable = false)
-    private String mediaType;
+    private MediaType mediaType;
 
 
     public String getName() {

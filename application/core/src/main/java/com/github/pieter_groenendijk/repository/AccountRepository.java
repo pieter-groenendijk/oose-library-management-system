@@ -56,7 +56,7 @@ public class AccountRepository implements IAccountRepository {
 
             account = session.get(Account.class, id);
             if (account != null) {
-                session.delete(account);
+                session.remove(account);
                 session.getTransaction().commit();
             } else {
                 session.getTransaction().rollback();

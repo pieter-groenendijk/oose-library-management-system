@@ -5,8 +5,7 @@ import jakarta.persistence.*;
 
 
 @Entity
-@Table (name = "ProductCopy")
-public class ProductCopy extends PhysicalProductTemplate {
+public class ProductCopy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productCopyId;
@@ -20,6 +19,7 @@ public class ProductCopy extends PhysicalProductTemplate {
 
     @Column (name = "isDamaged", nullable = false)
     private boolean isDamaged;
+
 
     public void setCopyId(Long productCopyId) {
         this.productCopyId = productCopyId;
@@ -51,5 +51,8 @@ public class ProductCopy extends PhysicalProductTemplate {
 
     public void setDamaged(boolean damaged) {
         isDamaged = damaged;
+    }
+
+    public void setStatus(String available) {
     }
 }
