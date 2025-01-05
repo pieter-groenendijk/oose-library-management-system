@@ -1,5 +1,7 @@
 package com.github.pieter_groenendijk.model.DTO;
 
+import java.util.Date;
+
 public class AccountRequestDTO {
 
     private String email;

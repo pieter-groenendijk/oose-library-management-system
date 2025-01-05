@@ -25,6 +25,22 @@ public class AccountRepository implements IAccountRepository {
         return Optional.ofNullable(account);
     }
 
+    public boolean doesAccountExistByEmail(String email) {
+        Session session = sessionFactory.openSession();
+        Account account;
+
+        try {
+            String hql = "FROM Account a WHERE a.email = :email";
+            account = session.createQuery(hql, Account.class)
+                    .setParameter("email", email)
+                    .uniqueResult();
+        } finally {
+            session.close();
+        }
+
+        return account != null;
+    }
+
     public Account store(Account account) {
         Session session = sessionFactory.openSession();
 

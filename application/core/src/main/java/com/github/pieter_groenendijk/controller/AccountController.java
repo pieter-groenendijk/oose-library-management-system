@@ -11,9 +11,12 @@ import com.github.pieter_groenendijk.repository.IAccountRepository;
 import com.github.pieter_groenendijk.repository.IMembershipTypeRepository;
 import com.github.pieter_groenendijk.repository.IMembershipRepository;
 import com.github.pieter_groenendijk.model.Account;
+import com.github.pieter_groenendijk.model.DTO.AccountRequestDTO;
 
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import com.github.pieter_groenendijk.hibernate.SessionFactoryFactory;
 import org.hibernate.SessionFactory;
 
@@ -44,19 +47,29 @@ public class AccountController {
 
     @Operation(summary = "Create an account", description = "Add a new account to the database")
     @PostMapping
-    public Account createAccount(@RequestBody AccountRequestDTO account) {
-        return accountService.store(account);
+    public ResponseEntity<?> createAccount(@RequestBody AccountRequestDTO account) {
+
+        accountService.store(account);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Succes!");
+
     }
 
     @Operation(summary = "Update an account", description = "Update an account in the database")
-    @PutMapping
-    public Account updateAccount(@RequestBody Account account){
-        return accountService.update(account);
+    @PutMapping("/{id}")
+    public Account updateAccount(@PathVariable("id") long id, @RequestBody AccountRequestDTO account){
+        return accountService.update(id, account);
     }
 
     @Operation(summary = "Delete an account", description = "Delete an account from the database")
     @DeleteMapping("/{id}")
     public Account deleteAccount(@PathVariable("id") long id){
         return accountService.deleteAccount(id);
+    }
+
+    @Operation(summary = "Toggle account active", description = "Toggle an account from active to inactive and back")
+    @PostMapping("/toggleActive/{id}")
+    public ResponseEntity<?> toggleAccountActive(@PathVariable("id") long id, @RequestBody boolean newValue) {
+        accountService.toggleIsActive(id, newValue);
+        return ResponseEntity.status(HttpStatus.OK).body("Succes!");
     }
 }

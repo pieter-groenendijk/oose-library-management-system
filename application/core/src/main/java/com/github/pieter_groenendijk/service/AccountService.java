@@ -39,17 +39,15 @@ public class AccountService implements IAccountService {
                 .orElseThrow(() -> new EntityNotFoundException("Membershiptype with ID " + id + " not found."));
     }
 
-//    public Account store(Account account) {
-//        if ( isAccountInputValid(account)) {
-//            return accountRepository.store(account);
-//        }
-//        throw new InputValidationException("Account input is not valid");
-//    }
-
     public Account store(AccountRequestDTO request){
+        boolean emailAlreadyExists = accountRepository.doesAccountExistByEmail(request.getEmail());
+        if (emailAlreadyExists) {
+            throw new InputValidationException("E-mail already exists!");
+        }
+
         //Create membership
         Account account = new Account();
-        account.setEmail(request.getEmail();
+        account.setEmail(request.getEmail());
         account.setFirstName(request.getFirstName());
         account.setLastName(request.getLastName());
         account.setDateOfBirth(request.getDateOfBirth());
@@ -65,14 +63,29 @@ public class AccountService implements IAccountService {
         }
     }
 
-    public Account update(Account account) {
-        Account retrievedAccount =  retrieveAccountById(account.getAccountId());
+    public Account update(long id, AccountRequestDTO account) {
+        Account retrievedAccount =  retrieveAccountById(id);
         if (retrievedAccount == null) {
-            throw new EntityNotFoundException("Account with ID " + account.getAccountId() + " not found.");
-        } else if (!isAccountInputValid(account)){
+            throw new EntityNotFoundException("Account with ID " + id + " not found.");
+        }
+
+        if (retrievedAccount.getEmail() != account.getEmail()) {
+            boolean emailAlreadyExists = accountRepository.doesAccountExistByEmail(account.getEmail());
+            if (emailAlreadyExists) {
+                throw new InputValidationException("E-mail already exists!");
+            }
+        }
+
+        retrievedAccount.setEmail(account.getEmail());
+        retrievedAccount.setFirstName(account.getFirstName());
+        retrievedAccount.setLastName(account.getLastName());
+        retrievedAccount.setDateOfBirth(account.getDateOfBirth());
+        retrievedAccount.setGender(account.getGender());
+
+        if (!isAccountInputValid(retrievedAccount)){
             throw new InputValidationException("Account input is not valid");
         } else {
-            return accountRepository.update(account);
+            return accountRepository.update(retrievedAccount);
         }
     }
 
@@ -132,4 +145,16 @@ public class AccountService implements IAccountService {
         return membershipRepository.store(membership);
     }
 
+    public void toggleIsActive(long id, boolean newValue) {
+        Account retrievedAccount =  retrieveAccountById(id);
+        if (retrievedAccount == null) {
+            throw new EntityNotFoundException("Account with ID " + id + " not found.");
+        }
+        if (newValue == retrievedAccount.isActive()){
+            throw new InputValidationException("This account is already (in)active");
+        } else {
+            retrievedAccount.setActive(newValue);
+            accountRepository.update(retrievedAccount);
+        }
+    }
 }
