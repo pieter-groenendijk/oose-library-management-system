@@ -1,5 +1,6 @@
 package com.github.pieter_groenendijk.repository;
 
+import com.github.pieter_groenendijk.exception.EntityNotFoundException;
 import com.github.pieter_groenendijk.model.Loan;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -30,7 +31,10 @@ public class LoanRepository implements ILoanRepository {
             cr.select(root).where(cb.equal(root.get("id"), loanId));
 
             Loan loan = session.createQuery(cr).uniqueResult();
-            return Optional.ofNullable(loan);
+            if (loan == null) {
+                throw new EntityNotFoundException("Loan with ID " + loanId + " not found");
+            }
+            return Optional.of(loan);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("Database query failed for Loan ID: " + loanId, e);
