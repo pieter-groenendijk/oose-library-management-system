@@ -129,16 +129,10 @@ public class LoanService implements ILoanService {
 
     @Override
     public List<Loan> retrieveActiveLoansByMembershipId(long membershipId) {
-        try {
-            List<Loan> loans = loanRepository.retrieveActiveLoansByMembershipId(membershipId);
-            return loans.stream()
-                    .filter(loan -> loan.getLoanStatus() == LoanStatus.ACTIVE)
-                    .collect(Collectors.toList());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Collections.emptyList();
-        }
+        List<Loan> loans = loanRepository.retrieveActiveLoansByMembershipId(membershipId);
+        if (loans.isEmpty()) {
+            throw new EntityNotFoundException("Membership with ID" + membershipId + " not found.");
     }
-
-
+        return loans;
+    }
 }
