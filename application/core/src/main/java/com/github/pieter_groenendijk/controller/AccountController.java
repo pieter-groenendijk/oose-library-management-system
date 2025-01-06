@@ -48,22 +48,22 @@ public class AccountController {
     @Operation(summary = "Create an account", description = "Add a new account to the database")
     @PostMapping
     public ResponseEntity<?> createAccount(@RequestBody AccountRequestDTO account) {
-
         accountService.store(account);
         return ResponseEntity.status(HttpStatus.CREATED).body("Succes!");
-
     }
 
     @Operation(summary = "Update an account", description = "Update an account in the database")
     @PutMapping("/{id}")
-    public Account updateAccount(@PathVariable("id") long id, @RequestBody AccountRequestDTO account){
-        return accountService.update(id, account);
+    public ResponseEntity<?> updateAccount(@PathVariable("id") long id, @RequestBody AccountRequestDTO account){
+        accountService.update(id, account);
+        return ResponseEntity.status(HttpStatus.OK).body("Succes!");
     }
 
     @Operation(summary = "Delete an account", description = "Delete an account from the database")
     @DeleteMapping("/{id}")
-    public Account deleteAccount(@PathVariable("id") long id){
-        return accountService.deleteAccount(id);
+    public ResponseEntity<?> deleteAccount(@PathVariable("id") long id){
+        accountService.deleteAccount(id);
+        return ResponseEntity.status(HttpStatus.OK).body("Succes!");
     }
 
     @Operation(summary = "Toggle account active", description = "Toggle an account from active to inactive and back")

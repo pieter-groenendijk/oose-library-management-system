@@ -17,6 +17,9 @@ import org.hibernate.SessionFactory;
 import com.github.pieter_groenendijk.model.Membership;
 import com.github.pieter_groenendijk.repository.IMembershipRepository;
 import com.github.pieter_groenendijk.repository.MembershipRepository;
+import com.github.pieter_groenendijk.model.DTO.MembershipTypeRequestDTO;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 @RestController
 @RequestMapping("/membershipType") 
@@ -46,7 +49,12 @@ public class MembershipTypeController {
 
     @Operation(summary = "Create a membershipType", description = "Add a new membershipType to the database")
     @PostMapping
-    public MembershipType createMembershipType(@RequestBody MembershipType membershipType) {
-        return accountService.store(membershipType);
+    public ResponseEntity<?> createMembershipType(@RequestBody MembershipTypeRequestDTO membershipType) {
+        accountService.store(membershipType);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Succes!");
     }
+
+//    @Operation(summary = "Update a membershipType", description = "Change a membershipType ")
+//    @PutMapping("/{id}")
+//    public ResponseEntity<?> updateAccount(@PathVariable("id") long id, @RequestBody)
 }

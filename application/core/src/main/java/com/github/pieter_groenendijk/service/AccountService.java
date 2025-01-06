@@ -11,6 +11,7 @@ import com.github.pieter_groenendijk.exception.InputValidationException;
 import com.github.pieter_groenendijk.service.validator.EmailValidator;
 import com.github.pieter_groenendijk.service.validator.GenderCheck;
 import com.github.pieter_groenendijk.model.DTO.MembershipRequestDTO;
+import com.github.pieter_groenendijk.model.DTO.MembershipTypeRequestDTO;
 import com.github.pieter_groenendijk.model.DTO.AccountRequestDTO;
 import java.util.Date;
 import java.time.LocalDate;
@@ -94,7 +95,18 @@ public class AccountService implements IAccountService {
         .orElseThrow(() -> new EntityNotFoundException("Account with ID " + id + " not found."));
     }
 
-    public MembershipType store(MembershipType membershipType){
+    public MembershipType store(MembershipTypeRequestDTO request){
+        boolean descriptionAlreadyExists = membershipTypeRepository.doesMembershipTypeExistByDescription(request.getDescription());
+        if (descriptionAlreadyExists) {
+            throw new InputValidationException("MembershipType with this description already exists!");
+        }
+
+        MembershipType membershipType = new MembershipType();
+        membershipType.setDescription(request.getDescription());
+        membershipType.setDigitalProducts(request.isDigitalProducts());
+        membershipType.setPhysicalProducts(request.isPhysicalProducts());
+        membershipType.setMaxLendings(request.getMaxLendings());
+
         return membershipTypeRepository.store(membershipType);
     }
 
