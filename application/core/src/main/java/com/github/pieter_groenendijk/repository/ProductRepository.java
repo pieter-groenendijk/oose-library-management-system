@@ -107,7 +107,7 @@ public class ProductRepository implements IProductRepository {
         return Optional.ofNullable(productCopy);
     }
 
-    public void updateProductCopy(ProductCopy productCopy) {
+    public ProductCopy updateProductCopy(ProductCopy productCopy) {
         Session session = sessionFactory.openSession();
 
         try {
@@ -122,6 +122,7 @@ public class ProductRepository implements IProductRepository {
         } finally {
             session.close();
         }
+        return productCopy;
     }
 
     @Override

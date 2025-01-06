@@ -1,5 +1,7 @@
 package com.github.pieter_groenendijk.service;
 
+import com.github.pieter_groenendijk.model.product.ProductCopy;
+import com.github.pieter_groenendijk.model.product.ProductCopyStatus;
 import com.github.pieter_groenendijk.model.product.ProductTemplate;
 import com.github.pieter_groenendijk.repository.IProductRepository;
 
@@ -39,5 +41,14 @@ public class ProductService implements IProductService {
         }
 
         return productRepository.updateProduct(product);
+    }
+
+    @Override
+    public ProductCopy updateProductCopy(ProductCopy productCopy) {
+        if (productCopy == null || productCopy.getProductCopyId() == 0) {
+            throw new IllegalArgumentException("ProductCopy and productCopy ID must be provided for update");
+        }
+
+        return productRepository.updateProductCopy(productCopy);
     }
 }

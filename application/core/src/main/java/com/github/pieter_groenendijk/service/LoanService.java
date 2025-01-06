@@ -5,6 +5,7 @@ import com.github.pieter_groenendijk.exception.InputValidationException;
 import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.model.LoanStatus;
 import com.github.pieter_groenendijk.model.product.ProductCopy;
+import com.github.pieter_groenendijk.model.product.ProductCopyStatus;
 import com.github.pieter_groenendijk.repository.ILoanRepository;
 import com.github.pieter_groenendijk.repository.IProductRepository;
 
@@ -30,30 +31,28 @@ public class LoanService implements ILoanService {
 
     @Override
     public Loan store(Loan loan) {
-            if (loan == null) {
-                throw new InputValidationException("Loan cannot be null");
-            }
-
-            if (loan.getLoanStatus() == null) {
-                loan.setLoanStatus(LoanStatus.ACTIVE);
-            }
-
-            Long productCopyId = loan.getProductCopy();
-            if (productCopyId == null) {
-                throw new EntityNotFoundException("ProductCopy ID not found in the loan");
-            }
-
-            ProductCopy productCopy = productRepository.retrieveProductCopyById(productCopyId)
-                    .orElseThrow(() -> new EntityNotFoundException("ProductCopy not found with ID: " + productCopyId));
-
-
-            productCopy.setAvailabilityStatus(LOANED);
-
-            productRepository.updateProductCopy(productCopy);
-
-            return loanRepository.store(loan);
+        if (loan == null) {
+            throw new InputValidationException("Loan cannot be null");
         }
 
+        if (loan.getLoanStatus() == null) {
+            loan.setLoanStatus(LoanStatus.ACTIVE);
+        }
+
+        Long productCopyId = loan.getProductCopy();
+        if (productCopyId == null) {
+            throw new EntityNotFoundException("ProductCopy ID not found in the loan");
+        }
+
+        ProductCopy productCopy = productRepository.retrieveProductCopyById(productCopyId)
+                .orElseThrow(() -> new EntityNotFoundException("ProductCopy not found with ID: " + productCopyId));
+
+        productCopy.setAvailabilityStatus(ProductCopyStatus.LOANED);
+
+        productRepository.updateProductCopy(productCopy);
+
+        return loanRepository.store(loan);
+    }
 
         @Override
     public Loan extendLoan(long loanId, Date returnBy) {
@@ -100,7 +99,7 @@ public class LoanService implements ILoanService {
         ProductCopy productCopy = productRepository.retrieveProductCopyById(productCopyId)
                 .orElseThrow(() -> new EntityNotFoundException("ProductCopy not found with ID: " + productCopyId));
 
-        productCopy.setAvailabilityStatus(AVAILABLE);
+        productCopy.setAvailabilityStatus(ProductCopyStatus.AVAILABLE);
         productRepository.updateProductCopy(productCopy);
     }
 
