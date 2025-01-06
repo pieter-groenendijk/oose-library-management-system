@@ -72,6 +72,6 @@ INSERT INTO "PhysicalReadProduct" ("productId", "ISBN", "author")
 VALUES
     (2, 1234567890, 'F. Scott Fitzgerald');
 
-INSERT INTO "ProductCopy" ("productId", "availabilityStatus", "isDamaged")
+INSERT INTO "ProductCopy" ("productCopyId", "availabilityStatus", "productId")
 VALUES
-    (2, 'Available', false);
+    (2, 'AVAILABLE', 2);

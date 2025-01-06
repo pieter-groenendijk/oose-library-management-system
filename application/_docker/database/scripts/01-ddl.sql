@@ -124,8 +124,7 @@ CREATE TABLE "PhysicalReadProduct" (
 CREATE TABLE "ProductCopy"
 (
     "productCopyId"      BIGSERIAL PRIMARY KEY,
-    "availabilityStatus" VARCHAR(100) NOT NULL,
-    "isDamaged"          BOOLEAN      NOT NULL,
+    "availabilityStatus" VARCHAR(50) NOT NULL,
     "productId"          BIGSERIAL      NOT NULL,
     CONSTRAINT fk_physical_product_template FOREIGN KEY ("productId") REFERENCES "PhysicalProductTemplate" ("productId")
 );
