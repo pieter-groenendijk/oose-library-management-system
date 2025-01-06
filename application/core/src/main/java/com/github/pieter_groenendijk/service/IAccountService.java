@@ -8,6 +8,7 @@ import com.github.pieter_groenendijk.model.Membership;
 import com.github.pieter_groenendijk.model.DTO.MembershipRequestDTO;
 import com.github.pieter_groenendijk.repository.IMembershipRepository;
 import java.util.List;
+import com.github.pieter_groenendijk.model.DTO.AccountRequestDTO;
 
 public interface IAccountService {
 
@@ -15,9 +16,9 @@ public interface IAccountService {
     
     MembershipType retrieveMembershipTypeById(long id);
     
-    Account store(Account account);
+    Account store(AccountRequestDTO account);
 
-    Account update(Account account);
+    Account update(long id, AccountRequestDTO account);
 
     Account deleteAccount(long id);
     
@@ -28,5 +29,7 @@ public interface IAccountService {
     Membership store(MembershipRequestDTO request);
 
     List<Membership> retrieveMembershipsByAccountId (long id);
+
+    void toggleIsActive(long id, boolean newValue);
 
 }
