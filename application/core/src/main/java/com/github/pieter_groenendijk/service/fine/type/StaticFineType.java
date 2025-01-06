@@ -1,4 +1,4 @@
-package com.github.pieter_groenendijk.service.fine;
+package com.github.pieter_groenendijk.service.fine.type;
 
 public enum StaticFineType {
     DAY_OVERDUE_LENDING,
