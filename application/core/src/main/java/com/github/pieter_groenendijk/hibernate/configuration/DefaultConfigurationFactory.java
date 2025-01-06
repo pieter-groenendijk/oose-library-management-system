@@ -3,6 +3,7 @@ package com.github.pieter_groenendijk.hibernate.configuration;
 import com.github.pieter_groenendijk.model.*;
 import com.github.pieter_groenendijk.model.event.Event;
 import com.github.pieter_groenendijk.model.event.LoanEvent;
+import com.github.pieter_groenendijk.model.event.ReservationEvent;
 import com.github.pieter_groenendijk.model.notification.LendingAssociatedNotificationTask;
 import com.github.pieter_groenendijk.model.notification.NotificationTask;
 import org.hibernate.cfg.Configuration;
@@ -29,7 +30,8 @@ public class DefaultConfigurationFactory {
             .addAnnotatedClass(LendingAssociatedNotificationTask.class)
 // TODO: Add below annotated classes, currently not possible since Loan and all those other classes are not placed here yet.
 //            .addAnnotatedClass(Event.class)
-//            .addAnnotatedClass(LoanEvent.class)
+//            .addAnnotatedClass(LoanEvent.class
+//            .addAnnotatedClass(ReservationEvent.class)
             ;
     }
 

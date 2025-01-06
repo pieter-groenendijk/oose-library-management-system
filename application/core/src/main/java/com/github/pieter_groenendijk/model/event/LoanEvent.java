@@ -16,6 +16,8 @@ public class LoanEvent extends Event<Loan> {
     )
     private Loan loan;
 
+    public LoanEvent() {}
+
     @Override
     public Loan getAssociation() {
         return this.loan;

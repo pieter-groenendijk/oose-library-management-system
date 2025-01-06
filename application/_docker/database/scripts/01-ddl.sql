@@ -161,7 +161,9 @@ CREATE TABLE "Event" (
     "scheduledAt" TIMESTAMP NOT NULL,
     "associationType" VARCHAR(50) NOT NULL,
     "loan" BIGINT,
+    "reservation" BIGINT,
     PRIMARY KEY ("eventId"),
-    FOREIGN KEY ("loan") REFERENCES "Loan"("loanId")
+    FOREIGN KEY ("loan") REFERENCES "Loan"("loanId"),
+    FOREIGN KEY ("reservation") REFERENCES "Reservation"("reservationId")
 );
 -- endregion
