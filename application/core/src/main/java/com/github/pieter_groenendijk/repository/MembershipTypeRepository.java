@@ -28,7 +28,6 @@ public class MembershipTypeRepository implements IMembershipTypeRepository {
 
     public MembershipType store(MembershipType membershipType) {
         Session session = sessionFactory.openSession();
-
         try {
             session.beginTransaction();
             session.persist(membershipType);
