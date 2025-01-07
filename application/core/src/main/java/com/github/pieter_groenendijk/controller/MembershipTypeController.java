@@ -54,7 +54,10 @@ public class MembershipTypeController {
         return ResponseEntity.status(HttpStatus.CREATED).body("Succes!");
     }
 
-//    @Operation(summary = "Update a membershipType", description = "Change a membershipType ")
-//    @PutMapping("/{id}")
-//    public ResponseEntity<?> updateAccount(@PathVariable("id") long id, @RequestBody)
+    @Operation(summary = "Update a membershipType", description = "Change a membershipType ")
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateAccount(@PathVariable("id") long id, @RequestBody MembershipTypeRequestDTO membershipType) {
+        accountService.update(id, membershipType);
+        return ResponseEntity.status(HttpStatus.OK).body("Succes!");
+    }
 }

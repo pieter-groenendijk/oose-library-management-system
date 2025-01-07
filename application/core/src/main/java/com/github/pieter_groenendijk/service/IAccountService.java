@@ -33,4 +33,6 @@ public interface IAccountService {
 
     void toggleIsActive(long id, boolean newValue);
 
+    void update(long id, MembershipTypeRequestDTO request);
+
 }

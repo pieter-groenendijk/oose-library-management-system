@@ -144,6 +144,30 @@ public class AccountService implements IAccountService {
         return membershipTypeRepository.store(membershipType);
     }
 
+    public void update(long id, MembershipTypeRequestDTO request) {
+        if (request.getMaxLendings() <= 0) {
+            throw new InputValidationException("MaxLendings should be at least 1!");
+        }
+        MembershipType retrievedMembershipType =  retrieveMembershipTypeById(id);
+        if (retrievedMembershipType == null) {
+            throw new EntityNotFoundException("MembershipType with ID " + id + " not found.");
+        }
+
+        //if (retrievedMembershipType.getDescription() != request.getDescription()) {
+          if (!retrievedMembershipType.getDescription().equals(request.getDescription())){
+            boolean descriptionAlreadyExists = membershipTypeRepository.doesMembershipTypeExistByDescription(request.getDescription());
+            if (descriptionAlreadyExists) {
+                throw new InputValidationException("Description already exists!");
+            }
+        }
+
+        retrievedMembershipType.setDescription(request.getDescription());
+        retrievedMembershipType.setDigitalProducts(request.isDigitalProducts());
+        retrievedMembershipType.setPhysicalProducts(request.isPhysicalProducts());
+        retrievedMembershipType.setMaxLendings(request.getMaxLendings());
+        membershipTypeRepository.update(retrievedMembershipType);
+    }
+
     //MembershipFunctionality
 
     public Membership retrieveMembershipById(long id){
@@ -174,18 +198,5 @@ public class AccountService implements IAccountService {
         membership.setBlocked(false);
 
         return membershipRepository.store(membership);
-    }
-
-    public void toggleIsActive(long id, boolean newValue) {
-        Account retrievedAccount =  retrieveAccountById(id);
-        if (retrievedAccount == null) {
-            throw new EntityNotFoundException("Account with ID " + id + " not found.");
-        }
-        if (newValue == retrievedAccount.isActive()){
-            throw new InputValidationException("This account is already (in)active");
-        } else {
-            retrievedAccount.setActive(newValue);
-            accountRepository.update(retrievedAccount);
-        }
     }
 }
