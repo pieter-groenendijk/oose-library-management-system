@@ -87,11 +87,6 @@ public class AccountService implements IAccountService {
         }
     }
 
-    public Account deleteAccount(long id) {
-        return accountRepository.deleteAccountById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Account with ID " + id + " not found."));
-    }
-
     private boolean isAccountInputValid(Account account) {
         if (!EmailValidator.isValidEmail(account.getEmail())) {
             throw new InputValidationException("Email " + account.getEmail() + " is not valid");

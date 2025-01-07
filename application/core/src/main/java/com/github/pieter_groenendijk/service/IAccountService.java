@@ -20,8 +20,6 @@ public interface IAccountService {
     Account store(AccountRequestDTO account);
 
     Account update(long id, AccountRequestDTO account);
-
-    Account deleteAccount(long id);
     
     MembershipType store(MembershipTypeRequestDTO membershipType);
     

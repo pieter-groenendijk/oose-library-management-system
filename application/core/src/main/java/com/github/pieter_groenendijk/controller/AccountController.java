@@ -59,13 +59,6 @@ public class AccountController {
         return ResponseEntity.status(HttpStatus.OK).body("Succes!");
     }
 
-    @Operation(summary = "Delete an account", description = "Delete an account from the database")
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteAccount(@PathVariable("id") long id){
-        accountService.deleteAccount(id);
-        return ResponseEntity.status(HttpStatus.OK).body("Succes!");
-    }
-
     @Operation(summary = "Toggle account active", description = "Toggle an account from active to inactive and back")
     @PostMapping("/toggleActive/{id}")
     public ResponseEntity<?> toggleAccountActive(@PathVariable("id") long id, @RequestBody boolean newValue) {
