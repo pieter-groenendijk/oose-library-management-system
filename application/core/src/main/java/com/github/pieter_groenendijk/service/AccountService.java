@@ -163,6 +163,11 @@ public class AccountService implements IAccountService {
         membershipTypeRepository.update(retrievedMembershipType);
     }
 
+    public List<MembershipType> retrieveMembershipTypeList() {
+        List<MembershipType> membershipTypes = membershipTypeRepository.retrieveMembershipTypeList();
+        return membershipTypes;
+    }
+
     //MembershipFunctionality
 
     public Membership retrieveMembershipById(long id){

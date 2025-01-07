@@ -20,6 +20,7 @@ import com.github.pieter_groenendijk.repository.MembershipRepository;
 import com.github.pieter_groenendijk.model.DTO.MembershipTypeRequestDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import java.util.*;
 
 @RestController
 @RequestMapping("/membershipType") 
@@ -59,5 +60,16 @@ public class MembershipTypeController {
     public ResponseEntity<?> updateMembershipType(@PathVariable("id") long id, @RequestBody MembershipTypeRequestDTO membershipType) {
         accountService.update(id, membershipType);
         return ResponseEntity.status(HttpStatus.OK).body("Succes!");
+    }
+
+    @Operation(summary = "Retrieve a list of memberships", description = "Retrieve a list of memberships")
+    @GetMapping("/getAll")
+    public ResponseEntity<List<MembershipType>> retrieveMembershipTypeList() {
+        List<MembershipType> membershipTypes = accountService.retrieveMembershipTypeList();
+        if (membershipTypes.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } else {
+            return ResponseEntity.ok(membershipTypes);
+        }
     }
 }

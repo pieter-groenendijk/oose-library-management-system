@@ -5,6 +5,10 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import java.util.Optional;
 import com.github.pieter_groenendijk.model.DTO.MembershipRequestDTO;
+import java.util.List;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 
 public class MembershipTypeRepository implements IMembershipTypeRepository {
 
@@ -83,26 +87,20 @@ public class MembershipTypeRepository implements IMembershipTypeRepository {
         return membershipType;
     }
 
-    public Optional<MembershipType> deleteMembershipTypeById(long id) {
-        Session session = null;
-        MembershipType membershipType = null;
-
-        try {
-            session = sessionFactory.openSession();
-            session.beginTransaction();
-
-            membershipType = session.get(MembershipType.class, id);
-            if (membershipType != null) {
-                session.delete(membershipType);
-                session.getTransaction().commit();
-            } else {
-                session.getTransaction().rollback();
-            }
-        } finally {
-            if (session != null) {
+    public List<MembershipType> retrieveMembershipTypeList() {
+            Session session = sessionFactory.openSession();
+            try {
+                CriteriaBuilder cb = session.getCriteriaBuilder();
+                CriteriaQuery<MembershipType> cr = cb.createQuery(MembershipType.class);
+                Root<MembershipType> root = cr.from(MembershipType.class);
+                cr.select(root);
+                return session.createQuery(cr).getResultList();
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new RuntimeException("Database query failed", e);
+            } finally {
                 session.close();
             }
-        }
-        return Optional.ofNullable(membershipType);
+
     }
 }

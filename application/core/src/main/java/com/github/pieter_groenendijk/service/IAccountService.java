@@ -33,4 +33,6 @@ public interface IAccountService {
 
     void update(long id, MembershipTypeRequestDTO request);
 
+    List<MembershipType> retrieveMembershipTypeList();
+
 }
