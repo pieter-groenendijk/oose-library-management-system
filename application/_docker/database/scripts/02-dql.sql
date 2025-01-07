@@ -38,3 +38,18 @@ SELECT
     "endDate",
     "isBlocked"
 FROM "Membership";
+
+CREATE VIEW
+    "vw_FineBalance"
+AS
+(
+    SELECT
+        "account",
+        SUM("amountInCents") as "balanceInCents"
+    FROM
+        "Fine"
+    WHERE
+        "paidBy" is null
+    GROUP BY
+        "account"
+);
