@@ -67,7 +67,7 @@ public class AccountService implements IAccountService {
             throw new EntityNotFoundException("Account with ID " + id + " not found.");
         }
 
-        if (retrievedAccount.getEmail() != account.getEmail()) {
+        if (!retrievedAccount.getEmail().equals(account.getEmail())) {
             boolean emailAlreadyExists = accountRepository.doesAccountExistByEmail(account.getEmail());
             if (emailAlreadyExists) {
                 throw new InputValidationException("E-mail already exists!");
