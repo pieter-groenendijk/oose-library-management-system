@@ -12,7 +12,8 @@ SELECT
     "lastName",
     "dateOfBirth",
     "gender",
-    "isActive"
+    "isActive",
+    "isBlocked"
 FROM "Account";
 
 
@@ -35,8 +36,7 @@ SELECT
     "membershipTypeId",
     "isActive",
     "startDate",
-    "endDate",
-    "isBlocked"
+    "endDate"
 FROM "Membership";
 
 CREATE VIEW

@@ -33,6 +33,9 @@ public class Account {
     @Column(name = "uncollectedReservations", nullable = false)
     private int uncollectedReservations;
 
+    @Column(name = "isBlocked", nullable = false)
+    private boolean isBlocked;
+
     // Getters and Setters
     public Long getAccountId() {
         return accountId;
@@ -90,8 +93,15 @@ public class Account {
         isActive = active;
     }
 
-
     public void incrementUncollectedReservationCount() {
         this.uncollectedReservations++;
+    }
+
+    public boolean isBlocked() {
+        return isBlocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        isBlocked = blocked;
     }
 }

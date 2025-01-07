@@ -30,8 +30,7 @@ public class Membership {
     @Temporal(TemporalType.DATE)
     private Date endDate;
 
-    @Column(name = "isBlocked", nullable = false)
-    private boolean isBlocked;
+
 
     // Getters and Setters
     public Long getMembershipId() {
@@ -80,13 +79,5 @@ public class Membership {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
-    }
-
-    public boolean isBlocked() {
-        return isBlocked;
-    }
-
-    public void setBlocked(boolean blocked) {
-        isBlocked = blocked;
     }
 }

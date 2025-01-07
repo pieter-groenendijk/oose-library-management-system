@@ -106,7 +106,6 @@ public class AccountService implements IAccountService {
         membership.setMembershipType(membershipType);
         membership.setStartDate(new Date());
         membership.setActive(true);
-        membership.setBlocked(false);
 
         //Persist
         return membershipRepository.store(membership);
