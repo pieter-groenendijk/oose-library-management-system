@@ -4,8 +4,12 @@ import com.github.pieter_groenendijk.model.*;
 import com.github.pieter_groenendijk.model.event.Event;
 import com.github.pieter_groenendijk.model.event.LoanEvent;
 import com.github.pieter_groenendijk.model.event.ReservationEvent;
+import com.github.pieter_groenendijk.model.fine.Fine;
+import com.github.pieter_groenendijk.model.fine.FineType;
 import com.github.pieter_groenendijk.model.notification.LendingAssociatedNotificationTask;
 import com.github.pieter_groenendijk.model.notification.NotificationTask;
+import com.github.pieter_groenendijk.model.payment.Payment;
+import com.github.pieter_groenendijk.model.payment.PaymentStatus;
 import org.hibernate.cfg.Configuration;
 
 public class DefaultConfigurationFactory {
@@ -32,7 +36,10 @@ public class DefaultConfigurationFactory {
 //            .addAnnotatedClass(Event.class)
 //            .addAnnotatedClass(LoanEvent.class
 //            .addAnnotatedClass(ReservationEvent.class)
-            ;
+            .addAnnotatedClass(FineType.class)
+            .addAnnotatedClass(PaymentStatus.class)
+            .addAnnotatedClass(Payment.class)
+            .addAnnotatedClass(Fine.class);
     }
 
     private void setMisc(ConfigurationBuilder builder) {

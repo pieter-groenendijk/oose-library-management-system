@@ -83,7 +83,7 @@ CREATE TABLE "FineType" (
 
 CREATE TABLE "Fine" (
     "fineId" BIGSERIAL NOT NULL,
-    "fineType" SMALLINT NOT NULL,
+    "fineType" BIGINT NOT NULL,
     "account" BIGINT NOT NULL,
     "amountInCents" BIGINT NOT NULL,
     "declaredOn" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
