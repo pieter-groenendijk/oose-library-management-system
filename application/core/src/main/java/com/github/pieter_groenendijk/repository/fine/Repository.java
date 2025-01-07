@@ -4,6 +4,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
+import java.util.Optional;
+
 public abstract class Repository {
     protected final SessionFactory SESSION_FACTORY;
 
@@ -11,8 +13,12 @@ public abstract class Repository {
         this.SESSION_FACTORY = sessionFactory;
     }
 
-    protected <T> void get(Class<T> entityType, Object id) throws Exception {
-        this.performAtomicOperation(session -> session.get(entityType, id)); // TODO: A get should not have to use transaction like this...
+    protected <T> Optional<T> get(Class<T> entityType, Object id) throws Exception {
+        return this.performAtomicOperationReturning(session -> {
+            return Optional.ofNullable(
+                session.get(entityType, id)
+            );
+        });
     }
 
     protected void remove(Object object) throws Exception {
@@ -25,6 +31,33 @@ public abstract class Repository {
 
     protected void persist(Object object) throws Exception {
         this.performAtomicOperation(session -> session.persist(object));
+    }
+
+    protected <Result> Result performAtomicOperationReturning(ReturningAtomicOperation<Result> operation) throws Exception {
+        try (Session session = SESSION_FACTORY.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            try {
+                return this.tryReturningAtomicOperation(
+                    session,
+                    transaction,
+                    operation
+                );
+            } catch (Exception exception) {
+                this.catchAtomicOperationException(transaction, exception);
+                throw exception;
+            }
+        }
+    }
+
+    private <Result> Result tryReturningAtomicOperation(
+        Session session,
+        Transaction transaction,
+        ReturningAtomicOperation<Result> operation
+    ) {
+        Result result = operation.run(session);
+        commitAtomicOperation(session, transaction);
+
+        return result;
     }
 
     protected void performAtomicOperation(AtomicOperation operation) throws Exception {
@@ -51,7 +84,13 @@ public abstract class Repository {
         AtomicOperation operation
     ) {
         operation.run(session);
+        commitAtomicOperation(session, transaction);
+    }
 
+    private void commitAtomicOperation(
+        Session session,
+        Transaction transaction
+    ) {
         session.flush();
         transaction.commit();
     }
