@@ -8,20 +8,13 @@ import com.github.pieter_groenendijk.model.product.ProductCopy;
 import com.github.pieter_groenendijk.model.product.ProductCopyStatus;
 import com.github.pieter_groenendijk.repository.ILoanRepository;
 import com.github.pieter_groenendijk.service.loan.event.ILoanEventService;
-import com.github.pieter_groenendijk.service.loan.event.LoanEventService;
 
 import static com.github.pieter_groenendijk.service.ServiceUtils.LOAN_LENGTH;
 import com.github.pieter_groenendijk.repository.IProductRepository;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
-
-
-import static com.github.pieter_groenendijk.service.ServiceUtils.*;
 
 
 public class LoanService implements ILoanService {
@@ -65,7 +58,7 @@ public class LoanService implements ILoanService {
     }
 
     @Override
-    public Loan extendLoan(long loanId, Date returnBy) {
+    public Loan extendLoan(long loanId, LocalDate returnBy) {
             Loan loan = loanRepository.retrieveLoanByLoanId(loanId)
                     .orElseThrow(() -> new IllegalArgumentException("Loan not found with id: " + loanId));
 
@@ -73,7 +66,7 @@ public class LoanService implements ILoanService {
                 throw new IllegalStateException("Loan can only be extended once.");
             }
 
-            Date extendedReturnBy = generateReturnByDate(loan.getReturnBy());
+            LocalDate extendedReturnBy = generateReturnByDate(loan.getReturnBy());
 
             loan.setReturnBy(extendedReturnBy);
             loan.setLoanStatus(LoanStatus.EXTENDED);
@@ -81,12 +74,11 @@ public class LoanService implements ILoanService {
             return loanRepository.updateLoan(loan);
         }
 
-
     @Override
-    public Date generateReturnByDate(Date returnBy) {
+    public LocalDate generateReturnByDate(LocalDate returnBy) {
         LocalDate loanDate = LocalDate.now();
         LocalDate returnByDate = loanDate.plusDays(LOAN_LENGTH);
-        return Date.from(returnByDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        return LocalDate.from(returnByDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 
     @Override
@@ -120,7 +112,7 @@ public class LoanService implements ILoanService {
 
     @Override
     public boolean checkIsLate(Loan loan) {
-        Date currentDate = new Date();
+        LocalDate currentDate = LocalDate.now();
 
         boolean isLate = loan.getLoanStatus().isOverdue(currentDate, loan);
 

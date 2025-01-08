@@ -3,6 +3,7 @@ package com.github.pieter_groenendijk.model;
 import com.github.pieter_groenendijk.model.product.ProductCopy;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -13,17 +14,17 @@ public class Loan {
     private long loanId;
     @Column(name = "startDate", nullable = false)
     @Temporal(TemporalType.DATE)
-    private Date startDate;
+    private LocalDate startDate;
     @Column(name = "returnBy")
     @Temporal(TemporalType.DATE)
-    private Date returnBy;
+    private LocalDate returnBy;
 
     @Column(name = "extendedReturnBy")
     @Temporal(TemporalType.DATE)
-    private Date extendedReturnBy;
+    private LocalDate extendedReturnBy;
     @Column(name = "returnedOn")
     @Temporal(TemporalType.DATE)
-    private Date returnedOn;
+    private LocalDate returnedOn;
 
     @Enumerated(EnumType.STRING)
     @Column(name= "loanStatus")
@@ -46,22 +47,7 @@ public class Loan {
         return loanId;
     }
 
-    public Date getStartDate() {
-        return startDate;
-    }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-
-    public Date getReturnedOn() {
-        return returnedOn;
-    }
-
-    public void setReturnedOn(Date returnedOn) {
-        this.returnedOn = returnedOn;
-    }
 
     public LoanStatus getLoanStatus() {
         return loanStatus;
@@ -79,24 +65,33 @@ public class Loan {
         this.membership = membership;
     }
 
-    public Date getReturnBy() {
-        return returnBy;
-    }
 
-    public void setReturnBy(Date returnBy) {
-        this.returnBy = returnBy;
-    }
-
-    public Date getExtendedReturnBy() {
-        return extendedReturnBy;
-    }
-
-    public void setExtendedReturnBy(Date extendedReturnBy) {
-        this.extendedReturnBy = extendedReturnBy;
-    }
 
     public Long getProductCopy() {
         return productCopy.getProductCopyId();
     }
 
+    public LocalDate getReturnBy() {
+        return returnBy;
+    }
+
+    public void setReturnBy(LocalDate returnBy) {
+        this.returnBy = returnBy;
+    }
+
+    public LocalDate getExtendedReturnBy() {
+        return extendedReturnBy;
+    }
+
+    public void setExtendedReturnBy(LocalDate extendedReturnBy) {
+        this.extendedReturnBy = extendedReturnBy;
+    }
+
+    public LocalDate getReturnedOn() {
+        return returnedOn;
+    }
+
+    public void setReturnedOn(LocalDate returnedOn) {
+        this.returnedOn = returnedOn;
+    }
 }
