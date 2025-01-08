@@ -32,7 +32,11 @@ public class LoanController {
         IProductRepository productRepository = new ProductRepository(sessionFactory);
         this.loanService = new LoanService(loanRepository);
     }
-
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Loan created"),
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "404", description = "Membership or Product not found")
+    })
     @Operation(summary = "Create a Loan", description = "Create a new Loan")
     @PostMapping
     public Loan store(@RequestBody Loan loan) {
@@ -67,9 +71,9 @@ public class LoanController {
 
     @Operation(summary = "Extend a loan", description = "Extend a loan by loanId")
     @PutMapping("/{loanId}")
-    public Loan extendLoan(@PathVariable("loanId") long loanId, @RequestBody ExtendLoanDTO extendLoanDTO) {
+    public Loan extendLoan(@PathVariable ("loanId") long loanId, @RequestBody ExtendLoanDTO extendLoanDTO) {
         return loanService.extendLoan(loanId, extendLoanDTO.getReturnBy());
-    }
+    } //TODO loanId meegeven is dubbelop
 }
 
 
