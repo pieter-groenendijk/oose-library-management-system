@@ -8,8 +8,6 @@ import com.github.pieter_groenendijk.repository.LoanRepository;
 import com.github.pieter_groenendijk.repository.ProductRepository;
 import com.github.pieter_groenendijk.repository.event.EventRepository;
 import com.github.pieter_groenendijk.repository.event.IEventRepository;
-import com.github.pieter_groenendijk.service.IProductService;
-import com.github.pieter_groenendijk.service.ProductService;
 import com.github.pieter_groenendijk.service.event.emitting.EventEmitterPool;
 import com.github.pieter_groenendijk.service.event.scheduling.EventScheduler;
 import com.github.pieter_groenendijk.service.loan.ILoanService;
@@ -40,7 +38,7 @@ public class LoanController {
 
     public LoanController() {
         ILoanRepository loanRepository = new LoanRepository(sessionFactory);
-        IProductRepository productRepository = new ProductRepository();
+        IProductRepository productRepository = new ProductRepository(sessionFactory);
         // TODO: Make this mess work with beans or dependency injection
         IEventRepository eventRepository = new EventRepository();
         ILoanEventService eventService = new LoanEventService(
