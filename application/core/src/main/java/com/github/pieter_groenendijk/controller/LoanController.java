@@ -1,11 +1,22 @@
 package com.github.pieter_groenendijk.controller;
 
 import com.github.pieter_groenendijk.hibernate.SessionFactoryFactory;
-import com.github.pieter_groenendijk.model.DTO.ExtendLoanDTO;
 import com.github.pieter_groenendijk.model.Loan;
-import com.github.pieter_groenendijk.repository.*;
-import com.github.pieter_groenendijk.service.ILoanService;
-import com.github.pieter_groenendijk.service.LoanService;
+import com.github.pieter_groenendijk.repository.ILoanRepository;
+import com.github.pieter_groenendijk.repository.IProductRepository;
+import com.github.pieter_groenendijk.repository.LoanRepository;
+import com.github.pieter_groenendijk.repository.ProductRepository;
+import com.github.pieter_groenendijk.repository.event.EventRepository;
+import com.github.pieter_groenendijk.repository.event.IEventRepository;
+import com.github.pieter_groenendijk.service.IProductService;
+import com.github.pieter_groenendijk.service.ProductService;
+import com.github.pieter_groenendijk.service.event.emitting.EventEmitterPool;
+import com.github.pieter_groenendijk.service.event.scheduling.EventScheduler;
+import com.github.pieter_groenendijk.service.loan.ILoanService;
+import com.github.pieter_groenendijk.service.loan.LoanService;
+import com.github.pieter_groenendijk.service.loan.event.ILoanEventService;
+import com.github.pieter_groenendijk.service.loan.event.LoanEventService;
+import com.github.pieter_groenendijk.utils.scheduling.TaskScheduler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -23,24 +34,37 @@ import java.util.List;
 @RequestMapping("/loan")
 public class LoanController {
 
-    private final ILoanService loanService;
     private final SessionFactory sessionFactory = new SessionFactoryFactory().create();
+    private final ILoanService loanService;
 
 
     public LoanController() {
         ILoanRepository loanRepository = new LoanRepository(sessionFactory);
-        IProductRepository productRepository = new ProductRepository(sessionFactory);
-        this.loanService = new LoanService(loanRepository);
+        IProductRepository productRepository = new ProductRepository();
+        // TODO: Make this mess work with beans or dependency injection
+        IEventRepository eventRepository = new EventRepository();
+        ILoanEventService eventService = new LoanEventService(
+            eventRepository,
+            new EventScheduler(
+                new TaskScheduler(1),
+                eventRepository,
+                new EventEmitterPool()
+            )
+        );
+        this.loanService = new LoanService(loanRepository, eventService);
     }
+
+    @Operation(summary = "Create a Loan", description = "Create a new Loan")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Loan created"),
             @ApiResponse(responseCode = "400", description = "Invalid input"),
             @ApiResponse(responseCode = "404", description = "Membership or Product not found")
     })
-    @Operation(summary = "Create a Loan", description = "Create a new Loan")
     @PostMapping
     public Loan store(@RequestBody Loan loan) {
-      return loanService.store(loan);
+        loanService.store(loan);
+
+        return loan;
     }
 
     @Operation(summary = "Retrieve a loan", description = "Retrieve a loan by Id")
@@ -50,7 +74,8 @@ public class LoanController {
     })
     @GetMapping("/{loanId}")
     public Loan retrieveLoanByLoanId(@PathVariable("loanId") long loanId) {
-        return loanService.retrieveLoanByLoanId(loanId);
+        Loan loan = loanService.retrieveLoanByLoanId(loanId);
+            return loan;
     }
 
     @Operation(summary = "Retrieve all loans for a membership", description = "Retrieve loans by membershipId")
@@ -68,12 +93,6 @@ public class LoanController {
             return new ResponseEntity<>(Collections.emptyList(), HttpStatus.NO_CONTENT);
         }
     }
-
-    @Operation(summary = "Extend a loan", description = "Extend a loan by loanId")
-    @PutMapping("/{loanId}")
-    public Loan extendLoan(@PathVariable ("loanId") long loanId, @RequestBody ExtendLoanDTO extendLoanDTO) {
-        return loanService.extendLoan(loanId, extendLoanDTO.getReturnBy());
-    } //TODO loanId meegeven is dubbelop
 }
 
 

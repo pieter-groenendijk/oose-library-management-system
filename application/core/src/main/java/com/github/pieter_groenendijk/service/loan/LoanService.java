@@ -1,4 +1,4 @@
-package com.github.pieter_groenendijk.service;
+package com.github.pieter_groenendijk.service.loan;
 
 import com.github.pieter_groenendijk.exception.EntityNotFoundException;
 import com.github.pieter_groenendijk.exception.InputValidationException;
@@ -7,6 +7,10 @@ import com.github.pieter_groenendijk.model.LoanStatus;
 import com.github.pieter_groenendijk.model.product.ProductCopy;
 import com.github.pieter_groenendijk.model.product.ProductCopyStatus;
 import com.github.pieter_groenendijk.repository.ILoanRepository;
+import com.github.pieter_groenendijk.service.loan.event.ILoanEventService;
+import com.github.pieter_groenendijk.service.loan.event.LoanEventService;
+
+import static com.github.pieter_groenendijk.service.ServiceUtils.LOAN_LENGTH;
 import com.github.pieter_groenendijk.repository.IProductRepository;
 
 import java.time.LocalDate;
@@ -21,20 +25,24 @@ import static com.github.pieter_groenendijk.service.ServiceUtils.*;
 
 
 public class LoanService implements ILoanService {
-
     private ILoanRepository loanRepository;
     private IProductRepository productRepository;
+    private final ILoanEventService EVENT_SERVICE;
 
-    public LoanService(ILoanRepository loanRepository) {
+    public LoanService(
+        ILoanRepository loanRepository,
+        ILoanEventService eventService
+    ) {
         this.loanRepository = loanRepository;
+        this.EVENT_SERVICE = eventService;
     }
 
+    // TODO: Implement correct error handling. Is a loan still successful if we failed to schedule events for it, or the other way around?
     @Override
     public Loan store(Loan loan) {
         if (loan == null) {
             throw new InputValidationException("Loan cannot be null");
         }
-
         if (loan.getLoanStatus() == null) {
             loan.setLoanStatus(LoanStatus.ACTIVE);
         }
@@ -50,11 +58,13 @@ public class LoanService implements ILoanService {
         productCopy.setAvailabilityStatus(ProductCopyStatus.LOANED);
 
         productRepository.updateProductCopy(productCopy);
+        loanRepository.store(loan);
+        EVENT_SERVICE.scheduleEventsForNewLoan(loan);
 
-        return loanRepository.store(loan);
+        return loan;
     }
 
-        @Override
+    @Override
     public Loan extendLoan(long loanId, Date returnBy) {
             Loan loan = loanRepository.retrieveLoanByLoanId(loanId)
                     .orElseThrow(() -> new IllegalArgumentException("Loan not found with id: " + loanId));
@@ -105,7 +115,9 @@ public class LoanService implements ILoanService {
 
     @Override
     public void handleOverdueLoans() {
+
     }
+
     @Override
     public boolean checkIsLate(Loan loan) {
         Date currentDate = new Date();
@@ -135,4 +147,6 @@ public class LoanService implements ILoanService {
     }
         return loans;
     }
+
+
 }
