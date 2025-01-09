@@ -1,71 +1,38 @@
 package com.github.pieter_groenendijk.repository;
 
 import com.github.pieter_groenendijk.model.Account;
-import org.hibernate.Session;
+import com.github.pieter_groenendijk.repository.fine.Repository;
 import org.hibernate.SessionFactory;
 import java.util.Optional;
 
-public class AccountRepository implements IAccountRepository {
-
-    private SessionFactory sessionFactory;
-
+public class AccountRepository extends Repository implements IAccountRepository {
     public AccountRepository (SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+        super(sessionFactory);
     }
 
-    public Optional<Account> retrieveAccountById(long id) {
-        Session session = sessionFactory.openSession();
-        Account account;
-
-        try {
-            account = session.get(Account.class, id);
-        } finally {
-            session.close();
-        }
-        return Optional.ofNullable(account);
+    public Optional<Account> retrieveAccountById(long id) throws Exception {
+        return super.get(Account.class, id);
     }
 
-    public Account store(Account account) {
-        Session session = sessionFactory.openSession();
+    public Account store(Account account) throws Exception {
+        super.persist(account);
 
-        try {
-            session.beginTransaction();
-            session.persist(account);
-            session.flush();
-
-            session.getTransaction().commit();
-
-        } catch (Exception e) {
-            if (session.getTransaction() != null) {
-                session.getTransaction().rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
         return account;
     }
 
-    public Optional<Account> deleteAccountById(long id) {
-        Session session = null;  // Initialize to null
-        Account account = null;  // Initialize to null
+    public Account deleteAccountById(long id) throws Exception {
+        Account account = super.get(Account.class, id).orElseThrow();
 
-        try {
-            session = sessionFactory.openSession();
-            session.beginTransaction();
+        super.remove(account);
 
-            account = session.get(Account.class, id);
-            if (account != null) {
-                session.delete(account);
-                session.getTransaction().commit();
-            } else {
-                session.getTransaction().rollback();
-            }
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
-        return Optional.ofNullable(account);  // Now account is definitely initialized
+        return account;
+    }
+
+    @Override
+    public Account blockAccount(Account account) throws Exception {
+        account.setBlocked(true);
+        super.merge(account);
+
+        return account;
     }
 }

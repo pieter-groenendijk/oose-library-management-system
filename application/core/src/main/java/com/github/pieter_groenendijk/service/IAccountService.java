@@ -11,21 +11,21 @@ import java.util.List;
 
 public interface IAccountService {
 
-    Account retrieveAccountById(long id);
+    Account retrieveAccountById(long id) throws Exception;
     
     MembershipType retrieveMembershipTypeById(long id);
     
-    Account store(Account account);
+    Account store(Account account) throws Exception;
 
-    Account update(Account account);
+    Account update(Account account) throws Exception;
 
-    Account deleteAccount(long id);
+    Account deleteAccount(long id) throws Exception;
     
     MembershipType store(MembershipType membershipType);
     
     Membership retrieveMembershipById(long id);
     
-    Membership store(MembershipRequestDTO request);
+    Membership store(MembershipRequestDTO request) throws Exception;
 
     List<Membership> retrieveMembershipsByAccountId (long id);
 

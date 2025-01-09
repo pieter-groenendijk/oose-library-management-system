@@ -1,5 +1,8 @@
 package com.github.pieter_groenendijk.repository.fine;
 
+import com.github.pieter_groenendijk.model.Account;
+import com.github.pieter_groenendijk.model.fine.Fine;
+import com.github.pieter_groenendijk.model.fine.FineBalance;
 import com.github.pieter_groenendijk.model.fine.FineType;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -22,5 +25,15 @@ public class FineRepository extends Repository implements IFineRepository {
             }
         }
         return Optional.ofNullable(fineType);
+    }
+
+    @Override
+    public void store(Fine fine) throws Exception {
+        super.persist(fine);
+    }
+
+    @Override
+    public Optional<FineBalance> retrieveFineBalance(Account account) throws Exception {
+        return super.get(FineBalance.class, account);
     }
 }

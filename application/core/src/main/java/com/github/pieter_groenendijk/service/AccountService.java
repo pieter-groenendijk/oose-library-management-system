@@ -28,24 +28,22 @@ public class AccountService implements IAccountService {
         this.membershipRepository = membershipRepository;
     }
 
-    public Account retrieveAccountById(long id) {
-        return accountRepository.retrieveAccountById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Account with ID " + id + " not found."));
+    public Account retrieveAccountById(long id) throws Exception {
+        return accountRepository.retrieveAccountById(id).orElseThrow();
     }
 
     public MembershipType retrieveMembershipTypeById(long id){
-        return membershipTypeRepository.retrieveMembershipTypeById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Membershiptype with ID " + id + " not found."));
+        return membershipTypeRepository.retrieveMembershipTypeById(id).orElseThrow();
     }
 
-    public Account store(Account account) {
+    public Account store(Account account) throws Exception {
         if ( isAccountInputValid(account)) {
             return accountRepository.store(account);
         }
         throw new InputValidationException("Account input is not valid");
     }
 
-    public Account update(Account account) {
+    public Account update(Account account) throws Exception {
         Account retrievedAccount =  retrieveAccountById(account.getAccountId());
         if (retrievedAccount == null) {
             throw new EntityNotFoundException("Account with ID " + account.getAccountId() + " not found.");
@@ -56,9 +54,8 @@ public class AccountService implements IAccountService {
         }
     }
 
-    public Account deleteAccount(long id) {
-        return accountRepository.deleteAccountById(id)
-        .orElseThrow(() -> new EntityNotFoundException("Account with ID " + id + " not found."));
+    public Account deleteAccount(long id) throws Exception {
+        return accountRepository.deleteAccountById(id);
     }
 
     public MembershipType store(MembershipType membershipType){
@@ -93,10 +90,11 @@ public class AccountService implements IAccountService {
 }
 
 
-    public Membership store(MembershipRequestDTO request){
+    public Membership store(MembershipRequestDTO request) throws Exception {
         //Validate input
         Account account = accountRepository.retrieveAccountById(request.getAccountId())
         .orElseThrow(() -> new EntityNotFoundException("Account with ID " + request.getAccountId() + "not found."));
+
         MembershipType membershipType = membershipTypeRepository.retrieveMembershipTypeById(request.getMembershipTypeId())
         .orElseThrow(() -> new EntityNotFoundException("MembershipType with ID" + request.getMembershipTypeId() + " not found."));
 

@@ -1,5 +1,6 @@
 package com.github.pieter_groenendijk.controller;
 
+import com.github.pieter_groenendijk.exception.EntityNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.Operation;
 import com.github.pieter_groenendijk.service.AccountService;
@@ -16,6 +17,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import com.github.pieter_groenendijk.hibernate.SessionFactoryFactory;
 import org.hibernate.SessionFactory;
+
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/account") 
@@ -38,25 +41,29 @@ public class AccountController {
         @ApiResponse(responseCode = "404", description = "Account not found")
     })
     @GetMapping("/{id}")
-    public Account retrieveAccountById(@PathVariable("id") long id) {
-        return accountService.retrieveAccountById(id);
+    public Account retrieveAccountById(@PathVariable("id") long id) throws Exception {
+        try {
+            return accountService.retrieveAccountById(id);
+        } catch (NoSuchElementException e) {
+            throw new EntityNotFoundException("");
+        }
     }
 
     @Operation(summary = "Create an account", description = "Add a new account to the database")
     @PostMapping
-    public Account createAccount(@RequestBody Account account) {
+    public Account createAccount(@RequestBody Account account) throws Exception {
         return accountService.store(account);
     }
 
     @Operation(summary = "Update an account", description = "Update an account in the database")
     @PutMapping
-    public Account updateAccount(@RequestBody Account account){
+    public Account updateAccount(@RequestBody Account account) throws Exception {
         return accountService.update(account);
     }
 
     @Operation(summary = "Delete an account", description = "Delete an account from the database")
     @DeleteMapping("/{id}")
-    public Account deleteAccount(@PathVariable("id") long id){
+    public Account deleteAccount(@PathVariable("id") long id) throws Exception {
         return accountService.deleteAccount(id);
     }
 }
