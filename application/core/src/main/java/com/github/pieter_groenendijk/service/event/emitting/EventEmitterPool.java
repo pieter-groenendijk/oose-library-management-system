@@ -1,6 +1,7 @@
 package com.github.pieter_groenendijk.service.event.emitting;
 
 import com.github.pieter_groenendijk.model.event.EventType;
+import com.github.pieter_groenendijk.service.event.listener.IEventListener;
 
 import java.util.HashMap;
 
@@ -14,7 +15,7 @@ public class EventEmitterPool {
         this.EMITTERS = new HashMap<>();
     }
 
-    public <T> void attach(EventType type, EventRunnable<T> runnable) {
+    public <T> void attach(EventType type, IEventListener<T> runnable) {
         EventEmitter<T> emitter = this.get(type);
 
         if (emitter == null) return;
@@ -25,7 +26,7 @@ public class EventEmitterPool {
     /**
      * Relatively unoptimized, only use as last resort.
      */
-    public <T> void detach(EventType type, EventRunnable<T> runnable) {
+    public <T> void detach(EventType type, IEventListener<T> runnable) {
         EventEmitter<T> emitter = this.get(type);
 
         if (emitter == null) return;
