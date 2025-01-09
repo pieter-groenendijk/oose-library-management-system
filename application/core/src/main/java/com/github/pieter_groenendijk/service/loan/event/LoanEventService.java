@@ -2,7 +2,7 @@ package com.github.pieter_groenendijk.service.loan.event;
 
 import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.repository.event.IEventRepository;
-import com.github.pieter_groenendijk.service.event.generator.DayOverdueLoanDetachedEventGenerator;
+import com.github.pieter_groenendijk.service.loan.event.generator.DayOverdueLoanDetachedEventGenerator;
 import com.github.pieter_groenendijk.service.event.scheduling.EventScheduler;
 
 public class LoanEventService implements ILoanEventService {
