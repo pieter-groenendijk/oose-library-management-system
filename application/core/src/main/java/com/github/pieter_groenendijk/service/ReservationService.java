@@ -85,7 +85,7 @@ public class ReservationService implements IReservationService {
     }
 
     @Override
-    public void handleUncollectedReservations(long accountId, Date currentDate) {
+    public void handleUncollectedReservations(long accountId, Date currentDate) throws Exception {
         Membership membership = membershipRepository.retrieveMembershipById(accountId)
                 .orElseThrow(() -> new EntityNotFoundException("Account with ID " + accountId + " not found."));
 

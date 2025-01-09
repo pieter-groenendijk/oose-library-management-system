@@ -14,6 +14,25 @@ public class EventEmitterPool {
         this.EMITTERS = new HashMap<>();
     }
 
+    public <T> void attach(EventType type, EventRunnable<T> runnable) {
+        EventEmitter<T> emitter = this.get(type);
+
+        if (emitter == null) return;
+
+        emitter.attach(runnable);
+    }
+
+    /**
+     * Relatively unoptimized, only use as last resort.
+     */
+    public <T> void detach(EventType type, EventRunnable<T> runnable) {
+        EventEmitter<T> emitter = this.get(type);
+
+        if (emitter == null) return;
+
+        emitter.detach(runnable);
+    }
+
     /**
      * Misuse of adding the wrong EventEmitter with the wrong EventType will cause runtime errors!
      */

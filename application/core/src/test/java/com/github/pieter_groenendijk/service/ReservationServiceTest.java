@@ -77,7 +77,7 @@ class ReservationServiceTest {
     }
 
     @Test
-    void handleUncollectedReservations() {
+    void handleUncollectedReservations() throws Exception {
         Date currentDate = new Date();
         Reservation reservation = new Reservation();
         reservation.setReservationPickUpDate(Date.from(LocalDate.now().minusDays(10).atStartOfDay(ZoneId.systemDefault()).toInstant()));

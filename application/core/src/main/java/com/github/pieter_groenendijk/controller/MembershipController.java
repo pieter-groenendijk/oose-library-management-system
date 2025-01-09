@@ -60,7 +60,7 @@ public class MembershipController{
 
     @Operation(summary = "Create a membership", description = "Add a new membership to the database")
     @PostMapping
-    public Membership createMembership(@RequestBody MembershipRequestDTO request) {
+    public Membership createMembership(@RequestBody MembershipRequestDTO request) throws Exception {
         return accountService.store(request);
     }
 }

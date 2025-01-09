@@ -20,7 +20,7 @@ public interface IReservationService {
 
     Date generateReservationPickUpDate();
 
-    void handleUncollectedReservations(long membershipId, Date currentDate);
+    void handleUncollectedReservations(long membershipId, Date currentDate) throws Exception;
 
     Date getPickupDate(long reservationId);
 }

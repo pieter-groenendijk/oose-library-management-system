@@ -12,7 +12,7 @@ public class DayOverdueLoanDetachedEventGenerator extends DetachedEventGenerator
     public DayOverdueLoanDetachedEventGenerator(IEventRepository repository) {
         super(
             repository,
-            EventType.DAY_OVERDUE_LOAN_EVENT
+            EventType.DAY_OVERDUE_LOAN
         );
     }
 
