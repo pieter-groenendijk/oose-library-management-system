@@ -36,7 +36,7 @@ public class Membership {
     @Column(name = "isBlocked", nullable = false)
     private boolean isBlocked;
     @OneToMany(mappedBy = "membership", cascade = CascadeType.ALL, orphanRemoval = true)
-    private java.util.List<Reservation> reservations = new ArrayList<>();
+    private List<Reservation> reservations = new ArrayList<>();
 
     // Getters and Setters
     public Long getMembershipId() {

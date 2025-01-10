@@ -68,8 +68,6 @@ public class ReservationController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        } finally {
-            sessionFactory.close();
         }
     }
 

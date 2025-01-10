@@ -48,29 +48,27 @@ public class ReservationRepository implements IReservationRepository {
     public Reservation store(Reservation reservation) {
             Session session = sessionFactory.openSession();
             try {
-                // Log the reservation to verify the incoming data
                 System.out.println("Attempting to save reservation: " + reservation);
-
                 session.beginTransaction();
-                session.persist(reservation);  // Persist the reservation
-                session.flush();               // Ensure the transaction is processed immediately
-                session.getTransaction().commit();  // Commit the transaction
+                session.persist(reservation);
+                session.flush();
+                session.getTransaction().commit();
 
                 System.out.println("Reservation successfully saved: " + reservation);
             } catch (HibernateException e) {
-                // Log the exception with details to understand the cause
-                System.err.println("Error occurred while saving reservation: " + e.getMessage());
-                e.printStackTrace();  // Or use a logger
 
-                // If there was a transaction, rollback
+                System.err.println("Error occurred while saving reservation: " + e.getMessage());
+                e.printStackTrace();
+
+
                 if (session.getTransaction() != null) {
                     session.getTransaction().rollback();
                 }
 
-                // Propagate the exception further
+
                 throw new RuntimeException("Error occurred while storing reservation", e);
             } finally {
-                // Close the session to avoid resource leaks
+
                 session.close();
             }
             return reservation;
