@@ -48,9 +48,9 @@ public class ReservationService implements IReservationService {
     }
 
     @Override
-    public Reservation getReservationById(long reservationId) {
+    public Reservation retrieveReservationById(long reservationId) {
         return reservationRepository.retrieveReservationById(reservationId)
-                .orElseThrow(() -> new EntityNotFoundException("Membership with ID " + reservationId + " not found."));
+                .orElseThrow(() -> new EntityNotFoundException("Reservation with ID " + reservationId + " not found."));
     }
 
     @Override
@@ -115,7 +115,7 @@ public class ReservationService implements IReservationService {
     }
     @Override
     public void markReservationAsLoaned(long reservationId) {
-        Reservation reservation = getReservationById(reservationId);
+        Reservation reservation = retrieveReservationById(reservationId);
         reservation.setReservationStatus(ReservationStatus.LOANED);
         reservationRepository.updateReservation(reservation);
     }

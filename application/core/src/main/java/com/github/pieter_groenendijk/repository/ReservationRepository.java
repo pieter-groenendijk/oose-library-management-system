@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public class ReservationRepository implements IReservationRepository {
 
-    private final SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
     public ReservationRepository(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
@@ -26,7 +26,7 @@ public class ReservationRepository implements IReservationRepository {
 
         try {
             reservation = session.get(Reservation.class, reservationId);
-        } finally {
+        }finally {
             session.close();
         }
         return Optional.ofNullable(reservation);

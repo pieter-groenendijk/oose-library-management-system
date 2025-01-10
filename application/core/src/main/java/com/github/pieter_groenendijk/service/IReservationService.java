@@ -11,7 +11,7 @@ import static com.github.pieter_groenendijk.service.ServiceUtils.PICKUP_DAYS;
 
 public interface IReservationService {
     Reservation store(Reservation reservation);
-    Reservation getReservationById(long reservationId);
+    Reservation retrieveReservationById(long reservationId);
     Reservation updateReservation(Reservation reservation);
     void cancelReservation(long reservationId);
     boolean readyForPickup(long reservationId);

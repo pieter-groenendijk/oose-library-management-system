@@ -20,8 +20,8 @@ import com.github.pieter_groenendijk.utils.scheduling.TaskScheduler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -65,17 +65,18 @@ public class ReservationController {
     @Operation(summary = "Get all reservation details by reservationId", description = "Get reservation details by reservationId")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Reservation found"),
-            @ApiResponse(responseCode = "204", description = "No reservation found for the given reservationId\"")
+            @ApiResponse(responseCode = "404", description = "No reservation found for the given reservationId\"")
     })
     @GetMapping("/{reservationId}")
-    public ResponseEntity<Reservation> getReservationById(@PathVariable("reservationId") long reservationId) {
-        Reservation reservation = reservationService.getReservationById(reservationId);
-        if (reservation != null) {
+    public ResponseEntity<Reservation> retrieveReservationById(@PathVariable("reservationId") long reservationId) {
+        try {
+            Reservation reservation = reservationService.retrieveReservationById(reservationId);
             return new ResponseEntity<>(reservation, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        } catch (HibernateException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
 
     @Operation(summary = "Check if reservation is ready for pickup", description = "Check if reservation is ready for pickup by reservationId")
     @ApiResponses(value = {
@@ -95,8 +96,7 @@ public class ReservationController {
     @PutMapping("/{reservationId}/convertToLoan")
     public ResponseEntity<String> markReservationAsLoaned(@PathVariable("reservationId") long reservationId) {
         try {
-            // Retrieve the reservation from the service
-            Reservation reservation = reservationService.getReservationById(reservationId);
+            Reservation reservation = reservationService.retrieveReservationById(reservationId);
             if (reservation == null) {
                 return new ResponseEntity<>("Reservation not found", HttpStatus.NOT_FOUND);
             }
