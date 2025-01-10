@@ -95,7 +95,7 @@ public class ProductRepository implements IProductRepository {
         return product;
     }
 
-    public Optional<ProductCopy> retrieveProductById(Long productCopyId) {
+    public Optional<ProductCopy> retrieveProductCopyById(Long productCopyId) {
         Session session = sessionFactory.openSession();
         ProductCopy productCopy = null;
 

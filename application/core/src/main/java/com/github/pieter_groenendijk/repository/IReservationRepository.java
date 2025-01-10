@@ -1,5 +1,6 @@
 package com.github.pieter_groenendijk.repository;
 
+import com.github.pieter_groenendijk.model.DTO.ReservationDTO;
 import com.github.pieter_groenendijk.model.Reservation;
 
 import java.util.List;

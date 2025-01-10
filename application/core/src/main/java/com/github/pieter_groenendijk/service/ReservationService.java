@@ -2,6 +2,7 @@ package com.github.pieter_groenendijk.service;
 
 import com.github.pieter_groenendijk.exception.EntityNotFoundException;
 import com.github.pieter_groenendijk.model.Account;
+import com.github.pieter_groenendijk.model.DTO.ReservationDTO;
 import com.github.pieter_groenendijk.model.Membership;
 import com.github.pieter_groenendijk.model.Reservation;
 import com.github.pieter_groenendijk.model.ReservationStatus;
@@ -10,8 +11,6 @@ import com.github.pieter_groenendijk.model.product.ProductCopyStatus;
 import com.github.pieter_groenendijk.repository.*;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.List;
 
 import static com.github.pieter_groenendijk.model.ReservationStatus.ACTIVE;
@@ -33,17 +32,28 @@ public class ReservationService implements IReservationService {
     }
 
     @Override
-    public Reservation store(Reservation reservation) {
-        if (reservation == null) {
+    public Reservation store(ReservationDTO reservationDTO) {
+        if (reservationDTO == null) {
             throw new IllegalArgumentException("Reservation cannot be null");
         }
 
-        ProductCopy productCopy = reservation.getProductCopyId();
-        if (productCopy != null) {
-            handleProductCopyAvailability(productCopy);
-        }
+        Reservation reservation = new Reservation();
+        reservation.setReservationDate(reservationDTO.getReservationDate());
+        reservation.setReservationStatus(reservationDTO.getReservationStatus());
 
-        reservation.setReservationStatus(ACTIVE);
+        ProductCopy productCopy = productRepository.retrieveProductCopyById(reservationDTO.getProductCopyId())
+                .orElseThrow(() -> new IllegalArgumentException("ProductCopy not found"));
+        Membership membership = membershipRepository.retrieveMembershipById(reservationDTO.getMembershipId())
+                .orElseThrow(() -> new IllegalArgumentException("Membership not found"));
+
+
+        reservation.setProductCopyId(productCopy);
+        reservation.setMembership(membership);
+
+        handleProductCopyAvailability(productCopy);
+
+        reservation.setReservationStatus(ReservationStatus.ACTIVE);
+
         return reservationRepository.store(reservation);
     }
 

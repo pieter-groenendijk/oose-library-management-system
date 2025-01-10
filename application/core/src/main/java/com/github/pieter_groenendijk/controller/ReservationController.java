@@ -3,6 +3,7 @@ package com.github.pieter_groenendijk.controller;
 
 import com.github.pieter_groenendijk.exception.EntityNotFoundException;
 import com.github.pieter_groenendijk.hibernate.SessionFactoryFactory;
+import com.github.pieter_groenendijk.model.DTO.ReservationDTO;
 import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.model.Reservation;
 import com.github.pieter_groenendijk.repository.*;
@@ -57,8 +58,9 @@ public class ReservationController {
             @ApiResponse(responseCode = "201", description = "Reservation created")
     })
     @PostMapping
-    public Reservation store(@RequestBody Reservation reservation) {
-        return reservationService.store(reservation);
+    public ResponseEntity<?> store(@RequestBody ReservationDTO reservationDTO) {
+        reservationService.store(reservationDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Reservation created");
     }
 
 
@@ -105,7 +107,7 @@ public class ReservationController {
             reservationService.markReservationAsLoaned(reservationId);
 
             Loan newLoan = new Loan();
-            newLoan.setProductCopy(reservation.getProductCopy());
+            newLoan.setProductCopy(reservation.getProductCopyId());
             newLoan.setMembership(reservation.getMembershipId());
 
             Loan storedLoan = loanService.store(newLoan);

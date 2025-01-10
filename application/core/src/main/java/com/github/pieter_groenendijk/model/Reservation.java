@@ -86,7 +86,10 @@ public class Reservation {
         return productCopy;
     }
 
-    public ProductCopy getProductCopy() {
-        return productCopy;
+    public Membership getMembership() {
+        return membership;
+    }
+
+    public void setMembership(Membership membership) {
     }
 }
