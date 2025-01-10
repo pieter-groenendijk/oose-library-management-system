@@ -52,10 +52,10 @@ VALUES
 -- endregion
 
 -- Insert data into Loan table
-INSERT INTO "Loan" ("loanId", "startDate", "returnBy", "returnedOn", "loanStatus", "membershipId", "productCopyId")
-VALUES (1, '2024-01-01', '2024-01-15', NULL, 'Borrowed', 1, 1),
-       (2, '2024-02-01', '2024-02-14', '2024-02-10', 'Returned', 1, 2),
-       (3, '2024-03-01', '2024-03-15', NULL, 'Overdue', 1, 3);
+INSERT INTO "Loan" ("loanId", "startDate", "returnBy", "returnedOn", "extendedReturnBy", "loanStatus", "membershipId", "productCopyId")
+VALUES (1, '2024-01-01', '2024-01-15', NULL, NULL, 'RETURNED', 1, 1),
+       (2, '2024-02-01', '2024-02-14', '2024-02-10', NULL, 'RETURNED', 1, 2),
+       (3, '2024-03-01', '2024-03-15', NULL, NULL, 'RETURNED', 1, 3);
 
 -- Insert data into Reservation table
 INSERT INTO "Reservation" ("reservationId", "reservationDate", "isActive", "membershipId", "productCopyId")
@@ -64,24 +64,43 @@ VALUES (1, '2024-12-09', FALSE, 1, 1),
        (3, '2024-12-11', FALSE, 3, 3),
        (4, '2024-12-12', FALSE, 4, 4),
        (5, '2024-12-13', FALSE, 5, 5),
-       (6, '2024-12-14', FALSE, 6, 6),
-       (7, '2024-12-15', TRUE, 7, 7),
-       (8, '2024-12-16', TRUE, 8, 8),
-       (9, '2024-12-17', TRUE, 1, 9),
-       (10, '2024-12-18', TRUE, 1, 10);
+       (6, '2024-12-14', FALSE, 1, 1),
+       (7, '2024-12-15', TRUE, 2, 2),
+       (8, '2024-12-16', TRUE, 3, 3),
+       (9, '2024-12-17', TRUE, 4, 4),
+       (10, '2024-12-18', TRUE, 5, 5);
 
 -- Insert a product in to database
 INSERT INTO "ProductTemplate" ("productId", "name", "genre", "yearOfRelease", "description", "type", "ageClassification", "mediaType")
-VALUES (2, 'The Great Gatsby', 'Classic', 1925, 'A novel by F. Scott Fitzgerald', 'BOOK', 18, 'PHYSICAL');
+VALUES
+    (1, '1984', 'Thriller', 1949, 'A novel by George Orwell', 'BOOK', 18, 'PHYSICAL'),
+    (2, 'The Great Gatsby', 'Classic', 1925, 'A novel by F. Scott Fitzgerald', 'BOOK', 18, 'PHYSICAL'),
+    (3, 'Moby-Dick', 'Classic', 1851, 'A novel by Herman Melville', 'BOOK', 18, 'PHYSICAL'),
+    (4, 'To Kill a Mockingbird', 'Drama', 1960, 'A novel by Harper Lee', 'BOOK', 18, 'PHYSICAL'),
+    (5, 'Pride and Prejudice', 'Romance', 1813, 'A novel by Jane Austen', 'BOOK', 18, 'PHYSICAL');
+
 
 INSERT INTO "PhysicalProductTemplate" ("productId", "location", "author")
 VALUES
-    (2, 'A1', 'F. Scott Fitzgerald');
+    (1, 'B2', 'George Orwell'),
+    (2, 'A1', 'F. Scott Fitzgerald'),
+    (3, 'C3', 'Herman Melville'),
+    (4, 'D4', 'Harper Lee'),
+    (5, 'E5', 'Jane Austen');
 
 INSERT INTO "PhysicalReadProduct" ("productId", "ISBN", "author")
 VALUES
-    (2, 1234567890, 'F. Scott Fitzgerald');
+    (1, 1234567891, 'George Orwell'),
+    (2, 1234567890, 'F. Scott Fitzgerald'),
+    (3, 1234567892, 'Herman Melville'),
+    (4, 1234567893, 'Harper Lee'),
+    (5, 1234567894, 'Jane Austen');
 
-INSERT INTO "ProductCopy" ("productId", "availabilityStatus", "isDamaged")
+
+INSERT INTO "ProductCopy" ("productCopyId", "availabilityStatus", "productId")
 VALUES
-    (2, 'Available', false);
+    (1, 'AVAILABLE', 1),
+    (2, 'AVAILABLE', 2),
+    (3, 'AVAILABLE', 3),
+    (4, 'AVAILABLE', 4),
+    (5, 'AVAILABLE', 5);
