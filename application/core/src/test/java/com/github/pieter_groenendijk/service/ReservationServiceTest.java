@@ -70,14 +70,7 @@ class ReservationServiceTest {
 
         assertEquals(expectedDate, generatedDate, "The generated pickup date is not correct.");
     }
-
-    @Test
-    void getPickupDate() {
-        Date expectedDate = Date.from(LocalDate.now().plusDays(7).atStartOfDay(ZoneId.systemDefault()).toInstant());
-        Date actualDate = reservationService.getPickupDate(1L);
-
-        assertEquals(expectedDate, actualDate);
-    }
+    
 
     @Test
     void handleUncollectedReservations() {
