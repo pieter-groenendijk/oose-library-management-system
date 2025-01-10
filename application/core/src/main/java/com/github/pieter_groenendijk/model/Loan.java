@@ -13,17 +13,13 @@ public class Loan {
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private long loanId;
     @Column(name = "startDate", nullable = false)
-    @Temporal(TemporalType.DATE)
     private LocalDate startDate;
     @Column(name = "returnBy")
-    @Temporal(TemporalType.DATE)
     private LocalDate returnBy;
 
     @Column(name = "extendedReturnBy")
-    @Temporal(TemporalType.DATE)
     private LocalDate extendedReturnBy;
     @Column(name = "returnedOn")
-    @Temporal(TemporalType.DATE)
     private LocalDate returnedOn;
 
     @Enumerated(EnumType.STRING)

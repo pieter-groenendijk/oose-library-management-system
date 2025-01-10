@@ -1,6 +1,7 @@
 package com.github.pieter_groenendijk.controller;
 
 
+import com.github.pieter_groenendijk.exception.EntityNotFoundException;
 import com.github.pieter_groenendijk.hibernate.SessionFactoryFactory;
 import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.model.Reservation;
@@ -55,8 +56,6 @@ public class ReservationController {
             return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         }
     }
-    
-
 
     @Operation(summary = "Check if reservation is ready for pickup", description = "Check if reservation is ready for pickup by reservationId")
     @ApiResponses(value = {
@@ -68,6 +67,20 @@ public class ReservationController {
         return new ResponseEntity<>(isReady, HttpStatus.OK);
     }
 
+    @Operation(summary = "Convert reservation to loan", description = "Change the status of the reservation to LOANED")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Reservation converted to loan successfully"),
+            @ApiResponse(responseCode = "404", description = "Reservation not found")
+    })
+    @PutMapping("/{reservationId}/convertToLoan")
+    public ResponseEntity<String> markReservationAsLoaned(@PathVariable long reservationId) {
+        try {
+            reservationService.markReservationAsLoaned(reservationId);
+            return new ResponseEntity<>("Reservation converted to loan successfully", HttpStatus.OK);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
 }
 
 

@@ -14,13 +14,9 @@ public interface IReservationService {
     Reservation getReservationById(long reservationId);
     Reservation updateReservation(Reservation reservation);
     void cancelReservation(long reservationId);
-
-
     boolean readyForPickup(long reservationId);
-
-
     LocalDate generateReservationPickUpDate(ProductCopy productCopy);
-
     void handleUncollectedReservations(long membershipId, LocalDate currentDate);
-
+    void markReservationAsLoaned(long reservationId);
+    void handleProductCopyAvailability(ProductCopy productCopy);
 }

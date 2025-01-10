@@ -35,20 +35,14 @@ public class ReservationRepository implements IReservationRepository {
 
     @Override
     public List<Reservation> retrieveReservationsByMembershipId(long membershipId) {
-        Session session = sessionFactory.openSession();
-        try {
-            CriteriaBuilder cb = session.getCriteriaBuilder();
-            CriteriaQuery<Reservation> cr = cb.createQuery(Reservation.class);
-            Root<Reservation> root = cr.from(Reservation.class);
-
-            cr.select(root).where(cb.equal(root.get("membership").get("id"), membershipId));
-
-            return session.createQuery(cr).getResultList();
-        } catch (Exception e) {
+        try (Session session = sessionFactory.openSession()) {
+            String hql = "FROM Reservation r WHERE r.membership.id = :membershipId";
+            return session.createQuery(hql, Reservation.class)
+                    .setParameter("membershipId", membershipId)
+                    .getResultList();
+        } catch (HibernateException e) {
             e.printStackTrace();
             throw new RuntimeException("Database query failed", e);
-        } finally {
-            session.close();
         }
     }
 

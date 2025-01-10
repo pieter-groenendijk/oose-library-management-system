@@ -13,12 +13,10 @@ public class Reservation {
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private long reservationId;
     @Column(name = "reservationDate", nullable = false)
-    @Temporal(TemporalType.DATE)
     private LocalDate reservationDate;
     @Column(name ="readyForPickup", nullable = false)
     private boolean readyForPickup;
     @Column(name = "reservationPickUpDate")
-    @Temporal(TemporalType.DATE)
     private LocalDate reservationPickUpDate;
     @OneToOne
     @JoinColumn(name = "productCopyId", nullable = false)

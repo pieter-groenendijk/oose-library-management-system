@@ -87,6 +87,7 @@ public class ReservationService implements IReservationService {
         return LocalDate.now().plusDays(PICKUP_DAYS);
     }
 
+    @Override
     public void handleProductCopyAvailability(ProductCopy productCopy) {
         if (productCopy.getAvailabilityStatus() == ProductCopyStatus.AVAILABLE) {
             LocalDate reservationPickUpDate = generateReservationPickUpDate(productCopy);
@@ -109,6 +110,7 @@ public class ReservationService implements IReservationService {
         }
         accountRepository.store(account);
     }
+    @Override
     public void markReservationAsLoaned(long reservationId) {
         Reservation reservation = getReservationById(reservationId);
         reservation.setReservationStatus(ReservationStatus.LOANED);
