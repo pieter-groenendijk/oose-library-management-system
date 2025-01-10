@@ -80,10 +80,11 @@ public class ReservationController {
 
     @Operation(summary = "Check if reservation is ready for pickup", description = "Check if reservation is ready for pickup by reservationId")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Ready for pickup status retrieved")
+            @ApiResponse(responseCode = "200", description = "Ready for pickup status retrieved"),
+            @ApiResponse(responseCode = "404", description = "Reservation not found")
     })
     @GetMapping("/{reservationId}/ready")
-    public ResponseEntity<Boolean> readyForPickup(@PathVariable long reservationId) {
+    public ResponseEntity<Boolean> readyForPickup(@PathVariable("reservationId") long reservationId) {
         boolean isReady = reservationService.readyForPickup(reservationId);
         return new ResponseEntity<>(isReady, HttpStatus.OK);
     }
