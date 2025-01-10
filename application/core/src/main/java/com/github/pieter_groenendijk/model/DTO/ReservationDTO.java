@@ -5,7 +5,7 @@ import com.github.pieter_groenendijk.model.ReservationStatus;
 import java.time.LocalDate;
 
 public class ReservationDTO {
-    private LocalDate reservationDate;
+    private LocalDate reservationDate = LocalDate.now();
     private boolean readyForPickup = false;
     private long productCopyId;
     private long membershipId;
@@ -44,7 +44,6 @@ public class ReservationDTO {
     public void setReservationStatus(ReservationStatus reservationStatus) {
         this.reservationStatus = reservationStatus;
     }
-
 
     public long getProductCopyId() {
         return productCopyId;

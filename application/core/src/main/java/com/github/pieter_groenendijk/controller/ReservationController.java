@@ -39,30 +39,39 @@ public class ReservationController {
 
 
     public ReservationController() {
-        IAccountRepository accountRepository = new AccountRepository(sessionFactory);
-        IMembershipRepository membershipRepository = new MembershipRepository(sessionFactory);
-        IReservationRepository reservationRepository = new ReservationRepository(sessionFactory);
-        IProductRepository productRepository = new ProductRepository(sessionFactory);
-        ILoanRepository loanRepository = new LoanRepository(sessionFactory);
         IEventRepository eventRepository = new EventRepository();
         EventEmitterPool eventEmitterPool = new EventEmitterPool();
         TaskScheduler taskScheduler = new TaskScheduler(1);
         EventScheduler eventScheduler = new EventScheduler(taskScheduler, eventRepository, eventEmitterPool);
         ILoanEventService loanEventService = new LoanEventService(eventRepository, eventScheduler);
+        IAccountRepository accountRepository = new AccountRepository(sessionFactory);
+        IMembershipRepository membershipRepository = new MembershipRepository(sessionFactory);
+        IReservationRepository reservationRepository = new ReservationRepository(sessionFactory);
+        IProductRepository productRepository = new ProductRepository(sessionFactory);
+        ILoanRepository loanRepository = new LoanRepository(sessionFactory);
         this.reservationService = new ReservationService(reservationRepository, membershipRepository, accountRepository, productRepository);
         this.loanService = new LoanService(loanRepository, loanEventService);
     }
 
     @Operation(summary = "Create a reservation", description = "Create a new reservation")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Reservation created")
+            @ApiResponse(responseCode = "201", description = "Reservation created"),
+            @ApiResponse(responseCode = "404", description = "ProductCopy or Membership not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error. WHYYYY")
     })
     @PostMapping
     public ResponseEntity<?> store(@RequestBody ReservationDTO reservationDTO) {
-        reservationService.store(reservationDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Reservation created");
+        try {
+            Reservation reservation = reservationService.store(reservationDTO);
+            return new ResponseEntity<>(reservation, HttpStatus.CREATED);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } finally {
+            sessionFactory.close();
+        }
     }
-
 
     @Operation(summary = "Get all reservation details by reservationId", description = "Get reservation details by reservationId")
     @ApiResponses(value = {
@@ -107,17 +116,15 @@ public class ReservationController {
             reservationService.markReservationAsLoaned(reservationId);
 
             Loan newLoan = new Loan();
-            newLoan.setProductCopy(reservation.getProductCopyId());
-            newLoan.setMembership(reservation.getMembershipId());
+            newLoan.setProductCopy(reservation.getProductCopy());
+            newLoan.setMembership(reservation.getMembership());
 
             Loan storedLoan = loanService.store(newLoan);
-
 
             return new ResponseEntity<>("Reservation converted to loan successfully with Loan ID: " + storedLoan.getLoanId(), HttpStatus.OK);
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
-
     }
 }
 

@@ -4,7 +4,6 @@ import com.github.pieter_groenendijk.model.product.ProductCopy;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Table(name = "Reservation")
@@ -38,20 +37,16 @@ public class Reservation {
         return reservationId;
     }
 
-    public void setProductCopyId(ProductCopy productCopyId) {
-        this.productCopy = productCopyId;
+    public void setProductCopy(ProductCopy productCopy) {
+        this.productCopy = productCopy;
     }
 
-    public Membership getMembershipId() {
+    public Membership getMembership() {
         return membership;
     }
 
-    public void setMembershipId(Membership membershipId) {
-        this.membership = membershipId;
-    }
-
-    public void setId(long reservationId) {
-        this.reservationId = reservationId;
+    public void setMembership(Membership membership) {
+        this.membership = membership;
     }
 
     public void setReservationStatus(ReservationStatus reservationStatus) {
@@ -66,8 +61,8 @@ public class Reservation {
         this.reservationDate = reservationDate;
     }
 
-    public boolean isReadyForPickup() {
-        return readyForPickup;
+    public void setReadyForPickup(boolean readyForPickup) {
+        this.readyForPickup = readyForPickup;
     }
 
     public LocalDate getReservationPickUpDate() {
@@ -82,14 +77,8 @@ public class Reservation {
         return reservationStatus;
     }
 
-    public ProductCopy getProductCopyId() {
+    public ProductCopy getProductCopy() {
         return productCopy;
     }
 
-    public Membership getMembership() {
-        return membership;
-    }
-
-    public void setMembership(Membership membership) {
-    }
 }

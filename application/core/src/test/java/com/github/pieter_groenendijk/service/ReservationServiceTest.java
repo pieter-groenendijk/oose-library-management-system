@@ -130,7 +130,7 @@ class ReservationServiceTest {
     void markReservationAsLoaned() {
         long reservationId = 1L;
         Reservation reservation = new Reservation();
-        reservation.setId(reservationId);
+        reservation.setReservationId(reservationId);
         reservation.setReservationStatus(ReservationStatus.ACTIVE);
 
         ReservationRepository mockReservationRepository = mock(ReservationRepository.class);

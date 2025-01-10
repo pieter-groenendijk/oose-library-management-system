@@ -37,24 +37,20 @@ public class ReservationService implements IReservationService {
             throw new IllegalArgumentException("Reservation cannot be null");
         }
 
-        Reservation reservation = new Reservation();
-        reservation.setReservationDate(reservationDTO.getReservationDate());
-        reservation.setReservationStatus(reservationDTO.getReservationStatus());
-
         ProductCopy productCopy = productRepository.retrieveProductCopyById(reservationDTO.getProductCopyId())
-                .orElseThrow(() -> new IllegalArgumentException("ProductCopy not found"));
+                .orElseThrow(() -> new EntityNotFoundException("ProductCopy not found"));
         Membership membership = membershipRepository.retrieveMembershipById(reservationDTO.getMembershipId())
-                .orElseThrow(() -> new IllegalArgumentException("Membership not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Membership not found"));
 
 
-        reservation.setProductCopyId(productCopy);
-        reservation.setMembership(membership);
+        Reservation reservation = toEntity(reservationDTO, productCopy, membership);
 
         handleProductCopyAvailability(productCopy);
 
         reservation.setReservationStatus(ReservationStatus.ACTIVE);
 
-        return reservationRepository.store(reservation);
+        reservationRepository.store(reservation);
+        return new Reservation();
     }
 
     @Override
@@ -152,4 +148,16 @@ public class ReservationService implements IReservationService {
         account.incrementUncollectedReservationCount();
         reservationRepository.updateReservation(reservation);
     }
+
+    public Reservation toEntity(ReservationDTO dto, ProductCopy productCopy, Membership membership) {
+        Reservation reservation = new Reservation();
+        reservation.setReservationDate(dto.getReservationDate());
+        reservation.setReadyForPickup(dto.isReadyForPickup());
+        reservation.setProductCopy(productCopy);
+        reservation.setMembership(membership);
+        reservation.setReservationStatus(dto.getReservationStatus());
+        return reservation;
+    }
+
+
 }
