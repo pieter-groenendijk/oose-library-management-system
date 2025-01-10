@@ -81,4 +81,8 @@ public class Reservation {
     public ReservationStatus getReservationStatus() {
         return reservationStatus;
     }
+
+    public ProductCopy getProductCopyId() {
+        return productCopy;
+    }
 }

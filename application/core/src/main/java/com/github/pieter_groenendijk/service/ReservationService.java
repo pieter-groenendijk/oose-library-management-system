@@ -7,10 +7,7 @@ import com.github.pieter_groenendijk.model.Reservation;
 import com.github.pieter_groenendijk.model.ReservationStatus;
 import com.github.pieter_groenendijk.model.product.ProductCopy;
 import com.github.pieter_groenendijk.model.product.ProductCopyStatus;
-import com.github.pieter_groenendijk.repository.IAccountRepository;
-import com.github.pieter_groenendijk.repository.IMembershipRepository;
-import com.github.pieter_groenendijk.repository.IProductRepository;
-import com.github.pieter_groenendijk.repository.IReservationRepository;
+import com.github.pieter_groenendijk.repository.*;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -40,6 +37,12 @@ public class ReservationService implements IReservationService {
         if (reservation == null) {
             throw new IllegalArgumentException("Reservation cannot be null");
         }
+
+        ProductCopy productCopy = reservation.getProductCopyId();
+        if (productCopy != null) {
+            handleProductCopyAvailability(productCopy);
+        }
+
         reservation.setReservationStatus(ACTIVE);
         return reservationRepository.store(reservation);
     }

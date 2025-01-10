@@ -21,8 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @Nested
 class ReservationServiceTest {
@@ -38,6 +37,7 @@ class ReservationServiceTest {
     @InjectMocks
     private ReservationService reservationService;
 
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -47,6 +47,22 @@ class ReservationServiceTest {
     void testExample() {
         when(reservationRepository.retrieveReservationById(1L)).thenReturn(Optional.empty());
         assertTrue(true);
+    }
+
+    @Test
+    void store() {
+        Reservation reservation = new Reservation();
+
+        when(reservationRepository.store(reservation)).thenReturn(reservation);
+
+        ReservationService mockReservationService = spy(reservationService);
+        doNothing().when(mockReservationService).handleProductCopyAvailability(any(ProductCopy.class));
+
+        Reservation storedReservation = mockReservationService.store(reservation);
+
+        verify(reservationRepository).store(reservation);
+        verify(mockReservationService, never()).handleProductCopyAvailability(any(ProductCopy.class));
+        assertEquals(ReservationStatus.ACTIVE, storedReservation.getReservationStatus());
     }
 
     @Test
@@ -94,23 +110,27 @@ class ReservationServiceTest {
         assertEquals(ReservationStatus.EXPIRED, reservation.getReservationStatus());
     }
 
-    @Test
-    void store() {
-    }
-
-    @Test
-    void getReservationById() {
-    }
-
-    @Test
-    void updateReservation() {
-    }
-
-    @Test
-    void cancelReservation() {
-    }
 
     @Test
     void markReservationAsLoaned() {
+        long reservationId = 1L;
+        Reservation reservation = new Reservation();
+        reservation.setId(reservationId);
+        reservation.setReservationStatus(ReservationStatus.ACTIVE);
+
+        ReservationRepository mockReservationRepository = mock(ReservationRepository.class);
+        IAccountRepository mockAccountRepository = mock(IAccountRepository.class);
+        IMembershipRepository mockMembershipRepository = mock(IMembershipRepository.class);
+        IProductRepository mockProductRepository = mock(IProductRepository.class);
+        ReservationService reservationService = new ReservationService(mockReservationRepository, mockMembershipRepository, mockAccountRepository, mockProductRepository);
+
+        when(mockReservationRepository.retrieveReservationById(reservationId)).thenReturn(Optional.of(reservation));
+
+        reservationService.markReservationAsLoaned(reservationId);
+
+
+        verify(mockReservationRepository).updateReservation(reservation);
+        assertEquals(ReservationStatus.LOANED, reservation.getReservationStatus());
     }
 }
+
