@@ -94,22 +94,5 @@ public class ReservationRepository implements IReservationRepository {
         return reservation;
     }
 
-    @Override
-    public void deleteReservationById(long reservationId) {
-        Session session = sessionFactory.openSession();
-        try {
-            session.beginTransaction();
-            Reservation reservation = session.get(Reservation.class, reservationId);
-            session.remove(reservation);
-            session.getTransaction().commit();
-            } catch (HibernateException e) {
-                if (session.getTransaction() != null) {
-                    session.getTransaction().rollback();
-                }
-                e.printStackTrace();
-            } finally {
-                session.close();
-        }
-    }
 
 }

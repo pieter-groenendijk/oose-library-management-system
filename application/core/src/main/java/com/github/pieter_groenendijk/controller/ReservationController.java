@@ -60,7 +60,7 @@ public class ReservationController {
             @ApiResponse(responseCode = "500", description = "Internal server error. WHYYYY")
     })
     @PostMapping
-    public ResponseEntity<?> store(@RequestBody ReservationDTO reservationDTO) {
+    public ResponseEntity<?>  store(@RequestBody ReservationDTO reservationDTO) {
         try {
             Reservation reservation = reservationService.store(reservationDTO);
             return new ResponseEntity<>(reservation, HttpStatus.CREATED);
