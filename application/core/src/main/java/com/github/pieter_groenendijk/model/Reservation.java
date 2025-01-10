@@ -3,22 +3,23 @@ package com.github.pieter_groenendijk.model;
 import com.github.pieter_groenendijk.model.product.ProductCopy;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
-@Table(name = "reservation")
+@Table(name = "Reservation")
 public class Reservation {
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private long reservationId;
     @Column(name = "reservationDate", nullable = false)
     @Temporal(TemporalType.DATE)
-    private Date reservationDate;
+    private LocalDate reservationDate;
     @Column(name ="readyForPickup", nullable = false)
     private boolean readyForPickup;
-    @Column(name = "reservationPickUpDate", nullable = false)
+    @Column(name = "reservationPickUpDate")
     @Temporal(TemporalType.DATE)
-    private Date reservationPickUpDate;
+    private LocalDate reservationPickUpDate;
     @OneToOne
     @JoinColumn(name = "productCopyId", nullable = false)
     private ProductCopy productCopy;
@@ -26,11 +27,9 @@ public class Reservation {
     @JoinColumn(name = "membershipId", nullable = false)
     private Membership membership;
 
-    @Column(name = "isExpired", nullable = false)
-    private boolean isExpired = false;
-
-    @Column(name = "isCollected", nullable = false)
-    private boolean isCollected = false;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "reservationStatus", nullable = false)
+    private ReservationStatus reservationStatus;
 
 
     public void setReservationId(Long reservationId) {
@@ -40,15 +39,6 @@ public class Reservation {
     public Long getReservationId() {
         return reservationId;
     }
-
-    public Date getReservationDate() {
-        return reservationDate;
-    }
-
-    public void setReservationDate(Date reservationDate) {
-        this.reservationDate = reservationDate;
-    }
-
 
     public void setProductCopyId(ProductCopy productCopyId) {
         this.productCopy = productCopyId;
@@ -63,30 +53,34 @@ public class Reservation {
     }
 
     public void setId(long reservationId) {
-
+        this.reservationId = reservationId;
     }
 
-    public Date getReservationPickUpDate() {
+    public void setReservationStatus(ReservationStatus reservationStatus) {
+        this.reservationStatus = reservationStatus;
+    }
+
+    public LocalDate getReservationDate() {
+        return reservationDate;
+    }
+
+    public void setReservationDate(LocalDate reservationDate) {
+        this.reservationDate = reservationDate;
+    }
+
+    public boolean isReadyForPickup() {
+        return readyForPickup;
+    }
+
+    public LocalDate getReservationPickUpDate() {
         return reservationPickUpDate;
     }
-    public void setReservationPickUpDate(Date reservationPickUpDate) {
+
+    public void setReservationPickUpDate(LocalDate reservationPickUpDate) {
         this.reservationPickUpDate = reservationPickUpDate;
     }
 
-    public boolean getIsCollected(boolean isCollected) {
-        return isCollected;
+    public ReservationStatus getReservationStatus() {
+        return reservationStatus;
     }
-
-    public boolean getIsExpired(boolean isExpired) {
-        return isExpired;
-    }
-
-    public void setIsCollected(boolean isCollected) {
-        this.isCollected = isCollected;
-    }
-
-    public void setIsExpired() {
-        this.isExpired = true;
-    }
-
 }

@@ -1,5 +1,6 @@
 package com.github.pieter_groenendijk.service;
 import com.github.pieter_groenendijk.model.Reservation;
+import com.github.pieter_groenendijk.model.product.ProductCopy;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -18,9 +19,8 @@ public interface IReservationService {
     boolean readyForPickup(long reservationId);
 
 
-    Date generateReservationPickUpDate();
+    LocalDate generateReservationPickUpDate(ProductCopy productCopy);
 
-    void handleUncollectedReservations(long membershipId, Date currentDate);
+    void handleUncollectedReservations(long membershipId, LocalDate currentDate);
 
-    Date getPickupDate(long reservationId);
 }

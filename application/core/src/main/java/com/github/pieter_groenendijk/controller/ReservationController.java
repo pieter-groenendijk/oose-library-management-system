@@ -28,7 +28,8 @@ public class ReservationController {
         IAccountRepository accountRepository = new AccountRepository(sessionFactory);
         IMembershipRepository membershipRepository = new MembershipRepository(sessionFactory);
         IReservationRepository reservationRepository = new ReservationRepository(sessionFactory);
-        reservationService = new ReservationService(reservationRepository, membershipRepository, accountRepository);
+        IProductRepository productRepository = new ProductRepository(sessionFactory);
+        reservationService = new ReservationService(reservationRepository, membershipRepository, accountRepository, productRepository);
     }
     @Operation(summary = "Create a reservation", description = "Create a new reservation")
     @ApiResponses(value = {

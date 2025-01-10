@@ -3,6 +3,9 @@ package com.github.pieter_groenendijk.service;
 import com.github.pieter_groenendijk.model.Account;
 import com.github.pieter_groenendijk.model.Membership;
 import com.github.pieter_groenendijk.model.Reservation;
+import com.github.pieter_groenendijk.model.ReservationStatus;
+import com.github.pieter_groenendijk.model.product.ProductCopy;
+import com.github.pieter_groenendijk.model.product.ProductCopyStatus;
 import com.github.pieter_groenendijk.repository.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -49,7 +52,7 @@ class ReservationServiceTest {
     @Test
     void readyForPickup() {
         Reservation reservation = new Reservation();
-        reservation.setReservationDate(Date.from(LocalDate.now().minusDays(1).atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        reservation.setReservationDate(LocalDate.now().minusDays(1));
         when(reservationRepository.retrieveReservationById(1L)).thenReturn(Optional.of(reservation));
 
         assertFalse(reservationService.readyForPickup(1L));
@@ -58,14 +61,14 @@ class ReservationServiceTest {
     @Test
     void generateReservationPickUpDate() {
         int pickupDays = 7;
-        Date generatedDate = reservationService.generateReservationPickUpDate();
+        ProductCopy productCopy = new ProductCopy();
+        productCopy.setAvailabilityStatus(ProductCopyStatus.RESERVED);
+
+        LocalDate generatedDate = reservationService.generateReservationPickUpDate(productCopy);
 
         LocalDate expectedDate = LocalDate.now().plusDays(pickupDays);
-        LocalDate actualDate = generatedDate.toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate();
 
-            assertEquals(expectedDate, actualDate, "The generated pickup date is not correct.");
+        assertEquals(expectedDate, generatedDate, "The generated pickup date is not correct.");
     }
 
     @Test
@@ -78,10 +81,10 @@ class ReservationServiceTest {
 
     @Test
     void handleUncollectedReservations() {
-        Date currentDate = new Date();
+        LocalDate currentDate = LocalDate.now();
         Reservation reservation = new Reservation();
-        reservation.setReservationPickUpDate(Date.from(LocalDate.now().minusDays(10).atStartOfDay(ZoneId.systemDefault()).toInstant()));
-        reservation.setIsCollected(false);
+        reservation.setReservationPickUpDate(LocalDate.now().minusDays(10));
+        reservation.setReservationStatus(ReservationStatus.ACTIVE);
 
         Account account = new Account();
         account.setAccountId(1L);
@@ -95,8 +98,7 @@ class ReservationServiceTest {
 
         reservationService.handleUncollectedReservations(1L, currentDate);
 
-        //verify(reservationRepository).updateReservation(reservation);
-        assertTrue(reservation.getIsExpired(true), "The reservation should be marked as expired.");
+        assertEquals(ReservationStatus.EXPIRED, reservation.getReservationStatus());
     }
 
     @Test

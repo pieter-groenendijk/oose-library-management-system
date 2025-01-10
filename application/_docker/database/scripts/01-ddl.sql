@@ -147,9 +147,12 @@ CREATE TABLE "Reservation"
 (
     "reservationId"   BIGSERIAL PRIMARY KEY,
     "membershipId"    BIGSERIAL  NOT NULL,
-    "productCopyId"   BIGSERIAL  NOT NULL,
+    "productCopyId"   BIGSERIAL NOT NULL,
     "reservationDate" DATE    NOT NULL,
-    "readyForPickUp"  BOOLEAN NOT NULL,
+    "readyForPickup"  BOOLEAN NOT NULL,
+    "reservationPickUpDate" DATE,
+    "reservationStatus" VARCHAR(50) NOT NULL,
     FOREIGN KEY ("membershipId") REFERENCES "Membership" ("membershipId") ON UPDATE CASCADE ON DELETE RESTRICT,
     FOREIGN KEY ("productCopyId") REFERENCES "ProductCopy" ("productCopyId") ON UPDATE CASCADE ON DELETE RESTRICT
 );
+

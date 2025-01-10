@@ -1,5 +1,6 @@
 package com.github.pieter_groenendijk.model.product;
 
+import com.github.pieter_groenendijk.model.Reservation;
 import com.github.pieter_groenendijk.model.product.PhysicalProductTemplate;
 import jakarta.persistence.*;
 
@@ -41,5 +42,9 @@ public class ProductCopy {
 
     public void setAvailabilityStatus(ProductCopyStatus availabilityStatus) {
         this.availabilityStatus = availabilityStatus;
+    }
+
+    public Reservation getReservation() {
+    return null;
     }
 }
