@@ -71,7 +71,7 @@ public class ReservationRepository implements IReservationRepository {
         return reservation;
     }
     @Override
-    public void updateReservation(Reservation reservation) {
+    public Reservation updateReservation(Reservation reservation) {
         Session session = sessionFactory.openSession();
         try {
             session.beginTransaction();
@@ -85,6 +85,7 @@ public class ReservationRepository implements IReservationRepository {
         } finally {
             session.close();
         }
+        return reservation;
     }
 
     @Override

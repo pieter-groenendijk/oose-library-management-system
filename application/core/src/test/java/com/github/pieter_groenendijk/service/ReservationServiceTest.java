@@ -70,7 +70,7 @@ class ReservationServiceTest {
 
         assertEquals(expectedDate, generatedDate, "The generated pickup date is not correct.");
     }
-    
+
 
     @Test
     void handleUncollectedReservations() {

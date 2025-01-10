@@ -10,7 +10,7 @@ public interface IReservationRepository {
     Optional<Reservation> retrieveReservationById(long reservationId);
 
     Reservation store(Reservation reservation);
-    void updateReservation(Reservation reservation);
+    Reservation updateReservation(Reservation reservation);
     void deleteReservationById(long reservationId);
 
     List<Reservation> retrieveReservationsByMembershipId(long membershipId);

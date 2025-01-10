@@ -52,7 +52,7 @@ public class ReservationService implements IReservationService {
 
     @Override
     public Reservation updateReservation(Reservation reservation) {
-        return null;
+        return reservationRepository.updateReservation(reservation);
     }
 
     @Override
@@ -111,7 +111,7 @@ public class ReservationService implements IReservationService {
     }
     public void markReservationAsLoaned(long reservationId) {
         Reservation reservation = getReservationById(reservationId);
-        //TODO: reservation.setStatus(LOAN);
+        reservation.setReservationStatus(ReservationStatus.LOANED);
         reservationRepository.updateReservation(reservation);
     }
     private Membership getMembership(long accountId) {
