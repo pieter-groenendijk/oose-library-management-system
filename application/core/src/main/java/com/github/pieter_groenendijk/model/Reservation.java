@@ -85,4 +85,8 @@ public class Reservation {
     public ProductCopy getProductCopyId() {
         return productCopy;
     }
+
+    public ProductCopy getProductCopy() {
+        return productCopy;
+    }
 }

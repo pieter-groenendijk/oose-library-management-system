@@ -34,16 +34,9 @@ public class Loan {
     private ProductCopy productCopy;
 
 
-    // Getters and Setters
-    public void setLoanId(Long loanId) {
-        this.loanId = loanId;
-    }
-
     public Long getLoanId() {
         return loanId;
     }
-
-
 
     public LoanStatus getLoanStatus() {
         return loanStatus;
@@ -62,9 +55,11 @@ public class Loan {
     }
 
 
-
     public Long getProductCopy() {
         return productCopy.getProductCopyId();
+    }
+    public void setProductCopy(ProductCopy productCopy) {
+        this.productCopy = productCopy;
     }
 
     public LocalDate getReturnBy() {
