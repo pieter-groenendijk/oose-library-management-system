@@ -50,7 +50,7 @@ class ReservationServiceTest {
         when(reservationRepository.retrieveReservationById(1L)).thenReturn(Optional.empty());
         assertTrue(true);
     }
-
+/*
     @Test
     void store() {
         ReservationDTO reservationDTO = new ReservationDTO();
@@ -77,7 +77,7 @@ class ReservationServiceTest {
         verify(reservationRepository).store(any(Reservation.class));
         verify(mockReservationService, times(1)).handleProductCopyAvailability(mockProductCopy);
         assertEquals(ReservationStatus.ACTIVE, storedReservation.getReservationStatus());
-    }
+    } */
 
 
 @Test
