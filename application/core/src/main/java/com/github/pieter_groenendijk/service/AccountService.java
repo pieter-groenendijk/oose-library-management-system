@@ -146,7 +146,6 @@ public class AccountService implements IAccountService {
             throw new EntityNotFoundException("MembershipType with ID " + id + " not found.");
         }
 
-        //if (retrievedMembershipType.getDescription() != request.getDescription()) {
           if (!retrievedMembershipType.getDescription().equals(request.getDescription())){
             boolean descriptionAlreadyExists = membershipTypeRepository.doesMembershipTypeExistByDescription(request.getDescription());
             if (descriptionAlreadyExists) {
@@ -181,7 +180,7 @@ public class AccountService implements IAccountService {
     return memberships;
     }
 
-    public Membership store(MembershipRequestDTO request){
+    public void store(MembershipRequestDTO request){
 
         Account account = accountRepository.retrieveAccountById(request.getAccountId())
         .orElseThrow(() -> new EntityNotFoundException("Account with ID " + request.getAccountId() + "not found."));
@@ -195,6 +194,19 @@ public class AccountService implements IAccountService {
         membership.setActive(true);
         membership.setBlocked(false);
 
-        return membershipRepository.store(membership);
+        membershipRepository.store(membership);
+    }
+
+    public void update(long id, MembershipRequestDTO request){
+        Membership retrievedMembership = retrieveMembershipById(id);
+        if (retrievedMembership.getAccount().getAccountId() != request.getAccountId()) {
+            throw new InputValidationException("Cannot move a membership between accounts!");
+        }
+        MembershipType retrievedMembershipType = retrieveMembershipTypeById(request.getMembershipTypeId());
+        if (retrievedMembership.getMembershipType().getMembershipTypeId() == retrievedMembershipType.getMembershipTypeId()) {
+            throw new InputValidationException("Membership already has this account type");
+        }
+        retrievedMembership.setMembershipType(retrievedMembershipType);
+        membershipRepository.update(retrievedMembership);
     }
 }

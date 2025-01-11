@@ -43,12 +43,12 @@ public class MembershipController{
         @ApiResponse(responseCode = "404", description = "Membership not found")
     })
     @GetMapping("/{id}")
-    public Membership retrieveMembershipById(@PathVariable("id") long id) {
+    public ResponseEntity<?> retrieveMembershipById(@PathVariable("id") long id) {
         Membership membership = accountService.retrieveMembershipById(id);
-        return membership;
+        return ResponseEntity.ok(membership);
     }
 
-    @Operation(summary = "Retrieve memberships", description = "Retrieve memberships by Account Id")
+    @Operation(summary = "Retrieve membershipList", description = "Retrieve memberships by Account Id")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Memberships found"),
         @ApiResponse(responseCode = "404", description = "No memberships found for the given Account Id")
@@ -68,5 +68,12 @@ public class MembershipController{
     public ResponseEntity<?> createMembership(@RequestBody MembershipRequestDTO request) {
         accountService.store(request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @Operation(summary = "Update a membership", description = "Update a membership in the database")
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateMembership(@PathVariable("id") long id, @RequestBody MembershipRequestDTO request){
+        accountService.update(id, request);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

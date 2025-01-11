@@ -49,11 +49,9 @@ public class MembershipRepository implements IMembershipRepository{
 		} finally {
 			session.close();
 		}
-
 	}
 
-
-	public Membership store (Membership membership) {
+	public void store (Membership membership) {
 		Session session = sessionFactory.openSession();
 
 		try {
@@ -70,6 +68,25 @@ public class MembershipRepository implements IMembershipRepository{
 		} finally {
 			session.close();
 		}
-		return membership;
+	}
+
+	public void update(Membership membership) {
+		Session session = sessionFactory.openSession();
+
+		try {
+			session.beginTransaction();
+			session.merge(membership);
+			session.flush();
+
+			session.getTransaction().commit();
+
+		} catch (HibernateException e) {
+			if (session.getTransaction() != null) {
+				session.getTransaction().rollback();
+			}
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
 	}
 }
