@@ -17,6 +17,10 @@ import org.hibernate.SessionFactory;
 import com.github.pieter_groenendijk.model.Membership;
 import com.github.pieter_groenendijk.repository.IMembershipRepository;
 import com.github.pieter_groenendijk.repository.MembershipRepository;
+import com.github.pieter_groenendijk.model.DTO.MembershipTypeRequestDTO;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import java.util.*;
 
 @RestController
 @RequestMapping("/membershipType") 
@@ -46,7 +50,26 @@ public class MembershipTypeController {
 
     @Operation(summary = "Create a membershipType", description = "Add a new membershipType to the database")
     @PostMapping
-    public MembershipType createMembershipType(@RequestBody MembershipType membershipType) {
-        return accountService.store(membershipType);
+    public ResponseEntity<?> createMembershipType(@RequestBody MembershipTypeRequestDTO membershipType) {
+        accountService.store(membershipType);
+        return ResponseEntity.status(HttpStatus.CREATED);
+    }
+
+    @Operation(summary = "Update a membershipType", description = "Change a membershipType ")
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateMembershipType(@PathVariable("id") long id, @RequestBody MembershipTypeRequestDTO membershipType) {
+        accountService.update(id, membershipType);
+        return ResponseEntity.status(HttpStatus.OK);
+    }
+
+    @Operation(summary = "Retrieve a list of memberships", description = "Retrieve a list of memberships")
+    @GetMapping("/getAll")
+    public ResponseEntity<List<MembershipType>> retrieveMembershipTypeList() {
+        List<MembershipType> membershipTypes = accountService.retrieveMembershipTypeList();
+        if (membershipTypes.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } else {
+            return ResponseEntity.ok(membershipTypes);
+        }
     }
 }
