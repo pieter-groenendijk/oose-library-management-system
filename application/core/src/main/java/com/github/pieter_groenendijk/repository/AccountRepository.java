@@ -51,7 +51,7 @@ public class AccountRepository implements IAccountRepository {
 
             session.getTransaction().commit();
 
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (session.getTransaction() != null) {
                 session.getTransaction().rollback();
             }
@@ -72,7 +72,7 @@ public class AccountRepository implements IAccountRepository {
 
             session.getTransaction().commit();
 
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (session.getTransaction() != null) {
                 session.getTransaction().rollback();
             }

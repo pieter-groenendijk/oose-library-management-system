@@ -39,7 +39,7 @@ public class MembershipTypeRepository implements IMembershipTypeRepository {
 
             session.getTransaction().commit();
 
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (session.getTransaction() != null) {
                 session.getTransaction().rollback();
             }
@@ -76,7 +76,7 @@ public class MembershipTypeRepository implements IMembershipTypeRepository {
 
             session.getTransaction().commit();
 
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (session.getTransaction() != null) {
                 session.getTransaction().rollback();
             }
@@ -95,9 +95,11 @@ public class MembershipTypeRepository implements IMembershipTypeRepository {
                 Root<MembershipType> root = cr.from(MembershipType.class);
                 cr.select(root);
                 return session.createQuery(cr).getResultList();
-            } catch (Exception e) {
+            } catch (HibernateException e) {
+                if (session.getTransaction() != null) {
+                    session.getTransaction().rollback();
+                }
                 e.printStackTrace();
-                throw new RuntimeException("Database query failed", e);
             } finally {
                 session.close();
             }
