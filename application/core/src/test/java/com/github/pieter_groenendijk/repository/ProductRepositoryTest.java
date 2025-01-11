@@ -45,7 +45,6 @@ class ProductRepositoryTest {
             assertTrue(result.isPresent());
             assertEquals(productCopyId, result.get().getProductCopyId());
 
-            // Verify interactions
             verify(sessionFactory).openSession();
             verify(session).get(ProductCopy.class, productCopyId);
             verify(session).close();

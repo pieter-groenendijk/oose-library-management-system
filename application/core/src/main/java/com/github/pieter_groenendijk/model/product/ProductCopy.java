@@ -35,9 +35,6 @@ public class ProductCopy {
     }
 
 
-    public Reservation getReservation() {
-        return null;
-    }
 
     public void setProductCopyId(long productCopyId) {
         this.productCopyId = productCopyId;

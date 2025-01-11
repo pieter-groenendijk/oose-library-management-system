@@ -60,7 +60,7 @@ class ReservationRepositoryTest {
         when(query.setParameter("membershipId", membershipId)).thenReturn(query);
         when(query.getResultList()).thenReturn(reservations);
 
-        List<Reservation> result = reservationRepository.retrieveReservationsByMembershipId(membershipId);
+        List<Reservation> result = reservationRepository.retrieveReservationByMembershipId(membershipId);
 
         verify(session).createQuery("FROM Reservation r WHERE r.membership.id = :membershipId", Reservation.class);
         verify(query).setParameter("membershipId", membershipId);

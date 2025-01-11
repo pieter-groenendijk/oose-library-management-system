@@ -14,4 +14,5 @@ public interface IReservationRepository {
     Reservation updateReservation(Reservation reservation);
 
     List<Reservation> retrieveReservationByMembershipId(long membershipId);
+
 }

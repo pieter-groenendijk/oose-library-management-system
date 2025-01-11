@@ -51,7 +51,7 @@ public class ReservationService implements IReservationService {
         reservation.setReservationStatus(ReservationStatus.ACTIVE);
 
         reservationRepository.store(reservation);
-        return new Reservation();
+        return reservation;
     }
 
     @Override
@@ -106,9 +106,12 @@ public class ReservationService implements IReservationService {
     public void handleProductCopyAvailability(ProductCopy productCopy) {
         if (productCopy.getAvailabilityStatus() == ProductCopyStatus.AVAILABLE) {
             LocalDate reservationPickUpDate = generateReservationPickUpDate(productCopy);
-            Reservation reservation = productCopy.getReservation();
+            Reservation reservation = reservationRepository.retrieveReservationById(productCopy.getProductCopyId())
+                    .orElseThrow(() -> new EntityNotFoundException("Reservation not found for ProductCopy ID " + productCopy.getProductCopyId()));
             reservation.setReservationPickUpDate(reservationPickUpDate);
+            productCopy.setAvailabilityStatus(ProductCopyStatus.RESERVED);
             reservationRepository.updateReservation(reservation);
+            productRepository.updateProductCopy(productCopy);
         }
     }
 
@@ -124,6 +127,7 @@ public class ReservationService implements IReservationService {
         }
         accountRepository.store(account);
     }
+
     @Override
     public void markReservationAsLoaned(long reservationId) {
         Reservation reservation = retrieveReservationById(reservationId);
