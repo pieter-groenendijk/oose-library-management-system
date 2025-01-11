@@ -5,8 +5,7 @@ import jakarta.persistence.*;
 
 
 @Entity
-@Table (name = "ProductCopy")
-public class ProductCopy extends PhysicalProductTemplate {
+public class ProductCopy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productCopyId;
@@ -15,11 +14,9 @@ public class ProductCopy extends PhysicalProductTemplate {
     @JoinColumn(name = "productId", nullable = false)
     private PhysicalProductTemplate physicalProduct;
 
+   @Enumerated(EnumType.STRING)
     @Column (name = "availabilityStatus", nullable = false, length = 50)
-    private String availabilityStatus;
-
-    @Column (name = "isDamaged", nullable = false)
-    private boolean isDamaged;
+    private ProductCopyStatus availabilityStatus;
 
     public void setCopyId(Long productCopyId) {
         this.productCopyId = productCopyId;
@@ -27,14 +24,6 @@ public class ProductCopy extends PhysicalProductTemplate {
 
     public Long getProductCopyId() {
         return productCopyId;
-    }
-
-    public String getAvailabilityStatus() {
-        return availabilityStatus;
-    }
-
-    public void setAvailabilityStatus(String availabilityStatus) {
-        this.availabilityStatus = availabilityStatus;
     }
 
     public PhysicalProductTemplate getPhysicalProduct() {
@@ -45,11 +34,12 @@ public class ProductCopy extends PhysicalProductTemplate {
         this.physicalProduct = physicalProduct;
     }
 
-    public boolean isDamaged() {
-        return isDamaged;
+
+    public ProductCopyStatus getAvailabilityStatus() {
+        return availabilityStatus;
     }
 
-    public void setDamaged(boolean damaged) {
-        isDamaged = damaged;
+    public void setAvailabilityStatus(ProductCopyStatus availabilityStatus) {
+        this.availabilityStatus = availabilityStatus;
     }
 }
