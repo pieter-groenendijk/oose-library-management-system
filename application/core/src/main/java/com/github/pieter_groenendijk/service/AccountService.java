@@ -51,6 +51,7 @@ public class AccountService implements IAccountService {
         account.setGender(request.getGender());
         account.setActive(true);
         account.setUncollectedReservations(0);
+        account.setDeleted(false);
 
         if ( isAccountInputValid(account)) {
             accountRepository.store(account);
