@@ -1,5 +1,6 @@
 package com.github.pieter_groenendijk.repository;
 
+import com.github.pieter_groenendijk.model.DTO.ReservationDTO;
 import com.github.pieter_groenendijk.model.Reservation;
 
 import java.util.List;
@@ -9,9 +10,9 @@ public interface IReservationRepository {
 
     Optional<Reservation> retrieveReservationById(long reservationId);
 
-    void store(Reservation reservation);
-    void updateReservation(Reservation reservation);
-    void deleteReservationById(long reservationId);
+    Reservation store(Reservation reservation);
+    Reservation updateReservation(Reservation reservation);
 
-    List<Reservation> retrieveReservationsByMembershipId(long membershipId);
+    List<Reservation> retrieveReservationByMembershipId(long membershipId);
+
 }

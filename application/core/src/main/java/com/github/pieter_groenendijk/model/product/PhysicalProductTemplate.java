@@ -13,8 +13,7 @@ public abstract class PhysicalProductTemplate extends ProductTemplate {
 
     @Column (name = "author", nullable = false, length = 100)
     private String author;
-    @OneToMany(mappedBy = "physicalProduct", cascade = CascadeType.ALL)
-    private List<ProductCopy> copies;
+
 
 
 // Getters and Setters
@@ -34,11 +33,4 @@ public abstract class PhysicalProductTemplate extends ProductTemplate {
         this.author = author;
     }
 
-    public List<ProductCopy> getCopies() {
-        return copies;
-    }
-
-    public void setCopies(List<ProductCopy> copies) {
-        this.copies = copies;
-    }
 }

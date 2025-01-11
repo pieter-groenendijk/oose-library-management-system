@@ -1,19 +1,18 @@
 package com.github.pieter_groenendijk.repository;
 
+import com.github.pieter_groenendijk.model.DTO.ReservationDTO;
 import com.github.pieter_groenendijk.model.Reservation;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Root;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class ReservationRepository implements IReservationRepository {
 
-    private final SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
     public ReservationRepository(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
@@ -26,51 +25,60 @@ public class ReservationRepository implements IReservationRepository {
 
         try {
             reservation = session.get(Reservation.class, reservationId);
-        } finally {
+        }finally {
             session.close();
         }
         return Optional.ofNullable(reservation);
     }
 
-
     @Override
-    public List<Reservation> retrieveReservationsByMembershipId(long membershipId) {
-        Session session = sessionFactory.openSession();
-        try {
-            CriteriaBuilder cb = session.getCriteriaBuilder();
-            CriteriaQuery<Reservation> cr = cb.createQuery(Reservation.class);
-            Root<Reservation> root = cr.from(Reservation.class);
+    public List<Reservation> retrieveReservationByMembershipId(long membershipId) {
+        try (Session session = sessionFactory.openSession()) {
+            String hql = "FROM Reservation r WHERE r.membership.id = :membershipId";
+            List<Reservation> result = session.createQuery(hql, Reservation.class)
+                    .setParameter("membershipId", membershipId)
+                    .getResultList();
 
-            cr.select(root).where(cb.equal(root.get("membership").get("id"), membershipId));
-
-            return session.createQuery(cr).getResultList();
-        } catch (Exception e) {
+            return result != null ? result : new ArrayList<>();
+        } catch (HibernateException e) {
             e.printStackTrace();
             throw new RuntimeException("Database query failed", e);
-        } finally {
-            session.close();
         }
     }
 
+
     @Override
-    public void store(Reservation reservation) {
-        Session session = sessionFactory.openSession();
-        try {
-            session.beginTransaction();
-            session.persist(reservation);
-            session.flush();
-            session.getTransaction().commit();
-        } catch (HibernateException e) {
-            if (session.getTransaction() != null) {
-                session.getTransaction().rollback();
+    public Reservation store(Reservation reservation) {
+            Session session = sessionFactory.openSession();
+            try {
+                System.out.println("Attempting to save reservation: " + reservation);
+                session.beginTransaction();
+                session.persist(reservation);
+                session.flush();
+                session.getTransaction().commit();
+
+                System.out.println("Reservation successfully saved: " + reservation);
+            } catch (HibernateException e) {
+
+                System.err.println("Error occurred while saving reservation: " + e.getMessage());
+                e.printStackTrace();
+
+
+                if (session.getTransaction() != null) {
+                    session.getTransaction().rollback();
+                }
+
+
+                throw new RuntimeException("Error occurred while storing reservation", e);
+            } finally {
+
+                session.close();
             }
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
+            return reservation;
+
     }
-    @Override
-    public void updateReservation(Reservation reservation) {
+        @Override
+    public Reservation updateReservation(Reservation reservation) {
         Session session = sessionFactory.openSession();
         try {
             session.beginTransaction();
@@ -84,24 +92,10 @@ public class ReservationRepository implements IReservationRepository {
         } finally {
             session.close();
         }
+        return reservation;
     }
 
-    @Override
-    public void deleteReservationById(long reservationId) {
-        Session session = sessionFactory.openSession();
-        try {
-            session.beginTransaction();
-            Reservation reservation = session.get(Reservation.class, reservationId);
-            session.remove(reservation);
-            session.getTransaction().commit();
-            } catch (HibernateException e) {
-                if (session.getTransaction() != null) {
-                    session.getTransaction().rollback();
-                }
-                e.printStackTrace();
-            } finally {
-                session.close();
-        }
-    }
+
+
 
 }

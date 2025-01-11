@@ -13,4 +13,6 @@ public interface IProductService {
     ProductTemplate updateProduct(ProductTemplate product);
 
     ProductCopy updateProductCopy(ProductCopy productCopy);
+
+    ProductCopy retrieveProductByCopyId(long productCopyId);
 }

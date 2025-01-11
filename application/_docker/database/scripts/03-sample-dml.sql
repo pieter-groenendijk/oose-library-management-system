@@ -46,38 +46,18 @@ INSERT INTO
     "FineType" ("title", "amountInCents")
 VALUES
     ('day-overdue-lending', 20),
-    ('uncollected-reservation-pattern', 1000)
+    ('uncollected-reservation-pattern', 1000);
 
 
 -- endregion
-
--- Insert data into Loan table
-INSERT INTO "Loan" ("loanId", "startDate", "returnBy", "returnedOn", "extendedReturnBy", "loanStatus", "membershipId", "productCopyId")
-VALUES (1, '2024-01-01', '2024-01-15', NULL, NULL, 'RETURNED', 1, 1),
-       (2, '2024-02-01', '2024-02-14', '2024-02-10', NULL, 'RETURNED', 1, 2),
-       (3, '2024-03-01', '2024-03-15', NULL, NULL, 'RETURNED', 1, 3);
-
--- Insert data into Reservation table
-INSERT INTO "Reservation" ("reservationId", "reservationDate", "isActive", "membershipId", "productCopyId")
-VALUES (1, '2024-12-09', FALSE, 1, 1),
-       (2, '2024-12-10', FALSE, 2, 2),
-       (3, '2024-12-11', FALSE, 3, 3),
-       (4, '2024-12-12', FALSE, 4, 4),
-       (5, '2024-12-13', FALSE, 5, 5),
-       (6, '2024-12-14', FALSE, 1, 1),
-       (7, '2024-12-15', TRUE, 2, 2),
-       (8, '2024-12-16', TRUE, 3, 3),
-       (9, '2024-12-17', TRUE, 4, 4),
-       (10, '2024-12-18', TRUE, 5, 5);
-
 -- Insert a product in to database
 INSERT INTO "ProductTemplate" ("productId", "name", "genre", "yearOfRelease", "description", "type", "ageClassification", "mediaType")
 VALUES
-    (1, '1984', 'Thriller', 1949, 'A novel by George Orwell', 'BOOK', 18, 'PHYSICAL'),
-    (2, 'The Great Gatsby', 'Classic', 1925, 'A novel by F. Scott Fitzgerald', 'BOOK', 18, 'PHYSICAL'),
-    (3, 'Moby-Dick', 'Classic', 1851, 'A novel by Herman Melville', 'BOOK', 18, 'PHYSICAL'),
-    (4, 'To Kill a Mockingbird', 'Drama', 1960, 'A novel by Harper Lee', 'BOOK', 18, 'PHYSICAL'),
-    (5, 'Pride and Prejudice', 'Romance', 1813, 'A novel by Jane Austen', 'BOOK', 18, 'PHYSICAL');
+    (1, '1984', 'Thriller', 1949, 'A novel by George Orwell', 'BOOK', 18, 'BOOK'),
+    (2, 'The Great Gatsby', 'Classic', 1925, 'A novel by F. Scott Fitzgerald', 'BOOK', 18, 'BOOK'),
+    (3, 'Moby-Dick', 'Classic', 1851, 'A novel by Herman Melville', 'BOOK', 18, 'BOOK'),
+    (4, 'To Kill a Mockingbird', 'Drama', 1960, 'A novel by Harper Lee', 'BOOK', 18, 'BOOK'),
+    (5, 'Pride and Prejudice', 'Romance', 1813, 'A novel by Jane Austen', 'BOOK', 18, 'BOOK');
 
 
 INSERT INTO "PhysicalProductTemplate" ("productId", "location", "author")
@@ -97,10 +77,30 @@ VALUES
     (5, 1234567894, 'Jane Austen');
 
 
-INSERT INTO "ProductCopy" ("productCopyId", "availabilityStatus", "productId")
+INSERT INTO "ProductCopy" ("productCopyId", "productId", "availabilityStatus")
 VALUES
-    (1, 'AVAILABLE', 1),
-    (2, 'AVAILABLE', 2),
-    (3, 'AVAILABLE', 3),
-    (4, 'AVAILABLE', 4),
-    (5, 'AVAILABLE', 5);
+    (1, 1, 'AVAILABLE'),
+    (2, 2, 'AVAILABLE'),
+    (3, 3, 'AVAILABLE'),
+    (4, 4, 'AVAILABLE'),
+    (5, 5, 'AVAILABLE');
+
+-- Insert data into Loan table
+INSERT INTO "Loan" ("loanId", "startDate", "returnBy", "returnedOn", "extendedReturnBy", "loanStatus", "membershipId", "productCopyId")
+VALUES (1, '2024-01-01', '2024-01-15', '2024-01-05', NULL, 'RETURNED', 1, 1),
+       (2, '2024-02-01', '2024-02-14', '2024-02-10', NULL, 'ACTIVE', 1, 2),
+       (3, '2024-03-01', '2024-03-15', NULL, NULL, 'ACTIVE', 1, 3);
+
+-- Insert data into Reservation table
+INSERT INTO "Reservation" ("reservationId", "reservationDate", "readyForPickup", "reservationPickUpDate", "productCopyId","membershipId", "reservationStatus")
+VALUES (1, '2024-12-09', 'FALSE','2024-12-16',  1, 1, 'LOANED'),
+       (2, '2024-12-10', 'FALSE','2024-12-17', 1, 2, 'LOANED'),
+       (3, '2024-12-11', 'FALSE','2024-12-18', 2, 3, 'LOANED'),
+       (4, '2024-12-12','FALSE', '2024-12-19', 3, 4, 'LOANED'),
+       (5, '2024-12-13','FALSE','2024-12-20', 4, 5, 'LOANED'),
+       (6, '2024-12-14', 'FALSE','2024-12-21', 5, 6, 'LOANED'),
+       (7, '2024-12-15', 'FALSE','2024-12-22', 1, 1, 'LOANED'),
+       (8, '2024-12-16','FALSE', '2024-12-23', 2, 2, 'LOANED'),
+       (9, '2024-12-17','FALSE', '2024-12-24', 3, 3, 'LOANED'),
+       (10, '2024-12-18', 'FALSE','2024-12-25', 4, 4, 'LOANED');
+
