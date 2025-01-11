@@ -7,7 +7,7 @@ import com.github.pieter_groenendijk.repository.event.IEventRepository;
 import java.time.LocalDateTime;
 
 public class AlmostOverdueLoanDetachedEventGenerator extends DetachedLoanEventGenerator {
-    protected AlmostOverdueLoanDetachedEventGenerator(IEventRepository repository) {
+    public AlmostOverdueLoanDetachedEventGenerator(IEventRepository repository) {
         super(
             repository,
             EventType.ALMOST_OVERDUE_LOAN
