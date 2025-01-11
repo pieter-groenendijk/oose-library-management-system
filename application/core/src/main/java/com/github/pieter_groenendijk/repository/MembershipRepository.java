@@ -38,9 +38,11 @@ public class MembershipRepository implements IMembershipRepository{
 			cr.select(root).where(cb.equal(root.get("account").get("id"), accountId));
 
 			return session.createQuery(cr).getResultList();
-		} catch (Exception e) {
-			e.printStackTrace(); 
-			throw new RuntimeException("Database query failed", e);
+		} catch (HibernateException e) {
+			if (session.getTransaction() != null) {
+				session.getTransaction().rollback();
+			}
+			e.printStackTrace();
 		} finally {
 			session.close();
 		}
@@ -56,7 +58,7 @@ public class MembershipRepository implements IMembershipRepository{
 			session.flush();
 
 			session.getTransaction().commit();
-		} catch (Exception e) {
+		} catch (HibernateException e) {
 			if (session.getTransaction() != null) {
 				session.getTransaction().rollback();
 			}

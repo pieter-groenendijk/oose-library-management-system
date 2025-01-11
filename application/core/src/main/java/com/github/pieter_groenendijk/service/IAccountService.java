@@ -6,6 +6,7 @@ import com.github.pieter_groenendijk.repository.IAccountRepository;
 import com.github.pieter_groenendijk.repository.IMembershipTypeRepository;
 import com.github.pieter_groenendijk.model.Membership;
 import com.github.pieter_groenendijk.model.DTO.MembershipRequestDTO;
+import com.github.pieter_groenendijk.model.DTO.MembershipTypeRequestDTO;
 import com.github.pieter_groenendijk.repository.IMembershipRepository;
 import java.util.List;
 import com.github.pieter_groenendijk.model.DTO.AccountRequestDTO;
@@ -19,10 +20,8 @@ public interface IAccountService {
     Account store(AccountRequestDTO account);
 
     Account update(long id, AccountRequestDTO account);
-
-    Account deleteAccount(long id);
     
-    MembershipType store(MembershipType membershipType);
+    MembershipType store(MembershipTypeRequestDTO membershipType);
     
     Membership retrieveMembershipById(long id);
     
@@ -30,6 +29,10 @@ public interface IAccountService {
 
     List<Membership> retrieveMembershipsByAccountId (long id);
 
-    void toggleIsActive(long id, boolean newValue);
+    void setIsActive(long id, boolean newValue);
+
+    void update(long id, MembershipTypeRequestDTO request);
+
+    List<MembershipType> retrieveMembershipTypeList();
 
 }

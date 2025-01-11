@@ -1,10 +1,10 @@
 -- Insert data into MembershipType table
-INSERT INTO "MembershipType" ("membershipTypeId", "description", "digitalProducts", "physicalProducts", "maxLendings") VALUES
-(1, 'Basic Membership', TRUE, FALSE, 2),
-(2, 'Premium Membership', TRUE, TRUE, 5),
-(3, 'Digital Only', TRUE, FALSE, 3),
-(4, 'Physical Only', FALSE, TRUE, 4),
-(5, 'VIP Membership', TRUE, TRUE, 10);
+INSERT INTO "MembershipType" ("description", "digitalProducts", "physicalProducts", "maxLendings") VALUES
+('Basic Membership', TRUE, FALSE, 2),
+('Premium Membership', TRUE, TRUE, 5),
+('Digital Only', TRUE, FALSE, 3),
+('Physical Only', FALSE, TRUE, 4),
+('VIP Membership', TRUE, TRUE, 10);
 
 INSERT INTO "Account" ("email", "firstName", "lastName", "dateOfBirth", "gender", "isActive", "uncollectedReservations") VALUES
 ('john.doe@example.com', 'John', 'Doe', '1990-01-01', 'M', TRUE, 0),

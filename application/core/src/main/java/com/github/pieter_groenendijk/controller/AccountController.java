@@ -48,28 +48,21 @@ public class AccountController {
     @Operation(summary = "Create an account", description = "Add a new account to the database")
     @PostMapping
     public ResponseEntity<?> createAccount(@RequestBody AccountRequestDTO account) {
-
         accountService.store(account);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Succes!");
-
+        return ResponseEntity.status(HttpStatus.OK);
     }
 
     @Operation(summary = "Update an account", description = "Update an account in the database")
     @PutMapping("/{id}")
-    public Account updateAccount(@PathVariable("id") long id, @RequestBody AccountRequestDTO account){
-        return accountService.update(id, account);
+    public ResponseEntity<?> updateAccount(@PathVariable("id") long id, @RequestBody AccountRequestDTO account){
+        accountService.update(id, account);
+        return ResponseEntity.status(HttpStatus.OK);
     }
 
-    @Operation(summary = "Delete an account", description = "Delete an account from the database")
-    @DeleteMapping("/{id}")
-    public Account deleteAccount(@PathVariable("id") long id){
-        return accountService.deleteAccount(id);
-    }
-
-    @Operation(summary = "Toggle account active", description = "Toggle an account from active to inactive and back")
-    @PostMapping("/toggleActive/{id}")
-    public ResponseEntity<?> toggleAccountActive(@PathVariable("id") long id, @RequestBody boolean newValue) {
-        accountService.toggleIsActive(id, newValue);
-        return ResponseEntity.status(HttpStatus.OK).body("Succes!");
+    @Operation(summary = "Set account active", description = "Set an account from active to inactive and back")
+    @PostMapping("/setActive/{id}")
+    public ResponseEntity<?> setAccountActive(@PathVariable("id") long id, @RequestBody boolean newValue) {
+        accountService.setIsActive(id, newValue);
+        return ResponseEntity.status(HttpStatus.OK);
     }
 }
