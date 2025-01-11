@@ -43,9 +43,9 @@ public class MembershipTypeController {
         @ApiResponse(responseCode = "404", description = "MembershipType not found")
     })
     @GetMapping("/{id}")
-    public MembershipType retrieveMembershipTypeById(@PathVariable("id") long id) {
+    public ResponseEntity<?> retrieveMembershipTypeById(@PathVariable("id") long id) {
         MembershipType membershipType = accountService.retrieveMembershipTypeById(id);
-        return membershipType;
+        return ResponseEntity.ok(membershipType);
     }
 
     @Operation(summary = "Create a membershipType", description = "Add a new membershipType to the database")

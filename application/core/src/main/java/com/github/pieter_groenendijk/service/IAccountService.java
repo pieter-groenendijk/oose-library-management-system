@@ -21,7 +21,7 @@ public interface IAccountService {
 
     void update(long id, AccountRequestDTO account);
     
-    MembershipType store(MembershipTypeRequestDTO membershipType);
+    void store(MembershipTypeRequestDTO membershipType);
     
     Membership retrieveMembershipById(long id);
     

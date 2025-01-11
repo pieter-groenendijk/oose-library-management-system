@@ -119,7 +119,7 @@ public class AccountService implements IAccountService {
                 .orElseThrow(() -> new EntityNotFoundException("Membershiptype with ID " + id + " not found."));
     }
 
-    public MembershipType store(MembershipTypeRequestDTO request){
+    public void store(MembershipTypeRequestDTO request){
         if (request.getMaxLendings() <= 0) {
             throw new InputValidationException("MaxLendings should be at least 1!");
         }
@@ -134,7 +134,7 @@ public class AccountService implements IAccountService {
         membershipType.setPhysicalProducts(request.isPhysicalProducts());
         membershipType.setMaxLendings(request.getMaxLendings());
 
-        return membershipTypeRepository.store(membershipType);
+        membershipTypeRepository.store(membershipType);
     }
 
     public void update(long id, MembershipTypeRequestDTO request) {
