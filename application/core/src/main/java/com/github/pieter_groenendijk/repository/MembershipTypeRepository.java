@@ -6,9 +6,11 @@ import org.hibernate.SessionFactory;
 import java.util.Optional;
 import com.github.pieter_groenendijk.model.DTO.MembershipRequestDTO;
 import java.util.List;
+import java.util.Collections;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
+import org.hibernate.HibernateException;
 
 public class MembershipTypeRepository implements IMembershipTypeRepository {
 
@@ -100,6 +102,7 @@ public class MembershipTypeRepository implements IMembershipTypeRepository {
                     session.getTransaction().rollback();
                 }
                 e.printStackTrace();
+                return Collections.emptyList();
             } finally {
                 session.close();
             }

@@ -4,6 +4,7 @@ import com.github.pieter_groenendijk.model.Account;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import java.util.Optional;
+import org.hibernate.HibernateException;
 
 public class AccountRepository implements IAccountRepository {
 
