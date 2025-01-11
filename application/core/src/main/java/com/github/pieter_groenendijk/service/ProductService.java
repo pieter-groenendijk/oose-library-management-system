@@ -1,5 +1,6 @@
 package com.github.pieter_groenendijk.service;
 
+import com.github.pieter_groenendijk.exception.EntityNotFoundException;
 import com.github.pieter_groenendijk.model.product.ProductCopy;
 import com.github.pieter_groenendijk.model.product.ProductCopyStatus;
 import com.github.pieter_groenendijk.model.product.ProductTemplate;
@@ -50,5 +51,11 @@ public class ProductService implements IProductService {
         }
 
         return productRepository.updateProductCopy(productCopy);
+    }
+
+    @Override
+    public ProductCopy retrieveProductByCopyId(long productCopyId) {
+        return productRepository.retrieveProductCopyById(productCopyId)
+                .orElseThrow(() -> new EntityNotFoundException("Reservation with ID " + productCopyId + " not found."));
     }
 }

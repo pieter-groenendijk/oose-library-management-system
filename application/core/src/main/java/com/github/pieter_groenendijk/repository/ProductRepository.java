@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public class ProductRepository implements IProductRepository {
 
-    private SessionFactory sessionFactory;
+    SessionFactory sessionFactory;
 
     public ProductRepository(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
@@ -95,24 +95,12 @@ public class ProductRepository implements IProductRepository {
         return product;
     }
 
-    public Optional<ProductCopy> retrieveProductCopyById(Long productCopyId) {
-        Session session = sessionFactory.openSession();
-        ProductCopy productCopy = null;
-
-        try {
-            productCopy = session.get(ProductCopy.class, productCopyId);
-        } finally {
-            session.close();
-        }
-        return Optional.ofNullable(productCopy);
-    }
-
     public ProductCopy updateProductCopy(ProductCopy productCopy) {
         Session session = sessionFactory.openSession();
 
         try {
             session.beginTransaction();
-            session.merge(productCopy); // Merge the productCopy object
+            session.merge(productCopy);
             session.getTransaction().commit();
         } catch (Exception e) {
             if (session.getTransaction() != null) {
@@ -127,15 +115,16 @@ public class ProductRepository implements IProductRepository {
 
     @Override
     public Optional<ProductCopy> retrieveProductCopyById(long productCopyId) {
-        Session session = sessionFactory.openSession();
-        ProductCopy productCopy;
-
-        try {
-            productCopy = session.get(ProductCopy.class, productCopyId);
-        } finally {
-            session.close();
+        try (Session session = sessionFactory.openSession()) {
+            ProductCopy productCopy = session.get(ProductCopy.class, productCopyId);
+            if (productCopy == null) {
+                throw new IllegalStateException("ProductCopy with ID " + productCopyId + " not found in the database.");
+            }
+            return Optional.of(productCopy);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Optional.empty();
         }
-        return Optional.ofNullable(productCopy);
     }
 }
 

@@ -50,34 +50,37 @@ class ReservationServiceTest {
         when(reservationRepository.retrieveReservationById(1L)).thenReturn(Optional.empty());
         assertTrue(true);
     }
-/*
+
+    public ReservationServiceTest() {
+        MockitoAnnotations.openMocks(this);
+    }
+
     @Test
     void store() {
-        ReservationDTO reservationDTO = new ReservationDTO();
-        reservationDTO.setReservationDate(LocalDate.now());
-        reservationDTO.setReservationStatus(ReservationStatus.ACTIVE);
-        ProductCopy mockProductCopy = null;
-        reservationDTO.setMembershipId(1L);
+            ReservationDTO reservationDTO = new ReservationDTO();
+            reservationDTO.setReservationDate(LocalDate.now());
+            reservationDTO.setReservationStatus(ReservationStatus.ACTIVE);
+            reservationDTO.setMembershipId(1L);
 
-        mockProductCopy = mock(ProductCopy.class);
-        Membership mockMembership = mock(Membership.class);
+            ProductCopy mockProductCopy = mock(ProductCopy.class);
+            Membership mockMembership = mock(Membership.class);
 
-        when(productRepository.retrieveProductCopyById(1L)).thenReturn(Optional.of(mockProductCopy));
-        when(membershipRepository.retrieveMembershipById(1L)).thenReturn(Optional.of(mockMembership));
+            when(productRepository.retrieveProductCopyById(1L)).thenReturn(Optional.of(mockProductCopy));
+            when(membershipRepository.retrieveMembershipById(1L)).thenReturn(Optional.of(mockMembership));
 
-        Reservation mockReservation = new Reservation();
-        mockReservation.setReservationStatus(ReservationStatus.ACTIVE);
-        when(reservationRepository.store(any(Reservation.class))).thenReturn(mockReservation);
+            Reservation mockReservation = new Reservation();
+            mockReservation.setReservationStatus(ReservationStatus.ACTIVE);
+            when(reservationRepository.store(any(Reservation.class))).thenReturn(mockReservation);
 
-        ReservationService mockReservationService = spy(reservationService);
-        doNothing().when(mockReservationService).handleProductCopyAvailability(any(ProductCopy.class));
+            ReservationService mockReservationService = spy(reservationService);
+            doNothing().when(mockReservationService).handleProductCopyAvailability(any(ProductCopy.class));
 
-        Reservation storedReservation = mockReservationService.store(reservationDTO);
+            Reservation storedReservation = mockReservationService.store(reservationDTO);
 
-        verify(reservationRepository).store(any(Reservation.class));
-        verify(mockReservationService, times(1)).handleProductCopyAvailability(mockProductCopy);
-        assertEquals(ReservationStatus.ACTIVE, storedReservation.getReservationStatus());
-    } */
+            verify(reservationRepository).store(any(Reservation.class));
+            verify(mockReservationService, times(1)).handleProductCopyAvailability(mockProductCopy);
+            assertEquals(ReservationStatus.ACTIVE, storedReservation.getReservationStatus());
+        }
 
 
 @Test

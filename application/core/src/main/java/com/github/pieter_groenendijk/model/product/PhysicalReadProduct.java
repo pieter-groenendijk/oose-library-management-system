@@ -1,11 +1,10 @@
 package com.github.pieter_groenendijk.model.product;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 @Entity
+@DiscriminatorValue("PhysicalReadProduct")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class PhysicalReadProduct extends PhysicalProductTemplate{
 
     @Column(name = "ISBN", nullable = true)

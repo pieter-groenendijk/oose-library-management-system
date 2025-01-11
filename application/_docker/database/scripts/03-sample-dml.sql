@@ -77,13 +77,13 @@ VALUES
     (5, 1234567894, 'Jane Austen');
 
 
-INSERT INTO "ProductCopy" ("productCopyId", "availabilityStatus", "productId")
+INSERT INTO "ProductCopy" ("productCopyId", "productId", "availabilityStatus")
 VALUES
-    (1, 'AVAILABLE', 1),
-    (2, 'AVAILABLE', 2),
-    (3, 'AVAILABLE', 3),
-    (4, 'AVAILABLE', 4),
-    (5, 'AVAILABLE', 5);
+    (1, 1, 'AVAILABLE'),
+    (2, 2, 'AVAILABLE'),
+    (3, 3, 'AVAILABLE'),
+    (4, 4, 'AVAILABLE'),
+    (5, 5, 'AVAILABLE');
 
 -- Insert data into Loan table
 INSERT INTO "Loan" ("loanId", "startDate", "returnBy", "returnedOn", "extendedReturnBy", "loanStatus", "membershipId", "productCopyId")

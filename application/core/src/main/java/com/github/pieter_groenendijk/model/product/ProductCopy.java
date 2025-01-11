@@ -6,22 +6,20 @@ import jakarta.persistence.*;
 
 
 @Entity
+@DiscriminatorValue("ProductCopy")
 public class ProductCopy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productCopyId;
 
-   @ManyToOne
+    @ManyToOne
     @JoinColumn(name = "productId", nullable = false)
     private PhysicalProductTemplate physicalProduct;
 
-   @Enumerated(EnumType.STRING)
-    @Column (name = "availabilityStatus", nullable = false, length = 50)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "availabilityStatus", nullable = false, length = 50)
     private ProductCopyStatus availabilityStatus;
 
-    public void setCopyId(Long productCopyId) {
-        this.productCopyId = productCopyId;
-    }
 
     public Long getProductCopyId() {
         return productCopyId;
@@ -35,7 +33,6 @@ public class ProductCopy {
         this.physicalProduct = physicalProduct;
     }
 
-
     public ProductCopyStatus getAvailabilityStatus() {
         return availabilityStatus;
     }
@@ -44,7 +41,12 @@ public class ProductCopy {
         this.availabilityStatus = availabilityStatus;
     }
 
+
     public Reservation getReservation() {
-    return null;
+        return null;
+    }
+
+    public void setProductCopyId(long productCopyId) {
+        this.productCopyId = productCopyId;
     }
 }
