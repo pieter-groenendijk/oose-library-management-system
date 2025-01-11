@@ -4,6 +4,7 @@ import com.github.pieter_groenendijk.model.Account;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import java.util.Optional;
+import org.hibernate.HibernateException;
 
 public class AccountRepository implements IAccountRepository {
 
@@ -25,6 +26,22 @@ public class AccountRepository implements IAccountRepository {
         return Optional.ofNullable(account);
     }
 
+    public boolean doesAccountExistByEmail(String email) {
+        Session session = sessionFactory.openSession();
+        Account account;
+
+        try {
+            String hql = "FROM Account a WHERE a.email = :email";
+            account = session.createQuery(hql, Account.class)
+                    .setParameter("email", email)
+                    .uniqueResult();
+        } finally {
+            session.close();
+        }
+
+        return account != null;
+    }
+
     public Account store(Account account) {
         Session session = sessionFactory.openSession();
 
@@ -35,7 +52,7 @@ public class AccountRepository implements IAccountRepository {
 
             session.getTransaction().commit();
 
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (session.getTransaction() != null) {
                 session.getTransaction().rollback();
             }
@@ -46,26 +63,24 @@ public class AccountRepository implements IAccountRepository {
         return account;
     }
 
-    public Optional<Account> deleteAccountById(long id) {
-        Session session = null;  // Initialize to null
-        Account account = null;  // Initialize to null
+    public Account update(Account account) {
+        Session session = sessionFactory.openSession();
 
         try {
-            session = sessionFactory.openSession();
             session.beginTransaction();
+            session.merge(account);
+            session.flush();
 
-            account = session.get(Account.class, id);
-            if (account != null) {
-                session.delete(account);
-                session.getTransaction().commit();
-            } else {
+            session.getTransaction().commit();
+
+        } catch (HibernateException e) {
+            if (session.getTransaction() != null) {
                 session.getTransaction().rollback();
             }
+            e.printStackTrace();
         } finally {
-            if (session != null) {
-                session.close();
-            }
+            session.close();
         }
-        return Optional.ofNullable(account);  // Now account is definitely initialized
+        return account;
     }
 }

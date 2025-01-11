@@ -124,8 +124,7 @@ CREATE TABLE "PhysicalReadProduct" (
 CREATE TABLE "ProductCopy"
 (
     "productCopyId"      BIGSERIAL PRIMARY KEY,
-    "availabilityStatus" VARCHAR(100) NOT NULL,
-    "isDamaged"          BOOLEAN      NOT NULL,
+    "availabilityStatus" VARCHAR(50) NOT NULL,
     "productId"          BIGSERIAL      NOT NULL,
     CONSTRAINT fk_physical_product_template FOREIGN KEY ("productId") REFERENCES "PhysicalProductTemplate" ("productId")
 );
@@ -136,6 +135,7 @@ CREATE TABLE "Loan"
     "startDate"     DATE   NOT NULL,
     "returnBy"      DATE,
     "returnedOn"    DATE,
+    "extendedReturnBy" DATE,
     "loanStatus"    VARCHAR(50),
     "membershipId"  BIGSERIAL NOT NULL,
     "productCopyId" BIGSERIAL NOT NULL,
