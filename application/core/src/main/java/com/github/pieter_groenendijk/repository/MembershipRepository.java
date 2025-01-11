@@ -5,9 +5,11 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import java.util.Optional;
 import java.util.List;
+import java.util.Collections;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
+import org.hibernate.HibernateException;
 
 public class MembershipRepository implements IMembershipRepository{
 	private SessionFactory sessionFactory;
@@ -43,9 +45,11 @@ public class MembershipRepository implements IMembershipRepository{
 				session.getTransaction().rollback();
 			}
 			e.printStackTrace();
+			return Collections.emptyList();
 		} finally {
 			session.close();
 		}
+
 	}
 
 
