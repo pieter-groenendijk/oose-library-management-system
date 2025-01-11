@@ -29,7 +29,7 @@ public interface IAccountService {
 
     List<Membership> retrieveMembershipsByAccountId (long id);
 
-    void toggleIsActive(long id, boolean newValue);
+    void setIsActive(long id, boolean newValue);
 
     void update(long id, MembershipTypeRequestDTO request);
 

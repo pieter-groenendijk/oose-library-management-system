@@ -59,10 +59,10 @@ public class AccountController {
         return ResponseEntity.status(HttpStatus.OK);
     }
 
-    @Operation(summary = "Toggle account active", description = "Toggle an account from active to inactive and back")
-    @PostMapping("/toggleActive/{id}")
-    public ResponseEntity<?> toggleAccountActive(@PathVariable("id") long id, @RequestBody boolean newValue) {
-        accountService.toggleIsActive(id, newValue);
+    @Operation(summary = "Set account active", description = "Set an account from active to inactive and back")
+    @PostMapping("/setActive/{id}")
+    public ResponseEntity<?> setAccountActive(@PathVariable("id") long id, @RequestBody boolean newValue) {
+        accountService.setIsActive(id, newValue);
         return ResponseEntity.status(HttpStatus.OK);
     }
 }

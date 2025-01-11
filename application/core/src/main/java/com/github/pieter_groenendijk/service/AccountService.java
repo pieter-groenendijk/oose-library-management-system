@@ -101,7 +101,7 @@ public class AccountService implements IAccountService {
         return true;
     }
 
-    public void toggleIsActive(long id, boolean newValue) {
+    public void setIsActive(long id, boolean newValue) {
         Account retrievedAccount =  retrieveAccountById(id);
         if (retrievedAccount == null) {
             throw new EntityNotFoundException("Account with ID " + id + " not found.");
