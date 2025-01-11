@@ -16,7 +16,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
+@RequestMapping("/product")
 public class ProductController {
     private IProductService productService;
     private SessionFactory sessionFactory = new SessionFactoryFactory().create();
@@ -26,10 +30,10 @@ public class ProductController {
         productService = new ProductService(productRepository);
     }
 
-    @Operation(summary = "Get all reservation details by reservationId", description = "Get reservation details by reservationId")
+    @Operation(summary = "Get all ProductCopy details by product", description = "Get product details by product")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Reservation found"),
-            @ApiResponse(responseCode = "404", description = "No reservation found for the given reservationId\"")
+            @ApiResponse(responseCode = "200", description = "Product found"),
+            @ApiResponse(responseCode = "404", description = "No product found for the given productId")
     })
     @GetMapping("/{productCopyId}")
     public ResponseEntity<ProductCopy> retrieveProductByCopyId(@PathVariable("productCopyId") long productCopyId) {

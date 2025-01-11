@@ -5,6 +5,7 @@ import com.github.pieter_groenendijk.model.product.ProductCopy;
 import com.github.pieter_groenendijk.model.product.ProductCopyStatus;
 import com.github.pieter_groenendijk.model.product.ProductTemplate;
 import com.github.pieter_groenendijk.repository.IProductRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
@@ -52,8 +53,7 @@ public class ProductService implements IProductService {
 
         return productRepository.updateProductCopy(productCopy);
     }
-
-    @Override
+@Override
     public ProductCopy retrieveProductByCopyId(long productCopyId) {
         return productRepository.retrieveProductCopyById(productCopyId)
                 .orElseThrow(() -> new EntityNotFoundException("Reservation with ID " + productCopyId + " not found."));

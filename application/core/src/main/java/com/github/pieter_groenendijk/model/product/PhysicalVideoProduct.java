@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 
 @Entity
 @DiscriminatorValue("PhysicalVideoProduct")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class PhysicalVideoProduct extends PhysicalProductTemplate{
     @Column(name = "duration", nullable = true)
     public int duration;

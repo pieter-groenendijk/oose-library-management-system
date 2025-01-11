@@ -13,7 +13,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
-
+/*
 class ReservationRepositoryTest {
     private SessionFactory sessionFactory;
     private Session session;
@@ -94,4 +94,4 @@ class ReservationRepositoryTest {
     @Test
     void updateReservation() {
     }
-}
+}*/

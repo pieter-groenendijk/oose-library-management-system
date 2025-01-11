@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class PhysicalProductTemplate extends ProductTemplate {
 
     @Column(name = "location", nullable = false, length = 100)
@@ -13,8 +13,7 @@ public abstract class PhysicalProductTemplate extends ProductTemplate {
 
     @Column (name = "author", nullable = false, length = 100)
     private String author;
-    @OneToMany(mappedBy = "physicalProduct", cascade = CascadeType.ALL)
-    private List<ProductCopy> copies;
+
 
 
 // Getters and Setters
@@ -34,11 +33,4 @@ public abstract class PhysicalProductTemplate extends ProductTemplate {
         this.author = author;
     }
 
-    public List<ProductCopy> getCopies() {
-        return copies;
-    }
-
-    public void setCopies(List<ProductCopy> copies) {
-        this.copies = copies;
-    }
 }
