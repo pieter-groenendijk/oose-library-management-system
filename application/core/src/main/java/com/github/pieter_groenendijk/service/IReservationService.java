@@ -4,11 +4,13 @@ import com.github.pieter_groenendijk.model.Reservation;
 import com.github.pieter_groenendijk.model.product.ProductCopy;
 
 import java.time.LocalDate;
+import java.util.List;
 
 
 public interface IReservationService {
     Reservation store(ReservationDTO reservation);
     Reservation retrieveReservationById(long reservationId);
+    List<Reservation> reservation(long membershipId);
     Reservation updateReservation(Reservation reservation);
     void cancelReservation(long reservationId);
     boolean readyForPickup(long reservationId);

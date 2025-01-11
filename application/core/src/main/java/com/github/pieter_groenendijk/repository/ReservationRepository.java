@@ -6,6 +6,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,14 +31,15 @@ public class ReservationRepository implements IReservationRepository {
         return Optional.ofNullable(reservation);
     }
 
-
     @Override
-    public List<Reservation> retrieveReservationsByMembershipId(long membershipId) {
+    public List<Reservation> retrieveReservationByMembershipId(long membershipId) {
         try (Session session = sessionFactory.openSession()) {
             String hql = "FROM Reservation r WHERE r.membership.id = :membershipId";
-            return session.createQuery(hql, Reservation.class)
+            List<Reservation> result = session.createQuery(hql, Reservation.class)
                     .setParameter("membershipId", membershipId)
                     .getResultList();
+
+            return result != null ? result : new ArrayList<>();
         } catch (HibernateException e) {
             e.printStackTrace();
             throw new RuntimeException("Database query failed", e);
@@ -91,6 +93,8 @@ public class ReservationRepository implements IReservationRepository {
         }
         return reservation;
     }
+
+
 
 
 }

@@ -12,6 +12,7 @@ import com.github.pieter_groenendijk.repository.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import static com.github.pieter_groenendijk.model.ReservationStatus.ACTIVE;
 import static com.github.pieter_groenendijk.service.ServiceUtils.PICKUP_DAYS;
@@ -57,6 +58,11 @@ public class ReservationService implements IReservationService {
     public Reservation retrieveReservationById(long reservationId) {
         return reservationRepository.retrieveReservationById(reservationId)
                 .orElseThrow(() -> new EntityNotFoundException("Reservation with ID " + reservationId + " not found."));
+    }
+
+    @Override
+    public List<Reservation> reservation(long membershipId) {
+        return reservationRepository.retrieveReservationByMembershipId(membershipId);
     }
 
     @Override
@@ -110,8 +116,7 @@ public class ReservationService implements IReservationService {
     public void handleUncollectedReservations(long accountId, LocalDate currentDate) {
         Membership membership = getMembership(accountId);
         Account account = membership.getAccount();
-        List<Reservation> reservations = reservationRepository.retrieveReservationsByMembershipId(membership.getMembershipId());
-
+        List<Reservation> reservations = reservationRepository.retrieveReservationByMembershipId(membership.getMembershipId());
         for (Reservation reservation : reservations) {
             if (shouldExpireReservation(reservation, currentDate)) {
                 expireReservation(reservation, account);
@@ -158,6 +163,5 @@ public class ReservationService implements IReservationService {
         reservation.setReservationStatus(dto.getReservationStatus());
         return reservation;
     }
-
 
 }

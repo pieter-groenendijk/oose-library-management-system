@@ -13,5 +13,5 @@ public interface IReservationRepository {
     Reservation store(Reservation reservation);
     Reservation updateReservation(Reservation reservation);
 
-    List<Reservation> retrieveReservationsByMembershipId(long membershipId);
+    List<Reservation> retrieveReservationByMembershipId(long membershipId);
 }
