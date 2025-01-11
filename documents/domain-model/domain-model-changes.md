@@ -19,7 +19,7 @@ We kunnen nu gemakkelijker associaties koppelen.
 - **_Exemplaar_ concept is nu gekoppeld aan _fysiek product_**. Je kan niet een digitaal product lenen.
 
 ### Mijn bibliotheek
-**Toegevoegt**
+**Toegevoegd**
 
 Net zoals bij de usecase representeerd dit concept de registraties van digitale producten in gebruik onder het abonnement.
 
@@ -29,3 +29,12 @@ Net zoals bij de usecase representeerd dit concept de registraties van digitale 
 ## Uitlening
 - **1 uitlening heeft 1...\* -> 1 uitlening heeft 1..1**. 
 - **associatie naar 'van'**
+
+## Changes naar Domain Model v4
+
+- Een bezoeker krijgt géén plaats in het domein model. Dit is een concept dat buiten het systeem valt.
+- Een Baliemedewerker is een gebruiker die specifieke rechten heeft. Dit is een specialisatie van de gebruiker.
+- De Beheerder en Editor zijn opgenomen in het Domein Model omdat zij de kern functionaliteit van de Boetes/Limieten en de Catalogus beheren en dus kunnen veranderen.
+- Leenhistorie komt voor uit gebruik van een digitaal product of uit een exemplaar uitlening.
+- Leenhistorie en aggregatie relatie met ProductCopy en DigitaalProductGebruik.
+- Catalogus heeft een aggregatie relatie met Product.
