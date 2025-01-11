@@ -13,7 +13,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-/*
+
 class ProductRepositoryTest {
 
     @Mock
@@ -34,18 +34,14 @@ class ProductRepositoryTest {
     void testRetrieveProductCopyById() {
             long productCopyId = 1;
 
-            // Create a mock ProductCopy to return
             ProductCopy mockProductCopy = new ProductCopy();
             mockProductCopy.setProductCopyId(productCopyId);
 
-            // Mock session behavior to return the mock product copy
             when(sessionFactory.openSession()).thenReturn(session);
             when(session.get(ProductCopy.class, productCopyId)).thenReturn(mockProductCopy);
 
-            // Call the method to retrieve the ProductCopy
             Optional<ProductCopy> result = productRepository.retrieveProductCopyById(productCopyId);
 
-            // Assert that the result is present and contains the correct product copy
             assertTrue(result.isPresent());
             assertEquals(productCopyId, result.get().getProductCopyId());
 
@@ -54,5 +50,4 @@ class ProductRepositoryTest {
             verify(session).get(ProductCopy.class, productCopyId);
             verify(session).close();
         }
-    }
-}*/
+}
