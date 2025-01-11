@@ -19,7 +19,7 @@ public interface IAccountService {
     
     void store(AccountRequestDTO account);
 
-    Account update(long id, AccountRequestDTO account);
+    void update(long id, AccountRequestDTO account);
     
     MembershipType store(MembershipTypeRequestDTO membershipType);
     

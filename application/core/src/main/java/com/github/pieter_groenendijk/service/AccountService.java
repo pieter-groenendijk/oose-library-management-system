@@ -59,7 +59,7 @@ public class AccountService implements IAccountService {
         }
     }
 
-    public Account update(long id, AccountRequestDTO account) {
+    public void update(long id, AccountRequestDTO account) {
         Account retrievedAccount =  retrieveAccountById(id);
         if (retrievedAccount == null) {
             throw new EntityNotFoundException("Account with ID " + id + " not found.");
@@ -81,7 +81,7 @@ public class AccountService implements IAccountService {
         if (!isAccountInputValid(retrievedAccount)){
             throw new InputValidationException("Account input is not valid");
         } else {
-            return accountRepository.update(retrievedAccount);
+            accountRepository.update(retrievedAccount);
         }
     }
 
