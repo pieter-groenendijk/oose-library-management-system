@@ -52,14 +52,14 @@ public class MembershipTypeController {
     @PostMapping
     public ResponseEntity<?> createMembershipType(@RequestBody MembershipTypeRequestDTO membershipType) {
         accountService.store(membershipType);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Succes!");
+        return ResponseEntity.status(HttpStatus.CREATED);
     }
 
     @Operation(summary = "Update a membershipType", description = "Change a membershipType ")
     @PutMapping("/{id}")
     public ResponseEntity<?> updateMembershipType(@PathVariable("id") long id, @RequestBody MembershipTypeRequestDTO membershipType) {
         accountService.update(id, membershipType);
-        return ResponseEntity.status(HttpStatus.OK).body("Succes!");
+        return ResponseEntity.status(HttpStatus.OK);
     }
 
     @Operation(summary = "Retrieve a list of memberships", description = "Retrieve a list of memberships")

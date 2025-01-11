@@ -49,20 +49,20 @@ public class AccountController {
     @PostMapping
     public ResponseEntity<?> createAccount(@RequestBody AccountRequestDTO account) {
         accountService.store(account);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Succes!");
+        return ResponseEntity.status(HttpStatus.OK);
     }
 
     @Operation(summary = "Update an account", description = "Update an account in the database")
     @PutMapping("/{id}")
     public ResponseEntity<?> updateAccount(@PathVariable("id") long id, @RequestBody AccountRequestDTO account){
         accountService.update(id, account);
-        return ResponseEntity.status(HttpStatus.OK).body("Succes!");
+        return ResponseEntity.status(HttpStatus.OK);
     }
 
     @Operation(summary = "Toggle account active", description = "Toggle an account from active to inactive and back")
     @PostMapping("/toggleActive/{id}")
     public ResponseEntity<?> toggleAccountActive(@PathVariable("id") long id, @RequestBody boolean newValue) {
         accountService.toggleIsActive(id, newValue);
-        return ResponseEntity.status(HttpStatus.OK).body("Succes!");
+        return ResponseEntity.status(HttpStatus.OK);
     }
 }
