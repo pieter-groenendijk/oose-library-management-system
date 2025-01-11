@@ -5,7 +5,6 @@ import com.github.pieter_groenendijk.exception.InputValidationException;
 import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.repository.ILoanRepository;
 import com.github.pieter_groenendijk.service.loan.event.ILoanEventService;
-import com.github.pieter_groenendijk.service.loan.event.LoanEventService;
 
 import static com.github.pieter_groenendijk.service.ServiceUtils.LOAN_LENGTH;
 
@@ -35,7 +34,7 @@ public class LoanService implements ILoanService {
             throw new InputValidationException("Loan cannot be null");
         }
         loanRepository.store(loan);
-        EVENT_SERVICE.scheduleEventsForNewLoan(loan);
+        EVENT_SERVICE.handleEventsForNewLoan(loan);
 
         return loan;
     }

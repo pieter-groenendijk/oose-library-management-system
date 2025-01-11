@@ -3,7 +3,7 @@ package com.github.pieter_groenendijk.service.event.scheduling;
 import com.github.pieter_groenendijk.model.event.Event;
 import com.github.pieter_groenendijk.repository.event.IEventRepository;
 import com.github.pieter_groenendijk.service.event.emitting.EventEmitterPool;
-import com.github.pieter_groenendijk.utils.scheduling.LongTermTaskScheduler;
+import com.github.pieter_groenendijk.utils.scheduling.longterm.LongTermTaskScheduler;
 import com.github.pieter_groenendijk.utils.scheduling.TaskScheduler;
 
 import java.util.List;
