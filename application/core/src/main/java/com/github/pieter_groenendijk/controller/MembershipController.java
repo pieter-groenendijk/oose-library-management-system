@@ -18,6 +18,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import com.github.pieter_groenendijk.hibernate.SessionFactoryFactory;
 import org.hibernate.SessionFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 @RestController
@@ -52,11 +54,14 @@ public class MembershipController{
         @ApiResponse(responseCode = "404", description = "No memberships found for the given Account Id")
     })
     @GetMapping("/account/{accountId}")
-    public List<Membership> retrieveMembershipsByAccountId(@PathVariable("accountId") long accountId) {
-    List<Membership> memberships = accountService.retrieveMembershipsByAccountId(accountId);
-    return memberships;
-}
-
+    public ResponseEntity<?> retrieveMembershipsByAccountId(@PathVariable("accountId") long accountId) {
+        List<Membership> memberships = accountService.retrieveMembershipsByAccountId(accountId);
+        if (memberships.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } else {
+            return ResponseEntity.ok(memberships);
+        }
+    }
 
     @Operation(summary = "Create a membership", description = "Add a new membership to the database")
     @PostMapping
