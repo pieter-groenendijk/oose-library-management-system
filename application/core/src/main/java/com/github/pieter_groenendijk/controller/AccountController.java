@@ -49,7 +49,7 @@ public class AccountController {
     @PostMapping
     public ResponseEntity<?> createAccount(@RequestBody AccountRequestDTO account) {
         accountService.store(account);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @Operation(summary = "Update an account", description = "Update an account in the database")
@@ -64,5 +64,12 @@ public class AccountController {
     public ResponseEntity<?> setAccountActive(@PathVariable("id") long id, @RequestBody boolean newValue) {
         accountService.setIsActive(id, newValue);
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @Operation(summary = "Softdelete an account", description = "Softdelete an account in the database")
+    @PutMapping("/softdelete/{id}")
+    public ResponseEntity<?> softDeleteAccount(@PathVariable("id") long id) {
+        accountService.softDeleteAccount(id);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 }

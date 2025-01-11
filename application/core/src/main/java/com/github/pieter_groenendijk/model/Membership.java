@@ -33,6 +33,9 @@ public class Membership {
     @Column(name = "isBlocked", nullable = false)
     private boolean isBlocked;
 
+    @Column(name = "isDeleted", nullable = false)
+    private boolean isDeleted;
+
     // Getters and Setters
     public Long getMembershipId() {
         return membershipId;
@@ -88,5 +91,13 @@ public class Membership {
 
     public void setBlocked(boolean blocked) {
         isBlocked = blocked;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 }

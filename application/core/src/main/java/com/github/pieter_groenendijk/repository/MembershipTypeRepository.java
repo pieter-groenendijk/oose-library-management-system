@@ -32,7 +32,7 @@ public class MembershipTypeRepository implements IMembershipTypeRepository {
         return Optional.ofNullable(membershipType);
     }
 
-    public MembershipType store(MembershipType membershipType) {
+    public void store(MembershipType membershipType) {
         Session session = sessionFactory.openSession();
         try {
             session.beginTransaction();
@@ -49,7 +49,6 @@ public class MembershipTypeRepository implements IMembershipTypeRepository {
         } finally {
             session.close();
         }
-        return membershipType;
     }
 
     public boolean doesMembershipTypeExistByDescription(String description){
@@ -68,7 +67,7 @@ public class MembershipTypeRepository implements IMembershipTypeRepository {
         return membershipType != null;
     }
 
-    public MembershipType update(MembershipType membershipType) {
+    public void update(MembershipType membershipType) {
         Session session = sessionFactory.openSession();
 
         try {
@@ -86,7 +85,6 @@ public class MembershipTypeRepository implements IMembershipTypeRepository {
         } finally {
             session.close();
         }
-        return membershipType;
     }
 
     public List<MembershipType> retrieveMembershipTypeList() {
@@ -106,6 +104,5 @@ public class MembershipTypeRepository implements IMembershipTypeRepository {
             } finally {
                 session.close();
             }
-
     }
 }

@@ -7,7 +7,8 @@ CREATE TABLE "Account" (
     "dateOfBirth" DATE NOT NULL,
     "gender" CHAR(1) NOT NULL,
     "isActive" BOOLEAN NOT NULL,
-    "uncollectedReservations" INT DEFAULT 0
+    "uncollectedReservations" INT DEFAULT 0,
+    "isDeleted" BOOLEAN NOT NULL
 );
 
 CREATE TABLE "MembershipType" (
@@ -15,7 +16,8 @@ CREATE TABLE "MembershipType" (
     "description" VARCHAR(150),
     "digitalProducts" BOOLEAN NOT NULL,
     "physicalProducts" BOOLEAN NOT NULL,
-    "maxLendings" INT NOT NULL
+    "maxLendings" INT NOT NULL,
+    "isDeleted" BOOLEAN NOT NULL
 );
 
 CREATE TABLE "Membership" (
@@ -25,6 +27,7 @@ CREATE TABLE "Membership" (
     "isActive" BOOLEAN NOT NULL,
     "startDate" DATE NOT NULL,
     "endDate" DATE,
+    "isDeleted" BOOLEAN NOT NULL,
     "isBlocked" BOOLEAN DEFAULT FALSE,
     FOREIGN KEY ("accountId") REFERENCES "Account" ("accountId") ON DELETE CASCADE,
     FOREIGN KEY ("membershipTypeId") REFERENCES "MembershipType" ("membershipTypeId") ON DELETE CASCADE

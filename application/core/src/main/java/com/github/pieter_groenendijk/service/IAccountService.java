@@ -17,15 +17,15 @@ public interface IAccountService {
     
     MembershipType retrieveMembershipTypeById(long id);
     
-    Account store(AccountRequestDTO account);
+    void store(AccountRequestDTO account);
 
-    Account update(long id, AccountRequestDTO account);
+    void update(long id, AccountRequestDTO account);
     
-    MembershipType store(MembershipTypeRequestDTO membershipType);
+    void store(MembershipTypeRequestDTO membershipType);
     
     Membership retrieveMembershipById(long id);
     
-    Membership store(MembershipRequestDTO request);
+    void store(MembershipRequestDTO request);
 
     List<Membership> retrieveMembershipsByAccountId (long id);
 
@@ -35,4 +35,11 @@ public interface IAccountService {
 
     List<MembershipType> retrieveMembershipTypeList();
 
+    void update(long id, MembershipRequestDTO request);
+
+    void softDeleteAccount(long id);
+
+    void softDeleteMembership(long id);
+
+    void softDeleteMembershipType(long id);
 }
