@@ -5,7 +5,7 @@ import java.util.Optional;
 
 public interface IAccountRepository {
     Optional<Account> retrieveAccountById(long id);
-    Account store(Account account);
+    void store(Account account);
     Account update(Account account);
     boolean doesAccountExistByEmail(String email);
 }

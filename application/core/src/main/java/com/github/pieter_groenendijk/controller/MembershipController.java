@@ -65,7 +65,8 @@ public class MembershipController{
 
     @Operation(summary = "Create a membership", description = "Add a new membership to the database")
     @PostMapping
-    public Membership createMembership(@RequestBody MembershipRequestDTO request) {
-        return accountService.store(request);
+    public ResponseEntity<?> createMembership(@RequestBody MembershipRequestDTO request) {
+        accountService.store(request);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

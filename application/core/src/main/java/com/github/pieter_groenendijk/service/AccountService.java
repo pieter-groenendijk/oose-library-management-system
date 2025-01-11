@@ -37,13 +37,12 @@ public class AccountService implements IAccountService {
                 .orElseThrow(() -> new EntityNotFoundException("Account with ID " + id + " not found."));
     }
 
-    public Account store(AccountRequestDTO request){
+    public void store(AccountRequestDTO request){
         boolean emailAlreadyExists = accountRepository.doesAccountExistByEmail(request.getEmail());
         if (emailAlreadyExists) {
             throw new InputValidationException("E-mail already exists!");
         }
 
-        //Create membership
         Account account = new Account();
         account.setEmail(request.getEmail());
         account.setFirstName(request.getFirstName());
@@ -53,9 +52,8 @@ public class AccountService implements IAccountService {
         account.setActive(true);
         account.setUncollectedReservations(0);
 
-        //Validate + Persist
         if ( isAccountInputValid(account)) {
-            return accountRepository.store(account);
+            accountRepository.store(account);
         } else {
             throw new InputValidationException("Account input is not valid");
         }
