@@ -76,4 +76,11 @@ public class MembershipController{
         accountService.update(id, request);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
+    @Operation(summary = "Softdelete a membership", description = "Softdelete an membership in the database")
+    @PutMapping("/softdelete/{id}")
+    public ResponseEntity<?> softDeleteMembership(@PathVariable("id") long id) {
+        accountService.softDeleteMembership(id);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+    }
 }

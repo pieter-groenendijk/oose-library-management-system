@@ -36,4 +36,10 @@ public interface IAccountService {
     List<MembershipType> retrieveMembershipTypeList();
 
     void update(long id, MembershipRequestDTO request);
+
+    void softDeleteAccount(long id);
+
+    void softDeleteMembership(long id);
+
+    void softDeleteMembershipType(long id);
 }

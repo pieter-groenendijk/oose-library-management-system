@@ -65,4 +65,11 @@ public class AccountController {
         accountService.setIsActive(id, newValue);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
+    @Operation(summary = "Softdelete an account", description = "Softdelete an account in the database")
+    @PutMapping("/softdelete/{id}")
+    public ResponseEntity<?> softDeleteAccount(@PathVariable("id") long id) {
+        accountService.softDeleteAccount(id);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+    }
 }

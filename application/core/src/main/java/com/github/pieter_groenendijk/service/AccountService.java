@@ -113,6 +113,19 @@ public class AccountService implements IAccountService {
         }
     }
 
+    public void softDeleteAccount(long id) {
+        Account retrievedAccount =  retrieveAccountById(id);
+        if (retrievedAccount == null) {
+            throw new EntityNotFoundException("Account with ID " + id + " not found.");
+        }
+        if (retrievedAccount.isDeleted()){
+            throw new InputValidationException("This account is already deleted");
+        } else {
+            retrievedAccount.setDeleted(true);
+            accountRepository.update(retrievedAccount);
+        }
+    }
+
     //MembershipTypeFunctionality
 
     public MembershipType retrieveMembershipTypeById(long id){
@@ -166,6 +179,19 @@ public class AccountService implements IAccountService {
         return membershipTypes;
     }
 
+    public void softDeleteMembershipType(long id) {
+        MembershipType retrievedMembershipType =  retrieveMembershipTypeById(id);
+        if (retrievedMembershipType == null) {
+            throw new EntityNotFoundException("MembershipType with ID " + id + " not found.");
+        }
+        if (retrievedMembershipType.isDeleted()){
+            throw new InputValidationException("This membershipType is already deleted");
+        } else {
+            retrievedMembershipType.setDeleted(true);
+            membershipTypeRepository.update(retrievedMembershipType);
+        }
+    }
+
     //MembershipFunctionality
 
     public Membership retrieveMembershipById(long id){
@@ -209,5 +235,18 @@ public class AccountService implements IAccountService {
         }
         retrievedMembership.setMembershipType(retrievedMembershipType);
         membershipRepository.update(retrievedMembership);
+    }
+
+    public void softDeleteMembership(long id) {
+        Membership retrievedMembership =  retrieveMembershipById(id);
+        if (retrievedMembership == null) {
+            throw new EntityNotFoundException("Membership with ID " + id + " not found.");
+        }
+        if (retrievedMembership.isDeleted()){
+            throw new InputValidationException("This membership is already deleted");
+        } else {
+            retrievedMembership.setDeleted(true);
+            membershipRepository.update(retrievedMembership);
+        }
     }
 }
