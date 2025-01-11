@@ -31,7 +31,8 @@ public class DefaultConfigurationFactory {
             .addAnnotatedClass(Loan.class)
             .addAnnotatedClass(ProductCopy.class)
             .addAnnotatedClass(ProductTemplate.class)
-            .addAnnotatedClass(PhysicalProductTemplate.class);
+            .addAnnotatedClass(PhysicalProductTemplate.class)
+            .addAnnotatedClass(Reservation.class);
 
 
     }
