@@ -1,6 +1,8 @@
 package com.github.pieter_groenendijk.hibernate.configuration;
 
 import com.github.pieter_groenendijk.model.*;
+import com.github.pieter_groenendijk.model.event.Event;
+import com.github.pieter_groenendijk.model.event.LoanEvent;
 import com.github.pieter_groenendijk.model.notification.LendingAssociatedNotificationTask;
 import com.github.pieter_groenendijk.model.notification.NotificationTask;
 import com.github.pieter_groenendijk.model.product.PhysicalProductTemplate;
@@ -31,9 +33,9 @@ public class DefaultConfigurationFactory {
             .addAnnotatedClass(Loan.class)
             .addAnnotatedClass(ProductCopy.class)
             .addAnnotatedClass(ProductTemplate.class)
-            .addAnnotatedClass(PhysicalProductTemplate.class);
-
-
+            .addAnnotatedClass(PhysicalProductTemplate.class)
+            .addAnnotatedClass(Event.class)
+            .addAnnotatedClass(LoanEvent.class);
     }
 
     private void setMisc(ConfigurationBuilder builder) {
