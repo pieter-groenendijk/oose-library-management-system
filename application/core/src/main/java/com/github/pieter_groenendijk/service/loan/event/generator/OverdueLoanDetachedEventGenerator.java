@@ -6,13 +6,19 @@ import com.github.pieter_groenendijk.repository.event.IEventRepository;
 
 import java.time.LocalDateTime;
 
-public class AlmostOverdueLoanEventGenerator extends DetachedLoanEventGenerator {
-    protected AlmostOverdueLoanEventGenerator(IEventRepository repository, EventType type) {
-        super(repository, type);
+public class OverdueLoanDetachedEventGenerator extends DetachedLoanEventGenerator {
+    protected OverdueLoanDetachedEventGenerator(IEventRepository repository) {
+        super(
+            repository,
+            EventType.OVERDUE_LOAN
+        );
     }
 
     @Override
     protected LocalDateTime determineScheduledDateTime(Loan loan) {
-        return null;
+        return loan
+            .getReturnBy()
+            .plusDays(1)
+            .atStartOfDay();
     }
 }

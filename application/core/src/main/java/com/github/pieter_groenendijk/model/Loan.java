@@ -17,7 +17,7 @@ public class Loan {
     private Date startDate;
     @Column(name = "returnBy")
     @Temporal(TemporalType.DATE)
-    private LocalDate returnBy;
+    private LocalDate returnBy; //
 
     @Column(name = "extendedReturnBy")
     @Temporal(TemporalType.DATE)

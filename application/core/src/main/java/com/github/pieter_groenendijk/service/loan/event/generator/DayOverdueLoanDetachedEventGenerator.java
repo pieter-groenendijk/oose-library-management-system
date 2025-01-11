@@ -19,9 +19,9 @@ public class DayOverdueLoanDetachedEventGenerator extends DetachedLoanEventGener
 
     @Override
     protected LocalDateTime determineScheduledDateTime(Loan loan) {
-        // At the start of the day after the returnBy date.
-        return loan.getReturnBy()
+        // start of tomorrow
+        return LocalDateTime.now()
             .plusDays(1)
-            .atStartOfDay();
+            .with(LocalDateTime.MIN);
     }
 }
