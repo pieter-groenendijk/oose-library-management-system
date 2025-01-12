@@ -71,13 +71,13 @@ VALUES (1, '2024-12-09', FALSE, 1, 1),
        (10, '2024-12-18', TRUE, 5, 5);
 
 -- Insert a product in to database
-INSERT INTO "ProductTemplate" ("productId", "name", "genre", "yearOfRelease", "description", "type", "ageClassification", "mediaType")
+INSERT INTO "ProductTemplate" ("productId", "name", "genre", "yearOfRelease", "description", "ageClassification", "mediaType")
 VALUES
-    (1, '1984', 'Thriller', 1949, 'A novel by George Orwell', 'BOOK', 18, 'PHYSICAL'),
-    (2, 'The Great Gatsby', 'Classic', 1925, 'A novel by F. Scott Fitzgerald', 'BOOK', 18, 'PHYSICAL'),
-    (3, 'Moby-Dick', 'Classic', 1851, 'A novel by Herman Melville', 'BOOK', 18, 'PHYSICAL'),
-    (4, 'To Kill a Mockingbird', 'Drama', 1960, 'A novel by Harper Lee', 'BOOK', 18, 'PHYSICAL'),
-    (5, 'Pride and Prejudice', 'Romance', 1813, 'A novel by Jane Austen', 'BOOK', 18, 'PHYSICAL');
+    (1, '1984', 'Thriller', 1949, 'A novel by George Orwell', 18, 'BOOK'),
+    (2, 'The Great Gatsby', 'Classic', 1925, 'A novel by F. Scott Fitzgerald', 18, 'BOOK'),
+    (3, 'Moby-Dick', 'Classic', 1851, 'A novel by Herman Melville',  18, 'BOOK'),
+    (4, 'To Kill a Mockingbird', 'Drama', 1960, 'A novel by Harper Lee',  18, 'BOOK'),
+    (5, 'Pride and Prejudice', 'Romance', 1813, 'A novel by Jane Austen', 18, 'BOOK');
 
 
 INSERT INTO "PhysicalProductTemplate" ("productId", "location", "author")

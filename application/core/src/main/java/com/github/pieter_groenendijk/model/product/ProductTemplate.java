@@ -23,8 +23,6 @@ public abstract class ProductTemplate {
     @Column (name = "description", nullable = true, length = 250)
     private String description;
 
-    @Column (name = "type", nullable = false, length = 10)
-    private String type;
     @Column(name = "ageClassification", nullable = true)
     private int ageClassification;
 
@@ -61,14 +59,6 @@ public abstract class ProductTemplate {
         this.description = description;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public int getAgeClassification() {
         return ageClassification;
     }
@@ -83,5 +73,13 @@ public abstract class ProductTemplate {
 
     public Long getProductId() {
         return productId;
+    }
+
+    public MediaType getMediaType() {
+        return mediaType;
+    }
+
+    public void setMediaType(MediaType mediaType) {
+        this.mediaType = mediaType;
     }
 }
