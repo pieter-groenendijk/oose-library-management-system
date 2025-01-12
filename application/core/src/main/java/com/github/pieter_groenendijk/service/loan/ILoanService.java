@@ -8,7 +8,7 @@ import java.util.List;
 
 
 public interface ILoanService {
-    Loan store(LoanRequestDTO loan);
+    void store(LoanRequestDTO loan);
 
     Loan extendLoan(long loanId, LocalDate returnBy);
 

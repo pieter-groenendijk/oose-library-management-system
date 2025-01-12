@@ -55,7 +55,7 @@ public class LoanRepository implements ILoanRepository {
     }
 
     @Override
-    public Loan store(Loan loan) {
+    public void store(Loan loan) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             session.persist(loan);
@@ -65,11 +65,10 @@ public class LoanRepository implements ILoanRepository {
             e.printStackTrace();
             throw new RuntimeException("Failed to store loan", e);
         }
-        return loan;
     }
 
     @Override
-    public Loan updateLoan(Loan loan) {
+    public void updateLoan(Loan loan) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             session.merge(loan);
@@ -79,7 +78,6 @@ public class LoanRepository implements ILoanRepository {
             e.printStackTrace();
             throw new RuntimeException("Failed to update loan", e);
         }
-        return loan;
     }
 }
 

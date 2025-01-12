@@ -38,7 +38,7 @@ public class LoanService implements ILoanService {
 
     // TODO: Implement correct error handling. Is a loan still successful if we failed to schedule events for it, or the other way around?
     @Override
-    public Loan store(LoanRequestDTO loanRequestDTO) {
+    public void store(LoanRequestDTO loanRequestDTO) {
         if (loanRequestDTO == null) {
             throw new InputValidationException("LoanRequestDTO cannot be null");
         }
@@ -53,8 +53,6 @@ public class LoanService implements ILoanService {
 
         loanRepository.store(loan);
         EVENT_SERVICE.scheduleEventsForNewLoan(loan);
-
-        return loan;
     }
 
     private Loan createLoanFromDTO(LoanRequestDTO loanRequestDTO) {
