@@ -10,7 +10,7 @@ import java.util.List;
 public interface ILoanService {
     void store(LoanRequestDTO loan);
 
-    Loan extendLoan(long loanId, LocalDate returnBy);
+    void extendLoan(long loanId, LocalDate returnBy);
 
     LocalDate generateReturnByDate(LocalDate returnBy);
 

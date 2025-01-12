@@ -89,7 +89,7 @@ public class LoanService implements ILoanService {
 
 
     @Override
-    public Loan extendLoan(long loanId, LocalDate returnBy) {
+    public void extendLoan(long loanId, LocalDate returnBy) {
         Loan loan = loanRepository.retrieveLoanByLoanId(loanId);
         if (loan == null) {
             throw new IllegalArgumentException("Loan not found with id: " + loanId);
@@ -104,7 +104,6 @@ public class LoanService implements ILoanService {
         loan.setReturnBy(extendedReturnBy);
         loan.setLoanStatus(LoanStatus.EXTENDED);
 
-        return loanRepository.updateLoan(loan);
     }
 
     @Override
