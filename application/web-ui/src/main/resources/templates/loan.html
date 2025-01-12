@@ -6,18 +6,18 @@
 </head>
 <body>
 <h1>Create New Loan</h1>
-<form th:action="@{/loan/new}" th:object="${loan}" method="post">
+<form th:action="@{/loan}" th:object="${loan}" method="post">
     <div>
         <label for="membershipId">Member ID:</label>
         <input type="number" id="membershipId" th:field="*{membershipId}" readonly required>
     </div>
     <div>
         <label for="productId">Product ID:</label>
-        <input type="number" id="productId" th:field="*{productId}" required>
+        <input type="number" id="productId" th:field="*{productCopyId}" required>
     </div>
     <div>
         <label for="loanDate">Loan Date:</label>
-        <input type="date" id="loanDate" th:field="*{startDate}" required>
+        <input type="date" id="loanDate" th:field="*{startDate}" th:value="${#dates.format(today, 'yyyy-MM-dd')}" required>
     </div>
     <button type="submit">Create Loan</button>
 </form>
