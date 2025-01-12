@@ -22,6 +22,7 @@ public class LoanService implements ILoanService {
     private IProductRepository productRepository;
     private final ILoanEventService EVENT_SERVICE;
 
+
     public LoanService(
         ILoanRepository loanRepository,
         ILoanEventService eventService
@@ -76,10 +77,9 @@ public class LoanService implements ILoanService {
 
     @Override
     public LocalDate generateReturnByDate(LocalDate returnBy) {
-        LocalDate loanDate = LocalDate.now();
-        LocalDate returnByDate = loanDate.plusDays(LOAN_LENGTH);
-        return LocalDate.from(returnByDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        return LocalDate.now().plusDays(LOAN_LENGTH);
     }
+
 
     @Override
     public void returnLoan(long loanId) {
