@@ -6,6 +6,8 @@ import com.github.pieter_groenendijk.repository.ILoanRepository;
 import com.github.pieter_groenendijk.repository.LoanRepository;
 import com.github.pieter_groenendijk.repository.event.EventRepository;
 import com.github.pieter_groenendijk.repository.event.IEventRepository;
+import com.github.pieter_groenendijk.repository.scheduling.ITaskRepository;
+import com.github.pieter_groenendijk.repository.scheduling.TaskRepository;
 import com.github.pieter_groenendijk.service.event.emitting.EventEmitterPool;
 import com.github.pieter_groenendijk.service.event.scheduling.EventScheduler;
 import com.github.pieter_groenendijk.service.loan.ILoanService;
@@ -37,10 +39,12 @@ public class LoanController {
         ILoanRepository loanRepository = new LoanRepository(sessionFactory);
 
         // TODO: Make this mess work with beans or dependency injection
+        ITaskRepository taskRepository = new TaskRepository(sessionFactory);
         IEventRepository eventRepository = new EventRepository();
         ILoanEventService eventService = new LoanEventService(
             eventRepository,
             new EventScheduler(
+                taskRepository,
                 new TaskScheduler(1),
                 eventRepository,
                 new EventEmitterPool()
