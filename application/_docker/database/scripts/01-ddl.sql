@@ -114,7 +114,7 @@ CREATE TABLE "PhysicalProductTemplate" (
     FOREIGN KEY ("productId") REFERENCES "ProductTemplate" ("productId")
 );
 
-CREATE TABLE "PhysicalReadProduct" (
+CREATE TABLE "PhysicalProduct" (
     "productId" BIGSERIAL PRIMARY KEY,
     "ISBN" BIGINT,
     "author" VARCHAR(100) NOT NULL,

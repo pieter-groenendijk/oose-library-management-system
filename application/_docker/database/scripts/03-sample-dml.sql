@@ -88,7 +88,7 @@ VALUES
     (4, 'D4', 'Harper Lee'),
     (5, 'E5', 'Jane Austen');
 
-INSERT INTO "PhysicalReadProduct" ("productId", "ISBN", "author")
+INSERT INTO "PhysicalProduct" ("productId", "ISBN", "author")
 VALUES
     (1, 1234567891, 'George Orwell'),
     (2, 1234567890, 'F. Scott Fitzgerald'),

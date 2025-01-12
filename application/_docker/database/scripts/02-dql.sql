@@ -20,7 +20,7 @@ FROM "Account";
 CREATE VIEW "vw_MembershipType" AS
 SELECT 
     "membershipTypeId",
-	"description"
+	"description",
     "digitalProducts",
     "physicalProducts",
     "maxLendings"
