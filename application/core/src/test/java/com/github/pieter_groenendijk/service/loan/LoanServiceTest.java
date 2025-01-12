@@ -8,6 +8,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -48,15 +50,17 @@ class LoanServiceTest {
         verify(mockLoan).setLoanStatus(LoanStatus.OVERDUE);
         verify(mockLoanRepository).updateLoan(mockLoan);
     }
-
     @Test
     void retrieveLoanByLoanId() {
         long loanId = 123L;
         Loan mockLoan = new Loan();
-        when(mockLoanRepository.retrieveLoanByLoanId(loanId)).thenReturn(Optional.of(mockLoan));
+        when(mockLoanRepository.retrieveLoanByLoanId(loanId)).thenReturn(mockLoan);
         Loan result = loanService.retrieveLoanByLoanId(loanId);
+
         assertNotNull(result, "Loan should be returned");
         assertEquals(mockLoan, result, "The returned loan should match the mock loan");
+
         verify(mockLoanRepository).retrieveLoanByLoanId(loanId);
     }
+
 }

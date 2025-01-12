@@ -60,20 +60,22 @@ public class LoanService implements ILoanService {
 
     @Override
     public Loan extendLoan(long loanId, LocalDate returnBy) {
-            Loan loan = loanRepository.retrieveLoanByLoanId(loanId)
-                    .orElseThrow(() -> new IllegalArgumentException("Loan not found with id: " + loanId));
-
-            if (loan.getLoanStatus().equals(LoanStatus.EXTENDED)) {
-                throw new IllegalStateException("Loan can only be extended once.");
-            }
-
-            LocalDate extendedReturnBy = generateReturnByDate(loan.getReturnBy());
-
-            loan.setReturnBy(extendedReturnBy);
-            loan.setLoanStatus(LoanStatus.EXTENDED);
-
-            return loanRepository.updateLoan(loan);
+        Loan loan = loanRepository.retrieveLoanByLoanId(loanId);
+        if (loan == null) {
+            throw new IllegalArgumentException("Loan not found with id: " + loanId);
         }
+
+        if (loan.getLoanStatus().equals(LoanStatus.EXTENDED)) {
+            throw new IllegalStateException("Loan can only be extended once.");
+        }
+
+        LocalDate extendedReturnBy = generateReturnByDate(loan.getReturnBy());
+
+        loan.setReturnBy(extendedReturnBy);
+        loan.setLoanStatus(LoanStatus.EXTENDED);
+
+        return loanRepository.updateLoan(loan);
+    }
 
     @Override
     public LocalDate generateReturnByDate(LocalDate returnBy) {
@@ -83,8 +85,10 @@ public class LoanService implements ILoanService {
 
     @Override
     public void returnLoan(long loanId) {
-        Loan loan = loanRepository.retrieveLoanByLoanId(loanId)
-                .orElseThrow(() -> new EntityNotFoundException("Loan not found with id: " + loanId));
+        Loan loan = loanRepository.retrieveLoanByLoanId(loanId);
+        if (loan == null) {
+            throw new EntityNotFoundException("Loan not found with id: " + loanId);
+        }
 
         if (loan.getLoanStatus() == LoanStatus.RETURNED) {
             throw new IllegalStateException("Loan has already been returned.");
@@ -124,11 +128,13 @@ public class LoanService implements ILoanService {
         return isLate;
     }
 
-
     @Override
     public Loan retrieveLoanByLoanId(long loanId) {
-        return loanRepository.retrieveLoanByLoanId(loanId)
-                .orElseThrow(() -> new EntityNotFoundException("Loan with ID " + loanId + " not found."));
+        Loan loan = (Loan) loanRepository.retrieveLoanByLoanId(loanId);
+        if (loan == null) {
+            throw new EntityNotFoundException("No loan found for Loan ID: " + loanId);
+        }
+        return loan; // Return the loan
     }
 
     @Override

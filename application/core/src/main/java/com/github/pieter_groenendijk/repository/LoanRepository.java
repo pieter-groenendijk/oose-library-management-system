@@ -1,6 +1,5 @@
 package com.github.pieter_groenendijk.repository;
 
-import com.github.pieter_groenendijk.exception.EntityNotFoundException;
 import com.github.pieter_groenendijk.model.Loan;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -10,7 +9,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import java.util.List;
-import java.util.Optional;
 
 public class LoanRepository implements ILoanRepository {
 
@@ -21,28 +19,20 @@ public class LoanRepository implements ILoanRepository {
     }
 
     @Override
-    public Optional<Loan> retrieveLoanByLoanId(long loanId) {
-        Session session = sessionFactory.openSession();
-        try {
+    public Loan retrieveLoanByLoanId(long loanId) {
+        try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
             CriteriaQuery<Loan> cr = cb.createQuery(Loan.class);
             Root<Loan> root = cr.from(Loan.class);
 
             cr.select(root).where(cb.equal(root.get("id"), loanId));
 
-            Loan loan = session.createQuery(cr).uniqueResult();
-            if (loan == null) {
-                throw new EntityNotFoundException("Loan with ID " + loanId + " not found");
-            }
-            return Optional.of(loan);
-        } catch (Exception e) {
+            return session.createQuery(cr).uniqueResult(); // Return single loan or null
+        } catch (HibernateException e) {
             e.printStackTrace();
             throw new RuntimeException("Database query failed for Loan ID: " + loanId, e);
-        } finally {
-            session.close();
         }
     }
-
 
     @Override
     public List<Loan> retrieveActiveLoansByMembershipId(long membershipId) {
@@ -59,7 +49,7 @@ public class LoanRepository implements ILoanRepository {
                     );
 
             return session.createQuery(cr).getResultList();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             e.printStackTrace();
             throw new RuntimeException("Database query failed", e);
         } finally {
@@ -77,7 +67,7 @@ public class LoanRepository implements ILoanRepository {
             session.flush();
 
             session.getTransaction().commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (session.getTransaction() != null) {
                 session.getTransaction().rollback();
             }

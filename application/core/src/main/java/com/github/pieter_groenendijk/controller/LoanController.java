@@ -1,5 +1,6 @@
 package com.github.pieter_groenendijk.controller;
 
+import com.github.pieter_groenendijk.exception.EntityNotFoundException;
 import com.github.pieter_groenendijk.hibernate.SessionFactoryFactory;
 import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.repository.ILoanRepository;
@@ -19,6 +20,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 
 import org.springframework.http.HttpStatus;
@@ -68,12 +70,16 @@ public class LoanController {
     @Operation(summary = "Retrieve a loan", description = "Retrieve a loan by Id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Loan found"),
-            @ApiResponse(responseCode = "204", description = "No loan found for the given loanId\"")
+            @ApiResponse(responseCode = "404", description = "No loan found for the given loanId\"")
     })
     @GetMapping("/{loanId}")
-    public Loan retrieveLoanByLoanId(@PathVariable("loanId") long loanId) {
-        Loan loan = loanService.retrieveLoanByLoanId(loanId);
-            return loan;
+    public ResponseEntity<Loan> retrieveLoanByLoanId(@PathVariable("loanId") long loanId) {
+        try {
+            Loan loan = loanService.retrieveLoanByLoanId(loanId);
+            return ResponseEntity.ok(loan);
+        } catch (HibernateException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
     @Operation(summary = "Retrieve all loans for a membership", description = "Retrieve loans by membershipId")
