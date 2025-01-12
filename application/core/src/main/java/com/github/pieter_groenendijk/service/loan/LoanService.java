@@ -2,61 +2,81 @@ package com.github.pieter_groenendijk.service.loan;
 
 import com.github.pieter_groenendijk.exception.EntityNotFoundException;
 import com.github.pieter_groenendijk.exception.InputValidationException;
+import com.github.pieter_groenendijk.model.DTO.LoanRequestDTO;
 import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.model.LoanStatus;
+import com.github.pieter_groenendijk.model.Membership;
 import com.github.pieter_groenendijk.model.product.ProductCopy;
 import com.github.pieter_groenendijk.model.product.ProductCopyStatus;
 import com.github.pieter_groenendijk.repository.ILoanRepository;
+import com.github.pieter_groenendijk.repository.IMembershipRepository;
+import com.github.pieter_groenendijk.repository.IProductRepository;
 import com.github.pieter_groenendijk.service.loan.event.ILoanEventService;
 
-import static com.github.pieter_groenendijk.service.ServiceUtils.LOAN_LENGTH;
-import com.github.pieter_groenendijk.repository.IProductRepository;
-
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.List;
+
+import static com.github.pieter_groenendijk.service.ServiceUtils.LOAN_LENGTH;
 
 
 public class LoanService implements ILoanService {
     private ILoanRepository loanRepository;
     private IProductRepository productRepository;
     private final ILoanEventService EVENT_SERVICE;
+    private final IMembershipRepository membershipRepository;
 
 
     public LoanService(
         ILoanRepository loanRepository,
+        IMembershipRepository membershipRepository,
         ILoanEventService eventService
     ) {
         this.loanRepository = loanRepository;
+        this.membershipRepository = membershipRepository;
         this.EVENT_SERVICE = eventService;
     }
 
     // TODO: Implement correct error handling. Is a loan still successful if we failed to schedule events for it, or the other way around?
     @Override
-    public Loan store(Loan loan) {
-        if (loan == null) {
-            throw new InputValidationException("Loan cannot be null");
-        }
-        if (loan.getLoanStatus() == null) {
-            loan.setLoanStatus(LoanStatus.ACTIVE);
+    public Loan store(LoanRequestDTO loanRequestDTO) {
+        if (loanRequestDTO == null) {
+            throw new InputValidationException("LoanRequestDTO cannot be null");
         }
 
-        Long productCopyId = loan.getProductCopy();
+        Loan loan = new Loan();
+        if (loanRequestDTO.getLoanStatus() == null) {
+            loan.setLoanStatus(LoanStatus.ACTIVE);
+        } else {
+            loan.setLoanStatus(loanRequestDTO.getLoanStatus());
+        }
+
+        loan.setStartDate(loanRequestDTO.getStartDate());
+        loan.setReturnBy(loanRequestDTO.getReturnBy());
+
+        long membershipId = loanRequestDTO.getMembershipId();
+
+        Membership membership = membershipRepository.retrieveMembershipById(membershipId)
+                .orElseThrow(() -> new EntityNotFoundException("Membership not found with ID: " + membershipId));
+        loan.setMembership(membership);
+
+        Long productCopyId = loanRequestDTO.getProductCopyId();
         if (productCopyId == null) {
-            throw new EntityNotFoundException("ProductCopy ID not found in the loan");
+            throw new EntityNotFoundException("ProductCopy ID not found in the loan request");
         }
 
         ProductCopy productCopy = productRepository.retrieveProductCopyById(productCopyId)
                 .orElseThrow(() -> new EntityNotFoundException("ProductCopy not found with ID: " + productCopyId));
 
-        productCopy.setAvailabilityStatus(ProductCopyStatus.LOANED);
-
+        productCopy.setAvailabilityStatus(ProductCopyStatus.LOANED);  // Set the status of the product copy to LOANED
         productRepository.updateProductCopy(productCopy);
+        loan.setProductCopyId(productCopy);
         loanRepository.store(loan);
+
         EVENT_SERVICE.scheduleEventsForNewLoan(loan);
 
         return loan;
     }
+
 
     @Override
     public Loan extendLoan(long loanId, LocalDate returnBy) {
@@ -130,11 +150,11 @@ public class LoanService implements ILoanService {
 
     @Override
     public Loan retrieveLoanByLoanId(long loanId) {
-        Loan loan = (Loan) loanRepository.retrieveLoanByLoanId(loanId);
+        Loan loan = loanRepository.retrieveLoanByLoanId(loanId);
         if (loan == null) {
             throw new EntityNotFoundException("No loan found for Loan ID: " + loanId);
         }
-        return loan; // Return the loan
+        return loan;
     }
 
     @Override

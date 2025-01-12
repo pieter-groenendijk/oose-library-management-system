@@ -25,9 +25,9 @@ public class LoanRepository implements ILoanRepository {
             CriteriaQuery<Loan> cr = cb.createQuery(Loan.class);
             Root<Loan> root = cr.from(Loan.class);
 
-            cr.select(root).where(cb.equal(root.get("id"), loanId));
+            cr.select(root).where(cb.equal(root.get("loanId"), loanId));
 
-            return session.createQuery(cr).uniqueResult(); // Return single loan or null
+            return session.createQuery(cr).uniqueResult();
         } catch (HibernateException e) {
             e.printStackTrace();
             throw new RuntimeException("Database query failed for Loan ID: " + loanId, e);

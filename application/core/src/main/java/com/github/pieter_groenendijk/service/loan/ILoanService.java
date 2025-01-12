@@ -1,5 +1,6 @@
 package com.github.pieter_groenendijk.service.loan;
 
+import com.github.pieter_groenendijk.model.DTO.LoanRequestDTO;
 import com.github.pieter_groenendijk.model.Loan;
 
 import java.time.LocalDate;
@@ -7,7 +8,7 @@ import java.util.List;
 
 
 public interface ILoanService {
-    Loan store(Loan loan);
+    Loan store(LoanRequestDTO loan);
 
     Loan extendLoan(long loanId, LocalDate returnBy);
 

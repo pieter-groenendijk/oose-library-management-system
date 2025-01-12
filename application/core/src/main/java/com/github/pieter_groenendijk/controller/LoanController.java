@@ -2,11 +2,9 @@ package com.github.pieter_groenendijk.controller;
 
 import com.github.pieter_groenendijk.exception.EntityNotFoundException;
 import com.github.pieter_groenendijk.hibernate.SessionFactoryFactory;
+import com.github.pieter_groenendijk.model.DTO.LoanRequestDTO;
 import com.github.pieter_groenendijk.model.Loan;
-import com.github.pieter_groenendijk.repository.ILoanRepository;
-import com.github.pieter_groenendijk.repository.IProductRepository;
-import com.github.pieter_groenendijk.repository.LoanRepository;
-import com.github.pieter_groenendijk.repository.ProductRepository;
+import com.github.pieter_groenendijk.repository.*;
 import com.github.pieter_groenendijk.repository.event.EventRepository;
 import com.github.pieter_groenendijk.repository.event.IEventRepository;
 import com.github.pieter_groenendijk.service.event.emitting.EventEmitterPool;
@@ -30,6 +28,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collections;
 import java.util.List;
 
+import static org.hibernate.query.sqm.tree.SqmNode.log;
+
 @RestController
 @RequestMapping("/loan")
 public class LoanController {
@@ -37,10 +37,10 @@ public class LoanController {
     private final SessionFactory sessionFactory = new SessionFactoryFactory().create();
     private final ILoanService loanService;
 
-
     public LoanController() {
         ILoanRepository loanRepository = new LoanRepository(sessionFactory);
         IProductRepository productRepository = new ProductRepository(sessionFactory);
+        IMembershipRepository membershipRepository = new MembershipRepository(sessionFactory);
         // TODO: Make this mess work with beans or dependency injection
         IEventRepository eventRepository = new EventRepository();
         ILoanEventService eventService = new LoanEventService(
@@ -51,7 +51,7 @@ public class LoanController {
                 new EventEmitterPool()
             )
         );
-        this.loanService = new LoanService(loanRepository, eventService);
+        this.loanService = new LoanService(loanRepository, membershipRepository, eventService);
     }
 
     @Operation(summary = "Create a Loan", description = "Create a new Loan")
@@ -60,12 +60,12 @@ public class LoanController {
             @ApiResponse(responseCode = "400", description = "Invalid input"),
             @ApiResponse(responseCode = "404", description = "Membership or Product not found")
     })
-    @PostMapping
-    public Loan store(@RequestBody Loan loan) {
-        loanService.store(loan);
-
-        return loan;
+    @PostMapping("/new")
+    public ResponseEntity<Loan> store(@RequestBody LoanRequestDTO loanRequestDTO) {
+        Loan loan = loanService.store(loanRequestDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(loan);
     }
+
 
     @Operation(summary = "Retrieve a loan", description = "Retrieve a loan by Id")
     @ApiResponses(value = {
@@ -74,10 +74,10 @@ public class LoanController {
     })
     @GetMapping("/{loanId}")
     public ResponseEntity<Loan> retrieveLoanByLoanId(@PathVariable("loanId") long loanId) {
-        try {
+       try {
             Loan loan = loanService.retrieveLoanByLoanId(loanId);
             return ResponseEntity.ok(loan);
-        } catch (HibernateException ex) {
+        } catch (EntityNotFoundException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
