@@ -43,6 +43,21 @@ public class LoanService implements ILoanService {
             throw new InputValidationException("LoanRequestDTO cannot be null");
         }
 
+        Loan loan = createLoanFromDTO(loanRequestDTO);
+        Membership membership = retrieveMembership(loanRequestDTO.getMembershipId());
+        ProductCopy productCopy = retrieveProductCopy(loanRequestDTO.getProductCopyId());
+
+        updateProductCopyStatus(productCopy);
+        loan.setMembership(membership);
+        loan.setProductCopyId(productCopy);
+
+        loanRepository.store(loan);
+        EVENT_SERVICE.scheduleEventsForNewLoan(loan);
+
+        return loan;
+    }
+
+    private Loan createLoanFromDTO(LoanRequestDTO loanRequestDTO) {
         Loan loan = new Loan();
         if (loanRequestDTO.getLoanStatus() == null) {
             loan.setLoanStatus(LoanStatus.ACTIVE);
@@ -52,29 +67,26 @@ public class LoanService implements ILoanService {
 
         loan.setStartDate(loanRequestDTO.getStartDate());
         loan.setReturnBy(loanRequestDTO.getReturnBy());
+        return loan;
+    }
 
-        long membershipId = loanRequestDTO.getMembershipId();
-
-        Membership membership = membershipRepository.retrieveMembershipById(membershipId)
+    private Membership retrieveMembership(long membershipId) {
+        return membershipRepository.retrieveMembershipById(membershipId)
                 .orElseThrow(() -> new EntityNotFoundException("Membership not found with ID: " + membershipId));
-        loan.setMembership(membership);
+    }
 
-        Long productCopyId = loanRequestDTO.getProductCopyId();
-        if (productCopyId == null) {
+    private ProductCopy retrieveProductCopy(long productCopyId) {
+        if (productCopyId == 0) {
             throw new EntityNotFoundException("ProductCopy ID not found in the loan request");
         }
 
-        ProductCopy productCopy = productRepository.retrieveProductCopyById(productCopyId)
+        return productRepository.retrieveProductCopyById(productCopyId)
                 .orElseThrow(() -> new EntityNotFoundException("ProductCopy not found with ID: " + productCopyId));
+    }
 
+    private void updateProductCopyStatus(ProductCopy productCopy) {
         productCopy.setAvailabilityStatus(ProductCopyStatus.LOANED);  // Set the status of the product copy to LOANED
         productRepository.updateProductCopy(productCopy);
-        loan.setProductCopyId(productCopy);
-        loanRepository.store(loan);
-
-        EVENT_SERVICE.scheduleEventsForNewLoan(loan);
-
-        return loan;
     }
 
 
@@ -131,8 +143,24 @@ public class LoanService implements ILoanService {
 
     @Override
     public void handleOverdueLoans() {
+    /*    LocalDate currentDate = LocalDate.now();
+        long membershipId = getMembershipId();
+        List<Loan> activeLoans = loanRepository.retrieveActiveLoansByMembershipId(membershipId);
 
+        for (Loan loan : activeLoans) {
+            try {
+                if (loan.getLoanStatus().isOverdue(currentDate, loan)) {
+                    loan.setLoanStatus(LoanStatus.OVERDUE);
+                    loanRepository.updateLoan(loan);
+                }
+            } catch (LoanOverdueException e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
+    */
+    } //TODO: Figure out how to deal with overdue loans
+
 
     @Override
     public boolean checkIsLate(Loan loan) {
@@ -165,6 +193,5 @@ public class LoanService implements ILoanService {
     }
         return loans;
     }
-
 
 }
