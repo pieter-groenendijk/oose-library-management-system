@@ -33,6 +33,20 @@ CREATE TABLE "Membership" (
     FOREIGN KEY ("membershipTypeId") REFERENCES "MembershipType" ("membershipTypeId") ON DELETE CASCADE
 );
 
+CREATE TABLE "Genre" (
+    "genreId" BIGSERIAL PRIMARY KEY,
+    "description" VARCHAR(150)
+);
+
+CREATE TABLE "LendingLimit" (
+    "lendingLimitId" BIGSERIAL PRIMARY KEY,
+    "membershipTypeId" BIGINT NOT NULL,
+    "genreId" BIGINT NOT NULL,
+    "maxLendings" INT NOT NULL,
+    FOREIGN KEY ("membershipTypeId") REFERENCES "MembershipType" ("membershipTypeId") ON DELETE CASCADE,
+    FOREIGN KEY ("genreId") REFERENCES "Genre" ("genreId") ON DELETE CASCADE
+);
+
 CREATE TABLE "Lending" (
     "lendingId" BIGSERIAL PRIMARY KEY,
     "mustReturnBy" DATE NOT NULL
@@ -102,12 +116,13 @@ CREATE TABLE "Fine" (
 CREATE TABLE "ProductTemplate" (
     "productId" BIGSERIAL PRIMARY KEY,
     "name" VARCHAR(100) NOT NULL,
-    "genre" VARCHAR(50) NOT NULL,
+    "genreId" BIGINT NOT NULL,
     "yearOfRelease" INT NOT NULL,
     "description" VARCHAR(250),
     "type" VARCHAR(10) NOT NULL,
     "ageClassification" INT,
-    "mediaType" VARCHAR(255) NOT NULL
+    "mediaType" VARCHAR(255) NOT NULL,
+    FOREIGN KEY ("genreId") REFERENCES "Genre"("genreId") ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
 CREATE TABLE "PhysicalProductTemplate" (
