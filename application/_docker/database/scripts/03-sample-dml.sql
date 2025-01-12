@@ -92,15 +92,15 @@ VALUES (1, '2024-01-01', '2024-01-15', '2024-01-05', NULL, 'RETURNED', 1, 1),
        (3, '2024-03-01', '2024-03-15', NULL, NULL, 'ACTIVE', 1, 3);
 
 -- Insert data into Reservation table
-INSERT INTO "Reservation" ("reservationId", "reservationDate", "readyForPickup", "reservationPickUpDate", "productCopyId","membershipId", "reservationStatus")
-VALUES (1, '2024-12-09', 'FALSE','2024-12-16',  1, 1, 'LOANED'),
-       (2, '2024-12-10', 'FALSE','2024-12-17', 1, 2, 'LOANED'),
-       (3, '2024-12-11', 'FALSE','2024-12-18', 2, 3, 'LOANED'),
-       (4, '2024-12-12','FALSE', '2024-12-19', 3, 4, 'LOANED'),
-       (5, '2024-12-13','FALSE','2024-12-20', 4, 5, 'LOANED'),
-       (6, '2024-12-14', 'FALSE','2024-12-21', 5, 6, 'LOANED'),
-       (7, '2024-12-15', 'FALSE','2024-12-22', 1, 1, 'LOANED'),
-       (8, '2024-12-16','FALSE', '2024-12-23', 2, 2, 'LOANED'),
-       (9, '2024-12-17','FALSE', '2024-12-24', 3, 3, 'LOANED'),
-       (10, '2024-12-18', 'FALSE','2024-12-25', 4, 4, 'LOANED');
+INSERT INTO "Reservation" ("reservationDate", "readyForPickup", "reservationPickUpDate", "productCopyId","membershipId", "reservationStatus")
+VALUES ('2024-12-09', 'FALSE','2024-12-16',  1, 1, 'LOANED'),
+       ('2024-12-10', 'FALSE','2024-12-17', 1, 2, 'LOANED'),
+       ('2024-12-11', 'FALSE','2024-12-18', 2, 3, 'LOANED'),
+       ('2024-12-12','FALSE', '2024-12-19', 3, 4, 'LOANED'),
+       ('2024-12-13','FALSE','2024-12-20', 4, 5, 'LOANED'),
+       ('2024-12-14', 'FALSE','2024-12-21', 5, 6, 'LOANED'),
+       ('2024-12-15', 'FALSE','2024-12-22', 1, 1, 'LOANED'),
+       ('2024-12-16','FALSE', '2024-12-23', 2, 2, 'LOANED'),
+       ('2024-12-17','FALSE', '2024-12-24', 3, 3, 'LOANED'),
+       ('2024-12-18', 'FALSE','2024-12-25', 4, 4, 'LOANED');
 

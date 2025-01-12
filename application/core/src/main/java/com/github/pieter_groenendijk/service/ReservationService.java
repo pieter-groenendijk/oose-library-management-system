@@ -11,6 +11,7 @@ import com.github.pieter_groenendijk.model.product.ProductCopyStatus;
 import com.github.pieter_groenendijk.repository.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -161,6 +162,7 @@ public class ReservationService implements IReservationService {
     public Reservation toEntity(ReservationDTO dto, ProductCopy productCopy, Membership membership) {
         Reservation reservation = new Reservation();
         reservation.setReservationDate(dto.getReservationDate());
+        reservation.setReservationPickUpDate(LocalDate.now());
         reservation.setReadyForPickup(dto.isReadyForPickup());
         reservation.setProductCopy(productCopy);
         reservation.setMembership(membership);

@@ -37,7 +37,7 @@ public class DefaultConfigurationFactory {
             .addAnnotatedClass(ProductTemplate.class)
             .addAnnotatedClass(PhysicalProductTemplate.class)
             .addAnnotatedClass(PhysicalReadProduct.class)
-            .addAnnotatedClass(Reservation.class);
+            .addAnnotatedClass(Reservation.class)
             .addAnnotatedClass(Event.class)
             .addAnnotatedClass(LoanEvent.class)
 // TODO: Add below annotated classes, currently not possible since Loan and all those other classes are not placed here yet.

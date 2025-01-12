@@ -63,11 +63,11 @@ public class ReservationController {
     public ResponseEntity<?>  store(@RequestBody ReservationDTO reservationDTO) {
         try {
             Reservation reservation = reservationService.store(reservationDTO);
-            return new ResponseEntity<>(reservation, HttpStatus.CREATED);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (EntityNotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
