@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
     length = 50
 )
 @Table(name = "Fine")
-public abstract class Fine { // With abstract we enforce that it's an exclusive subtype.
+public abstract class Fine { // With abstract, we enforce that it's an exclusive subtype.
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "fineId")
