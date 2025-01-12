@@ -1,20 +1,15 @@
--- Drop tables if they exist, cascading dependencies
---DROP TABLE IF EXISTS "Membership" CASCADE;
---DROP TABLE IF EXISTS "MembershipType" CASCADE;
---DROP TABLE IF EXISTS "Account" CASCADE;
-
--- Create Account table
 CREATE TABLE "Account" (
     "accountId" BIGSERIAL PRIMARY KEY,
+    "mollieCustomerId" VARCHAR(255) NULL, -- TODO: Can an account exist without being registered as a customer at mollie?
     "email" VARCHAR(50) NOT NULL UNIQUE,
     "firstName" VARCHAR(50) NOT NULL,
     "lastName" VARCHAR(50) NOT NULL,
     "dateOfBirth" DATE NOT NULL,
     "gender" CHAR(1) NOT NULL,
-    "isActive" BOOLEAN NOT NULL
+    "isActive" BOOLEAN NOT NULL,
+    "uncollectedReservations" INT DEFAULT 0
 );
 
--- Create MembershipType table
 CREATE TABLE "MembershipType" (
     "membershipTypeId" BIGSERIAL PRIMARY KEY,
     "description" VARCHAR(150),
@@ -23,10 +18,9 @@ CREATE TABLE "MembershipType" (
     "maxLendings" INT NOT NULL
 );
 
--- Create Membership table
 CREATE TABLE "Membership" (
     "membershipId" BIGSERIAL PRIMARY KEY,
-    "accountId" BIGINT NOT NULL,
+    "accountId" BIGSERIAL NOT NULL,
     "membershipTypeId" BIGINT NOT NULL,
     "isActive" BOOLEAN NOT NULL,
     "startDate" DATE NOT NULL,
@@ -53,7 +47,123 @@ CREATE TABLE "NotificationTask" (
 );
 
 CREATE TABLE "LendingAssociatedNotificationTask" (
-    "lendingId" BIGINT NOT NULL,
+                                                     "lendingId" BIGSERIAL NOT NULL,
     "notificationTaskId" BIGINT NOT NULL,
     PRIMARY KEY ("lendingId", "notificationTaskId")
 );
+
+CREATE TABLE "PaymentStatus" (
+    "paymentStatusId" SMALLSERIAL NOT NULL,
+    "title" VARCHAR(50) NOT NULL,
+    PRIMARY KEY ("paymentStatusId"),
+    UNIQUE ("title")
+);
+
+CREATE TABLE "Payment" (
+    "paymentId" BIGSERIAL NOT NULL,
+    "molliePaymentId" VARCHAR(255) NOT NULL,
+    "amountInCents" BIGINT NOT NULL,
+    "status" SMALLINT NOT NULL,
+    "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    "paidAt" TIMESTAMP,
+    PRIMARY KEY ("paymentId"),
+    UNIQUE ("molliePaymentId"),
+    CHECK ("amountInCents" >= 0)
+);
+
+-- region: Fine Related
+CREATE TABLE "FineType" (
+    "fineTypeId" BIGSERIAL NOT NULL,
+    "title" VARCHAR(50) NOT NULL,
+    "amountInCents" BIGINT NOT NULL,
+    PRIMARY KEY ("fineTypeId"),
+    UNIQUE ("title"),
+    CHECK ("amountInCents" >= 0)
+);
+
+CREATE TABLE "Fine" (
+    "fineId" BIGSERIAL NOT NULL,
+    "fineType" SMALLINT NOT NULL,
+    "account" BIGINT NOT NULL,
+    "amountInCents" BIGINT NOT NULL,
+    "declaredOn" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    "paidBy" BIGINT,
+    PRIMARY KEY ("fineId"),
+    FOREIGN KEY ("fineType") REFERENCES "FineType"("fineTypeId") ON UPDATE CASCADE ON DELETE RESTRICT,
+    FOREIGN KEY ("account") REFERENCES "Account"("accountId") ON UPDATE CASCADE ON DELETE RESTRICT,
+    FOREIGN KEY ("paidBy") REFERENCES "Payment"("paymentId") ON UPDATE CASCADE ON DELETE RESTRICT,
+    CHECK ("amountInCents" >= 0)
+);
+-- endregion
+
+CREATE TABLE "ProductTemplate" (
+    "productId" BIGSERIAL PRIMARY KEY,
+    "name" VARCHAR(100) NOT NULL,
+    "genre" VARCHAR(50) NOT NULL,
+    "yearOfRelease" INT NOT NULL,
+    "description" VARCHAR(250),
+    "type" VARCHAR(10) NOT NULL,
+    "ageClassification" INT,
+    "mediaType" VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE "PhysicalProductTemplate" (
+    "productId" BIGSERIAL PRIMARY KEY,
+    "location" VARCHAR(100) NOT NULL,
+    "author" VARCHAR(100) NOT NULL,
+    FOREIGN KEY ("productId") REFERENCES "ProductTemplate" ("productId")
+);
+
+CREATE TABLE "PhysicalReadProduct" (
+    "productId" BIGSERIAL PRIMARY KEY,
+    "ISBN" BIGINT,
+    "author" VARCHAR(100) NOT NULL,
+    FOREIGN KEY ("productId") REFERENCES "ProductTemplate" ("productId")
+);
+
+CREATE TABLE "ProductCopy"
+(
+    "productCopyId"      BIGSERIAL PRIMARY KEY,
+    "availabilityStatus" VARCHAR(50) NOT NULL,
+    "productId"          BIGSERIAL      NOT NULL,
+    CONSTRAINT fk_physical_product_template FOREIGN KEY ("productId") REFERENCES "PhysicalProductTemplate" ("productId")
+);
+
+CREATE TABLE "Loan"
+(
+    "loanId" BIGSERIAL PRIMARY KEY,
+    "startDate"     DATE   NOT NULL,
+    "returnBy"      DATE,
+    "returnedOn"    DATE,
+    "extendedReturnBy" DATE,
+    "loanStatus"    VARCHAR(50),
+    "membershipId"  BIGSERIAL NOT NULL,
+    "productCopyId" BIGSERIAL NOT NULL,
+    FOREIGN KEY ("membershipId") REFERENCES "Membership" ("membershipId") ON UPDATE CASCADE ON DELETE RESTRICT,
+    FOREIGN KEY ("productCopyId") REFERENCES "ProductCopy" ("productCopyId") ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+CREATE TABLE "Reservation"
+(
+    "reservationId"   BIGSERIAL PRIMARY KEY,
+    "membershipId"    BIGSERIAL  NOT NULL,
+    "productCopyId"   BIGSERIAL  NOT NULL,
+    "reservationDate" DATE    NOT NULL,
+    "readyForPickUp"  BOOLEAN NOT NULL,
+    FOREIGN KEY ("membershipId") REFERENCES "Membership" ("membershipId") ON UPDATE CASCADE ON DELETE RESTRICT,
+    FOREIGN KEY ("productCopyId") REFERENCES "ProductCopy" ("productCopyId") ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+-- region: Event related
+CREATE TABLE "Event" (
+    "eventId" BIGSERIAL NOT NULL,
+    "type" VARCHAR(50) NOT NULL,
+    "scheduledAt" TIMESTAMP NOT NULL,
+    "associationType" VARCHAR(50) NOT NULL,
+    "loan" BIGINT,
+    "reservation" BIGINT,
+    PRIMARY KEY ("eventId"),
+    FOREIGN KEY ("loan") REFERENCES "Loan"("loanId"),
+    FOREIGN KEY ("reservation") REFERENCES "Reservation"("reservationId")
+);
+-- endregion

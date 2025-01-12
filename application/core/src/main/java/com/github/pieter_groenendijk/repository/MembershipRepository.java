@@ -5,9 +5,11 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import java.util.Optional;
 import java.util.List;
+import java.util.Collections;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
+import org.hibernate.HibernateException;
 
 public class MembershipRepository implements IMembershipRepository{
 	private SessionFactory sessionFactory;
@@ -38,12 +40,16 @@ public class MembershipRepository implements IMembershipRepository{
 			cr.select(root).where(cb.equal(root.get("account").get("id"), accountId));
 
 			return session.createQuery(cr).getResultList();
-		} catch (Exception e) {
-			e.printStackTrace(); 
-			throw new RuntimeException("Database query failed", e);
+		} catch (HibernateException e) {
+			if (session.getTransaction() != null) {
+				session.getTransaction().rollback();
+			}
+			e.printStackTrace();
+			return Collections.emptyList();
 		} finally {
 			session.close();
 		}
+
 	}
 
 
@@ -56,7 +62,7 @@ public class MembershipRepository implements IMembershipRepository{
 			session.flush();
 
 			session.getTransaction().commit();
-		} catch (Exception e) {
+		} catch (HibernateException e) {
 			if (session.getTransaction() != null) {
 				session.getTransaction().rollback();
 			}
