@@ -62,8 +62,8 @@ public class LoanController {
     })
     @PostMapping("/new")
     public ResponseEntity<Loan> store(@RequestBody LoanRequestDTO loanRequestDTO) {
-        Loan loan = loanService.store(loanRequestDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(loan);
+        loanService.store(loanRequestDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
 

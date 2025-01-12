@@ -36,7 +36,7 @@ public class LoanRequestDTO {
     }
 
     public LoanStatus getLoanStatus() {
-        return loanStatus != null ? loanStatus : LoanStatus.ACTIVE; // Default to ACTIVE if not set
+        return loanStatus != null ? loanStatus : LoanStatus.ACTIVE;
     }
 
     public void setLoanStatus(LoanStatus loanStatus) {
