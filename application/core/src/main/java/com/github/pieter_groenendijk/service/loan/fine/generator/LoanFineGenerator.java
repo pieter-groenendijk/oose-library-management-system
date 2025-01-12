@@ -1,4 +1,4 @@
-package com.github.pieter_groenendijk.service.loan.fine;
+package com.github.pieter_groenendijk.service.loan.fine.generator;
 
 import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.model.fine.FineType;

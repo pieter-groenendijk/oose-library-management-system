@@ -1,4 +1,4 @@
-package com.github.pieter_groenendijk.service.loan.fine;
+package com.github.pieter_groenendijk.service.loan.fine.generator;
 
 import com.github.pieter_groenendijk.service.fine.type.FineTypeRegistry;
 import com.github.pieter_groenendijk.service.fine.type.StaticFineType;
