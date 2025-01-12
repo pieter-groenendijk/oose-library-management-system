@@ -8,8 +8,14 @@ import jakarta.validation.constraints.Min;
 import java.time.LocalDateTime;
 
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(
+    name = "associationType",
+    discriminatorType = DiscriminatorType.STRING,
+    length = 50
+)
 @Table(name = "Fine")
-public class Fine {
+public abstract class Fine { // With abstract we enforce that it's an exclusive subtype.
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "fineId")

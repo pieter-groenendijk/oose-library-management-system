@@ -86,12 +86,16 @@ CREATE TABLE "Fine" (
     "fineType" BIGINT NOT NULL,
     "account" BIGINT NOT NULL,
     "amountInCents" BIGINT NOT NULL,
+    "loan" BIGINT,
+    "reservation" BIGINT,
     "declaredOn" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     "paidBy" BIGINT,
     PRIMARY KEY ("fineId"),
     FOREIGN KEY ("fineType") REFERENCES "FineType"("fineTypeId") ON UPDATE CASCADE ON DELETE RESTRICT,
     FOREIGN KEY ("account") REFERENCES "Account"("accountId") ON UPDATE CASCADE ON DELETE RESTRICT,
     FOREIGN KEY ("paidBy") REFERENCES "Payment"("paymentId") ON UPDATE CASCADE ON DELETE RESTRICT,
+    FOREIGN KEY ("loan") REFERENCES "Loan"("loanId") ON UPDATE CASCADE ON DELETE RESTRICT,
+    FOREIGN KEY ("reservation") REFERENCES "Reservation"("reservationId") ON UPDATE CASCADE ON DELETE RESTRICT,
     CHECK ("amountInCents" >= 0)
 );
 -- endregion
