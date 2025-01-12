@@ -13,6 +13,8 @@ class OverdueEventListener extends EventListener<Loan> {
 
     @Override
     public void react(Loan loan) {
+        // TODO: Schedule DayOverdue Event
 
+        // TODO: Schedule notification
     }
 }
