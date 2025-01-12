@@ -15,15 +15,15 @@ abstract class DetachedLoanEventGenerator extends DetachedEventGenerator<Loan, L
     }
 
     @Override
+    protected abstract LocalDateTime determineScheduledDateTime(Loan loan);
+
+    @Override
     protected LoanEvent generateEmptyEvent() {
         return new LoanEvent();
     }
 
     @Override
     protected TaskStorage<LoanEvent> generateEventStorage() {
-        return this.REPOSITORY::storeLoanEvent;
+        return super.REPOSITORY::storeLoanEvent;
     }
-
-    @Override
-    protected abstract LocalDateTime determineScheduledDateTime(Loan loan);
 }

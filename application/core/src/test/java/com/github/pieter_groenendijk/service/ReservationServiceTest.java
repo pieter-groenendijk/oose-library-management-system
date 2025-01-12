@@ -4,6 +4,7 @@ import com.github.pieter_groenendijk.model.Account;
 import com.github.pieter_groenendijk.model.Membership;
 import com.github.pieter_groenendijk.model.Reservation;
 import com.github.pieter_groenendijk.repository.*;
+import com.github.pieter_groenendijk.service.reservation.ReservationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

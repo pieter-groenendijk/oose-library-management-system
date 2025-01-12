@@ -1,11 +1,7 @@
-package com.github.pieter_groenendijk.service;
+package com.github.pieter_groenendijk.service.reservation;
 import com.github.pieter_groenendijk.model.Reservation;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Date;
-
-import static com.github.pieter_groenendijk.service.ServiceUtils.PICKUP_DAYS;
 
 
 public interface IReservationService {

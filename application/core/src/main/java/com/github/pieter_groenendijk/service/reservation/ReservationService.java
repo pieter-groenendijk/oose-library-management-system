@@ -1,4 +1,4 @@
-package com.github.pieter_groenendijk.service;
+package com.github.pieter_groenendijk.service.reservation;
 
 import com.github.pieter_groenendijk.exception.EntityNotFoundException;
 import com.github.pieter_groenendijk.model.Account;

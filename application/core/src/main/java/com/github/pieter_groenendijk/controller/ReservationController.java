@@ -2,11 +2,10 @@ package com.github.pieter_groenendijk.controller;
 
 
 import com.github.pieter_groenendijk.hibernate.SessionFactoryFactory;
-import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.model.Reservation;
 import com.github.pieter_groenendijk.repository.*;
-import com.github.pieter_groenendijk.service.IReservationService;
-import com.github.pieter_groenendijk.service.ReservationService;
+import com.github.pieter_groenendijk.service.reservation.IReservationService;
+import com.github.pieter_groenendijk.service.reservation.ReservationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
