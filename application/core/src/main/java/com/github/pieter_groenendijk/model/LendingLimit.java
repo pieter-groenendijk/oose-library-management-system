@@ -1,6 +1,7 @@
 package com.github.pieter_groenendijk.model;
 
 import jakarta.persistence.*;
+import com.github.pieter_groenendijk.model.product.Genre;
 
 @Entity
 @Table(name = "LendingLimit")

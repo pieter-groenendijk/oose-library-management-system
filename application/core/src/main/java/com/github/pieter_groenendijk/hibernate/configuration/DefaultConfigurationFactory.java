@@ -9,6 +9,7 @@ import com.github.pieter_groenendijk.model.notification.NotificationTask;
 import com.github.pieter_groenendijk.model.product.PhysicalProductTemplate;
 import com.github.pieter_groenendijk.model.product.ProductCopy;
 import com.github.pieter_groenendijk.model.product.ProductTemplate;
+import com.github.pieter_groenendijk.model.product.Genre;
 import org.hibernate.cfg.Configuration;
 
 public class DefaultConfigurationFactory {
@@ -37,6 +38,9 @@ public class DefaultConfigurationFactory {
             .addAnnotatedClass(PhysicalProductTemplate.class)
             .addAnnotatedClass(Event.class)
             .addAnnotatedClass(LoanEvent.class)
+            .addAnnotatedClass(Genre.class)
+            .addAnnotatedClass(LendingLimit.class)
+
 // TODO: Add below annotated classes, currently not possible since Loan and all those other classes are not placed here yet.
 //            .addAnnotatedClass(ReservationEvent.class)
         ;

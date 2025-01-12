@@ -12,8 +12,8 @@ public class Genre {
     @Column(name = "description", length = 150)
     private String description;
 
-    public long getGenreId() { return membershipTypeId; }
+    public long getGenreId() { return genreId; }
     public void setGenreId(long genreId) {this.genreId = genreId; }
-    public string getDescription() {return description; }
+    public String getDescription() {return description; }
     public void setDescription(String description) {this.description = description; }
 }
