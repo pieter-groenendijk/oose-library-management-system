@@ -41,21 +41,32 @@ INSERT INTO "Membership" ("accountId", "membershipTypeId", "isActive", "startDat
 (6, 3, TRUE, '2023-03-15', '2024-03-14', FALSE),
 (3, 4, FALSE, '2022-08-01', '2023-07-31', FALSE);
 
+INSERT INTO "Genre" ("description") VALUES
+('Thriller'),
+('Chickflick'),
+('Fantasy'),
+('History'),
+('Biography');
+
+INSERT INTO "LendingLimit" ("membershipTypeId", "genreId", "maxLendings") VALUES
+(1, 1, 3),
+(1, 2, 5),
+(2, 3, 6),
+(2, 4, 7),
+(4, 1, 12),
+(4, 5, 10),
+(5, 2, 15),
+(5, 3, 15);
+
 -- region: Fines
 INSERT INTO
     "FineType" ("title", "amountInCents")
 VALUES
     ('day-overdue-lending', 20),
-    ('uncollected-reservation-pattern', 1000)
+    ('uncollected-reservation-pattern', 1000);
 
 
 -- endregion
-
--- Insert data into Loan table
-INSERT INTO "Loan" ("loanId", "startDate", "returnBy", "returnedOn", "extendedReturnBy", "loanStatus", "membershipId", "productCopyId")
-VALUES (1, '2024-01-01', '2024-01-15', NULL, NULL, 'RETURNED', 1, 1),
-       (2, '2024-02-01', '2024-02-14', '2024-02-10', NULL, 'RETURNED', 1, 2),
-       (3, '2024-03-01', '2024-03-15', NULL, NULL, 'RETURNED', 1, 3);
 
 -- Insert data into Reservation table
 INSERT INTO "Reservation" ("reservationId", "reservationDate", "isActive", "membershipId", "productCopyId")
@@ -71,13 +82,13 @@ VALUES (1, '2024-12-09', FALSE, 1, 1),
        (10, '2024-12-18', TRUE, 5, 5);
 
 -- Insert a product in to database
-INSERT INTO "ProductTemplate" ("productId", "name", "genre", "yearOfRelease", "description", "type", "ageClassification", "mediaType")
+INSERT INTO "ProductTemplate" ("productId", "name", "genreId", "yearOfRelease", "description", "type", "ageClassification", "mediaType")
 VALUES
-    (1, '1984', 'Thriller', 1949, 'A novel by George Orwell', 'BOOK', 18, 'PHYSICAL'),
-    (2, 'The Great Gatsby', 'Classic', 1925, 'A novel by F. Scott Fitzgerald', 'BOOK', 18, 'PHYSICAL'),
-    (3, 'Moby-Dick', 'Classic', 1851, 'A novel by Herman Melville', 'BOOK', 18, 'PHYSICAL'),
-    (4, 'To Kill a Mockingbird', 'Drama', 1960, 'A novel by Harper Lee', 'BOOK', 18, 'PHYSICAL'),
-    (5, 'Pride and Prejudice', 'Romance', 1813, 'A novel by Jane Austen', 'BOOK', 18, 'PHYSICAL');
+    (1, '1984', 1 , 1949, 'A novel by George Orwell', 'BOOK', 18, 'PHYSICAL'),
+    (2, 'The Great Gatsby', 2, 1925, 'A novel by F. Scott Fitzgerald', 'BOOK', 18, 'PHYSICAL'),
+    (3, 'Moby-Dick', 3, 1851, 'A novel by Herman Melville', 'BOOK', 18, 'PHYSICAL'),
+    (4, 'To Kill a Mockingbird', 2, 1960, 'A novel by Harper Lee', 'BOOK', 18, 'PHYSICAL'),
+    (5, 'Pride and Prejudice', 5, 1813, 'A novel by Jane Austen', 'BOOK', 18, 'PHYSICAL');
 
 
 INSERT INTO "PhysicalProductTemplate" ("productId", "location", "author")
@@ -104,3 +115,9 @@ VALUES
     (3, 'AVAILABLE', 3),
     (4, 'AVAILABLE', 4),
     (5, 'AVAILABLE', 5);
+
+-- Insert data into Loan table
+INSERT INTO "Loan" ("loanId", "startDate", "returnBy", "returnedOn", "extendedReturnBy", "loanStatus", "membershipId", "productCopyId")
+VALUES (1, '2024-01-01', '2024-01-15', NULL, NULL, 'RETURNED', 1, 1),
+       (2, '2024-02-01', '2024-02-14', '2024-02-10', NULL, 'RETURNED', 1, 2),
+       (3, '2024-03-01', '2024-03-15', NULL, NULL, 'RETURNED', 1, 3);
