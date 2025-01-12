@@ -36,8 +36,7 @@ public class LoanRepository implements ILoanRepository {
 
     @Override
     public List<Loan> retrieveActiveLoansByMembershipId(long membershipId) {
-        Session session = sessionFactory.openSession();
-        try {
+        try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
             CriteriaQuery<Loan> cr = cb.createQuery(Loan.class);
             Root<Loan> root = cr.from(Loan.class);
@@ -52,48 +51,33 @@ public class LoanRepository implements ILoanRepository {
         } catch (HibernateException e) {
             e.printStackTrace();
             throw new RuntimeException("Database query failed", e);
-        } finally {
-            session.close();
         }
     }
 
     @Override
     public Loan store(Loan loan) {
-        Session session = sessionFactory.openSession();
-
-        try {
+        try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             session.persist(loan);
             session.flush();
-
             session.getTransaction().commit();
         } catch (HibernateException e) {
-            if (session.getTransaction() != null) {
-                session.getTransaction().rollback();
-            }
             e.printStackTrace();
-        } finally {
-            session.close();
+            throw new RuntimeException("Failed to store loan", e);
         }
         return loan;
     }
 
     @Override
     public Loan updateLoan(Loan loan) {
-        Session session = sessionFactory.openSession();
-        try {
+        try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             session.merge(loan);
             session.getTransaction().commit();
 
         } catch (HibernateException e) {
-            if (session.getTransaction() != null) {
-                session.getTransaction().rollback();
-            }
             e.printStackTrace();
-
-        } finally {
-            session.close();
+            throw new RuntimeException("Failed to update loan", e);
         }
         return loan;
     }
