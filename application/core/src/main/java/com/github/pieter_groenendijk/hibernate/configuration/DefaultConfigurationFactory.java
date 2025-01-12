@@ -1,6 +1,9 @@
 package com.github.pieter_groenendijk.hibernate.configuration;
 
 import com.github.pieter_groenendijk.model.*;
+import com.github.pieter_groenendijk.model.event.Event;
+import com.github.pieter_groenendijk.model.event.LoanEvent;
+import com.github.pieter_groenendijk.model.event.ReservationEvent;
 import com.github.pieter_groenendijk.model.notification.LendingAssociatedNotificationTask;
 import com.github.pieter_groenendijk.model.notification.NotificationTask;
 import com.github.pieter_groenendijk.model.product.PhysicalProductTemplate;
@@ -35,8 +38,11 @@ public class DefaultConfigurationFactory {
             .addAnnotatedClass(PhysicalProductTemplate.class)
             .addAnnotatedClass(PhysicalReadProduct.class)
             .addAnnotatedClass(Reservation.class);
-
-
+            .addAnnotatedClass(Event.class)
+            .addAnnotatedClass(LoanEvent.class)
+// TODO: Add below annotated classes, currently not possible since Loan and all those other classes are not placed here yet.
+//            .addAnnotatedClass(ReservationEvent.class)
+        ;
     }
 
     private void setMisc(ConfigurationBuilder builder) {

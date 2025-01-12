@@ -155,8 +155,19 @@ CREATE TABLE "Reservation"
     FOREIGN KEY ("membershipId") REFERENCES "Membership" ("membershipId") ON UPDATE CASCADE ON DELETE RESTRICT,
     FOREIGN KEY ("productCopyId") REFERENCES "ProductCopy" ("productCopyId") ON UPDATE CASCADE ON DELETE RESTRICT
 );
-
 CREATE TYPE loanStatus AS ENUM ('ACTIVE', 'EXTENDED', 'RETURNED', 'OVERDUE');
 CREATE TYPE reservationStatus AS ENUM ('ACTIVE', 'LOANED', 'EXPIRED', 'CANCELLED');
-
+-- region: Event related
+CREATE TABLE "Event" (
+    "eventId" BIGSERIAL NOT NULL,
+    "type" VARCHAR(50) NOT NULL,
+    "scheduledAt" TIMESTAMP NOT NULL,
+    "associationType" VARCHAR(50) NOT NULL,
+    "loan" BIGINT,
+    "reservation" BIGINT,
+    PRIMARY KEY ("eventId"),
+    FOREIGN KEY ("loan") REFERENCES "Loan"("loanId"),
+    FOREIGN KEY ("reservation") REFERENCES "Reservation"("reservationId")
+);
+-- endregion
 

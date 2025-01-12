@@ -1,5 +1,7 @@
 package com.github.pieter_groenendijk.utils.scheduling;
 
+import com.github.pieter_groenendijk.model.Task;
+
 /**
  * This class wraps around a task to provide a consistent call signature to store the object, without having to know what
  * specific subclass it is and how it should be stored.
