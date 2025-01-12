@@ -114,12 +114,26 @@ CREATE TABLE "PhysicalProductTemplate" (
     FOREIGN KEY ("productId") REFERENCES "ProductTemplate" ("productId")
 );
 
+CREATE TABLE "DigitalProductTemplate"
+(
+    "productId" BIGSERIAL PRIMARY KEY,
+    "language"  VARCHAR(100) NOT NULL,
+    FOREIGN KEY ("productId") REFERENCES "ProductTemplate" ("productId")
+);
+
 CREATE TABLE "PhysicalProduct" (
     "productId" BIGSERIAL PRIMARY KEY,
     "ISBN" BIGINT,
     "author" VARCHAR(100) NOT NULL,
     FOREIGN KEY ("productId") REFERENCES "ProductTemplate" ("productId")
 );
+CREATE TABLE "DigitalProduct"
+(
+    "productId" BIGSERIAL PRIMARY KEY,
+    "language"      BIGINT,
+    FOREIGN KEY ("productId") REFERENCES "ProductTemplate" ("productId")
+);
+
 
 CREATE TABLE "ProductCopy"
 (

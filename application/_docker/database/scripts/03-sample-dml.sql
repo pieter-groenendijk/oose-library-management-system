@@ -70,14 +70,17 @@ VALUES (1, '2024-12-09', FALSE, 1, 1),
        (9, '2024-12-17', TRUE, 4, 4),
        (10, '2024-12-18', TRUE, 5, 5);
 
--- Insert a product in to database
+-- Inserting Products
 INSERT INTO "ProductTemplate" ("productId", "name", "genre", "yearOfRelease", "description", "ageClassification", "mediaType")
 VALUES
     (1, '1984', 'Thriller', 1949, 'A novel by George Orwell', 18, 'BOOK'),
     (2, 'The Great Gatsby', 'Classic', 1925, 'A novel by F. Scott Fitzgerald', 18, 'BOOK'),
     (3, 'Moby-Dick', 'Classic', 1851, 'A novel by Herman Melville',  18, 'BOOK'),
     (4, 'To Kill a Mockingbird', 'Drama', 1960, 'A novel by Harper Lee',  18, 'BOOK'),
-    (5, 'Pride and Prejudice', 'Romance', 1813, 'A novel by Jane Austen', 18, 'BOOK');
+    (5, 'Pride and Prejudice', 'Romance', 1813, 'A novel by Jane Austen', 18, 'BOOK'),
+    (6, 'Java Programming for Beginners', 'Technology', 2022, 'A beginner-friendly guide to learning Java programming.', 12, 'EBOOK'),
+    (7, 'Mastering Spring Framework', 'Technology', 2021, 'A comprehensive guide to Spring Framework for advanced developers.', 16, 'EBOOK'),
+    (8, 'The Art of Cooking', 'Cookbook', 2019, 'A cookbook with gourmet recipes and techniques from around the world.', 18, 'EBOOK');
 
 
 INSERT INTO "PhysicalProductTemplate" ("productId", "location", "author")
@@ -104,3 +107,17 @@ VALUES
     (3, 'AVAILABLE', 3),
     (4, 'AVAILABLE', 4),
     (5, 'AVAILABLE', 5);
+
+INSERT INTO "DigitalProductTemplate" ("productId", "language")
+VALUES
+    (6, 'English'),
+    (7, 'English'),
+    (8, 'English');
+
+
+INSERT INTO DigitalProduct (productId, author, edition)
+VALUES
+    (6, 'John Doe', 1),
+    (7, 'Jane Smith', 2),
+    (8, 'Gordon Ramsay', 1);
+-- endregion Products
