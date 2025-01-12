@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface IMembershipTypeRepository {
     Optional<MembershipType> retrieveMembershipTypeById(long id);
-    MembershipType store(MembershipType membershipType);
+    void store(MembershipType membershipType);
     boolean doesMembershipTypeExistByDescription(String description);
-    MembershipType update(MembershipType membershipType);
+    void update(MembershipType membershipType);
     List<MembershipType> retrieveMembershipTypeList();
 }
