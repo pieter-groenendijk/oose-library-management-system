@@ -13,17 +13,13 @@ public class Loan {
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private long loanId;
     @Column(name = "startDate", nullable = false)
-    @Temporal(TemporalType.DATE)
     private LocalDate startDate;
     @Column(name = "returnBy")
-    @Temporal(TemporalType.DATE)
     private LocalDate returnBy;
 
     @Column(name = "extendedReturnBy")
-    @Temporal(TemporalType.DATE)
     private LocalDate extendedReturnBy;
     @Column(name = "returnedOn")
-    @Temporal(TemporalType.DATE)
     private LocalDate returnedOn;
 
     @Enumerated(EnumType.STRING)
@@ -38,16 +34,9 @@ public class Loan {
     private ProductCopy productCopy;
 
 
-    // Getters and Setters
-    public void setLoanId(Long loanId) {
-        this.loanId = loanId;
-    }
-
     public Long getLoanId() {
         return loanId;
     }
-
-
 
     public LoanStatus getLoanStatus() {
         return loanStatus;
@@ -66,9 +55,11 @@ public class Loan {
     }
 
 
-
     public Long getProductCopy() {
         return productCopy.getProductCopyId();
+    }
+    public void setProductCopy(ProductCopy productCopy) {
+        this.productCopy = productCopy;
     }
 
     public LocalDate getReturnBy() {

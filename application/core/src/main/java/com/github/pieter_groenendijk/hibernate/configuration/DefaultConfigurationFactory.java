@@ -7,6 +7,7 @@ import com.github.pieter_groenendijk.model.event.ReservationEvent;
 import com.github.pieter_groenendijk.model.notification.LendingAssociatedNotificationTask;
 import com.github.pieter_groenendijk.model.notification.NotificationTask;
 import com.github.pieter_groenendijk.model.product.PhysicalProductTemplate;
+import com.github.pieter_groenendijk.model.product.PhysicalReadProduct;
 import com.github.pieter_groenendijk.model.product.ProductCopy;
 import com.github.pieter_groenendijk.model.product.ProductTemplate;
 import com.github.pieter_groenendijk.model.product.Genre;
@@ -36,6 +37,8 @@ public class DefaultConfigurationFactory {
             .addAnnotatedClass(ProductCopy.class)
             .addAnnotatedClass(ProductTemplate.class)
             .addAnnotatedClass(PhysicalProductTemplate.class)
+            .addAnnotatedClass(PhysicalReadProduct.class)
+            .addAnnotatedClass(Reservation.class)
             .addAnnotatedClass(Event.class)
             .addAnnotatedClass(LoanEvent.class)
             .addAnnotatedClass(Genre.class)

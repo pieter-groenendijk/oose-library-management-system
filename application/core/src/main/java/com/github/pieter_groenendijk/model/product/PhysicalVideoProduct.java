@@ -1,9 +1,9 @@
 package com.github.pieter_groenendijk.model.product;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 
 @Entity
+@DiscriminatorValue("PhysicalVideoProduct")
 public class PhysicalVideoProduct extends PhysicalProductTemplate{
     @Column(name = "duration", nullable = true)
     public int duration;

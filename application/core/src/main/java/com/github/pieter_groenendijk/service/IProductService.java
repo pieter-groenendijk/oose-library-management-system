@@ -15,9 +15,12 @@ public interface IProductService {
 
     ProductCopy updateProductCopy(ProductCopy productCopy);
 
+    ProductCopy retrieveProductByCopyId(long productCopyId);
+
     //Genre
     Genre retrieveGenreById(long id);
     void store(Genre genre);
     void update(long id, Genre genre);
     List<Genre> retrieveGenreList();
+
 }
