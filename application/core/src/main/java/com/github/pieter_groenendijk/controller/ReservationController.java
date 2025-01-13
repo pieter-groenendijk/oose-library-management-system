@@ -57,7 +57,6 @@ public class ReservationController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Reservation created"),
             @ApiResponse(responseCode = "404", description = "ProductCopy or Membership not found"),
-            @ApiResponse(responseCode = "500", description = "Internal server error. WHYYYY")
     })
     @PostMapping
     public ResponseEntity<?>  store(@RequestBody ReservationDTO reservationDTO) {
@@ -66,8 +65,6 @@ public class ReservationController {
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
