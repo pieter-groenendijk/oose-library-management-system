@@ -1,21 +1,23 @@
 package com.github.pieter_groenendijk.model.product;
 
 import com.github.pieter_groenendijk.model.MediaType;
+import com.github.pieter_groenendijk.model.product.Genre;
 import jakarta.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class ProductTemplate {
 
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "productId")
     private Long productId;
 
     @Column(name = "name", nullable = false, length = 100)
     private String name;
 
-    @Column (name = "genre", nullable = false, length = 50)
-    private String genre;
+    @ManyToOne
+    @JoinColumn (name = "genreId", nullable = false)
+    private Genre genre;
 
     @Column (name = "yearOfRelease", nullable = false, length = 4)
     private int yearOfRelease;
@@ -35,11 +37,11 @@ public abstract class ProductTemplate {
         return name;
     }
 
-    public String getGenre() {
+    public Genre getGenre() {
         return genre;
     }
 
-    public void setGenre(String genre) {
+    public void setGenre(Genre genre) {
         this.genre = genre;
     }
 

@@ -7,7 +7,8 @@ CREATE TABLE "Account" (
     "dateOfBirth" DATE NOT NULL,
     "gender" CHAR(1) NOT NULL,
     "isActive" BOOLEAN NOT NULL,
-    "uncollectedReservations" INT DEFAULT 0
+    "uncollectedReservations" INT DEFAULT 0,
+    "isDeleted" BOOLEAN NOT NULL
 );
 
 CREATE TABLE "MembershipType" (
@@ -15,7 +16,8 @@ CREATE TABLE "MembershipType" (
     "description" VARCHAR(150),
     "digitalProducts" BOOLEAN NOT NULL,
     "physicalProducts" BOOLEAN NOT NULL,
-    "maxLendings" INT NOT NULL
+    "maxLendings" INT NOT NULL,
+    "isDeleted" BOOLEAN NOT NULL
 );
 
 CREATE TABLE "Membership" (
@@ -25,9 +27,24 @@ CREATE TABLE "Membership" (
     "isActive" BOOLEAN NOT NULL,
     "startDate" DATE NOT NULL,
     "endDate" DATE,
+    "isDeleted" BOOLEAN NOT NULL,
     "isBlocked" BOOLEAN DEFAULT FALSE,
     FOREIGN KEY ("accountId") REFERENCES "Account" ("accountId") ON DELETE CASCADE,
     FOREIGN KEY ("membershipTypeId") REFERENCES "MembershipType" ("membershipTypeId") ON DELETE CASCADE
+);
+
+CREATE TABLE "Genre" (
+    "genreId" BIGSERIAL PRIMARY KEY,
+    "description" VARCHAR(150)
+);
+
+CREATE TABLE "LendingLimit" (
+    "lendingLimitId" BIGSERIAL PRIMARY KEY,
+    "membershipTypeId" BIGINT NOT NULL,
+    "genreId" BIGINT NOT NULL,
+    "maxLendings" INT NOT NULL,
+    FOREIGN KEY ("membershipTypeId") REFERENCES "MembershipType" ("membershipTypeId") ON DELETE CASCADE,
+    FOREIGN KEY ("genreId") REFERENCES "Genre" ("genreId") ON DELETE CASCADE
 );
 
 CREATE TABLE "Lending" (
@@ -99,12 +116,13 @@ CREATE TABLE "Fine" (
 CREATE TABLE "ProductTemplate" (
     "productId" BIGSERIAL PRIMARY KEY,
     "name" VARCHAR(100) NOT NULL,
-    "genre" VARCHAR(50) NOT NULL,
+    "genreId" BIGINT NOT NULL,
     "yearOfRelease" INT NOT NULL,
     "description" VARCHAR(250),
     "type" VARCHAR(10) NOT NULL,
     "ageClassification" INT,
-    "mediaType" VARCHAR(255) NOT NULL
+    "mediaType" VARCHAR(255) NOT NULL,
+    FOREIGN KEY ("genreId") REFERENCES "Genre"("genreId") ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
 CREATE TABLE "PhysicalProductTemplate" (
@@ -140,7 +158,7 @@ CREATE TABLE "ProductCopy"
     "productCopyId"      BIGSERIAL PRIMARY KEY,
     "availabilityStatus" VARCHAR(50) NOT NULL,
     "productId"          BIGSERIAL      NOT NULL,
-    CONSTRAINT fk_physical_product_template FOREIGN KEY ("productId") REFERENCES "PhysicalProductTemplate" ("productId")
+    CONSTRAINT fk_physicalReadProduct FOREIGN KEY ("productId") REFERENCES "PhysicalReadProduct" ("productId")
 );
 
 CREATE TABLE "Loan"
@@ -161,13 +179,16 @@ CREATE TABLE "Reservation"
 (
     "reservationId"   BIGSERIAL PRIMARY KEY,
     "membershipId"    BIGSERIAL  NOT NULL,
-    "productCopyId"   BIGSERIAL  NOT NULL,
+    "productCopyId"   BIGSERIAL NOT NULL,
     "reservationDate" DATE    NOT NULL,
-    "readyForPickUp"  BOOLEAN NOT NULL,
+    "readyForPickup"  BOOLEAN NOT NULL,
+    "reservationPickUpDate" DATE,
+    "reservationStatus" VARCHAR(50) NOT NULL,
     FOREIGN KEY ("membershipId") REFERENCES "Membership" ("membershipId") ON UPDATE CASCADE ON DELETE RESTRICT,
     FOREIGN KEY ("productCopyId") REFERENCES "ProductCopy" ("productCopyId") ON UPDATE CASCADE ON DELETE RESTRICT
 );
-
+CREATE TYPE loanStatus AS ENUM ('ACTIVE', 'EXTENDED', 'RETURNED', 'OVERDUE');
+CREATE TYPE reservationStatus AS ENUM ('ACTIVE', 'LOANED', 'EXPIRED', 'CANCELLED');
 -- region: Event related
 CREATE TABLE "Event" (
     "eventId" BIGSERIAL NOT NULL,
@@ -181,3 +202,4 @@ CREATE TABLE "Event" (
     FOREIGN KEY ("reservation") REFERENCES "Reservation"("reservationId")
 );
 -- endregion
+
