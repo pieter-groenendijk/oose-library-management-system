@@ -8,14 +8,14 @@ import com.github.pieter_groenendijk.model.Reservation;
 import com.github.pieter_groenendijk.model.ReservationStatus;
 import com.github.pieter_groenendijk.model.product.ProductCopy;
 import com.github.pieter_groenendijk.model.product.ProductCopyStatus;
-import com.github.pieter_groenendijk.repository.*;
+import com.github.pieter_groenendijk.repository.IAccountRepository;
+import com.github.pieter_groenendijk.repository.IMembershipRepository;
+import com.github.pieter_groenendijk.repository.IProductRepository;
+import com.github.pieter_groenendijk.repository.IReservationRepository;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
-import static com.github.pieter_groenendijk.model.ReservationStatus.ACTIVE;
 import static com.github.pieter_groenendijk.service.ServiceUtils.PICKUP_DAYS;
 import static com.github.pieter_groenendijk.service.ServiceUtils.PICKUP_EXPIRY_DAYS;
 
@@ -98,11 +98,12 @@ public class ReservationService implements IReservationService {
     @Override
     public LocalDate generateReservationPickUpDate(ProductCopy productCopy) {
         if (productCopy.getAvailabilityStatus() == ProductCopyStatus.AVAILABLE) {
-            return LocalDate.now();
+            return LocalDate.now().plusDays(PICKUP_DAYS);
+        } else if (productCopy.getAvailabilityStatus() == ProductCopyStatus.LOANED) {
+            return null;
         }
-        return LocalDate.now().plusDays(PICKUP_DAYS);
+        return LocalDate.now();
     }
-
     @Override
     public void handleProductCopyAvailability(ProductCopy productCopy) {
         if (productCopy.getAvailabilityStatus() == ProductCopyStatus.AVAILABLE) {
@@ -162,7 +163,7 @@ public class ReservationService implements IReservationService {
     public Reservation toEntity(ReservationDTO dto, ProductCopy productCopy, Membership membership) {
         Reservation reservation = new Reservation();
         reservation.setReservationDate(dto.getReservationDate());
-        reservation.setReservationPickUpDate(LocalDate.now());
+        reservation.setReservationPickUpDate(null);
         reservation.setReadyForPickup(dto.isReadyForPickup());
         reservation.setProductCopy(productCopy);
         reservation.setMembership(membership);

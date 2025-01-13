@@ -19,6 +19,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import static com.github.pieter_groenendijk.service.ServiceUtils.PICKUP_DAYS;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -51,41 +52,41 @@ class ReservationServiceTest {
         assertTrue(true);
     }
 
-    public ReservationServiceTest() {
-        MockitoAnnotations.openMocks(this);
-    }
-/*
     @Test
-    void store() {
+    void testStoreReservationDTO() {
         ReservationDTO reservationDTO = new ReservationDTO();
+        reservationDTO.setProductCopyId(1L);
+        reservationDTO.setMembershipId(1L);
         reservationDTO.setReservationDate(LocalDate.now());
         reservationDTO.setReservationStatus(ReservationStatus.ACTIVE);
-        reservationDTO.setProductCopyId(1L);
 
-        ProductCopy mockProductCopy = new ProductCopy();
-        mockProductCopy.setProductCopyId(1L);
+        ProductCopy productCopy = new ProductCopy();
+        productCopy.setProductCopyId(1L);
 
-        Membership mockMembership = new Membership();
-        mockMembership.setMembershipId(1L);
+        Membership membership = new Membership();
+        membership.setMembershipId(1L);
 
-        when(productRepository.retrieveProductCopyById(1L)).thenReturn(Optional.of(mockProductCopy));
-        when(membershipRepository.retrieveMembershipById(1L)).thenReturn(Optional.of(mockMembership));
+        when(productRepository.retrieveProductCopyById(1L)).thenReturn(Optional.of(productCopy));
+        when(membershipRepository.retrieveMembershipById(1L)).thenReturn(Optional.of(membership));
 
-        Reservation mockReservation = new Reservation();
-        mockReservation.setReservationStatus(ReservationStatus.ACTIVE);
-        when(reservationRepository.store(any(Reservation.class))).thenReturn(mockReservation);
+        Reservation reservation = new Reservation();
+        when(reservationRepository.store(any(Reservation.class))).thenReturn(reservation);
 
-        ReservationService mockReservationService = spy(reservationService);
-        doNothing().when(mockReservationService).handleProductCopyAvailability(any(ProductCopy.class));
+        Reservation result = reservationService.store(reservationDTO);
 
-        Reservation storedReservation = mockReservationService.store(reservationDTO);
-
+        assertNotNull(result);
+        assertEquals(ReservationStatus.ACTIVE, result.getReservationStatus());
+        verify(productRepository).retrieveProductCopyById(1L);
+        verify(membershipRepository).retrieveMembershipById(1L);
         verify(reservationRepository).store(any(Reservation.class));
-        verify(mockReservationService, times(1)).handleProductCopyAvailability(mockProductCopy);
-        assertEquals(ReservationStatus.ACTIVE, storedReservation.getReservationStatus());
     }
-*/
-
+    @Test
+    void testStore_NullReservationDTO() {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            reservationService.store(null);
+        });
+        assertEquals("Reservation cannot be null", exception.getMessage());
+    }
 @Test
     void readyForPickup() {
         Reservation reservation = new Reservation();
@@ -97,16 +98,15 @@ class ReservationServiceTest {
 
     @Test
     void generateReservationPickUpDate() {
-        int pickupDays = 7;
         ProductCopy productCopy = new ProductCopy();
-        productCopy.setAvailabilityStatus(ProductCopyStatus.RESERVED);
+        productCopy.setAvailabilityStatus(ProductCopyStatus.AVAILABLE);
 
-        LocalDate generatedDate = reservationService.generateReservationPickUpDate(productCopy);
+        LocalDate expectedDate = LocalDate.now().plusDays(PICKUP_DAYS);
+        LocalDate actualDate = reservationService.generateReservationPickUpDate(productCopy);
 
-        LocalDate expectedDate = LocalDate.now().plusDays(pickupDays);
-
-        assertEquals(expectedDate, generatedDate, "The generated pickup date is not correct.");
+        assertEquals(expectedDate, actualDate, "The generated pickup date for AVAILABLE status is not correct.");
     }
+
 
 /*
     @Test
