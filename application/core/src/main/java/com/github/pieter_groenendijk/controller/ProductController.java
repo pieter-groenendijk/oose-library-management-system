@@ -5,6 +5,8 @@ import com.github.pieter_groenendijk.model.Reservation;
 import com.github.pieter_groenendijk.model.product.ProductCopy;
 import com.github.pieter_groenendijk.repository.IProductRepository;
 import com.github.pieter_groenendijk.repository.ProductRepository;
+import com.github.pieter_groenendijk.repository.genre.IGenreRepository;
+import com.github.pieter_groenendijk.repository.genre.GenreRepository;
 import com.github.pieter_groenendijk.service.IProductService;
 import com.github.pieter_groenendijk.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,7 +29,8 @@ public class ProductController {
 
     private ProductController() {
         IProductRepository productRepository = new ProductRepository(sessionFactory);
-        productService = new ProductService(productRepository);
+        IGenreRepository genreRepository = new GenreRepository(sessionFactory);
+        productService = new ProductService(productRepository, genreRepository);
     }
 
     @Operation(summary = "Get all ProductCopy details by product", description = "Get product details by product")
