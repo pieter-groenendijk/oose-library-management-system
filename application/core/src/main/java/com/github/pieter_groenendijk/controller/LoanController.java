@@ -61,9 +61,13 @@ public class LoanController {
             @ApiResponse(responseCode = "404", description = "Membership or Product not found")
     })
     @PostMapping("/new")
-    public ResponseEntity<Loan> store(@RequestBody LoanRequestDTO loanRequestDTO) {
-        loanService.store(loanRequestDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    public ResponseEntity<?> store(@RequestBody LoanRequestDTO loanRequestDTO) {
+        try {
+            Loan loan = loanService.store(loanRequestDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        } catch (EntityNotFoundException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
 

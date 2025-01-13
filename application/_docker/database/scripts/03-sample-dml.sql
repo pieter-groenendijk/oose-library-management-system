@@ -51,73 +51,73 @@ VALUES
 
 -- endregion
 
--- Insert data into Loan table
-INSERT INTO "Loan" ("loanId", "startDate", "returnBy", "returnedOn", "extendedReturnBy", "loanStatus", "membershipId", "productCopyId")
-VALUES (1, '2024-01-01', '2024-01-15', NULL, NULL, 'RETURNED', 1, 1),
-       (2, '2024-02-01', '2024-02-14', '2024-02-10', NULL, 'RETURNED', 1, 2),
-       (3, '2024-03-01', '2024-03-15', NULL, NULL, 'RETURNED', 1, 3);
-
--- Insert data into Reservation table
-INSERT INTO "Reservation" ("reservationId", "reservationDate", "isActive", "membershipId", "productCopyId")
-VALUES (1, '2024-12-09', FALSE, 1, 1),
-       (2, '2024-12-10', FALSE, 2, 2),
-       (3, '2024-12-11', FALSE, 3, 3),
-       (4, '2024-12-12', FALSE, 4, 4),
-       (5, '2024-12-13', FALSE, 5, 5),
-       (6, '2024-12-14', FALSE, 1, 1),
-       (7, '2024-12-15', TRUE, 2, 2),
-       (8, '2024-12-16', TRUE, 3, 3),
-       (9, '2024-12-17', TRUE, 4, 4),
-       (10, '2024-12-18', TRUE, 5, 5);
 
 -- Inserting Products
-INSERT INTO "ProductTemplate" ("productId", "name", "genre", "yearOfRelease", "description", "ageClassification", "mediaType")
+INSERT INTO "ProductTemplate" ("name", "genre", "yearOfRelease", "description", "ageClassification", "mediaType")
 VALUES
-    (1, '1984', 'Thriller', 1949, 'A novel by George Orwell', 18, 'BOOK'),
-    (2, 'The Great Gatsby', 'Classic', 1925, 'A novel by F. Scott Fitzgerald', 18, 'BOOK'),
-    (3, 'Moby-Dick', 'Classic', 1851, 'A novel by Herman Melville',  18, 'BOOK'),
-    (4, 'To Kill a Mockingbird', 'Drama', 1960, 'A novel by Harper Lee',  18, 'BOOK'),
-    (5, 'Pride and Prejudice', 'Romance', 1813, 'A novel by Jane Austen', 18, 'BOOK'),
-    (6, 'Java Programming for Beginners', 'Technology', 2022, 'A beginner-friendly guide to learning Java programming.', 12, 'EBOOK'),
-    (7, 'Mastering Spring Framework', 'Technology', 2021, 'A comprehensive guide to Spring Framework for advanced developers.', 16, 'EBOOK'),
-    (8, 'The Art of Cooking', 'Cookbook', 2019, 'A cookbook with gourmet recipes and techniques from around the world.', 18, 'EBOOK');
+    ('1984', 'Thriller', 1949, 'A novel by George Orwell', 18, 'BOOK'),
+    ('The Great Gatsby', 'Classic', 1925, 'A novel by F. Scott Fitzgerald', 18, 'BOOK'),
+    ('Moby-Dick', 'Classic', 1851, 'A novel by Herman Melville',  18, 'BOOK'),
+    ('To Kill a Mockingbird', 'Drama', 1960, 'A novel by Harper Lee',  18, 'BOOK'),
+    ('Pride and Prejudice', 'Romance', 1813, 'A novel by Jane Austen', 18, 'BOOK'),
+    ('Java Programming for Beginners', 'Technology', 2022, 'A beginner-friendly guide to learning Java programming.', 12, 'EBOOK'),
+    ('Mastering Spring Framework', 'Technology', 2021, 'A comprehensive guide to Spring Framework for advanced developers.', 16, 'EBOOK'),
+    ('The Art of Cooking', 'Cookbook', 2019, 'A cookbook with gourmet recipes and techniques from around the world.', 18, 'EBOOK');
 
 
-INSERT INTO "PhysicalProductTemplate" ("productId", "location", "author")
+INSERT INTO "PhysicalProductTemplate" ("location", "author")
 VALUES
-    (1, 'B2', 'George Orwell'),
-    (2, 'A1', 'F. Scott Fitzgerald'),
-    (3, 'C3', 'Herman Melville'),
-    (4, 'D4', 'Harper Lee'),
-    (5, 'E5', 'Jane Austen');
+    ('B2', 'George Orwell'),
+    ('A1', 'F. Scott Fitzgerald'),
+    ('C3', 'Herman Melville'),
+    ('D4', 'Harper Lee'),
+    ( 'E5', 'Jane Austen');
 
-INSERT INTO "PhysicalProduct" ("productId", "ISBN", "author")
+INSERT INTO "PhysicalProduct" ("ISBN", "author")
 VALUES
-    (1, 1234567891, 'George Orwell'),
-    (2, 1234567890, 'F. Scott Fitzgerald'),
-    (3, 1234567892, 'Herman Melville'),
-    (4, 1234567893, 'Harper Lee'),
-    (5, 1234567894, 'Jane Austen');
+    (1234567891, 'George Orwell'),
+    (21234567890, 'F. Scott Fitzgerald'),
+    (1234567892, 'Herman Melville'),
+    (1234567893, 'Harper Lee'),
+    (1234567894, 'Jane Austen');
 
 
-INSERT INTO "ProductCopy" ("productCopyId", "availabilityStatus", "productId")
+INSERT INTO "ProductCopy" ("availabilityStatus")
 VALUES
-    (1, 'AVAILABLE', 1),
-    (2, 'AVAILABLE', 2),
-    (3, 'AVAILABLE', 3),
-    (4, 'AVAILABLE', 4),
-    (5, 'AVAILABLE', 5);
+    ('AVAILABLE'),
+    ('AVAILABLE'),
+    ('AVAILABLE'),
+    ('AVAILABLE'),
+    ('AVAILABLE');
 
-INSERT INTO "DigitalProductTemplate" ("productId", "language")
+INSERT INTO "DigitalProductTemplate" ("language")
 VALUES
-    (6, 'English'),
-    (7, 'English'),
-    (8, 'English');
+    ('English'),
+    ('English'),
+    ('English');
 
 
-INSERT INTO DigitalProduct (productId, author, edition)
+INSERT INTO DigitalProduct (author, edition)
 VALUES
-    (6, 'John Doe', 1),
-    (7, 'Jane Smith', 2),
-    (8, 'Gordon Ramsay', 1);
+    ('John Doe', 1),
+    ('Jane Smith', 2),
+    ('Gordon Ramsay', 1);
 -- endregion Products
+-- Insert data into Loan table
+INSERT INTO "Loan" ("startDate", "returnBy", "returnedOn", "extendedReturnBy", "loanStatus", "membershipId", "productCopyId")
+VALUES ('2024-01-01', '2024-01-15', NULL, NULL, 'RETURNED', 1, 1),
+       ('2024-02-01', '2024-02-14', '2024-02-10', NULL, 'RETURNED', 1, 2),
+       ('2024-03-01', '2024-03-15', NULL, NULL, 'RETURNED', 1, 3);
+
+-- Insert data into Reservation table
+INSERT INTO "Reservation" ("reservationDate", "isActive", "membershipId", "productCopyId")
+VALUES ('2024-12-09', FALSE, 1, 1),
+       ('2024-12-10', FALSE, 2, 2),
+       ('2024-12-11', FALSE, 3, 3),
+       ('2024-12-12', FALSE, 4, 4),
+       ('2024-12-13', FALSE, 5, 5),
+       ('2024-12-14', FALSE, 1, 1),
+       ('2024-12-15', TRUE, 2, 2),
+       ('2024-12-16', TRUE, 3, 3),
+       ('2024-12-17', TRUE, 4, 4),
+       ('2024-12-18', TRUE, 5, 5);

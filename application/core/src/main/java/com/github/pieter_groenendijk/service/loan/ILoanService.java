@@ -8,13 +8,13 @@ import java.util.List;
 
 
 public interface ILoanService {
-    void store(LoanRequestDTO loan);
+    Loan store(LoanRequestDTO loan);
 
     void extendLoan(long loanId, LocalDate returnBy);
 
     LocalDate generateReturnByDate(LocalDate returnBy);
 
-    void returnToCatalogue(long productCopyId);
+    void returnToCatalog(long productCopyId);
     void returnLoan(long loanId);
 
     void handleOverdueLoans();

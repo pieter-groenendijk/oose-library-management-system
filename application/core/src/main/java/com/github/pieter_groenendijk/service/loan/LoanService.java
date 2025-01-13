@@ -1,7 +1,6 @@
 package com.github.pieter_groenendijk.service.loan;
 
 import com.github.pieter_groenendijk.exception.EntityNotFoundException;
-import com.github.pieter_groenendijk.exception.InputValidationException;
 import com.github.pieter_groenendijk.model.DTO.LoanRequestDTO;
 import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.model.LoanStatus;
@@ -38,9 +37,9 @@ public class LoanService implements ILoanService {
 
     // TODO: Implement correct error handling. Is a loan still successful if we failed to schedule events for it, or the other way around?
     @Override
-    public void store(LoanRequestDTO loanRequestDTO) {
+    public Loan store(LoanRequestDTO loanRequestDTO) {
         if (loanRequestDTO == null) {
-            throw new InputValidationException("LoanRequestDTO cannot be null");
+            throw new IllegalArgumentException("LoanRequestDTO cannot be null.");
         }
 
         Loan loan = createLoanFromDTO(loanRequestDTO);
@@ -53,6 +52,7 @@ public class LoanService implements ILoanService {
 
         loanRepository.store(loan);
         EVENT_SERVICE.scheduleEventsForNewLoan(loan);
+        return loan;
     }
 
     private Loan createLoanFromDTO(LoanRequestDTO loanRequestDTO) {
@@ -125,12 +125,12 @@ public class LoanService implements ILoanService {
 
         loan.setLoanStatus(LoanStatus.RETURNED);
         loanRepository.updateLoan(loan);
-        returnToCatalogue(loan.getProductCopy());
+        returnToCatalog(loan.getProductCopy());
     }
 
 
     @Override
-    public void returnToCatalogue(long productCopyId) {
+    public void returnToCatalog(long productCopyId) {
         ProductCopy productCopy = productRepository.retrieveProductCopyById(productCopyId)
                 .orElseThrow(() -> new EntityNotFoundException("ProductCopy not found with ID: " + productCopyId));
 
