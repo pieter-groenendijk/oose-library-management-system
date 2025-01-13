@@ -38,6 +38,9 @@ public class Membership {
     @OneToMany(mappedBy = "membership", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reservation> reservations = new ArrayList<>();
 
+    @Column(name = "isDeleted", nullable = false)
+    private boolean isDeleted;
+
     // Getters and Setters
     public Long getMembershipId() {
         return membershipId;
@@ -101,5 +104,12 @@ public class Membership {
 
     public void setReservations(List<Reservation> reservations) {
         this.reservations = reservations;
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 }

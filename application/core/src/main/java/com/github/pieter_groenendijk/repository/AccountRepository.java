@@ -42,7 +42,7 @@ public class AccountRepository implements IAccountRepository {
         return account != null;
     }
 
-    public Account store(Account account) {
+    public void store(Account account) {
         Session session = sessionFactory.openSession();
 
         try {
@@ -60,10 +60,9 @@ public class AccountRepository implements IAccountRepository {
         } finally {
             session.close();
         }
-        return account;
     }
 
-    public Account update(Account account) {
+    public void update(Account account) {
         Session session = sessionFactory.openSession();
 
         try {
@@ -81,7 +80,5 @@ public class AccountRepository implements IAccountRepository {
         } finally {
             session.close();
         }
-        return account;
-        // test
     }
 }
