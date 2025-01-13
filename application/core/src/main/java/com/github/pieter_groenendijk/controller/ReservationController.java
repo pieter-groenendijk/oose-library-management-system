@@ -50,7 +50,7 @@ public class ReservationController {
         IProductRepository productRepository = new ProductRepository(sessionFactory);
         ILoanRepository loanRepository = new LoanRepository(sessionFactory);
         this.reservationService = new ReservationService(reservationRepository, membershipRepository, accountRepository, productRepository);
-        this.loanService = new LoanService(loanRepository, loanEventService);
+        this.loanService = new LoanService(loanRepository, membershipRepository, loanEventService);
     }
 
     @Operation(summary = "Create a reservation", description = "Create a new reservation")
@@ -95,6 +95,7 @@ public class ReservationController {
         return new ResponseEntity<>(isReady, HttpStatus.OK);
     }
 
+    //TODO STORE LOANDTO 
     @Operation(summary = "Convert reservation to loan", description = "Change the status of the reservation to LOANED")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Reservation converted to loan successfully"),

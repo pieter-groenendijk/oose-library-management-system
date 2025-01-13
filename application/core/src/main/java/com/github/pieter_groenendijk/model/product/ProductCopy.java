@@ -14,7 +14,7 @@ public class ProductCopy {
 
     @ManyToOne
     @JoinColumn(name = "productId", nullable = false)
-    private PhysicalReadProduct physicalReadProduct;
+    private PhysicalProduct physicalProduct;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "availabilityStatus", nullable = false, length = 50)
@@ -34,17 +34,15 @@ public class ProductCopy {
         this.availabilityStatus = availabilityStatus;
     }
 
-
-
     public void setProductCopyId(long productCopyId) {
         this.productCopyId = productCopyId;
     }
 
-    public PhysicalReadProduct getPhysicalReadProduct() {
-        return physicalReadProduct;
+    public PhysicalProduct getPhysicalProduct() {
+        return physicalProduct;
     }
 
-    public void setPhysicalReadProduct(PhysicalReadProduct physicalReadProduct) {
-        this.physicalReadProduct = physicalReadProduct;
+    public void setPhysicalProduct(PhysicalProduct physicalProduct) {
+        this.physicalProduct = physicalProduct;
     }
 }
