@@ -71,35 +71,6 @@ CREATE TABLE "Payment" (
     CHECK ("amountInCents" >= 0)
 );
 
--- region: Fine Related
-CREATE TABLE "FineType" (
-    "fineTypeId" BIGSERIAL NOT NULL,
-    "title" VARCHAR(50) NOT NULL,
-    "amountInCents" BIGINT NOT NULL,
-    PRIMARY KEY ("fineTypeId"),
-    UNIQUE ("title"),
-    CHECK ("amountInCents" >= 0)
-);
-
-CREATE TABLE "Fine" (
-    "fineId" BIGSERIAL NOT NULL,
-    "fineType" BIGINT NOT NULL,
-    "account" BIGINT NOT NULL,
-    "amountInCents" BIGINT NOT NULL,
-    "loan" BIGINT,
-    "reservation" BIGINT,
-    "declaredOn" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    "paidBy" BIGINT,
-    PRIMARY KEY ("fineId"),
-    FOREIGN KEY ("fineType") REFERENCES "FineType"("fineTypeId") ON UPDATE CASCADE ON DELETE RESTRICT,
-    FOREIGN KEY ("account") REFERENCES "Account"("accountId") ON UPDATE CASCADE ON DELETE RESTRICT,
-    FOREIGN KEY ("paidBy") REFERENCES "Payment"("paymentId") ON UPDATE CASCADE ON DELETE RESTRICT,
-    FOREIGN KEY ("loan") REFERENCES "Loan"("loanId") ON UPDATE CASCADE ON DELETE RESTRICT,
-    FOREIGN KEY ("reservation") REFERENCES "Reservation"("reservationId") ON UPDATE CASCADE ON DELETE RESTRICT,
-    CHECK ("amountInCents" >= 0)
-);
--- endregion
-
 CREATE TABLE "ProductTemplate" (
     "productId" BIGSERIAL PRIMARY KEY,
     "name" VARCHAR(100) NOT NULL,
@@ -169,5 +140,35 @@ CREATE TABLE "Event" (
     PRIMARY KEY ("eventId"),
     FOREIGN KEY ("loan") REFERENCES "Loan"("loanId"),
     FOREIGN KEY ("reservation") REFERENCES "Reservation"("reservationId")
+);
+-- endregion
+
+-- region: Fine Related
+CREATE TABLE "FineType" (
+                            "fineTypeId" BIGSERIAL NOT NULL,
+                            "title" VARCHAR(50) NOT NULL,
+                            "amountInCents" BIGINT NOT NULL,
+                            PRIMARY KEY ("fineTypeId"),
+                            UNIQUE ("title"),
+                            CHECK ("amountInCents" >= 0)
+);
+
+CREATE TABLE "Fine" (
+                        "fineId" BIGSERIAL NOT NULL,
+                        "fineType" BIGINT NOT NULL,
+                        "account" BIGINT NOT NULL,
+                        "amountInCents" BIGINT NOT NULL,
+                        "loan" BIGINT,
+                        "reservation" BIGINT,
+                        "associationType" VARCHAR(50) NOT NULL,
+                        "declaredOn" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                        "paidBy" BIGINT,
+                        PRIMARY KEY ("fineId"),
+                        FOREIGN KEY ("fineType") REFERENCES "FineType"("fineTypeId") ON UPDATE CASCADE ON DELETE RESTRICT,
+                        FOREIGN KEY ("account") REFERENCES "Account"("accountId") ON UPDATE CASCADE ON DELETE RESTRICT,
+                        FOREIGN KEY ("paidBy") REFERENCES "Payment"("paymentId") ON UPDATE CASCADE ON DELETE RESTRICT,
+                        FOREIGN KEY ("loan") REFERENCES "Loan"("loanId") ON UPDATE CASCADE ON DELETE RESTRICT,
+                        FOREIGN KEY ("reservation") REFERENCES "Reservation"("reservationId") ON UPDATE CASCADE ON DELETE RESTRICT,
+                        CHECK ("amountInCents" >= 0)
 );
 -- endregion
