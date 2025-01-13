@@ -33,6 +33,9 @@ public class Account {
     @Column(name = "uncollectedReservations", nullable = false)
     private int uncollectedReservations;
 
+    @Column(name = "isDeleted", nullable = false)
+    private boolean isDeleted;
+
     // Getters and Setters
     public Long getAccountId() {
         return accountId;
@@ -96,5 +99,13 @@ public class Account {
 
     public void incrementUncollectedReservationCount() {
         this.uncollectedReservations++;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 }
