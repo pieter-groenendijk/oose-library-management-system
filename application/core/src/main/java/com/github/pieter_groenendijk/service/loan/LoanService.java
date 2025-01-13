@@ -3,7 +3,7 @@ package com.github.pieter_groenendijk.service.loan;
 import com.github.pieter_groenendijk.exception.EntityNotFoundException;
 import com.github.pieter_groenendijk.exception.InputValidationException;
 import com.github.pieter_groenendijk.model.Loan;
-import com.github.pieter_groenendijk.repository.ILoanRepository;
+import com.github.pieter_groenendijk.repository.loan.ILoanRepository;
 import com.github.pieter_groenendijk.service.loan.event.ILoanEventService;
 
 import static com.github.pieter_groenendijk.service.ServiceUtils.LOAN_LENGTH;

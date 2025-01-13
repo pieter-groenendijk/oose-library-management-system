@@ -1,4 +1,4 @@
-package com.github.pieter_groenendijk.repository;
+package com.github.pieter_groenendijk.repository.loan;
 
 import com.github.pieter_groenendijk.model.Loan;
 
