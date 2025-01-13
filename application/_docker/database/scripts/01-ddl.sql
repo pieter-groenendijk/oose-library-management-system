@@ -35,7 +35,8 @@ CREATE TABLE "Membership" (
 
 CREATE TABLE "Genre" (
     "genreId" BIGSERIAL PRIMARY KEY,
-    "description" VARCHAR(150)
+    "description" VARCHAR(150),
+    "isDeleted" BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE "LendingLimit" (
@@ -43,6 +44,7 @@ CREATE TABLE "LendingLimit" (
     "membershipTypeId" BIGINT NOT NULL,
     "genreId" BIGINT NOT NULL,
     "maxLendings" INT NOT NULL,
+    "isDeleted" BOOLEAN DEFAULT FALSE,
     FOREIGN KEY ("membershipTypeId") REFERENCES "MembershipType" ("membershipTypeId") ON DELETE CASCADE,
     FOREIGN KEY ("genreId") REFERENCES "Genre" ("genreId") ON DELETE CASCADE
 );
