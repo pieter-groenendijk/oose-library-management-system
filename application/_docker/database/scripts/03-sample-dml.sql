@@ -41,6 +41,22 @@ INSERT INTO "Membership" ("accountId", "membershipTypeId", "isActive", "startDat
 (6, 3, TRUE, '2023-03-15', '2024-03-14'),
 (3, 4, FALSE, '2022-08-01', '2023-07-31');
 
+INSERT INTO "Genre" ("description")
+VALUES ('Thriller'),
+       ('Chickflick'),
+       ('Fantasy'),
+       ('History'),
+       ('Biography');
+
+INSERT INTO "LendingLimit" ("membershipTypeId", "genreId", "maxLendings")
+VALUES (1, 1, 3),
+       (1, 2, 5),
+       (2, 3, 6),
+       (2, 4, 7),
+       (4, 1, 12),
+       (4, 5, 10),
+       (5, 2, 15),
+       (5, 3, 15);
 -- region: Fines
 INSERT INTO
     "FineType" ("title", "amountInCents")
@@ -55,14 +71,14 @@ VALUES
 -- Inserting Products
 INSERT INTO "ProductTemplate" ("name", "genre", "yearOfRelease", "description", "ageClassification", "mediaType")
 VALUES
-    ('1984', 'Thriller', 1949, 'A novel by George Orwell', 18, 'BOOK'),
-    ('The Great Gatsby', 'Classic', 1925, 'A novel by F. Scott Fitzgerald', 18, 'BOOK'),
-    ('Moby-Dick', 'Classic', 1851, 'A novel by Herman Melville',  18, 'BOOK'),
-    ('To Kill a Mockingbird', 'Drama', 1960, 'A novel by Harper Lee',  18, 'BOOK'),
-    ('Pride and Prejudice', 'Romance', 1813, 'A novel by Jane Austen', 18, 'BOOK'),
-    ('Java Programming for Beginners', 'Technology', 2022, 'A beginner-friendly guide to learning Java programming.', 12, 'EBOOK'),
-    ('Mastering Spring Framework', 'Technology', 2021, 'A comprehensive guide to Spring Framework for advanced developers.', 16, 'EBOOK'),
-    ('The Art of Cooking', 'Cookbook', 2019, 'A cookbook with gourmet recipes and techniques from around the world.', 18, 'EBOOK');
+    ('1984', 1, 1949, 'A novel by George Orwell', 18, 'BOOK'),
+    ('The Great Gatsby', 2, 1925, 'A novel by F. Scott Fitzgerald', 18, 'BOOK'),
+    ('Moby-Dick', 3, 1851, 'A novel by Herman Melville',  18, 'BOOK'),
+    ('To Kill a Mockingbird', 4, 1960, 'A novel by Harper Lee',  18, 'BOOK'),
+    ('Pride and Prejudice', 2, 1813, 'A novel by Jane Austen', 18, 'BOOK'),
+    ('Java Programming for Beginners', 1, 2022, 'A beginner-friendly guide to learning Java programming.', 12, 'EBOOK'),
+    ('Mastering Spring Framework', 1, 2021, 'A comprehensive guide to Spring Framework for advanced developers.', 16, 'EBOOK'),
+    ('The Art of Cooking', 1, 2019, 'A cookbook with gourmet recipes and techniques from around the world.', 18, 'EBOOK');
 
 
 INSERT INTO "PhysicalProductTemplate" ("location", "author")
