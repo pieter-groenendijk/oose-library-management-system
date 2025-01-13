@@ -103,7 +103,7 @@ public class Membership {
     }
 
     public void setReservations(List<Reservation> reservations) {
-        this.reservations = reservations;
+        this.reservations = reservations;}
 
     public boolean isDeleted() {
         return isDeleted;
