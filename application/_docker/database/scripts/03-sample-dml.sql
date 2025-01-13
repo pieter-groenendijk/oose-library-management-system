@@ -71,11 +71,11 @@ VALUES
 -- Insert a product in to database
 INSERT INTO "ProductTemplate" ("productId", "name", "genreId", "yearOfRelease", "description", "type", "ageClassification", "mediaType")
 VALUES
-    (1, '1984', 'Thriller', 1949, 'A novel by George Orwell', 'BOOK', 18, 'BOOK'),
-    (2, 'The Great Gatsby', 'Classic', 1925, 'A novel by F. Scott Fitzgerald', 'BOOK', 18, 'BOOK'),
-    (3, 'Moby-Dick', 'Classic', 1851, 'A novel by Herman Melville', 'BOOK', 18, 'BOOK'),
-    (4, 'To Kill a Mockingbird', 'Drama', 1960, 'A novel by Harper Lee', 'BOOK', 18, 'BOOK'),
-    (5, 'Pride and Prejudice', 'Romance', 1813, 'A novel by Jane Austen', 'BOOK', 18, 'BOOK');
+    (1, '1984', 1, 1949, 'A novel by George Orwell', 'BOOK', 18, 'BOOK'),
+    (2, 'The Great Gatsby', 2, 1925, 'A novel by F. Scott Fitzgerald', 'BOOK', 18, 'BOOK'),
+    (3, 'Moby-Dick', 3, 1851, 'A novel by Herman Melville', 'BOOK', 18, 'BOOK'),
+    (4, 'To Kill a Mockingbird', 4, 1960, 'A novel by Harper Lee', 'BOOK', 18, 'BOOK'),
+    (5, 'Pride and Prejudice', 2, 1813, 'A novel by Jane Austen', 'BOOK', 18, 'BOOK');
 
 
 
