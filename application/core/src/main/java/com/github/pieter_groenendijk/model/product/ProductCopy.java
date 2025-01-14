@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 
 
 @Entity
-@DiscriminatorValue("ProductCopy")
 public class ProductCopy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,7 +37,7 @@ public class ProductCopy {
         this.productCopyId = productCopyId;
     }
 
-    public PhysicalProduct getPhysicalProduct() {
+    public PhysicalProduct getPhysicalProductId() {
         return physicalProduct;
     }
 

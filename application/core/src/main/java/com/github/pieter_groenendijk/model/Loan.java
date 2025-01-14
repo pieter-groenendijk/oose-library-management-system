@@ -29,7 +29,7 @@ public class Loan {
     @JoinColumn(name = "membershipId", nullable = false)
     private Membership membership;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "productCopyId")
     private ProductCopy productCopy;
 

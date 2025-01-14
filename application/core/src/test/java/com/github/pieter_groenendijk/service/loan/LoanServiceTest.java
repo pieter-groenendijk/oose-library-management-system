@@ -4,6 +4,7 @@ import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.model.LoanStatus;
 import com.github.pieter_groenendijk.repository.ILoanRepository;
 import com.github.pieter_groenendijk.repository.IMembershipRepository;
+import com.github.pieter_groenendijk.service.IReservationService;
 import com.github.pieter_groenendijk.service.loan.event.ILoanEventService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,13 +25,14 @@ class LoanServiceTest {
 
     private ILoanEventService mockEventService;
     private IMembershipRepository mockMembershipRepository;
+    private IReservationService mockReservationService;
     private Loan mockLoan;
 
     @BeforeEach
     public void setUp() {
         mockLoanRepository = mock(ILoanRepository.class);
         mockEventService = mock(ILoanEventService.class);
-        loanService = new LoanService(mockLoanRepository, mockMembershipRepository,mockEventService);
+        loanService = new LoanService(mockLoanRepository, mockMembershipRepository,mockEventService, mockReservationService);
         mockLoan = mock(Loan.class);
     }
 

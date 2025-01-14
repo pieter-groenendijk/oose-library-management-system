@@ -5,8 +5,7 @@ import com.github.pieter_groenendijk.model.LoanStatus;
 import java.time.LocalDate;
 
 public class LoanRequestDTO {
-    private LocalDate startDate;
-    private LocalDate returnBy;
+    private LocalDate startDate = LocalDate.now();
     private long productCopyId;
     private LoanStatus loanStatus;
     private long membershipId;
@@ -19,13 +18,6 @@ public class LoanRequestDTO {
         this.startDate = startDate;
     }
 
-    public LocalDate getReturnBy() {
-        return returnBy;
-    }
-
-    public void setReturnBy(LocalDate returnBy) {
-        this.returnBy = returnBy;
-    }
 
     public long getProductCopyId() {
         return productCopyId;

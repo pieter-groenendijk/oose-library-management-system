@@ -160,7 +160,8 @@ CREATE TABLE "ProductCopy"
     "productId"          BIGSERIAL      NOT NULL,
     FOREIGN KEY ("productId") REFERENCES "PhysicalProduct" ("productId")
 );
-
+CREATE TYPE loanStatus AS ENUM ('ACTIVE', 'EXTENDED', 'RETURNED', 'OVERDUE');
+CREATE TYPE reservationStatus AS ENUM ('ACTIVE', 'LOANED', 'EXPIRED', 'CANCELLED');
 CREATE TABLE "Loan"
 (
     "loanId" BIGSERIAL PRIMARY KEY,
@@ -187,8 +188,7 @@ CREATE TABLE "Reservation"
     FOREIGN KEY ("membershipId") REFERENCES "Membership" ("membershipId") ON UPDATE CASCADE ON DELETE RESTRICT,
     FOREIGN KEY ("productCopyId") REFERENCES "ProductCopy" ("productCopyId") ON UPDATE CASCADE ON DELETE RESTRICT
 );
-CREATE TYPE loanStatus AS ENUM ('ACTIVE', 'EXTENDED', 'RETURNED', 'OVERDUE');
-CREATE TYPE reservationStatus AS ENUM ('ACTIVE', 'LOANED', 'EXPIRED', 'CANCELLED');
+
 -- region: Event related
 CREATE TABLE "Event" (
     "eventId" BIGSERIAL NOT NULL,

@@ -7,6 +7,8 @@ import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.repository.*;
 import com.github.pieter_groenendijk.repository.event.EventRepository;
 import com.github.pieter_groenendijk.repository.event.IEventRepository;
+import com.github.pieter_groenendijk.service.IReservationService;
+import com.github.pieter_groenendijk.service.ReservationService;
 import com.github.pieter_groenendijk.service.event.emitting.EventEmitterPool;
 import com.github.pieter_groenendijk.service.event.scheduling.EventScheduler;
 import com.github.pieter_groenendijk.service.loan.ILoanService;
@@ -37,10 +39,17 @@ public class LoanController {
     private final SessionFactory sessionFactory = new SessionFactoryFactory().create();
     private final ILoanService loanService;
 
+
     public LoanController() {
         ILoanRepository loanRepository = new LoanRepository(sessionFactory);
         IProductRepository productRepository = new ProductRepository(sessionFactory);
         IMembershipRepository membershipRepository = new MembershipRepository(sessionFactory);
+        IReservationService reservationService = new ReservationService(
+            new ReservationRepository(sessionFactory),
+            membershipRepository,
+            new AccountRepository(sessionFactory),
+            productRepository
+        );
         // TODO: Make this mess work with beans or dependency injection
         IEventRepository eventRepository = new EventRepository();
         ILoanEventService eventService = new LoanEventService(
@@ -51,16 +60,15 @@ public class LoanController {
                 new EventEmitterPool()
             )
         );
-        this.loanService = new LoanService(loanRepository, membershipRepository, eventService);
+        this.loanService = new LoanService(loanRepository, membershipRepository, eventService, reservationService);
     }
 
     @Operation(summary = "Create a Loan", description = "Create a new Loan")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Loan created"),
-            @ApiResponse(responseCode = "400", description = "Invalid input"),
             @ApiResponse(responseCode = "404", description = "Membership or Product not found")
     })
-    @PostMapping("/new")
+    @PostMapping
     public ResponseEntity<?> store(@RequestBody LoanRequestDTO loanRequestDTO) {
         try {
             Loan loan = loanService.store(loanRequestDTO);

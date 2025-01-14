@@ -5,11 +5,13 @@ import com.github.pieter_groenendijk.model.DTO.LoanRequestDTO;
 import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.model.LoanStatus;
 import com.github.pieter_groenendijk.model.Membership;
+import com.github.pieter_groenendijk.model.Reservation;
 import com.github.pieter_groenendijk.model.product.ProductCopy;
 import com.github.pieter_groenendijk.model.product.ProductCopyStatus;
 import com.github.pieter_groenendijk.repository.ILoanRepository;
 import com.github.pieter_groenendijk.repository.IMembershipRepository;
 import com.github.pieter_groenendijk.repository.IProductRepository;
+import com.github.pieter_groenendijk.service.IReservationService;
 import com.github.pieter_groenendijk.service.loan.event.ILoanEventService;
 
 import java.time.LocalDate;
@@ -19,6 +21,7 @@ import static com.github.pieter_groenendijk.service.ServiceUtils.LOAN_LENGTH;
 
 
 public class LoanService implements ILoanService {
+    private final IReservationService reservationService;
     private ILoanRepository loanRepository;
     private IProductRepository productRepository;
     private final ILoanEventService EVENT_SERVICE;
@@ -28,11 +31,13 @@ public class LoanService implements ILoanService {
     public LoanService(
         ILoanRepository loanRepository,
         IMembershipRepository membershipRepository,
-        ILoanEventService eventService
+        ILoanEventService eventService,
+        IReservationService reservationService
     ) {
         this.loanRepository = loanRepository;
         this.membershipRepository = membershipRepository;
         this.EVENT_SERVICE = eventService;
+        this.reservationService = reservationService;
     }
 
     // TODO: Implement correct error handling. Is a loan still successful if we failed to schedule events for it, or the other way around?
@@ -42,14 +47,12 @@ public class LoanService implements ILoanService {
             throw new IllegalArgumentException("LoanRequestDTO cannot be null.");
         }
 
-        Loan loan = createLoanFromDTO(loanRequestDTO);
-        Membership membership = retrieveMembership(loanRequestDTO.getMembershipId());
-        ProductCopy productCopy = retrieveProductCopy(loanRequestDTO.getProductCopyId());
+        Loan loan = createLoanFromDTO(loanRequestDTO);;
 
+        loan.setMembership(retrieveMembership(loanRequestDTO.getMembershipId()));
+        loan.setProductCopy(retrieveProductCopy(loanRequestDTO.getProductCopyId()));
         updateProductCopyStatus(productCopy);
-        loan.setMembership(membership);
-        loan.setProductCopyId(productCopy);
-
+        loan.setReturnBy(generateReturnByDate(loan.getReturnBy()));
         loanRepository.store(loan);
         EVENT_SERVICE.scheduleEventsForNewLoan(loan);
         return loan;
@@ -64,7 +67,6 @@ public class LoanService implements ILoanService {
         }
 
         loan.setStartDate(loanRequestDTO.getStartDate());
-        loan.setReturnBy(loanRequestDTO.getReturnBy());
         return loan;
     }
 
@@ -74,10 +76,6 @@ public class LoanService implements ILoanService {
     }
 
     private ProductCopy retrieveProductCopy(long productCopyId) {
-        if (productCopyId == 0) {
-            throw new EntityNotFoundException("ProductCopy ID not found in the loan request");
-        }
-
         return productRepository.retrieveProductCopyById(productCopyId)
                 .orElseThrow(() -> new EntityNotFoundException("ProductCopy not found with ID: " + productCopyId));
     }
@@ -189,6 +187,19 @@ public class LoanService implements ILoanService {
             throw new EntityNotFoundException("Membership with ID" + membershipId + " not found.");
     }
         return loans;
+    }
+
+    @Override
+    public Loan convertReservationToLoan(Reservation reservation) {
+        reservationService.markReservationAsLoaned(reservation.getReservationId());
+
+        Loan loan = new Loan();
+        loan.setProductCopy(reservation.getProductCopy());
+        loan.setMembership(reservation.getMembership());
+        loan.setStartDate(LocalDate.now());
+        loan.setReturnBy(LocalDate.now().plusDays(LOAN_LENGTH));
+        loan.setLoanStatus(LoanStatus.ACTIVE);
+        return loanRepository.store(loan);
     }
 
 }

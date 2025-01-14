@@ -50,7 +50,7 @@ public class ReservationController {
         IProductRepository productRepository = new ProductRepository(sessionFactory);
         ILoanRepository loanRepository = new LoanRepository(sessionFactory);
         this.reservationService = new ReservationService(reservationRepository, membershipRepository, accountRepository, productRepository);
-        this.loanService = new LoanService(loanRepository, membershipRepository, loanEventService);
+        this.loanService = new LoanService(loanRepository, membershipRepository, loanEventService, reservationService);
     }
 
     @Operation(summary = "Create a reservation", description = "Create a new reservation")
@@ -95,7 +95,7 @@ public class ReservationController {
         return new ResponseEntity<>(isReady, HttpStatus.OK);
     }
 
-    //TODO STORE LOANDTO 
+
     @Operation(summary = "Convert reservation to loan", description = "Change the status of the reservation to LOANED")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Reservation converted to loan successfully"),
@@ -109,19 +109,15 @@ public class ReservationController {
                 return new ResponseEntity<>("Reservation not found", HttpStatus.NOT_FOUND);
             }
 
-            reservationService.markReservationAsLoaned(reservationId);
+            Loan newLoan = loanService.convertReservationToLoan(reservation);
 
-            Loan newLoan = new Loan();
-            newLoan.setProductCopy(reservation.getProductCopy());
-            newLoan.setMembership(reservation.getMembership());
-
-            Loan storedLoan = loanService.store(newLoan);
-
-            return new ResponseEntity<>("Reservation converted to loan successfully with Loan ID: " + storedLoan.getLoanId(), HttpStatus.OK);
+            return new ResponseEntity<>("Reservation converted to loan successfully with Loan ID: "
+                    + newLoan.getLoanId(), HttpStatus.OK);
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
+
 }
 
 
