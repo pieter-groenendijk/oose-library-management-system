@@ -87,7 +87,7 @@ VALUES
     ('D4', 'Harper Lee'),
     ('E5', 'Jane Austen');
 
-INSERT INTO "PhysicalReadProduct" ("ISBN", "author")
+INSERT INTO "PhysicalProduct" ("ISBN", "author")
 VALUES
     (1234567891, 'George Orwell'),
     (1234567890, 'F. Scott Fitzgerald'),
@@ -123,5 +123,5 @@ VALUES ('2024-12-09', 'FALSE','2024-12-16',  1, 1, 'LOANED'),
 INSERT INTO "Loan" ("startDate", "returnBy", "returnedOn", "extendedReturnBy", "loanStatus", "membershipId", "productCopyId")
 VALUES ('2024-01-01', '2024-01-15', '2024-01-12' , NULL, 'RETURNED', 1, 1),
        ('2024-02-01', '2024-02-14', '2024-02-10', NULL, 'RETURNED', 1, 2),
-       ('2024-0-01', '2024-1-15', '2024-01-12', NULL, 'RETURNED', 1, 3);
+       ('2024-02-01', '2024-1-15', '2024-01-12', NULL, 'RETURNED', 1, 3);
 
