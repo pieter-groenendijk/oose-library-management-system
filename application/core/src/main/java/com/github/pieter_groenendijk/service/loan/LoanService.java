@@ -47,14 +47,7 @@ public class LoanService implements ILoanService {
 
         Loan loan = new Loan();
 
-
-        if (loanRequestDTO.getLoanStatus() == null) {
-            loan.setLoanStatus(LoanStatus.ACTIVE);
-        } else {
-            loan.setLoanStatus(loanRequestDTO.getLoanStatus());
-        }
-
-
+        loan.setLoanStatus(LoanStatus.ACTIVE);
         loan.setStartDate(loanRequestDTO.getStartDate());
         loan.setReturnBy(LocalDate.now().plusDays(LOAN_LENGTH));
 
