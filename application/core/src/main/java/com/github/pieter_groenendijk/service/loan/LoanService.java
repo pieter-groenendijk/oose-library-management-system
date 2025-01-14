@@ -1,11 +1,8 @@
 package com.github.pieter_groenendijk.service.loan;
 
 import com.github.pieter_groenendijk.exception.EntityNotFoundException;
+import com.github.pieter_groenendijk.model.*;
 import com.github.pieter_groenendijk.model.DTO.LoanRequestDTO;
-import com.github.pieter_groenendijk.model.Loan;
-import com.github.pieter_groenendijk.model.LoanStatus;
-import com.github.pieter_groenendijk.model.Membership;
-import com.github.pieter_groenendijk.model.Reservation;
 import com.github.pieter_groenendijk.model.product.ProductCopy;
 import com.github.pieter_groenendijk.model.product.ProductCopyStatus;
 import com.github.pieter_groenendijk.repository.ILoanRepository;
@@ -38,6 +35,7 @@ public class LoanService implements ILoanService {
         this.membershipRepository = membershipRepository;
         this.EVENT_SERVICE = eventService;
         this.reservationService = reservationService;
+
     }
 
     // TODO: Implement correct error handling. Is a loan still successful if we failed to schedule events for it, or the other way around?
@@ -47,12 +45,21 @@ public class LoanService implements ILoanService {
             throw new IllegalArgumentException("LoanRequestDTO cannot be null.");
         }
 
-        Loan loan = createLoanFromDTO(loanRequestDTO);;
+        Loan loan = createLoanFromDTO(loanRequestDTO);
+        Membership membership = membershipRepository.retrieveMembershipById(loanRequestDTO.getMembershipId())
+                .orElseThrow(() -> new EntityNotFoundException("Membership not found"));
 
-        loan.setMembership(retrieveMembership(loanRequestDTO.getMembershipId()));
-        loan.setProductCopy(retrieveProductCopy(loanRequestDTO.getProductCopyId()));
-        updateProductCopyStatus(productCopy);
-        loan.setReturnBy(generateReturnByDate(loan.getReturnBy()));
+        ProductCopy productCopy = productRepository.retrieveProductCopyById(loanRequestDTO.getProductCopyId())
+                .orElseThrow(() -> new EntityNotFoundException("ProductCopy not found"));
+
+        loan.setMembership(membership);
+        loan.setProductCopy(productCopy);
+
+
+        productCopy.setAvailabilityStatus(ProductCopyStatus.LOANED);
+        productRepository.updateProductCopy(productCopy);
+
+
         loanRepository.store(loan);
         EVENT_SERVICE.scheduleEventsForNewLoan(loan);
         return loan;
@@ -60,32 +67,21 @@ public class LoanService implements ILoanService {
 
     private Loan createLoanFromDTO(LoanRequestDTO loanRequestDTO) {
         Loan loan = new Loan();
+
         if (loanRequestDTO.getLoanStatus() == null) {
             loan.setLoanStatus(LoanStatus.ACTIVE);
         } else {
             loan.setLoanStatus(loanRequestDTO.getLoanStatus());
         }
 
+
         loan.setStartDate(loanRequestDTO.getStartDate());
+        loan.setReturnBy(LocalDate.now().plusDays(LOAN_LENGTH));
+
         return loan;
+
     }
-
-    private Membership retrieveMembership(long membershipId) {
-        return membershipRepository.retrieveMembershipById(membershipId)
-                .orElseThrow(() -> new EntityNotFoundException("Membership not found with ID: " + membershipId));
-    }
-
-    private ProductCopy retrieveProductCopy(long productCopyId) {
-        return productRepository.retrieveProductCopyById(productCopyId)
-                .orElseThrow(() -> new EntityNotFoundException("ProductCopy not found with ID: " + productCopyId));
-    }
-
-    private void updateProductCopyStatus(ProductCopy productCopy) {
-        productCopy.setAvailabilityStatus(ProductCopyStatus.LOANED);  // Set the status of the product copy to LOANED
-        productRepository.updateProductCopy(productCopy);
-    }
-
-
+    
     @Override
     public void extendLoan(long loanId, LocalDate returnBy) {
         Loan loan = loanRepository.retrieveLoanByLoanId(loanId);

@@ -93,4 +93,7 @@ public class Loan {
     public void setProductCopyId(ProductCopy productCopy) {
         this.productCopy = productCopy;
     }
+
+    public void setMembershipId(long membershipId) {
+    }
 }

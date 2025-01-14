@@ -73,7 +73,7 @@ public class LoanController {
         try {
             Loan loan = loanService.store(loanRequestDTO);
             return ResponseEntity.status(HttpStatus.CREATED).build();
-        } catch (EntityNotFoundException ex) {
+        } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
