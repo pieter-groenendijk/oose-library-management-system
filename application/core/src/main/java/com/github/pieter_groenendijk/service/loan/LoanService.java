@@ -45,28 +45,8 @@ public class LoanService implements ILoanService {
             throw new IllegalArgumentException("LoanRequestDTO cannot be null.");
         }
 
-        Loan loan = createLoanFromDTO(loanRequestDTO);
-        Membership membership = membershipRepository.retrieveMembershipById(loanRequestDTO.getMembershipId())
-                .orElseThrow(() -> new EntityNotFoundException("Membership not found"));
-
-        ProductCopy productCopy = productRepository.retrieveProductCopyById(loanRequestDTO.getProductCopyId())
-                .orElseThrow(() -> new EntityNotFoundException("ProductCopy not found"));
-
-        loan.setMembership(membership);
-        loan.setProductCopy(productCopy);
-
-
-        productCopy.setAvailabilityStatus(ProductCopyStatus.LOANED);
-        productRepository.updateProductCopy(productCopy);
-
-
-        loanRepository.store(loan);
-        EVENT_SERVICE.scheduleEventsForNewLoan(loan);
-        return loan;
-    }
-
-    private Loan createLoanFromDTO(LoanRequestDTO loanRequestDTO) {
         Loan loan = new Loan();
+
 
         if (loanRequestDTO.getLoanStatus() == null) {
             loan.setLoanStatus(LoanStatus.ACTIVE);
@@ -78,10 +58,28 @@ public class LoanService implements ILoanService {
         loan.setStartDate(loanRequestDTO.getStartDate());
         loan.setReturnBy(LocalDate.now().plusDays(LOAN_LENGTH));
 
-        return loan;
 
+        Membership membership = membershipRepository.retrieveMembershipById(loanRequestDTO.getMembershipId())
+                .orElseThrow(() -> new EntityNotFoundException("Membership not found"));
+        loan.setMembership(membership);
+
+
+        ProductCopy productCopy = productRepository.retrieveProductCopyById(loanRequestDTO.getProductCopyId())
+                .orElseThrow(() -> new EntityNotFoundException("ProductCopy not found"));
+        loan.setProductCopy(productCopy);
+
+
+        productCopy.setAvailabilityStatus(ProductCopyStatus.LOANED);
+        productRepository.updateProductCopy(productCopy);
+
+
+        loanRepository.store(loan);
+        EVENT_SERVICE.scheduleEventsForNewLoan(loan);
+
+        return loan;
     }
-    
+
+
     @Override
     public void extendLoan(long loanId, LocalDate returnBy) {
         Loan loan = loanRepository.retrieveLoanByLoanId(loanId);

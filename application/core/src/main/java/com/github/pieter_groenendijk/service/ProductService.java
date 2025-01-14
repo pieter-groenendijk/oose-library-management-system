@@ -65,7 +65,7 @@ public class ProductService implements IProductService {
 @Override
     public ProductCopy retrieveProductByCopyId(long productCopyId) {
     return productRepository.retrieveProductCopyById(productCopyId)
-            .orElseThrow(() -> new EntityNotFoundException("Reservation with ID " + productCopyId + " not found."));
+            .orElseThrow(() -> new EntityNotFoundException("Product with ID " + productCopyId + " not found."));
 }
     //Genres
 

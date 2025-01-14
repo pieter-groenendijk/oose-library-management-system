@@ -65,29 +65,6 @@ public class LoanRepository implements ILoanRepository {
             e.printStackTrace();
             throw new RuntimeException("Error occurred while storing loan", e);
         }
-     /*   Session session = sessionFactory.openSession();
-        try {
-            System.out.println("Attempting to save loan: " + loan);
-            session.beginTransaction();
-            session.persist(loan);
-            session.flush();
-            session.getTransaction().commit();
-
-            System.out.println("Loan successfully saved: " + loan);
-        } catch (HibernateException e) {
-
-            e.printStackTrace();
-
-            if (session.getTransaction() != null) {
-                session.getTransaction().rollback();
-            }
-
-
-            throw new RuntimeException("Error occurred while storing loan", e);
-        } finally {
-
-            session.close();
-        }*/
         return loan;
 
     }

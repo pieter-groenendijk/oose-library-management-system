@@ -39,21 +39,3 @@ SELECT
     "endDate",
     "isBlocked"
 FROM "Membership";
-
--- View for LoanHistory
-CREATE VIEW "vw_LoanHistory" AS
-    SELECT
-    "l.loanId",
-    "l.membershipId",
-    "l.returnDate",
-    "p.productCopyId",
-    "pp.author",
-    "pp.isbn",
-    "t.mediaType",
-    "t.name",
-    "t.yearOfRelease"
-    FROM "Loan l"
-    JOIN "ProductCopy p" ON "l.productCopyId" = "p.productCopyId"
-    JOIN "PhysicalProduct pp" ON "productId" = "pp.productId"
-    JOIN "ProductTemplate t" ON "p.productId" = "t.productId"
-    WHERE "l.loanStatus" = 'RETURNED';

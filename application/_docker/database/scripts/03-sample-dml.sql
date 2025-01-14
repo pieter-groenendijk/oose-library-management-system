@@ -96,13 +96,13 @@ VALUES
     (1234567894, 'Jane Austen');
 
 
-INSERT INTO "ProductCopy" ("availabilityStatus")
+INSERT INTO "ProductCopy" ("productId", "availabilityStatus")
 VALUES
-    ('AVAILABLE'),
-    ('AVAILABLE'),
-    ('AVAILABLE'),
-    ('AVAILABLE'),
-    ('AVAILABLE');
+    (1, 'AVAILABLE'),
+    (2, 'AVAILABLE'),
+    (3, 'AVAILABLE'),
+    (4, 'AVAILABLE'),
+    (5, 'AVAILABLE');
 
 
 -- Insert data into Reservation table
