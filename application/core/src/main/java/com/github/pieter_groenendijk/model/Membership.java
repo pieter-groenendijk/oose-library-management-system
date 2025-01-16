@@ -35,8 +35,9 @@ public class Membership {
 
     @Column(name = "isBlocked", nullable = false)
     private boolean isBlocked;
-    @OneToMany(mappedBy = "membership", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Reservation> reservations = new ArrayList<>();
+
+//    @OneToMany(mappedBy = "membership", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+//    private List<Reservation> reservations = new ArrayList<>();
 
     @Column(name = "isDeleted", nullable = false)
     private boolean isDeleted;
@@ -98,12 +99,12 @@ public class Membership {
         isBlocked = blocked;
     }
 
-    public List<Reservation> getReservations() {
-        return reservations;
-    }
-
-    public void setReservations(List<Reservation> reservations) {
-        this.reservations = reservations;}
+//    public List<Reservation> getReservations() {
+//        return reservations;
+//    }
+//
+//    public void setReservations(List<Reservation> reservations) {
+//        this.reservations = reservations;}
 
     public boolean isDeleted() {
         return isDeleted;

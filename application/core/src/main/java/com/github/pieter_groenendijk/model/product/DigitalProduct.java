@@ -4,7 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 
 @Entity
-public class DigitalReadProduct extends DigitalProductTemplate{
+public class DigitalProduct extends DigitalProductTemplate{
     @Column (name = "author", nullable = true, length = 100)
     public String author;
 

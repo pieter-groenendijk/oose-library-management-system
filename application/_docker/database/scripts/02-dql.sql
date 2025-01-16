@@ -2,6 +2,7 @@
 --DROP VIEW IF EXISTS "vw_Account";
 --DROP VIEW IF EXISTS "vw_MembershipType";
 --DROP VIEW IF EXISTS "vw_Membership";
+--DROP VIEW IF EXISTS "vw_LoanHistory";
 
 -- View for Account table
 CREATE VIEW "vw_Account" AS 
@@ -20,7 +21,7 @@ FROM "Account";
 CREATE VIEW "vw_MembershipType" AS
 SELECT 
     "membershipTypeId",
-	"description"
+	"description",
     "digitalProducts",
     "physicalProducts",
     "maxLendings"
