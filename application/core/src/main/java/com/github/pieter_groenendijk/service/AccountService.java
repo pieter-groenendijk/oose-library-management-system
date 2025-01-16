@@ -50,7 +50,7 @@ public class AccountService implements IAccountService {
         account.setLastName(request.getLastName());
         account.setDateOfBirth(request.getDateOfBirth());
         account.setGender(request.getGender());
-        account.setActive(true);
+        account.setBlocked(true);
         account.setUncollectedReservations(0);
         account.setDeleted(false);
 
@@ -101,16 +101,21 @@ public class AccountService implements IAccountService {
         return true;
     }
 
-    public void setIsActive(long id, boolean newValue) {
+    public void setIsBlocked(long id, boolean newValue) {
         Account retrievedAccount =  retrieveAccountById(id);
         if (retrievedAccount == null) {
             throw new EntityNotFoundException("Account with ID " + id + " not found.");
         }
-        if (newValue == retrievedAccount.isActive()){
+        if (newValue == retrievedAccount.isBlocked()){
             throw new InputValidationException("This account is already (in)active");
         } else {
-            retrievedAccount.setActive(newValue);
+            retrievedAccount.setBlocked(newValue);
             accountRepository.update(retrievedAccount);
+        }
+        List<Membership> membershipList = membershipRepository.retrieveMembershipsByAccountId(id);
+        for (Membership membership : membershipList) {
+            membership.setBlocked(newValue);
+            membershipRepository.update(membership);
         }
     }
 
@@ -124,6 +129,11 @@ public class AccountService implements IAccountService {
         } else {
             retrievedAccount.setDeleted(true);
             accountRepository.update(retrievedAccount);
+        }
+        List<Membership> membershipList = membershipRepository.retrieveMembershipsByAccountId(id);
+        for (Membership membership : membershipList) {
+            membership.setDeleted(true);
+            membershipRepository.update(membership);
         }
     }
 
@@ -219,7 +229,7 @@ public class AccountService implements IAccountService {
         membership.setAccount(account);
         membership.setMembershipType(membershipType);
         membership.setStartDate(new Date());
-        membership.setActive(true);
+        membership.setDeleted(false);
         membership.setBlocked(false);
 
         membershipRepository.store(membership);

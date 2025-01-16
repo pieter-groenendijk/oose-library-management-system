@@ -30,7 +30,7 @@ public interface IAccountService {
 
     List<Membership> retrieveMembershipsByAccountId (long id);
 
-    void setIsActive(long id, boolean newValue);
+    void setIsBlocked(long id, boolean newValue);
 
     void update(long id, MembershipTypeRequestDTO request);
 
