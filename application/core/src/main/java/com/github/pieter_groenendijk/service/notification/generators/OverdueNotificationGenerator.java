@@ -2,14 +2,14 @@ package com.github.pieter_groenendijk.service.notification.generators;
 
 import com.github.pieter_groenendijk.model.Lending;
 import com.github.pieter_groenendijk.model.notification.Notification;
-import com.github.pieter_groenendijk.repository.notification.INotificationTaskRepository;
+import com.github.pieter_groenendijk.repository.notification.INotificationRepository;
 import com.github.pieter_groenendijk.service.notification.sendstrategies.registry.SendStrategyType;
 import com.github.pieter_groenendijk.utils.scheduling.TaskStorage;
 
 import java.time.LocalDateTime;
 
-public class ReturnDateDetachedNotificationTaskGenerator extends DetachedNotificationTaskGenerator<Lending, Notification> {
-    public ReturnDateDetachedNotificationTaskGenerator(INotificationTaskRepository repository) {
+public class OverdueNotificationGenerator extends DetachedNotificationGenerator<Lending, Notification> {
+    public OverdueNotificationGenerator(INotificationRepository repository) {
         super(
             SendStrategyType.ALERT,
             repository
@@ -18,12 +18,12 @@ public class ReturnDateDetachedNotificationTaskGenerator extends DetachedNotific
 
     @Override
     protected String generateTitle(Lending lending) {
-        return "A product is due today!";
+        return "A product is expected to be already returned!";
     }
 
     @Override
     protected String generateMessage(Lending lending) {
-        return "Return the product to prevent a fine.";
+        return "Return the product to prevent further penalties.";
     }
 
     @Override

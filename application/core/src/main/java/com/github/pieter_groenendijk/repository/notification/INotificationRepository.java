@@ -5,6 +5,6 @@ import com.github.pieter_groenendijk.model.notification.Notification;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public interface INotificationTaskRepository {
+public interface INotificationRepository {
     List<Notification> retrieve(LocalDateTime scheduledUntil);
 }

@@ -9,10 +9,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NotificationTaskRepository implements INotificationTaskRepository {
+public class NotificationRepository implements INotificationRepository {
     private final SessionFactory SESSION_FACTORY;
 
-    public NotificationTaskRepository(SessionFactory sessionFactory) {
+    public NotificationRepository(SessionFactory sessionFactory) {
         this.SESSION_FACTORY = sessionFactory;
     }
 

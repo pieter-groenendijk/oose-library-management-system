@@ -3,18 +3,18 @@ package com.github.pieter_groenendijk.service.notification.scheduling;
 import com.github.pieter_groenendijk.repository.scheduling.ITaskRepository;
 import com.github.pieter_groenendijk.utils.scheduling.TaskScheduler;
 import com.github.pieter_groenendijk.model.notification.Notification;
-import com.github.pieter_groenendijk.repository.notification.INotificationTaskRepository;
+import com.github.pieter_groenendijk.repository.notification.INotificationRepository;
 import com.github.pieter_groenendijk.service.notification.sendstrategies.registry.NotificationSendStrategyRegistry;
 import com.github.pieter_groenendijk.utils.scheduling.longterm.LongTermTaskScheduler;
 
 import java.util.List;
 
-public class NotificationTaskScheduler extends LongTermTaskScheduler<Notification> {
-    private final INotificationTaskRepository REPOSITORY;
+public class NotificationScheduler extends LongTermTaskScheduler<Notification> {
+    private final INotificationRepository REPOSITORY;
     private final NotificationSendStrategyRegistry SEND_STRATEGY_REGISTRY;
 
-    public NotificationTaskScheduler(
-        INotificationTaskRepository notificationTaskRepository,
+    public NotificationScheduler(
+        INotificationRepository notificationTaskRepository,
         ITaskRepository repository,
         TaskScheduler scheduler,
         NotificationSendStrategyRegistry sendStrategyRegistry
@@ -25,8 +25,8 @@ public class NotificationTaskScheduler extends LongTermTaskScheduler<Notificatio
         this.SEND_STRATEGY_REGISTRY = sendStrategyRegistry;
     }
 
-    public NotificationTaskScheduler(
-        INotificationTaskRepository notificationTaskRepository,
+    public NotificationScheduler(
+        INotificationRepository notificationTaskRepository,
         ITaskRepository repository,
         int amountOfThreads,
         NotificationSendStrategyRegistry sendStrategyRegistry

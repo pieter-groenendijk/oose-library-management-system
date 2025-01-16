@@ -2,7 +2,7 @@ package com.github.pieter_groenendijk.service.notification.generators;
 
 import com.github.pieter_groenendijk.model.Account;
 import com.github.pieter_groenendijk.model.notification.Notification;
-import com.github.pieter_groenendijk.repository.notification.INotificationTaskRepository;
+import com.github.pieter_groenendijk.repository.notification.INotificationRepository;
 import com.github.pieter_groenendijk.service.notification.sendstrategies.registry.SendStrategyType;
 import com.github.pieter_groenendijk.utils.scheduling.TaskStorage;
 import com.github.pieter_groenendijk.utils.scheduling.longterm.DetachedTask;
@@ -10,12 +10,12 @@ import com.github.pieter_groenendijk.utils.scheduling.longterm.DetachedTask;
 import java.time.LocalDateTime;
 
 // TODO: Generalize generators into a superclass
-public abstract class DetachedNotificationTaskGenerator<T, K extends Notification> {
-    protected final INotificationTaskRepository REPOSITORY;
+public abstract class DetachedNotificationGenerator<T, K extends Notification> {
+    protected final INotificationRepository REPOSITORY;
 
     private final SendStrategyType SEND_STRATEGY;
 
-    protected DetachedNotificationTaskGenerator(SendStrategyType sendStrategy, INotificationTaskRepository repository) {
+    protected DetachedNotificationGenerator(SendStrategyType sendStrategy, INotificationRepository repository) {
         this.SEND_STRATEGY = sendStrategy;
         this.REPOSITORY = repository;
     }

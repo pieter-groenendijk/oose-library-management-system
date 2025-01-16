@@ -5,22 +5,22 @@ import com.github.pieter_groenendijk.repository.scheduling.TaskRepository;
 import com.github.pieter_groenendijk.utils.scheduling.TaskScheduler;
 import com.github.pieter_groenendijk.model.Account;
 import com.github.pieter_groenendijk.model.Lending;
-import com.github.pieter_groenendijk.repository.notification.INotificationTaskRepository;
-import com.github.pieter_groenendijk.service.notification.scheduling.NotificationTaskScheduler;
+import com.github.pieter_groenendijk.repository.notification.INotificationRepository;
+import com.github.pieter_groenendijk.service.notification.scheduling.NotificationScheduler;
 import com.github.pieter_groenendijk.service.notification.sendstrategies.NotificationSendStrategyFactory;
 import com.github.pieter_groenendijk.service.notification.sendstrategies.registry.NotificationSendStrategyRegistry;
-import com.github.pieter_groenendijk.service.notification.task.DetachedNotificationTaskFactory;
+import com.github.pieter_groenendijk.service.notification.task.DetachedNotificationFactory;
 
 public class NotificationService {
-    private final DetachedNotificationTaskFactory FACTORY;
-    private final NotificationTaskScheduler SCHEDULER;
+    private final DetachedNotificationFactory FACTORY;
+    private final NotificationScheduler SCHEDULER;
 
     public NotificationService(
         TaskScheduler scheduler,
-        INotificationTaskRepository repository
+        INotificationRepository repository
     ) {
-        this.FACTORY = new DetachedNotificationTaskFactory(repository);
-        this.SCHEDULER = new NotificationTaskScheduler(
+        this.FACTORY = new DetachedNotificationFactory(repository);
+        this.SCHEDULER = new NotificationScheduler(
             repository,
             new TaskRepository(new SessionFactoryFactory().create()),
             scheduler,
