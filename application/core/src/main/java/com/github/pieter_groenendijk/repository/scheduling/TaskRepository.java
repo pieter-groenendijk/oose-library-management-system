@@ -5,7 +5,7 @@ import com.github.pieter_groenendijk.repository.fine.Repository;
 import com.github.pieter_groenendijk.utils.scheduling.TaskStatus;
 import org.hibernate.SessionFactory;
 
-public class TaskRepository extends Repository implements ITaskRepository {
+public abstract class TaskRepository<T extends Task> extends Repository implements ITaskRepository<T> {
     public TaskRepository(SessionFactory sessionFactory) {
         super(sessionFactory);
     }

@@ -11,13 +11,11 @@ import java.util.List;
 
 // TODO: Do something about the big constructors
 public class EventScheduler extends LongTermTaskScheduler<Event<?>> {
-    private final IEventRepository REPOSITORY;
     private final EventEmitterPool EMITTER_POOL;
 
     public EventScheduler(
-        ITaskRepository taskRepository,
+        ITaskRepository<Event<?>> taskRepository,
         TaskScheduler scheduler,
-        IEventRepository repository,
         EventEmitterPool eventEmitterPool
     ) {
         super(
@@ -25,14 +23,12 @@ public class EventScheduler extends LongTermTaskScheduler<Event<?>> {
             scheduler
         );
 
-        this.REPOSITORY = repository;
         this.EMITTER_POOL = eventEmitterPool;
     }
 
     public EventScheduler(
         int amountOfThreads,
-        ITaskRepository taskRepository,
-        IEventRepository repository,
+        ITaskRepository<Event<?>> taskRepository,
         EventEmitterPool eventEmitterPool
     ) {
         super(
@@ -40,7 +36,6 @@ public class EventScheduler extends LongTermTaskScheduler<Event<?>> {
             amountOfThreads
         );
 
-        this.REPOSITORY = repository;
         this.EMITTER_POOL = eventEmitterPool;
     }
 
@@ -49,13 +44,6 @@ public class EventScheduler extends LongTermTaskScheduler<Event<?>> {
         this.EMITTER_POOL.emit(
             event.getType(),
             event.getAssociation()
-        );
-    }
-
-    @Override
-    protected List<Event<?>> retrieveDueSoonTasks() {
-        return this.REPOSITORY.retrieveUntil(
-            this.getScheduledUntilDateTime()
         );
     }
 }

@@ -11,5 +11,5 @@ public interface IEventRepository {
     void storeLoanEvent(LoanEvent event);
     void storeReservationEvent(ReservationEvent event);
 
-    List<Event<?>> retrieveUntil(LocalDateTime scheduledAt); // TODO: Could generalize this in a separate interface; very similar for notifications.
+    List<Event<?>> retrieveUntil(LocalDateTime scheduledAt) throws Exception; // TODO: Could generalize this in a separate interface; very similar for notifications.
 }

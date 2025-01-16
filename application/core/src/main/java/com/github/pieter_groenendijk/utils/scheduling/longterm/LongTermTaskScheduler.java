@@ -10,18 +10,18 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public abstract class LongTermTaskScheduler<T extends Task> {
-    private final ITaskRepository REPOSITORY;
+    private final ITaskRepository<T> REPOSITORY;
     private final TaskScheduler SCHEDULER; // We don't use inheritance because we want to determine the interface, and we may want to share the underlying scheduler between multiple subclasses.
 
     // TODO: Allow customization in constructor?
     private final Duration RETRIEVE_INTERVAL = Duration.ofMinutes(5);
 
-    public LongTermTaskScheduler(ITaskRepository repository, TaskScheduler scheduler) {
+    public LongTermTaskScheduler(ITaskRepository<T> repository, TaskScheduler scheduler) {
         this.REPOSITORY = repository;
         this.SCHEDULER = scheduler;
     }
 
-    public LongTermTaskScheduler(ITaskRepository repository, int amountOfThreads) {
+    public LongTermTaskScheduler(ITaskRepository<T> repository, int amountOfThreads) {
         this.REPOSITORY = repository;
         this.SCHEDULER = new TaskScheduler(amountOfThreads);
     }
@@ -60,7 +60,16 @@ public abstract class LongTermTaskScheduler<T extends Task> {
     // TODO: Maybe move this responsibility to the actual task
     protected abstract void executeTask(T task);
 
-    protected abstract List<T> retrieveDueSoonTasks();
+    private List<T> retrieveDueSoonTasks() {
+        try {
+            return this.REPOSITORY.retrieveUntil(
+                this.getScheduledUntilDateTime()
+            );
+        } catch (Exception e) {
+            // TODO: Logging
+            return List.of();
+        }
+    }
 
     private void startSchedulingFromDatabase() {
         this.SCHEDULER.scheduleRecurring(

@@ -26,7 +26,6 @@ public class NotificationService {
         this.FACTORY = new DetachedNotificationFactory(repository);
         this.SCHEDULER = new NotificationScheduler(
             repository,
-            new TaskRepository(new SessionFactoryFactory().create()),
             scheduler,
             new NotificationSendStrategyRegistry(
                 new NotificationSendStrategyFactory()

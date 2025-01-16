@@ -1,44 +1,27 @@
 package com.github.pieter_groenendijk.repository.notification;
 
 import com.github.pieter_groenendijk.model.notification.Notification;
-import org.hibernate.Session;
+import com.github.pieter_groenendijk.repository.scheduling.TaskRepository;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
-public class NotificationRepository implements INotificationRepository {
-    private final SessionFactory SESSION_FACTORY;
-
+public class NotificationRepository extends TaskRepository<Notification> {
     public NotificationRepository(SessionFactory sessionFactory) {
-        this.SESSION_FACTORY = sessionFactory;
+        super(sessionFactory);
     }
 
-    // TODO: Do something with a status so that it will not retrieve already previously retrieved items.
+    // TODO: We could probably generalize this somehow
     @Override
-    public List<Notification> retrieve(LocalDateTime scheduledUntil) {
-        List<Notification> tasks;
-        try (Session session = this.SESSION_FACTORY.openSession()) {
-            Transaction transaction = session.beginTransaction();
-
-            try {
-                tasks = session.createQuery(
-                        "select nt from Notification as nt where scheduledAt <= :scheduledUntil",
-                        Notification.class
-                    )
-                    .setParameter("scheduledUntil", scheduledUntil)
-                    .list();
-
-                transaction.commit();
-            } catch(Exception exception) {
-                transaction.rollback();
-
-                tasks = new ArrayList<>(); // To prevent returning null
-            }
-        }
-
-        return tasks;
+    public List<Notification> retrieveUntil(LocalDateTime until) throws Exception {
+        return super.performAtomicOperationReturning((session -> {
+            return session.createQuery(
+                    "select n from Notification as n where scheduledAt <= :until",
+                    Notification.class
+                )
+                    .setParameter("until", until)
+                    .getResultList();
+        }));
     }
 }

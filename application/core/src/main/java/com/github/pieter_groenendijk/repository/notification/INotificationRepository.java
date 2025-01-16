@@ -1,10 +1,7 @@
 package com.github.pieter_groenendijk.repository.notification;
 
 import com.github.pieter_groenendijk.model.notification.Notification;
+import com.github.pieter_groenendijk.repository.scheduling.ITaskRepository;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
-public interface INotificationRepository {
-    List<Notification> retrieve(LocalDateTime scheduledUntil);
+public interface INotificationRepository extends ITaskRepository<Notification> {
 }

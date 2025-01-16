@@ -2,6 +2,7 @@ package com.github.pieter_groenendijk.controller;
 
 import com.github.pieter_groenendijk.hibernate.SessionFactoryFactory;
 import com.github.pieter_groenendijk.model.Loan;
+import com.github.pieter_groenendijk.model.event.Event;
 import com.github.pieter_groenendijk.repository.loan.ILoanRepository;
 import com.github.pieter_groenendijk.repository.loan.LoanRepository;
 import com.github.pieter_groenendijk.repository.event.EventRepository;
@@ -42,17 +43,15 @@ public class LoanController {
         ILoanRepository loanRepository = new LoanRepository(sessionFactory);
 
         // TODO: Make this mess work with beans or dependency injection!!!!
-        ITaskRepository taskRepository = new TaskRepository(sessionFactory);
-        IEventRepository eventRepository = new EventRepository();
+        IEventRepository eventRepository = new EventRepository(sessionFactory);
         ILoanEventRepostory loanEventRepostory = new LoanEventRepostory(sessionFactory);
         ILoanEventService eventService = new LoanEventService(
             new LoanEventScheduler(
                 eventRepository,
                 loanEventRepostory,
                 new EventScheduler(
-                    taskRepository,
+                    (ITaskRepository<Event<?>>) eventRepository,
                     new TaskScheduler(1),
-                    eventRepository,
                     new EventEmitterPool()
                 )
             )
