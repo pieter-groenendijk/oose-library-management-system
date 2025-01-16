@@ -18,7 +18,9 @@ public class LoanCycleListener extends EventPoolListener {
         super(
             eventEmitterPool,
             new EventListener[]{
-                new AlmostOverdueEventListener(),
+                new AlmostOverdueEventListener(
+                    notificationService
+                ),
                 new OverdueEventListener(
                     scheduler,
                     notificationService
