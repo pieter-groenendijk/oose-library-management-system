@@ -6,13 +6,13 @@ import com.github.pieter_groenendijk.repository.IAccountRepository;
 import com.github.pieter_groenendijk.repository.fine.IFineRepository;
 
 // TODO: Better name?
-public class FineManager {
+public class FineProcessor {
     private final IAccountRepository ACCOUNT_REPOSITORY;
     private final IFineRepository FINE_REPOSITORY;
 
     private final long BLOCK_TRESHOLD_IN_CENTS;
 
-    public FineManager(
+    public FineProcessor(
         IAccountRepository accountRepository,
         IFineRepository fineRepository,
         long blockThresholdInCents
