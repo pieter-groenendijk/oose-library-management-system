@@ -2,6 +2,7 @@ package com.github.pieter_groenendijk.service.notification;
 
 import com.github.pieter_groenendijk.hibernate.SessionFactoryFactory;
 import com.github.pieter_groenendijk.model.Loan;
+import com.github.pieter_groenendijk.repository.IAccountRepository;
 import com.github.pieter_groenendijk.repository.scheduling.TaskRepository;
 import com.github.pieter_groenendijk.utils.scheduling.TaskScheduler;
 import com.github.pieter_groenendijk.model.Account;
@@ -15,9 +16,12 @@ public class NotificationService {
     private final DetachedNotificationFactory FACTORY;
     private final NotificationScheduler SCHEDULER;
 
+    private final IAccountRepository ACCOUNT_REPOSITORY;
+
     public NotificationService(
         TaskScheduler scheduler,
-        INotificationRepository repository
+        INotificationRepository repository,
+        IAccountRepository accountRepository
     ) {
         this.FACTORY = new DetachedNotificationFactory(repository);
         this.SCHEDULER = new NotificationScheduler(
@@ -28,11 +32,16 @@ public class NotificationService {
                 new NotificationSendStrategyFactory()
             )
         );
+
+        this.ACCOUNT_REPOSITORY = accountRepository;
     }
 
-    public void scheduleOverdueLoanNotification(Account account, Loan loan) {
+    public void scheduleOverdueLoanNotification(Loan loan) throws Exception {
         this.SCHEDULER.schedule(
-            this.FACTORY.createOverdueLoanNotification(account, loan)
+            this.FACTORY.createOverdueLoanNotification(
+                this.ACCOUNT_REPOSITORY.retrieveAccountFromLoan(loan).orElseThrow(),
+                loan
+            )
         );
     }
 }

@@ -10,10 +10,22 @@ public abstract class EventListener<Context> implements IEventListener<Context> 
         this.TYPE = type;
     }
 
-    public void attachTo(EventEmitterPool pool) {
+    public final void attachTo(EventEmitterPool pool) {
         pool.attach(this.TYPE, this);
     }
 
     @Override
-    public abstract void react(Context context);
+    public void react(Context context) {
+        try {
+            this.tryReact(context);
+        } catch (Exception exception) {
+            this.handleReactException(exception);
+        }
+    }
+
+    protected abstract void tryReact(Context context) throws Exception;
+
+    protected void handleReactException(Exception exception) {
+        // TODO: Logging
+    }
 }

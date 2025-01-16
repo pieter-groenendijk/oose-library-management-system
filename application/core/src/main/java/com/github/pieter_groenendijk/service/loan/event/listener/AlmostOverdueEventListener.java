@@ -12,7 +12,7 @@ class AlmostOverdueEventListener extends EventListener<Loan> {
     }
 
     @Override
-    public void react(Loan loan) {
+    public void tryReact(Loan loan) {
         // TODO: Schedule Notification
     }
 }

@@ -25,12 +25,8 @@ class DayOverdueEventListener extends EventListener<Loan> {
     }
 
     @Override
-    public void react(Loan loan) {
-        try {
-            this.SCHEDULER.scheduleDayOverdueLoanEvent(loan);
-            this.SERVICE.declareDayOverdueFine(loan);
-        } catch (Exception e) {
-            // TODO: Log
-        }
+    public void tryReact(Loan loan) {
+        this.SCHEDULER.scheduleDayOverdueLoanEvent(loan);
+        this.SERVICE.declareDayOverdueFine(loan);
     }
 }

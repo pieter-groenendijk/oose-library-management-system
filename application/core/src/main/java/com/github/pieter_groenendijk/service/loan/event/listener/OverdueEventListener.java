@@ -4,23 +4,28 @@ import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.model.event.EventType;
 import com.github.pieter_groenendijk.service.event.listener.EventListener;
 import com.github.pieter_groenendijk.service.loan.event.scheduling.LoanEventScheduler;
-import com.github.pieter_groenendijk.service.loan.fine.LoanFineService;
+import com.github.pieter_groenendijk.service.notification.NotificationService;
 
 class OverdueEventListener extends EventListener<Loan> {
-    private final LoanEventScheduler SCHEDULER;
+    private final LoanEventScheduler LOAN_EVENT_SCHEDULER;
+    private final NotificationService NOTIFICATION_SERVICE;
 
-    public OverdueEventListener(LoanEventScheduler scheduler) {
+    public OverdueEventListener(
+        LoanEventScheduler scheduler,
+        NotificationService notificationService
+    ) {
         super(
             EventType.OVERDUE_LOAN
         );
 
-        this.SCHEDULER = scheduler;
+        this.LOAN_EVENT_SCHEDULER = scheduler;
+        this.NOTIFICATION_SERVICE = notificationService;
     }
 
     @Override
-    public void react(Loan loan) {
-        this.SCHEDULER.scheduleDayOverdueLoanEvent(loan);
+    public void tryReact(Loan loan) throws Exception {
+        this.LOAN_EVENT_SCHEDULER.scheduleDayOverdueLoanEvent(loan);
 
-        // TODO: Schedule notification
+        this.NOTIFICATION_SERVICE.scheduleOverdueLoanNotification(loan);
     }
 }
