@@ -1,6 +1,6 @@
 package com.github.pieter_groenendijk.service.notification.send_strategies;
 
-import com.github.pieter_groenendijk.model.notification.NotificationTask;
+import com.github.pieter_groenendijk.model.notification.Notification;
 import com.github.pieter_groenendijk.service.notification.notifiers.Notifier;
 
 public class NotificationSendStrategy implements Notifier {
@@ -11,7 +11,7 @@ public class NotificationSendStrategy implements Notifier {
     }
 
     @Override
-    public void send(NotificationTask task) {
+    public void send(Notification task) {
         for (Notifier notifier : NOTIFIERS) {
             notifier.send(task);
         }

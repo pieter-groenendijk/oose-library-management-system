@@ -1,6 +1,6 @@
 package com.github.pieter_groenendijk.service.notification.notifiers;
 
-import com.github.pieter_groenendijk.model.notification.NotificationTask;
+import com.github.pieter_groenendijk.model.notification.Notification;
 
 public abstract class ChannelNotifier implements Notifier {
     private final byte MAXIMUM_AMOUNT_OF_ATTEMPTS;
@@ -14,11 +14,11 @@ public abstract class ChannelNotifier implements Notifier {
     }
 
     @Override
-    public void send(NotificationTask task) {
+    public void send(Notification task) {
         this.send(task, (byte)1);
     }
 
-    private void send(NotificationTask task, byte amountOfAttempts) {
+    private void send(Notification task, byte amountOfAttempts) {
         try {
             this.attempt(task);
         } catch (Exception e) {
@@ -26,9 +26,9 @@ public abstract class ChannelNotifier implements Notifier {
         }
     }
 
-    protected abstract void attempt(NotificationTask task) throws Exception;
+    protected abstract void attempt(Notification task) throws Exception;
 
-    private void handleSendingError(NotificationTask task, byte amountOfAttempts) {
+    private void handleSendingError(Notification task, byte amountOfAttempts) {
         if (amountOfAttempts < this.MAXIMUM_AMOUNT_OF_ATTEMPTS) {
             ++amountOfAttempts;
             this.send(task, amountOfAttempts);
@@ -37,7 +37,7 @@ public abstract class ChannelNotifier implements Notifier {
         }
     }
 
-    private void logFailedSending(NotificationTask task) {
+    private void logFailedSending(Notification task) {
         System.out.println("Failed to send notification: " + task.toString());
     }
 }

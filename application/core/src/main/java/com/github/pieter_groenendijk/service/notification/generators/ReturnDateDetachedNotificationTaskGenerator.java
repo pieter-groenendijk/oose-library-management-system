@@ -1,14 +1,14 @@
 package com.github.pieter_groenendijk.service.notification.generators;
 
 import com.github.pieter_groenendijk.model.Lending;
-import com.github.pieter_groenendijk.model.notification.NotificationTask;
+import com.github.pieter_groenendijk.model.notification.Notification;
 import com.github.pieter_groenendijk.repository.notification.INotificationTaskRepository;
 import com.github.pieter_groenendijk.service.notification.send_strategies.registry.SendStrategyType;
 import com.github.pieter_groenendijk.utils.scheduling.TaskStorage;
 
 import java.time.LocalDateTime;
 
-public class ReturnDateDetachedNotificationTaskGenerator extends DetachedNotificationTaskGenerator<Lending, NotificationTask> {
+public class ReturnDateDetachedNotificationTaskGenerator extends DetachedNotificationTaskGenerator<Lending, Notification> {
     public ReturnDateDetachedNotificationTaskGenerator(INotificationTaskRepository repository) {
         super(
             SendStrategyType.ALERT,
@@ -34,14 +34,14 @@ public class ReturnDateDetachedNotificationTaskGenerator extends DetachedNotific
     }
 
     @Override
-    protected TaskStorage<NotificationTask> generateStorage(Lending lending) {
-        return (NotificationTask task) -> {
-            super.REPOSITORY.storeLendingAssociated(lending, task);
+    protected TaskStorage<Notification> generateStorage(Lending lending) {
+        return (Notification task) -> {
+            // TODO
         };
     }
 
     @Override
-    protected NotificationTask generateEmpty() {
-        return new NotificationTask();
+    protected Notification generateEmpty() {
+        return new Notification();
     }
 }

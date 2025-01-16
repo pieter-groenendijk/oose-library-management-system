@@ -1,13 +1,10 @@
 package com.github.pieter_groenendijk.hibernate.configuration;
 
 import com.github.pieter_groenendijk.model.*;
-import com.github.pieter_groenendijk.model.event.Event;
-import com.github.pieter_groenendijk.model.event.LoanEvent;
-import com.github.pieter_groenendijk.model.event.ReservationEvent;
 import com.github.pieter_groenendijk.model.fine.Fine;
 import com.github.pieter_groenendijk.model.fine.FineType;
-import com.github.pieter_groenendijk.model.notification.LendingAssociatedNotificationTask;
-import com.github.pieter_groenendijk.model.notification.NotificationTask;
+import com.github.pieter_groenendijk.model.notification.LoanNotification;
+import com.github.pieter_groenendijk.model.notification.Notification;
 import com.github.pieter_groenendijk.model.payment.Payment;
 import com.github.pieter_groenendijk.model.payment.PaymentStatus;
 import org.hibernate.cfg.Configuration;
@@ -29,10 +26,9 @@ public class DefaultConfigurationFactory {
             .addAnnotatedClass(Account.class)
             .addAnnotatedClass(Membership.class)
             .addAnnotatedClass(MembershipType.class)
-            .addAnnotatedClass(Lending.class)
-            .addAnnotatedClass(NotificationTask.class)
-            .addAnnotatedClass(LendingAssociatedNotificationTask.class)
+            .addAnnotatedClass(Notification.class)
 // TODO: Add below annotated classes, currently not possible since Loan and all those other classes are not placed here yet.
+//            .addAnnotatedClass(LoanNotification.class)
 //            .addAnnotatedClass(Event.class)
 //            .addAnnotatedClass(LoanEvent.class
 //            .addAnnotatedClass(ReservationEvent.class)

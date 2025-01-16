@@ -8,12 +8,18 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "NotificationTask")
-public class NotificationTask extends Task {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(
+    name = "associationType",
+    discriminatorType = DiscriminatorType.STRING,
+    length = 50
+)
+@Table(name = "Notification")
+public class Notification extends Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(
-        name = "notificationTaskId",
+        name = "notificationId",
         nullable = false
     )
     private Long id;
@@ -45,7 +51,7 @@ public class NotificationTask extends Task {
     )
     private SendStrategyType sendStrategyType;
 
-    public NotificationTask() {} // Needed for ORM
+    public Notification() {} // Needed for ORM
 
     public Long getId() {
         return id;
