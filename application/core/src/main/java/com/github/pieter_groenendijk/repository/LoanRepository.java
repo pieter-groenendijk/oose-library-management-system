@@ -1,6 +1,7 @@
 package com.github.pieter_groenendijk.repository;
 
 import com.github.pieter_groenendijk.model.Loan;
+import com.github.pieter_groenendijk.model.LoanStatus;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
@@ -44,7 +45,7 @@ public class LoanRepository implements ILoanRepository {
             cr.select(root)
                     .where(
                             cb.equal(root.get("membership").get("id"), membershipId),
-                            cb.equal(root.get("loanStatus"), "ACTIVE")
+                            cb.equal(root.get("loanStatus"), LoanStatus.ACTIVE)
                     );
 
             return session.createQuery(cr).getResultList();
@@ -79,6 +80,25 @@ public class LoanRepository implements ILoanRepository {
         } catch (HibernateException e) {
             e.printStackTrace();
             throw new RuntimeException("Failed to update loan", e);
+        }
+    }
+
+    @Override
+    public List<Loan> retrieveAllActiveLoans() {
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<Loan> cr = cb.createQuery(Loan.class);
+            Root<Loan> root = cr.from(Loan.class);
+
+            cr.select(root)
+                    .where(
+                            cb.equal(root.get("loanStatus"), LoanStatus.ACTIVE)
+                    );
+
+            return session.createQuery(cr).getResultList();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Database query failed", e);
         }
     }
 }

@@ -10,5 +10,5 @@ public interface ILoanRepository {
     List<Loan> retrieveActiveLoansByMembershipId(long MembershipId);
     Loan store(Loan loan);
     void updateLoan(Loan loan);
-
+    List<Loan> retrieveAllActiveLoans();
 }

@@ -1,8 +1,11 @@
 package com.github.pieter_groenendijk.service.loan;
 
 import com.github.pieter_groenendijk.exception.EntityNotFoundException;
-import com.github.pieter_groenendijk.model.*;
 import com.github.pieter_groenendijk.model.DTO.LoanRequestDTO;
+import com.github.pieter_groenendijk.model.Loan;
+import com.github.pieter_groenendijk.model.LoanStatus;
+import com.github.pieter_groenendijk.model.Membership;
+import com.github.pieter_groenendijk.model.Reservation;
 import com.github.pieter_groenendijk.model.product.ProductCopy;
 import com.github.pieter_groenendijk.model.product.ProductCopyStatus;
 import com.github.pieter_groenendijk.repository.ILoanRepository;
@@ -128,23 +131,20 @@ public class LoanService implements ILoanService {
 
     @Override
     public void handleOverdueLoans() {
-    /*    LocalDate currentDate = LocalDate.now();
-        long membershipId = getMembershipId();
-        List<Loan> activeLoans = loanRepository.retrieveActiveLoansByMembershipId(membershipId);
+        LocalDate currentDate = LocalDate.now();
 
+        List<Loan> activeLoans = loanRepository.retrieveAllActiveLoans();
         for (Loan loan : activeLoans) {
             try {
                 if (loan.getLoanStatus().isOverdue(currentDate, loan)) {
                     loan.setLoanStatus(LoanStatus.OVERDUE);
                     loanRepository.updateLoan(loan);
                 }
-            } catch (LoanOverdueException e) {
-                System.out.println(e.getMessage());
+            } catch (EntityNotFoundException e) {
+                System.out.println("No active loans found" + e.getMessage());
             }
         }
     }
-    */
-    } //TODO: Figure out how to deal with overdue loans
 
 
     @Override
