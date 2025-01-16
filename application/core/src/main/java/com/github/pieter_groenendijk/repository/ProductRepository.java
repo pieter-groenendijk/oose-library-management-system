@@ -4,6 +4,8 @@ import com.github.pieter_groenendijk.model.product.ProductTemplate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
+import org.hibernate.Transaction;
+import org.hibernate.Hibernate;
 
 import java.util.Optional;
 
@@ -114,17 +116,17 @@ public class ProductRepository implements IProductRepository {
         return productCopy;
     }
 
-    @Override
-    public Optional<ProductCopy> retrieveProductCopyById(long productCopyId) {
+    public Optional<ProductCopy> retrieveProductCopyById(long id) {
         try (Session session = sessionFactory.openSession()) {
-            ProductCopy productCopy = session.get(ProductCopy.class, productCopyId);
-            if (productCopy == null) {
-                throw new IllegalStateException("ProductCopy with ID " + productCopyId + " not found in the database.");
+            Transaction transaction = session.beginTransaction();
+            try {
+                ProductCopy productCopy = session.get(ProductCopy.class, id);
+                transaction.commit();
+                return Optional.ofNullable(productCopy);
+            } catch (Exception e) {
+                transaction.rollback();
+                throw e;
             }
-            return Optional.of(productCopy);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Optional.empty();
         }
     }
 }

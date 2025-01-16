@@ -60,7 +60,7 @@ public class LoanController {
                 new EventEmitterPool()
             )
         );
-        this.loanService = new LoanService(loanRepository, membershipRepository, eventService, reservationService);
+        this.loanService = new LoanService(loanRepository, membershipRepository, eventService, reservationService, productRepository);
     }
 
     @Operation(summary = "Create a Loan", description = "Create a new Loan")
