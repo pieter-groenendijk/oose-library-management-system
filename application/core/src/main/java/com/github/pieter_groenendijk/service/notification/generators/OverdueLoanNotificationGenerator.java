@@ -1,15 +1,15 @@
 package com.github.pieter_groenendijk.service.notification.generators;
 
-import com.github.pieter_groenendijk.model.Lending;
-import com.github.pieter_groenendijk.model.notification.Notification;
+import com.github.pieter_groenendijk.model.Loan;
+import com.github.pieter_groenendijk.model.notification.LoanNotification;
 import com.github.pieter_groenendijk.repository.notification.INotificationRepository;
 import com.github.pieter_groenendijk.service.notification.sendstrategies.registry.SendStrategyType;
 import com.github.pieter_groenendijk.utils.scheduling.TaskStorage;
 
 import java.time.LocalDateTime;
 
-public class OverdueNotificationGenerator extends DetachedNotificationGenerator<Lending, Notification> {
-    public OverdueNotificationGenerator(INotificationRepository repository) {
+public class OverdueLoanNotificationGenerator extends DetachedNotificationGenerator<Loan, LoanNotification> {
+    public OverdueLoanNotificationGenerator(INotificationRepository repository) {
         super(
             SendStrategyType.ALERT,
             repository
@@ -17,31 +17,31 @@ public class OverdueNotificationGenerator extends DetachedNotificationGenerator<
     }
 
     @Override
-    protected String generateTitle(Lending lending) {
+    protected String generateTitle(Loan loan) {
         return "A product is expected to be already returned!";
     }
 
     @Override
-    protected String generateMessage(Lending lending) {
+    protected String generateMessage(Loan loan) {
         return "Return the product to prevent further penalties.";
     }
 
     @Override
-    protected LocalDateTime determineScheduleDateTime(Lending lending) {
-        return lending
-            .mustReturnBy
+    protected LocalDateTime determineScheduleDateTime(Loan loan) {
+        return loan
+            .getReturnBy()
             .atTime(8, 0);
     }
 
     @Override
-    protected TaskStorage<Notification> generateStorage(Lending lending) {
-        return (Notification task) -> {
+    protected TaskStorage<LoanNotification> generateStorage(Loan loan) {
+        return (LoanNotification task) -> {
             // TODO
         };
     }
 
     @Override
-    protected Notification generateEmpty() {
-        return new Notification();
+    protected LoanNotification generateEmpty() {
+        return new LoanNotification();
     }
 }

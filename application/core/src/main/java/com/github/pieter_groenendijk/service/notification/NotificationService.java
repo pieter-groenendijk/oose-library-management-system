@@ -1,10 +1,10 @@
 package com.github.pieter_groenendijk.service.notification;
 
 import com.github.pieter_groenendijk.hibernate.SessionFactoryFactory;
+import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.repository.scheduling.TaskRepository;
 import com.github.pieter_groenendijk.utils.scheduling.TaskScheduler;
 import com.github.pieter_groenendijk.model.Account;
-import com.github.pieter_groenendijk.model.Lending;
 import com.github.pieter_groenendijk.repository.notification.INotificationRepository;
 import com.github.pieter_groenendijk.service.notification.scheduling.NotificationScheduler;
 import com.github.pieter_groenendijk.service.notification.sendstrategies.NotificationSendStrategyFactory;
@@ -30,13 +30,9 @@ public class NotificationService {
         );
     }
 
-    public void scheduleNewLendingBundle(Account account, Lending lending) {
-        this.scheduleReturnDateNotification(account, lending);
-    }
-
-    private void scheduleReturnDateNotification(Account account, Lending lending) {
+    public void scheduleOverdueLoanNotification(Account account, Loan loan) {
         this.SCHEDULER.schedule(
-            this.FACTORY.createReturnDateNotificationTask(account, lending)
+            this.FACTORY.createOverdueLoanNotification(account, loan)
         );
     }
 }
