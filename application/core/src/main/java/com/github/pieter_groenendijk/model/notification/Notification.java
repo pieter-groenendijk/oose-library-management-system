@@ -2,7 +2,7 @@ package com.github.pieter_groenendijk.model.notification;
 
 import com.github.pieter_groenendijk.model.Account;
 import com.github.pieter_groenendijk.model.scheduling.Task;
-import com.github.pieter_groenendijk.service.notification.send_strategies.registry.SendStrategyType;
+import com.github.pieter_groenendijk.service.notification.sendstrategies.registry.SendStrategyType;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;

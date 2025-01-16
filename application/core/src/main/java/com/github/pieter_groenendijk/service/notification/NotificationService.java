@@ -7,8 +7,8 @@ import com.github.pieter_groenendijk.model.Account;
 import com.github.pieter_groenendijk.model.Lending;
 import com.github.pieter_groenendijk.repository.notification.INotificationTaskRepository;
 import com.github.pieter_groenendijk.service.notification.scheduling.NotificationTaskScheduler;
-import com.github.pieter_groenendijk.service.notification.send_strategies.NotificationSendStrategyFactory;
-import com.github.pieter_groenendijk.service.notification.send_strategies.registry.NotificationSendStrategyRegistry;
+import com.github.pieter_groenendijk.service.notification.sendstrategies.NotificationSendStrategyFactory;
+import com.github.pieter_groenendijk.service.notification.sendstrategies.registry.NotificationSendStrategyRegistry;
 import com.github.pieter_groenendijk.service.notification.task.DetachedNotificationTaskFactory;
 
 public class NotificationService {

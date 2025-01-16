@@ -1,7 +1,7 @@
-package com.github.pieter_groenendijk.service.notification.send_strategies.registry;
+package com.github.pieter_groenendijk.service.notification.sendstrategies.registry;
 
 
-import com.github.pieter_groenendijk.service.notification.send_strategies.*;
+import com.github.pieter_groenendijk.service.notification.sendstrategies.*;
 
 public class NotificationSendStrategyRegistry {
     private final AlertNotificationSendStrategy ALERT_STRATEGY;

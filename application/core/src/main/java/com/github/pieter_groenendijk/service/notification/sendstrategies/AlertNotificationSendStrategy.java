@@ -1,4 +1,4 @@
-package com.github.pieter_groenendijk.service.notification.send_strategies;
+package com.github.pieter_groenendijk.service.notification.sendstrategies;
 
 
 import com.github.pieter_groenendijk.service.notification.notifiers.AppNotifier;

@@ -4,7 +4,7 @@ import com.github.pieter_groenendijk.repository.scheduling.ITaskRepository;
 import com.github.pieter_groenendijk.utils.scheduling.TaskScheduler;
 import com.github.pieter_groenendijk.model.notification.Notification;
 import com.github.pieter_groenendijk.repository.notification.INotificationTaskRepository;
-import com.github.pieter_groenendijk.service.notification.send_strategies.registry.NotificationSendStrategyRegistry;
+import com.github.pieter_groenendijk.service.notification.sendstrategies.registry.NotificationSendStrategyRegistry;
 import com.github.pieter_groenendijk.utils.scheduling.longterm.LongTermTaskScheduler;
 
 import java.util.List;
