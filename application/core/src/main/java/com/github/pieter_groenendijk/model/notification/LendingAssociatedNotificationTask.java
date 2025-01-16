@@ -32,7 +32,7 @@ public class LendingAssociatedNotificationTask {
         this.notificationTask = notificationTask;
         this.id = new LendingAssociatedNotificationTaskId(
             lending.id,
-            notificationTask.id
+            notificationTask.getId()
         );
     }
 }

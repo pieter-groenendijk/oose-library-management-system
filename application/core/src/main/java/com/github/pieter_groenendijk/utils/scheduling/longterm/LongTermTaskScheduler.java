@@ -44,16 +44,17 @@ public abstract class LongTermTaskScheduler<T extends Task> {
         }
     }
 
+    // TODO: Makes more sense that this is passed to the retrieveDueSoonTasks abstract method instead. Currently this promotes a little duplication.
+    protected final LocalDateTime getScheduledUntilDateTime() {
+        return LocalDateTime.now()
+            .plus(this.RETRIEVE_INTERVAL);
+    }
+
     private void tryCancel(T task) throws Exception {
         this.REPOSITORY.updateStatus(
             task,
             TaskStatus.CANCELLED
         );
-    }
-
-    protected final LocalDateTime getScheduledUntilDateTime() {
-        return LocalDateTime.now()
-            .plus(this.RETRIEVE_INTERVAL);
     }
 
     // TODO: Maybe move this responsibility to the actual task

@@ -13,12 +13,13 @@ public class LoanCycleListener extends EventPoolListener {
         LoanEventScheduler scheduler,
         LoanFineService fineService
     ) {
-
         super(
             eventEmitterPool,
             new EventListener[]{
                 new AlmostOverdueEventListener(),
-                new OverdueEventListener(),
+                new OverdueEventListener(
+                    scheduler
+                ),
                 new DayOverdueEventListener(
                     scheduler,
                     fineService
