@@ -50,7 +50,7 @@ public class ReservationController {
         IProductRepository productRepository = new ProductRepository(sessionFactory);
         ILoanRepository loanRepository = new LoanRepository(sessionFactory);
         this.reservationService = new ReservationService(reservationRepository, membershipRepository, accountRepository, productRepository);
-        this.loanService = new LoanService(loanRepository, membershipRepository, loanEventService, reservationService);
+        this.loanService = new LoanService(loanRepository, membershipRepository, loanEventService, reservationService, productRepository);
     }
 
     @Operation(summary = "Create a reservation", description = "Create a new reservation")

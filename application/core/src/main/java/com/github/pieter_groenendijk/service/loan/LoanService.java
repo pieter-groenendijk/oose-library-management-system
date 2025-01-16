@@ -29,12 +29,14 @@ public class LoanService implements ILoanService {
         ILoanRepository loanRepository,
         IMembershipRepository membershipRepository,
         ILoanEventService eventService,
-        IReservationService reservationService
+        IReservationService reservationService,
+        IProductRepository productRepository
     ) {
         this.loanRepository = loanRepository;
         this.membershipRepository = membershipRepository;
         this.EVENT_SERVICE = eventService;
         this.reservationService = reservationService;
+        this.productRepository = productRepository;
 
     }
 
@@ -44,7 +46,6 @@ public class LoanService implements ILoanService {
         if (loanRequestDTO == null) {
             throw new IllegalArgumentException("LoanRequestDTO cannot be null.");
         }
-
         Loan loan = new Loan();
 
 
@@ -54,24 +55,19 @@ public class LoanService implements ILoanService {
             loan.setLoanStatus(loanRequestDTO.getLoanStatus());
         }
 
-
         loan.setStartDate(loanRequestDTO.getStartDate());
         loan.setReturnBy(LocalDate.now().plusDays(LOAN_LENGTH));
-
 
         Membership membership = membershipRepository.retrieveMembershipById(loanRequestDTO.getMembershipId())
                 .orElseThrow(() -> new EntityNotFoundException("Membership not found"));
         loan.setMembership(membership);
 
-
         ProductCopy productCopy = productRepository.retrieveProductCopyById(loanRequestDTO.getProductCopyId())
                 .orElseThrow(() -> new EntityNotFoundException("ProductCopy not found"));
         loan.setProductCopy(productCopy);
 
-
         productCopy.setAvailabilityStatus(ProductCopyStatus.LOANED);
         productRepository.updateProductCopy(productCopy);
-
 
         loanRepository.store(loan);
         EVENT_SERVICE.scheduleEventsForNewLoan(loan);
@@ -195,5 +191,4 @@ public class LoanService implements ILoanService {
         loan.setLoanStatus(LoanStatus.ACTIVE);
         return loanRepository.store(loan);
     }
-
 }
