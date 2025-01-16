@@ -68,56 +68,60 @@ VALUES
 
 -- endregion
 
--- Insert data into Reservation table
-INSERT INTO "Reservation" ("reservationId", "reservationDate", "isActive", "membershipId", "productCopyId")
-VALUES (1, '2024-12-09', FALSE, 1, 1),
-       (2, '2024-12-10', FALSE, 2, 2),
-       (3, '2024-12-11', FALSE, 3, 3),
-       (4, '2024-12-12', FALSE, 4, 4),
-       (5, '2024-12-13', FALSE, 5, 5),
-       (6, '2024-12-14', FALSE, 1, 1),
-       (7, '2024-12-15', TRUE, 2, 2),
-       (8, '2024-12-16', TRUE, 3, 3),
-       (9, '2024-12-17', TRUE, 4, 4),
-       (10, '2024-12-18', TRUE, 5, 5);
-
 -- Insert a product in to database
-INSERT INTO "ProductTemplate" ("productId", "name", "genreId", "yearOfRelease", "description", "type", "ageClassification", "mediaType")
+INSERT INTO "ProductTemplate" ("name", "genreId", "yearOfRelease", "description", "type", "ageClassification", "mediaType")
 VALUES
-    (1, '1984', 1 , 1949, 'A novel by George Orwell', 'BOOK', 18, 'PHYSICAL'),
-    (2, 'The Great Gatsby', 2, 1925, 'A novel by F. Scott Fitzgerald', 'BOOK', 18, 'PHYSICAL'),
-    (3, 'Moby-Dick', 3, 1851, 'A novel by Herman Melville', 'BOOK', 18, 'PHYSICAL'),
-    (4, 'To Kill a Mockingbird', 2, 1960, 'A novel by Harper Lee', 'BOOK', 18, 'PHYSICAL'),
-    (5, 'Pride and Prejudice', 5, 1813, 'A novel by Jane Austen', 'BOOK', 18, 'PHYSICAL');
+    ('1984', 1, 1949, 'A novel by George Orwell', 'BOOK', 18, 'BOOK'),
+    ('The Great Gatsby', 2, 1925, 'A novel by F. Scott Fitzgerald', 'BOOK', 18, 'BOOK'),
+    ('Moby-Dick', 3, 1851, 'A novel by Herman Melville', 'BOOK', 18, 'BOOK'),
+    ('To Kill a Mockingbird', 4, 1960, 'A novel by Harper Lee', 'BOOK', 18, 'BOOK'),
+    ('Pride and Prejudice', 2, 1813, 'A novel by Jane Austen', 'BOOK', 18, 'BOOK');
 
 
-INSERT INTO "PhysicalProductTemplate" ("productId", "location", "author")
+
+INSERT INTO "PhysicalProductTemplate" ("location", "author")
 VALUES
-    (1, 'B2', 'George Orwell'),
-    (2, 'A1', 'F. Scott Fitzgerald'),
-    (3, 'C3', 'Herman Melville'),
-    (4, 'D4', 'Harper Lee'),
-    (5, 'E5', 'Jane Austen');
+    ('B2', 'George Orwell'),
+    ('A1', 'F. Scott Fitzgerald'),
+    ('C3', 'Herman Melville'),
+    ('D4', 'Harper Lee'),
+    ('E5', 'Jane Austen');
 
-INSERT INTO "PhysicalReadProduct" ("productId", "ISBN", "author")
+INSERT INTO "PhysicalProduct" ("ISBN", "author")
 VALUES
-    (1, 1234567891, 'George Orwell'),
-    (2, 1234567890, 'F. Scott Fitzgerald'),
-    (3, 1234567892, 'Herman Melville'),
-    (4, 1234567893, 'Harper Lee'),
-    (5, 1234567894, 'Jane Austen');
+    (1234567891, 'George Orwell'),
+    (1234567890, 'F. Scott Fitzgerald'),
+    (1234567892, 'Herman Melville'),
+    (1234567893, 'Harper Lee'),
+    (1234567894, 'Jane Austen');
 
 
-INSERT INTO "ProductCopy" ("productCopyId", "availabilityStatus", "productId")
+INSERT INTO "ProductCopy" ("productId", "availabilityStatus")
 VALUES
-    (1, 'AVAILABLE', 1),
-    (2, 'AVAILABLE', 2),
-    (3, 'AVAILABLE', 3),
-    (4, 'AVAILABLE', 4),
-    (5, 'AVAILABLE', 5);
+    (1, 'AVAILABLE'),
+    (2, 'AVAILABLE'),
+    (3, 'AVAILABLE'),
+    (4, 'AVAILABLE'),
+    (5, 'AVAILABLE');
+
+
+-- Insert data into Reservation table
+INSERT INTO "Reservation" ("reservationDate", "readyForPickup", "reservationPickUpDate", "productCopyId","membershipId", "reservationStatus")
+VALUES ('2024-12-09', 'FALSE','2024-12-16',  1, 1, 'LOANED'),
+       ('2024-12-10', 'FALSE','2024-12-17', 1, 2, 'LOANED'),
+       ('2024-12-11', 'FALSE','2024-12-18', 2, 3, 'LOANED'),
+       ('2024-12-12','FALSE', '2024-12-19', 3, 4, 'LOANED'),
+       ('2024-12-13','FALSE','2024-12-20', 4, 5, 'LOANED'),
+       ('2024-12-14', 'FALSE','2024-12-21', 5, 6, 'LOANED'),
+       ('2024-12-15', 'FALSE','2024-12-22', 1, 1, 'LOANED'),
+       ('2024-12-16','FALSE', '2024-12-23', 2, 2, 'LOANED'),
+       ('2024-12-17','FALSE', '2024-12-24', 3, 3, 'LOANED'),
+       ('2024-12-18', 'FALSE','2024-12-25', 4, 4, 'LOANED');
+
 
 -- Insert data into Loan table
-INSERT INTO "Loan" ("loanId", "startDate", "returnBy", "returnedOn", "extendedReturnBy", "loanStatus", "membershipId", "productCopyId")
-VALUES (1, '2024-01-01', '2024-01-15', NULL, NULL, 'RETURNED', 1, 1),
-       (2, '2024-02-01', '2024-02-14', '2024-02-10', NULL, 'RETURNED', 1, 2),
-       (3, '2024-03-01', '2024-03-15', NULL, NULL, 'RETURNED', 1, 3);
+INSERT INTO "Loan" ("startDate", "returnBy", "returnedOn", "extendedReturnBy", "loanStatus", "membershipId", "productCopyId")
+VALUES ('2024-01-01', '2024-01-15', '2024-01-12' , NULL, 'RETURNED', 1, 1),
+       ('2024-02-01', '2024-02-14', '2024-02-10', NULL, 'RETURNED', 1, 2),
+       ('2024-02-01', '2024-1-15', '2024-01-12', NULL, 'RETURNED', 1, 3);
+

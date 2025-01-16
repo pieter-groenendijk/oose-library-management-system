@@ -24,8 +24,9 @@ public class UncollectedReservationDetachedEventGenerator extends DetachedEventG
 
     @Override
     protected LocalDateTime determineScheduledDateTime(Reservation reservation) {
-        return TimeUtils.dateToLocalDateTime(reservation.getReservationPickUpDate())
-            .plusHours(1); // 1 hour leeway
+        return LocalDateTime.now();
+//        return TimeUtils.dateToLocalDateTime(reservation.getReservationPickUpDate())
+//            .plusHours(1); // 1 hour leeway
     }
 
     @Override

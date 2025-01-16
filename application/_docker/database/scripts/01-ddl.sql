@@ -134,21 +134,36 @@ CREATE TABLE "PhysicalProductTemplate" (
     FOREIGN KEY ("productId") REFERENCES "ProductTemplate" ("productId")
 );
 
-CREATE TABLE "PhysicalReadProduct" (
+CREATE TABLE "DigitalProductTemplate"
+(
+    "productId" BIGSERIAL PRIMARY KEY,
+    "language"  VARCHAR(100) NOT NULL,
+    FOREIGN KEY ("productId") REFERENCES "ProductTemplate" ("productId")
+);
+
+CREATE TABLE "PhysicalProduct" (
     "productId" BIGSERIAL PRIMARY KEY,
     "ISBN" BIGINT,
     "author" VARCHAR(100) NOT NULL,
     FOREIGN KEY ("productId") REFERENCES "ProductTemplate" ("productId")
 );
+CREATE TABLE "DigitalProduct"
+(
+    "productId" BIGSERIAL PRIMARY KEY,
+    "language"      BIGINT,
+    FOREIGN KEY ("productId") REFERENCES "ProductTemplate" ("productId")
+);
+
 
 CREATE TABLE "ProductCopy"
 (
     "productCopyId"      BIGSERIAL PRIMARY KEY,
     "availabilityStatus" VARCHAR(50) NOT NULL,
     "productId"          BIGSERIAL      NOT NULL,
-    CONSTRAINT fk_physical_product_template FOREIGN KEY ("productId") REFERENCES "PhysicalProductTemplate" ("productId")
+    FOREIGN KEY ("productId") REFERENCES "PhysicalProduct" ("productId")
 );
-
+CREATE TYPE loanStatus AS ENUM ('ACTIVE', 'EXTENDED', 'RETURNED', 'OVERDUE');
+CREATE TYPE reservationStatus AS ENUM ('ACTIVE', 'LOANED', 'EXPIRED', 'CANCELLED');
 CREATE TABLE "Loan"
 (
     "loanId" BIGSERIAL PRIMARY KEY,
@@ -167,9 +182,11 @@ CREATE TABLE "Reservation"
 (
     "reservationId"   BIGSERIAL PRIMARY KEY,
     "membershipId"    BIGSERIAL  NOT NULL,
-    "productCopyId"   BIGSERIAL  NOT NULL,
+    "productCopyId"   BIGSERIAL NOT NULL,
     "reservationDate" DATE    NOT NULL,
-    "readyForPickUp"  BOOLEAN NOT NULL,
+    "readyForPickup"  BOOLEAN NOT NULL,
+    "reservationPickUpDate" DATE,
+    "reservationStatus" VARCHAR(50) NOT NULL,
     FOREIGN KEY ("membershipId") REFERENCES "Membership" ("membershipId") ON UPDATE CASCADE ON DELETE RESTRICT,
     FOREIGN KEY ("productCopyId") REFERENCES "ProductCopy" ("productCopyId") ON UPDATE CASCADE ON DELETE RESTRICT
 );
@@ -187,3 +204,4 @@ CREATE TABLE "Event" (
     FOREIGN KEY ("reservation") REFERENCES "Reservation"("reservationId")
 );
 -- endregion
+

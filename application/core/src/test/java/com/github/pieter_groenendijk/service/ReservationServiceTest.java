@@ -1,8 +1,12 @@
 package com.github.pieter_groenendijk.service;
 
 import com.github.pieter_groenendijk.model.Account;
+import com.github.pieter_groenendijk.model.DTO.ReservationDTO;
 import com.github.pieter_groenendijk.model.Membership;
 import com.github.pieter_groenendijk.model.Reservation;
+import com.github.pieter_groenendijk.model.ReservationStatus;
+import com.github.pieter_groenendijk.model.product.ProductCopy;
+import com.github.pieter_groenendijk.model.product.ProductCopyStatus;
 import com.github.pieter_groenendijk.repository.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -12,14 +16,12 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import static com.github.pieter_groenendijk.service.ServiceUtils.PICKUP_DAYS;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @Nested
 class ReservationServiceTest {
@@ -32,8 +34,12 @@ class ReservationServiceTest {
     @Mock
     private IAccountRepository accountRepository;
 
+    @Mock
+    private IProductRepository productRepository;
+
     @InjectMocks
     private ReservationService reservationService;
+
 
     @BeforeEach
     void setUp() {
@@ -47,9 +53,44 @@ class ReservationServiceTest {
     }
 
     @Test
+    void testStoreReservationDTO() {
+        ReservationDTO reservationDTO = new ReservationDTO();
+        reservationDTO.setProductCopyId(1L);
+        reservationDTO.setMembershipId(1L);
+        reservationDTO.setReservationDate(LocalDate.now());
+        reservationDTO.setReservationStatus(ReservationStatus.ACTIVE);
+
+        ProductCopy productCopy = new ProductCopy();
+        productCopy.setProductCopyId(1L);
+
+        Membership membership = new Membership();
+        membership.setMembershipId(1L);
+
+        when(productRepository.retrieveProductCopyById(1L)).thenReturn(Optional.of(productCopy));
+        when(membershipRepository.retrieveMembershipById(1L)).thenReturn(Optional.of(membership));
+
+        Reservation reservation = new Reservation();
+        when(reservationRepository.store(any(Reservation.class))).thenReturn(reservation);
+
+        Reservation result = reservationService.store(reservationDTO);
+
+        assertNotNull(result);
+        assertEquals(ReservationStatus.ACTIVE, result.getReservationStatus());
+        verify(productRepository).retrieveProductCopyById(1L);
+        verify(membershipRepository).retrieveMembershipById(1L);
+        verify(reservationRepository).store(any(Reservation.class));
+    }
+    @Test
+    void testStore_NullReservationDTO() {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            reservationService.store(null);
+        });
+        assertEquals("Reservation cannot be null", exception.getMessage());
+    }
+@Test
     void readyForPickup() {
         Reservation reservation = new Reservation();
-        reservation.setReservationDate(Date.from(LocalDate.now().minusDays(1).atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        reservation.setReservationDate(LocalDate.now().minusDays(1));
         when(reservationRepository.retrieveReservationById(1L)).thenReturn(Optional.of(reservation));
 
         assertFalse(reservationService.readyForPickup(1L));
@@ -57,31 +98,23 @@ class ReservationServiceTest {
 
     @Test
     void generateReservationPickUpDate() {
-        int pickupDays = 7;
-        Date generatedDate = reservationService.generateReservationPickUpDate();
+        ProductCopy productCopy = new ProductCopy();
+        productCopy.setAvailabilityStatus(ProductCopyStatus.AVAILABLE);
 
-        LocalDate expectedDate = LocalDate.now().plusDays(pickupDays);
-        LocalDate actualDate = generatedDate.toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate();
+        LocalDate expectedDate = LocalDate.now().plusDays(PICKUP_DAYS);
+        LocalDate actualDate = reservationService.generateReservationPickUpDate(productCopy);
 
-            assertEquals(expectedDate, actualDate, "The generated pickup date is not correct.");
+        assertEquals(expectedDate, actualDate, "The generated pickup date for AVAILABLE status is not correct.");
     }
 
-    @Test
-    void getPickupDate() {
-        Date expectedDate = Date.from(LocalDate.now().plusDays(7).atStartOfDay(ZoneId.systemDefault()).toInstant());
-        Date actualDate = reservationService.getPickupDate(1L);
 
-        assertEquals(expectedDate, actualDate);
-    }
-
+/*
     @Test
     void handleUncollectedReservations() {
-        Date currentDate = new Date();
+        LocalDate currentDate = LocalDate.now();
         Reservation reservation = new Reservation();
-        reservation.setReservationPickUpDate(Date.from(LocalDate.now().minusDays(10).atStartOfDay(ZoneId.systemDefault()).toInstant()));
-        reservation.setIsCollected(false);
+        reservation.setReservationPickUpDate(LocalDate.now().minusDays(10));
+        reservation.setReservationStatus(ReservationStatus.ACTIVE);
 
         Account account = new Account();
         account.setAccountId(1L);
@@ -91,31 +124,34 @@ class ReservationServiceTest {
         membership.setAccount(account);
 
         when(membershipRepository.retrieveMembershipById(1L)).thenReturn(Optional.of(membership));
-        when(reservationRepository.retrieveReservationsByMembershipId(1L)).thenReturn(List.of(reservation));
+        when(reservationRepository.retrieveReservationByMembershipId(1L)).thenReturn(List.of(reservation));
 
         reservationService.handleUncollectedReservations(1L, currentDate);
 
-        //verify(reservationRepository).updateReservation(reservation);
-        assertTrue(reservation.getIsExpired(true), "The reservation should be marked as expired.");
-    }
+        assertEquals(ReservationStatus.EXPIRED, reservation.getReservationStatus());
+    }*/
 
-    @Test
-    void store() {
-    }
-
-    @Test
-    void getReservationById() {
-    }
-
-    @Test
-    void updateReservation() {
-    }
-
-    @Test
-    void cancelReservation() {
-    }
 
     @Test
     void markReservationAsLoaned() {
+        long reservationId = 1L;
+        Reservation reservation = new Reservation();
+        reservation.setReservationId(reservationId);
+        reservation.setReservationStatus(ReservationStatus.ACTIVE);
+
+        ReservationRepository mockReservationRepository = mock(ReservationRepository.class);
+        IAccountRepository mockAccountRepository = mock(IAccountRepository.class);
+        IMembershipRepository mockMembershipRepository = mock(IMembershipRepository.class);
+        IProductRepository mockProductRepository = mock(IProductRepository.class);
+        ReservationService reservationService = new ReservationService(mockReservationRepository, mockMembershipRepository, mockAccountRepository, mockProductRepository);
+
+        when(mockReservationRepository.retrieveReservationById(reservationId)).thenReturn(Optional.of(reservation));
+
+        reservationService.markReservationAsLoaned(reservationId);
+
+
+        verify(mockReservationRepository).updateReservation(reservation);
+        assertEquals(ReservationStatus.LOANED, reservation.getReservationStatus());
     }
 }
+

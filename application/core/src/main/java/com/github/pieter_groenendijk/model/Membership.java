@@ -1,7 +1,10 @@
 package com.github.pieter_groenendijk.model;
 
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "Membership")
@@ -32,6 +35,9 @@ public class Membership {
 
     @Column(name = "isBlocked", nullable = false)
     private boolean isBlocked;
+
+//    @OneToMany(mappedBy = "membership", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+//    private List<Reservation> reservations = new ArrayList<>();
 
     @Column(name = "isDeleted", nullable = false)
     private boolean isDeleted;
@@ -92,6 +98,13 @@ public class Membership {
     public void setBlocked(boolean blocked) {
         isBlocked = blocked;
     }
+
+//    public List<Reservation> getReservations() {
+//        return reservations;
+//    }
+//
+//    public void setReservations(List<Reservation> reservations) {
+//        this.reservations = reservations;}
 
     public boolean isDeleted() {
         return isDeleted;
