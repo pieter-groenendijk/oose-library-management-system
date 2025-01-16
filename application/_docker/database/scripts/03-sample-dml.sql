@@ -6,7 +6,7 @@ INSERT INTO "MembershipType" ("description", "digitalProducts", "physicalProduct
 ('Physical Only', FALSE, TRUE, 4, FALSE),
 ('VIP Membership', TRUE, TRUE, 10, FALSE);
 
-INSERT INTO "Account" ("email", "firstName", "lastName", "dateOfBirth", "gender", "isActive", "uncollectedReservations", "isDeleted") VALUES
+INSERT INTO "Account" ("email", "firstName", "lastName", "dateOfBirth", "gender", "isBlocked", "uncollectedReservations", "isDeleted") VALUES
 ('john.doe@example.com', 'John', 'Doe', '1990-01-01', 'M', TRUE, 0, FALSE),
 ('jane.smith@example.com', 'Jane', 'Smith', '1985-03-15', 'F', TRUE, 0, FALSE),
 ('sam.wilson@example.com', 'Sam', 'Wilson', '1995-07-22', 'M', FALSE, 0, FALSE),
@@ -19,7 +19,7 @@ INSERT INTO "Account" ("email", "firstName", "lastName", "dateOfBirth", "gender"
 ('anna.jackson@example.com', 'Anna', 'Jackson', '1987-11-11', 'F', TRUE, 2, FALSE);
 
 -- Insert data into Membership table
-INSERT INTO "Membership" ("accountId", "membershipTypeId", "isActive", "startDate", "endDate", "isDeleted") VALUES
+INSERT INTO "Membership" ("accountId", "membershipTypeId", "isBlocked", "startDate", "endDate", "isDeleted") VALUES
 (1, 1, TRUE, '2023-01-01', '2023-12-31', FALSE),
 (2, 2, TRUE, '2022-06-01', '2023-05-31', FALSE),
 (3, 3, FALSE, '2022-09-01', '2023-08-31', FALSE),
