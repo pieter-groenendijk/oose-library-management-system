@@ -1,7 +1,5 @@
 package com.github.pieter_groenendijk.model.product;
 
-import com.github.pieter_groenendijk.model.MediaType;
-import com.github.pieter_groenendijk.model.product.Genre;
 import jakarta.persistence.*;
 
 @Entity

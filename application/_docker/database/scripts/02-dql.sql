@@ -36,8 +36,7 @@ SELECT
     "membershipTypeId",
     "isBlocked",
     "startDate",
-    "endDate",
-    "isBlocked"
+    "endDate"
 FROM "Membership";
 
 CREATE VIEW "vw_Loans_Per_Membership" AS
