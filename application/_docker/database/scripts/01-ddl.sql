@@ -6,7 +6,7 @@ CREATE TABLE "Account" (
     "lastName" VARCHAR(50) NOT NULL,
     "dateOfBirth" DATE NOT NULL,
     "gender" CHAR(1) NOT NULL,
-    "isActive" BOOLEAN NOT NULL,
+    "isBlocked" BOOLEAN NOT NULL,
     "uncollectedReservations" INT DEFAULT 0,
     "isDeleted" BOOLEAN NOT NULL
 );
@@ -24,7 +24,6 @@ CREATE TABLE "Membership" (
     "membershipId" BIGSERIAL PRIMARY KEY,
     "accountId" BIGSERIAL NOT NULL,
     "membershipTypeId" BIGINT NOT NULL,
-    "isActive" BOOLEAN NOT NULL,
     "startDate" DATE NOT NULL,
     "endDate" DATE,
     "isDeleted" BOOLEAN NOT NULL,
@@ -35,7 +34,8 @@ CREATE TABLE "Membership" (
 
 CREATE TABLE "Genre" (
     "genreId" BIGSERIAL PRIMARY KEY,
-    "description" VARCHAR(150)
+    "description" VARCHAR(150),
+    "isDeleted" BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE "LendingLimit" (
@@ -43,6 +43,7 @@ CREATE TABLE "LendingLimit" (
     "membershipTypeId" BIGINT NOT NULL,
     "genreId" BIGINT NOT NULL,
     "maxLendings" INT NOT NULL,
+    "isDeleted" BOOLEAN DEFAULT FALSE,
     FOREIGN KEY ("membershipTypeId") REFERENCES "MembershipType" ("membershipTypeId") ON DELETE CASCADE,
     FOREIGN KEY ("genreId") REFERENCES "Genre" ("genreId") ON DELETE CASCADE
 );
@@ -162,6 +163,7 @@ CREATE TABLE "ProductCopy"
 );
 CREATE TYPE loanStatus AS ENUM ('ACTIVE', 'EXTENDED', 'RETURNED', 'OVERDUE');
 CREATE TYPE reservationStatus AS ENUM ('ACTIVE', 'LOANED', 'EXPIRED', 'CANCELLED');
+
 CREATE TABLE "Loan"
 (
     "loanId" BIGSERIAL PRIMARY KEY,

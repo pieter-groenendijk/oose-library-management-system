@@ -9,4 +9,5 @@ public interface IMembershipRepository {
     void store(Membership membership);
     List<Membership> retrieveMembershipsByAccountId(long id);
     void update(Membership membership);
+
 }

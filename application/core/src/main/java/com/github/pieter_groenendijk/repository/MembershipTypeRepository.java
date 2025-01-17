@@ -11,6 +11,7 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import org.hibernate.HibernateException;
+import com.github.pieter_groenendijk.model.LendingLimit;
 
 public class MembershipTypeRepository implements IMembershipTypeRepository {
 
@@ -105,4 +106,77 @@ public class MembershipTypeRepository implements IMembershipTypeRepository {
                 session.close();
             }
     }
+
+    public Optional<LendingLimit> retrieveLendingLimitById(long id) {
+        Session session = sessionFactory.openSession();
+        LendingLimit lendingLimit;
+
+        try {
+            lendingLimit = session.get(LendingLimit.class, id);
+        } finally {
+            session.close();
+        }
+        return Optional.ofNullable(lendingLimit);
+    }
+
+    public void store(LendingLimit lendingLimit){
+        Session session = sessionFactory.openSession();
+        try {
+            session.beginTransaction();
+            session.persist(lendingLimit);
+            session.flush();
+
+            session.getTransaction().commit();
+
+        } catch (HibernateException e) {
+            if (session.getTransaction() != null) {
+                session.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+
+    public void update(LendingLimit lendingLimit){
+        Session session = sessionFactory.openSession();
+
+        try {
+            session.beginTransaction();
+            session.merge(lendingLimit);
+            session.flush();
+
+            session.getTransaction().commit();
+
+        } catch (HibernateException e) {
+            if (session.getTransaction() != null) {
+                session.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+
+    public List<LendingLimit> retrieveLendingLimitList(long id){
+        Session session = sessionFactory.openSession();
+        try {
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<LendingLimit> cr = cb.createQuery(LendingLimit.class);
+            Root<LendingLimit> root = cr.from(LendingLimit.class);
+
+            cr.select(root).where(cb.equal(root.get("membershiptype").get("id"), id));
+
+            return session.createQuery(cr).getResultList();
+        } catch (HibernateException e) {
+            if (session.getTransaction() != null) {
+                session.getTransaction().rollback();
+            }
+            e.printStackTrace();
+            return Collections.emptyList();
+        } finally {
+            session.close();
+        }
+    }
+
 }

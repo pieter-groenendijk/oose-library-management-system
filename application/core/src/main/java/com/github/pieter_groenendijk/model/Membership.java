@@ -22,9 +22,6 @@ public class Membership {
     @JoinColumn(name = "membershipTypeId", nullable = false)
     private MembershipType membershipType;
 
-    @Column(name = "isActive", nullable = false)
-    private boolean isActive;
-
     @Column(name = "startDate", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date startDate;
@@ -35,9 +32,6 @@ public class Membership {
 
     @Column(name = "isBlocked", nullable = false)
     private boolean isBlocked;
-
-//    @OneToMany(mappedBy = "membership", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-//    private List<Reservation> reservations = new ArrayList<>();
 
     @Column(name = "isDeleted", nullable = false)
     private boolean isDeleted;
@@ -65,14 +59,6 @@ public class Membership {
 
     public void setMembershipType(MembershipType membershipType) {
         this.membershipType = membershipType;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
     }
 
     public Date getStartDate() {
