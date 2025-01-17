@@ -24,6 +24,8 @@ public interface ILoanService {
 
     boolean checkIsLate(Loan loan);
 
+    void updateLoanStatusIfNeeded(Loan loan);
+
     Loan retrieveLoanByLoanId(long loanId);
 
     List<Loan> retrieveActiveLoansByMembershipId(long membershipId);

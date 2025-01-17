@@ -149,15 +149,21 @@ public class LoanService implements ILoanService {
     @Override
     public boolean checkIsLate(Loan loan) {
         LocalDate currentDate = getCurrentDate();
-
         boolean isLate = loan.getLoanStatus().isOverdue(currentDate, loan);
 
-        if (isLate && loan.getLoanStatus() != LoanStatus.OVERDUE) {
-            loan.setLoanStatus(LoanStatus.OVERDUE);
-            loanRepository.updateLoan(loan);
+        if (isLate) {
+            updateLoanStatusIfNeeded(loan);
         }
 
         return isLate;
+    }
+
+    @Override
+    public void updateLoanStatusIfNeeded(Loan loan) {
+        if (loan.getLoanStatus() != LoanStatus.OVERDUE) {
+            loan.setLoanStatus(LoanStatus.OVERDUE);
+            loanRepository.updateLoan(loan);
+        }
     }
 
     @Override
