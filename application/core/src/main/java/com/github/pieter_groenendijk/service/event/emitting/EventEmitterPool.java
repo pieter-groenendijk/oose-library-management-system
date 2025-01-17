@@ -19,11 +19,13 @@ public class EventEmitterPool {
 
     public <T> void attach(
         @NotNull EventType type,
-        IEventListener<T> runnable
+        @NotNull IEventListener<T> runnable
     ) {
         EventEmitter<T> emitter = this.get(type);
 
-        if (emitter == null) return;
+        if (emitter == null) {
+            throw new IllegalStateException("EventEmitter for event type " + type + " not found in the pool");
+        }
 
         emitter.attach(runnable);
     }
@@ -33,7 +35,7 @@ public class EventEmitterPool {
      */
     public <T> void detach(
         @NotNull EventType type,
-        IEventListener<T> runnable
+        @NotNull IEventListener<T> runnable
     ) {
         EventEmitter<T> emitter = this.get(type);
 
@@ -47,7 +49,7 @@ public class EventEmitterPool {
      */
     public void add(
         @NotNull EventType eventType,
-        EventEmitter<?> eventEmitter
+        @NotNull EventEmitter<?> eventEmitter
     ) {
         this.EMITTERS.put(eventType, eventEmitter);
     }
@@ -68,7 +70,7 @@ public class EventEmitterPool {
     }
 
     @SuppressWarnings("unchecked") // We assume people haven't mismatched at the .add() method.
-    private <T> EventEmitter<T> get(EventType eventType) {
+    private <T> EventEmitter<T> get(@NotNull EventType eventType) {
         return (EventEmitter<T>) this.EMITTERS.get(eventType);
     }
 }
