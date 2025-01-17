@@ -118,6 +118,26 @@ public class ReservationController {
         }
     }
 
+    @Operation(summary = "Cancel a reservation", description = "Change the status of the reservation to CANCELLED")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Reservation cancelled successfully"),
+            @ApiResponse(responseCode = "404", description = "Reservation not found")
+    })
+    @PutMapping("/{reservationId}/cancel")
+    public ResponseEntity<String> cancelReservation(@PathVariable("reservationId") long reservationId) {
+        try {
+            Reservation reservation = reservationService.retrieveReservationById(reservationId);
+            if (reservation == null) {
+                return new ResponseEntity<>("Reservation not found", HttpStatus.NOT_FOUND);
+            }
+
+            reservationService.cancelReservation(reservationId);
+
+            return new ResponseEntity<>("Reservation cancelled successfully", HttpStatus.OK);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
 }
 
 

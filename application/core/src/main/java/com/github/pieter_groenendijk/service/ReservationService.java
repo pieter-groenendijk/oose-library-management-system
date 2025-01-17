@@ -78,7 +78,6 @@ public class ReservationService implements IReservationService {
 
         reservation.setReservationStatus(ReservationStatus.CANCELLED);
         reservationRepository.updateReservation(reservation);
-
     }
 
     @Override
