@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
     <title>Create New Loan</title>
 </head>
 <body>
@@ -21,5 +20,10 @@
     </div>
     <button type="submit">Create Loan</button>
 </form>
+<div>
+    <button onclick="window.location.href='/loan/loanId/{loanId}';">Retrieve a loan by LoanId!</button>
+    <button onclick="window.location.href='/loan/membershipId/{membershipId}';">Retrieve a loan by MembershipId!</button>
+
+</div>
 </body>
 </html>
