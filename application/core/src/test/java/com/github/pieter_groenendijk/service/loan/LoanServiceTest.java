@@ -68,7 +68,33 @@ class LoanServiceTest {
         verify(mockLoan).setLoanStatus(LoanStatus.OVERDUE);
         verify(mockLoanRepository).updateLoan(mockLoan);
     }
-    
+
+    @Test
+    void updateLoanStatusIfNeeded_ShouldUpdateStatus_WhenNotOverdue() {
+        // Arrange
+        when(mockLoan.getLoanStatus()).thenReturn(LoanStatus.ACTIVE);
+
+        // Act
+        loanService.updateLoanStatusIfNeeded(mockLoan);
+
+        // Assert
+        verify(mockLoan).setLoanStatus(LoanStatus.OVERDUE);
+        verify(mockLoanRepository).updateLoan(mockLoan);
+    }
+
+    @Test
+    void updateLoanStatusIfNeeded_ShouldNotUpdateStatus_WhenAlreadyOverdue() {
+        // Arrange
+        when(mockLoan.getLoanStatus()).thenReturn(LoanStatus.OVERDUE);
+
+        // Act
+        loanService.updateLoanStatusIfNeeded(mockLoan);
+
+        // Assert
+        verify(mockLoan, never()).setLoanStatus(any());
+        verify(mockLoanRepository, never()).updateLoan(any()); 
+    }
+
     @Test
     void retrieveLoanByLoanId() {
         long loanId = 123L;
