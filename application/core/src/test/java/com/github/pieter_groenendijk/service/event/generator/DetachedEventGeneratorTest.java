@@ -9,15 +9,12 @@ import com.github.pieter_groenendijk.utils.scheduling.TaskStorage;
 import com.github.pieter_groenendijk.utils.scheduling.longterm.DetachedTask;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 
 import java.time.LocalDateTime;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.openMocks;
 
 public class DetachedEventGeneratorTest {

@@ -2,15 +2,16 @@ package com.github.pieter_groenendijk.service.event.listener;
 
 import com.github.pieter_groenendijk.model.event.EventType;
 import com.github.pieter_groenendijk.service.event.emitting.EventEmitterPool;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class EventListener<Context> implements IEventListener<Context> {
     private final EventType TYPE;
 
-    protected EventListener(EventType type) {
+    protected EventListener(@NotNull EventType type) {
         this.TYPE = type;
     }
 
-    public final void attachTo(EventEmitterPool pool) {
+    public final void attachTo(@NotNull EventEmitterPool pool) {
         pool.attach(this.TYPE, this);
     }
 
@@ -25,7 +26,7 @@ public abstract class EventListener<Context> implements IEventListener<Context> 
 
     protected abstract void tryReact(Context context) throws Exception;
 
-    protected void handleReactException(Exception exception) {
+    protected void handleReactException(@NotNull Exception exception) {
         // TODO: Logging
     }
 }
