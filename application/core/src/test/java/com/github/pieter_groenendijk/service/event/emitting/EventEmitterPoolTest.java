@@ -347,4 +347,24 @@ public class EventEmitterPoolTest {
         verify(emitter, times(1)).detach(listener);
         verify(secondEmitter, times(0)).detach(secondListener);
     }
+
+    @Test
+    void testRemove_existingEmitter() {
+        EventEmitter<String> emitter = mock(EventEmitter.class);
+        EventType type = EventType.ALMOST_OVERDUE_LOAN;
+        String context = "exmaple";
+
+        this.pool.add(type, emitter);
+        this.pool.remove(type);
+
+        this.pool.emit(type, context);
+
+        verifyNoInteractions(emitter);
+    }
+
+    @Test
+    void testRemove_nonExistentEmitter() {
+        this.pool.remove(EventType.ALMOST_OVERDUE_LOAN);
+    }
 }
+
