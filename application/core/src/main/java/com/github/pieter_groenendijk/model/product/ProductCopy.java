@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 
 
 @Entity
+@Table(name = "ProductCopy")
 public class ProductCopy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

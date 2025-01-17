@@ -77,12 +77,12 @@ VALUES
     ('To Kill a Mockingbird', 4, 1960, 'A novel by Harper Lee', 18, 'BOOK'),
     ('Pride and Prejudice', 2, 1813, 'A novel by Jane Austen',  18, 'BOOK'),
     ('The Hitchhikers Guide to the Galaxy', 5, 1979, 'Read by Stephen Fry', 12, 'AUDIOBOOK'),
-    ('Clean Code', 6, 2008, 'A Handbook of Agile Software Craftsmanship by Robert C. Martin', 18, 'BOOK'),
-    ('The Pragmatic Programmer', 6, 1999, 'A book by Andrew Hunt and David Thomas', 18, 'EBOOK'),
-    ('Refactoring', 6, 1999, 'Improving the design of existing code by Martin Fowler', 18, 'EBOOK'),
-    ('The Mythical Man-Month', 6, 1975, 'A collection of essays by Fred Brooks', 18, 'EBOOK'),
-    ('Design Patterns', 6, 1994, 'Elements of reusable object-oriented software', 18, 'EBOOK'),
-    ('JavaScript: The Good Parts', 6, 2008, 'A book by Douglas Crockford on JavaScript', 18, 'BOOK'),
+    ('Clean Code', 1, 2008, 'A Handbook of Agile Software Craftsmanship by Robert C. Martin', 18, 'BOOK'),
+    ('The Pragmatic Programmer', 1, 1999, 'A book by Andrew Hunt and David Thomas', 18, 'EBOOK'),
+    ('Refactoring', 1, 1999, 'Improving the design of existing code by Martin Fowler', 18, 'EBOOK'),
+    ('The Mythical Man-Month', 1, 1975, 'A collection of essays by Fred Brooks', 18, 'EBOOK'),
+    ('Design Patterns', 1, 1994, 'Elements of reusable object-oriented software', 18, 'EBOOK'),
+    ('JavaScript: The Good Parts', 1, 2008, 'A book by Douglas Crockford on JavaScript', 18, 'BOOK'),
     ('The Catcher in the Rye', 4, 1951, 'A novel by J.D. Salinger', 18, 'BOOK'),
     ('The Road', 4, 2006, 'A novel by Cormac McCarthy', 18, 'BOOK');
 
@@ -92,39 +92,39 @@ VALUES
     (8, 'English'),
     (9, 'English'),
     (10, 'English'),
-    (11, 'English');;
+    (11, 'English');
 
-INSERT INTO "DigitalProduct" ("productId", "author", "edition")
+INSERT INTO "DigitalProduct" ("productId", "language")
 VALUES
-    (6, 'Douglas Adams', 1),
-    (8, 'Andrew Hunt & David Thomas', 1),
-    (9, 'Martin Fowler', 1),
-    (10, 'Fred Brooks', 1),
-    (11, 'Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides', 1);
+    (6, 'English'),
+    (8, 'English'),
+    (9, 'English'),
+    (10, 'English'),
+    (11, 'English');
 
-INSERT INTO "PhysicalProductTemplate" ("location", "author")
+INSERT INTO "PhysicalProductTemplate" ("productId", "location", "author")
 VALUES
-    ('B2', 'George Orwell'),
-    ('A1', 'F. Scott Fitzgerald'),
-    ('C3', 'Herman Melville'),
-    ('D4', 'Harper Lee'),
-    ('E5', 'Jane Austen'),
-    ('B6', 'Robert C. Martin'),
-    ('J5', 'Douglas Crockford'),
-    ('K6', 'J.D. Salinger'),
-    ('L1', 'Cormac McCarthy');
+    (1, 'B2', 'George Orwell'),
+    (2, 'A1', 'F. Scott Fitzgerald'),
+    (3, 'C3', 'Herman Melville'),
+    (4, 'D4', 'Harper Lee'),
+    (5, 'E5', 'Jane Austen'),
+    (7, 'B6', 'Robert C. Martin'),
+    (12, 'J5', 'Douglas Crockford'),
+    (13, 'K6', 'J.D. Salinger'),
+    (14, 'L1', 'Cormac McCarthy');
 
-INSERT INTO "PhysicalProduct" ("ISBN", "author")
+INSERT INTO "PhysicalProduct" ("productId", "ISBN", "author")
 VALUES
-    (1234567891, 'George Orwell'),
-    (1234567890, 'F. Scott Fitzgerald'),
-    (1234567892, 'Herman Melville'),
-    (1234567893, 'Harper Lee'),
-    (1234567894, 'Jane Austen'),
-    (1234567895, 'Robert C. Martin'),
-    (1234567896, 'Douglas Crockford'),
-    (1234567897, 'J.D. Salinger'),
-    (1234567898, 'Cormac McCarthy');
+    (1, 1234567891, 'George Orwell'),
+    (2, 1234567890, 'F. Scott Fitzgerald'),
+    (3, 1234567892, 'Herman Melville'),
+    (4, 1234567893, 'Harper Lee'),
+    (5, 1234567894, 'Jane Austen'),
+    (7, 1234567895, 'Robert C. Martin'),
+    (12, 1234567896, 'Douglas Crockford'),
+    (13, 1234567897, 'J.D. Salinger'),
+    (14, 1234567898, 'Cormac McCarthy');
 
 
 INSERT INTO "ProductCopy" ("productId", "availabilityStatus")
@@ -135,9 +135,18 @@ VALUES
     (4, 'AVAILABLE'),
     (5, 'AVAILABLE'),
     (7, 'AVAILABLE'),
-    (8, 'AVAILABLE'),
-    (9, 'AVAILABLE'),
-    (10, 'AVAILABLE');
+    (7, 'AVAILABLE'),
+    (7, 'AVAILABLE'),
+    (7, 'AVAILABLE'),
+    (12, 'AVAILABLE'),
+    (12, 'AVAILABLE'),
+    (12, 'AVAILABLE'),
+    (13, 'AVAILABLE'),
+    (13, 'AVAILABLE'),
+    (13, 'AVAILABLE'),
+    (14, 'AVAILABLE'),
+    (14, 'AVAILABLE'),
+    (14, 'AVAILABLE');
 
 
 -- Insert data into Reservation table

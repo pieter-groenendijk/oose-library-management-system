@@ -120,7 +120,6 @@ CREATE TABLE "ProductTemplate" (
     "genreId" BIGINT NOT NULL,
     "yearOfRelease" INT NOT NULL,
     "description" VARCHAR(250),
-    "type" VARCHAR(10) NOT NULL,
     "ageClassification" INT,
     "mediaType" VARCHAR(255) NOT NULL,
     FOREIGN KEY ("genreId") REFERENCES "Genre"("genreId") ON UPDATE CASCADE ON DELETE RESTRICT
@@ -149,7 +148,7 @@ CREATE TABLE "PhysicalProduct" (
 CREATE TABLE "DigitalProduct"
 (
     "productId" BIGSERIAL PRIMARY KEY,
-    "language"      BIGINT,
+    "language"      VARCHAR(100),
     FOREIGN KEY ("productId") REFERENCES "ProductTemplate" ("productId")
 );
 
@@ -158,7 +157,7 @@ CREATE TABLE "ProductCopy"
 (
     "productCopyId"      BIGSERIAL PRIMARY KEY,
     "availabilityStatus" VARCHAR(50) NOT NULL,
-    "productId"          BIGSERIAL      NOT NULL,
+    "productId"          BIGINT      NOT NULL,
     FOREIGN KEY ("productId") REFERENCES "PhysicalProduct" ("productId")
 );
 CREATE TYPE loanStatus AS ENUM ('ACTIVE', 'EXTENDED', 'RETURNED', 'OVERDUE');
