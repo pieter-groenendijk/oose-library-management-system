@@ -69,15 +69,38 @@ VALUES
 -- endregion
 
 -- Insert a product in to database
-INSERT INTO "ProductTemplate" ("name", "genreId", "yearOfRelease", "description", "type", "ageClassification", "mediaType")
+INSERT INTO "ProductTemplate" ("name", "genreId", "yearOfRelease", "description",  "ageClassification", "mediaType")
 VALUES
-    ('1984', 1, 1949, 'A novel by George Orwell', 'BOOK', 18, 'BOOK'),
-    ('The Great Gatsby', 2, 1925, 'A novel by F. Scott Fitzgerald', 'BOOK', 18, 'BOOK'),
-    ('Moby-Dick', 3, 1851, 'A novel by Herman Melville', 'BOOK', 18, 'BOOK'),
-    ('To Kill a Mockingbird', 4, 1960, 'A novel by Harper Lee', 'BOOK', 18, 'BOOK'),
-    ('Pride and Prejudice', 2, 1813, 'A novel by Jane Austen', 'BOOK', 18, 'BOOK');
+    ('1984', 1, 1949, 'A novel by George Orwell',  18, 'BOOK'),
+    ('The Great Gatsby', 2, 1925, 'A novel by F. Scott Fitzgerald',  18, 'BOOK'),
+    ('Moby-Dick', 3, 1851, 'A novel by Herman Melville', 18, 'BOOK'),
+    ('To Kill a Mockingbird', 4, 1960, 'A novel by Harper Lee', 18, 'BOOK'),
+    ('Pride and Prejudice', 2, 1813, 'A novel by Jane Austen',  18, 'BOOK'),
+    ('The Hitchhikers Guide to the Galaxy', 5, 1979, 'Read by Stephen Fry', 12, 'AUDIOBOOK'),
+    ('Clean Code', 6, 2008, 'A Handbook of Agile Software Craftsmanship by Robert C. Martin', 18, 'BOOK'),
+    ('The Pragmatic Programmer', 6, 1999, 'A book by Andrew Hunt and David Thomas', 18, 'EBOOK'),
+    ('Refactoring', 6, 1999, 'Improving the design of existing code by Martin Fowler', 18, 'EBOOK'),
+    ('The Mythical Man-Month', 6, 1975, 'A collection of essays by Fred Brooks', 18, 'EBOOK'),
+    ('Design Patterns', 6, 1994, 'Elements of reusable object-oriented software', 18, 'EBOOK'),
+    ('JavaScript: The Good Parts', 6, 2008, 'A book by Douglas Crockford on JavaScript', 18, 'BOOK'),
+    ('The Catcher in the Rye', 4, 1951, 'A novel by J.D. Salinger', 18, 'BOOK'),
+    ('The Road', 4, 2006, 'A novel by Cormac McCarthy', 18, 'BOOK');
 
+INSERT INTO "DigitalProductTemplate" ("productId", "language")
+VALUES
+    (6, 'English'),
+    (8, 'English'),
+    (9, 'English'),
+    (10, 'English'),
+    (11, 'English');;
 
+INSERT INTO "DigitalProduct" ("productId", "author", "edition")
+VALUES
+    (6, 'Douglas Adams', 1),
+    (8, 'Andrew Hunt & David Thomas', 1),
+    (9, 'Martin Fowler', 1),
+    (10, 'Fred Brooks', 1),
+    (11, 'Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides', 1);
 
 INSERT INTO "PhysicalProductTemplate" ("location", "author")
 VALUES
@@ -85,7 +108,11 @@ VALUES
     ('A1', 'F. Scott Fitzgerald'),
     ('C3', 'Herman Melville'),
     ('D4', 'Harper Lee'),
-    ('E5', 'Jane Austen');
+    ('E5', 'Jane Austen'),
+    ('B6', 'Robert C. Martin'),
+    ('J5', 'Douglas Crockford'),
+    ('K6', 'J.D. Salinger'),
+    ('L1', 'Cormac McCarthy');
 
 INSERT INTO "PhysicalProduct" ("ISBN", "author")
 VALUES
@@ -93,7 +120,11 @@ VALUES
     (1234567890, 'F. Scott Fitzgerald'),
     (1234567892, 'Herman Melville'),
     (1234567893, 'Harper Lee'),
-    (1234567894, 'Jane Austen');
+    (1234567894, 'Jane Austen'),
+    (1234567895, 'Robert C. Martin'),
+    (1234567896, 'Douglas Crockford'),
+    (1234567897, 'J.D. Salinger'),
+    (1234567898, 'Cormac McCarthy');
 
 
 INSERT INTO "ProductCopy" ("productId", "availabilityStatus")
@@ -102,26 +133,37 @@ VALUES
     (2, 'AVAILABLE'),
     (3, 'AVAILABLE'),
     (4, 'AVAILABLE'),
-    (5, 'AVAILABLE');
+    (5, 'AVAILABLE'),
+    (7, 'AVAILABLE'),
+    (8, 'AVAILABLE'),
+    (9, 'AVAILABLE'),
+    (10, 'AVAILABLE');
 
 
 -- Insert data into Reservation table
 INSERT INTO "Reservation" ("reservationDate", "readyForPickup", "reservationPickUpDate", "productCopyId","membershipId", "reservationStatus")
-VALUES ('2024-12-09', 'FALSE','2024-12-16',  1, 1, 'LOANED'),
+VALUES ('2024-12-09', 'FALSE','2024-12-16',  1, 1, 'CANCELLED'),
        ('2024-12-10', 'FALSE','2024-12-17', 1, 2, 'LOANED'),
        ('2024-12-11', 'FALSE','2024-12-18', 2, 3, 'LOANED'),
        ('2024-12-12','FALSE', '2024-12-19', 3, 4, 'LOANED'),
-       ('2024-12-13','FALSE','2024-12-20', 4, 5, 'LOANED'),
+       ('2024-12-13','FALSE','2024-12-20', 4, 5, 'CANCELLED'),
        ('2024-12-14', 'FALSE','2024-12-21', 5, 6, 'LOANED'),
        ('2024-12-15', 'FALSE','2024-12-22', 1, 1, 'LOANED'),
        ('2024-12-16','FALSE', '2024-12-23', 2, 2, 'LOANED'),
        ('2024-12-17','FALSE', '2024-12-24', 3, 3, 'LOANED'),
-       ('2024-12-18', 'FALSE','2024-12-25', 4, 4, 'LOANED');
+       ('2024-12-18', 'FALSE','2024-12-25', 4, 4, 'LOANED'),
+       ('2025-01-17', 'TRUE', '2025-01-31', 4, 5, 'ACTIVE'),
+       ('2025-01-18', 'TRUE', '2025-01-31', 5, 6, 'ACTIVE');
 
 
 -- Insert data into Loan table
 INSERT INTO "Loan" ("startDate", "returnBy", "returnedOn", "extendedReturnBy", "loanStatus", "membershipId", "productCopyId")
 VALUES ('2024-01-01', '2024-01-15', '2024-01-12' , NULL, 'RETURNED', 1, 1),
        ('2024-02-01', '2024-02-14', '2024-02-10', NULL, 'RETURNED', 1, 2),
-       ('2024-02-01', '2024-1-15', '2024-01-12', NULL, 'RETURNED', 1, 3);
+       ('2024-02-01', '2024-1-15', '2024-01-12', NULL, 'RETURNED', 1, 3),
+       ('2024-01-05', '2024-01-20', NULL, NULL, 'ACTIVE', 2, 4),
+       ('2024-01-10', '2024-01-24', NULL, NULL, 'ACTIVE', 2, 5),
+       ('2024-01-15', '2024-01-30', NULL, NULL, 'ACTIVE', 3, 6),
+       ('2024-01-20', '2024-02-03', NULL, NULL, 'ACTIVE', 3, 7),
+       ('2024-01-25', '2024-02-08', NULL, NULL, 'ACTIVE', 4, 8);
 
