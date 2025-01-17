@@ -1,8 +1,10 @@
 package com.github.pieter_groenendijk.service.event.emitting;
 
 import com.github.pieter_groenendijk.service.event.listener.IEventListener;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public abstract class EventEmitter<Context> {
     private final ArrayList<IEventListener<Context>> RUNNABLES;
@@ -11,14 +13,14 @@ public abstract class EventEmitter<Context> {
         RUNNABLES = new ArrayList<>();
     }
 
-    public void attach(IEventListener<Context> runnable) {
+    public void attach(@NotNull IEventListener<Context> runnable) {
         this.RUNNABLES.add(runnable);
     }
 
     /**
      * Relatively unoptimized action. It's not expected that it's called frequently.
      */
-    public void detach(IEventListener<Context> runnable) {
+    public void detach(@NotNull IEventListener<Context> runnable) {
         this.RUNNABLES.remove(runnable);
     }
 
