@@ -36,8 +36,7 @@ class LoanServiceTest {
     private IMembershipRepository mockMembershipRepository;
     private IReservationService mockReservationService;
     private IProductRepository mockProductRepository;
-    private ProductCopy mockProductCopy;
-    private ProductService productService;
+
     private Loan mockLoan;
 
     @BeforeEach
@@ -153,7 +152,7 @@ class LoanServiceTest {
 
         verify(mockReservationService).markReservationAsLoaned(reservation.getReservationId());
     }
-    
+
 
     @Test
     void returnToCatalog_ShouldThrowException_WhenProductCopyDoesNotExist() {
