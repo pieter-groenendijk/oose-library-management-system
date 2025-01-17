@@ -2,6 +2,8 @@ package com.github.pieter_groenendijk.service.event.emitting;
 
 import com.github.pieter_groenendijk.model.event.EventType;
 import com.github.pieter_groenendijk.service.event.listener.IEventListener;
+import jakarta.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 
@@ -15,7 +17,10 @@ public class EventEmitterPool {
         this.EMITTERS = new HashMap<>();
     }
 
-    public <T> void attach(EventType type, IEventListener<T> runnable) {
+    public <T> void attach(
+        @NotNull EventType type,
+        IEventListener<T> runnable
+    ) {
         EventEmitter<T> emitter = this.get(type);
 
         if (emitter == null) return;
@@ -26,7 +31,10 @@ public class EventEmitterPool {
     /**
      * Relatively unoptimized, only use as last resort.
      */
-    public <T> void detach(EventType type, IEventListener<T> runnable) {
+    public <T> void detach(
+        @NotNull EventType type,
+        IEventListener<T> runnable
+    ) {
         EventEmitter<T> emitter = this.get(type);
 
         if (emitter == null) return;
@@ -37,18 +45,21 @@ public class EventEmitterPool {
     /**
      * Misuse of adding the wrong EventEmitter with the wrong EventType will cause runtime errors!
      */
-    public void add(EventType eventType, EventEmitter<?> eventEmitter) {
+    public void add(
+        @NotNull EventType eventType,
+        EventEmitter<?> eventEmitter
+    ) {
         this.EMITTERS.put(eventType, eventEmitter);
     }
 
-    public void remove(EventType eventType) {
+    public void remove(@NotNull EventType eventType) {
         this.EMITTERS.remove(eventType);
     }
 
     /**
      * Fails silently if the emitter is not found in the pool.
      */
-    public <T> void emit(EventType type, T context) {
+    public <T> void emit(@NotNull EventType type, T context) {
         EventEmitter<T> emitter = this.get(type);
 
         if (emitter == null) return;
