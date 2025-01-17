@@ -7,13 +7,15 @@ import com.github.pieter_groenendijk.model.Reservation;
 import java.time.LocalDate;
 import java.util.List;
 
+import static com.github.pieter_groenendijk.service.ServiceUtils.LOAN_LENGTH;
+
 
 public interface ILoanService {
     Loan store(LoanRequestDTO loan);
 
     void extendLoan(long loanId, LocalDate returnBy);
 
-    LocalDate generateReturnByDate(LocalDate returnBy);
+    public LocalDate generateReturnByDate(LocalDate returnBy);
 
     void returnToCatalog(long productCopyId);
     void returnLoan(long loanId);

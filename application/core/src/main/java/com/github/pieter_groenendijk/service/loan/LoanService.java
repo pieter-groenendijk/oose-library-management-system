@@ -59,7 +59,7 @@ public class LoanService implements ILoanService {
         }
 
         loan.setStartDate(loanRequestDTO.getStartDate());
-        loan.setReturnBy(LocalDate.now().plusDays(LOAN_LENGTH));
+        loan.setReturnBy(getCurrentDate().plusDays(LOAN_LENGTH));
 
         Membership membership = membershipRepository.retrieveMembershipById(loanRequestDTO.getMembershipId())
                 .orElseThrow(() -> new EntityNotFoundException("Membership not found"));
@@ -98,10 +98,9 @@ public class LoanService implements ILoanService {
     }
 
     @Override
-    public LocalDate generateReturnByDate(LocalDate returnBy) {
-        return LocalDate.now().plusDays(LOAN_LENGTH);
+  public LocalDate generateReturnByDate(LocalDate returnBy) {
+        return getCurrentDate().plusDays(LOAN_LENGTH);
     }
-
 
     @Override
     public void returnLoan(long loanId) {
@@ -131,7 +130,7 @@ public class LoanService implements ILoanService {
 
     @Override
     public void handleOverdueLoans() {
-        LocalDate currentDate = LocalDate.now();
+        LocalDate currentDate = getCurrentDate();
 
         List<Loan> activeLoans = loanRepository.retrieveAllActiveLoans();
         for (Loan loan : activeLoans) {
@@ -149,7 +148,7 @@ public class LoanService implements ILoanService {
 
     @Override
     public boolean checkIsLate(Loan loan) {
-        LocalDate currentDate = LocalDate.now();
+        LocalDate currentDate = getCurrentDate();
 
         boolean isLate = loan.getLoanStatus().isOverdue(currentDate, loan);
 
@@ -186,9 +185,14 @@ public class LoanService implements ILoanService {
         Loan loan = new Loan();
         loan.setProductCopy(reservation.getProductCopy());
         loan.setMembership(reservation.getMembership());
-        loan.setStartDate(LocalDate.now());
-        loan.setReturnBy(LocalDate.now().plusDays(LOAN_LENGTH));
+        loan.setStartDate(getCurrentDate());
+        loan.setReturnBy(getCurrentDate().plusDays(LOAN_LENGTH));
         loan.setLoanStatus(LoanStatus.ACTIVE);
         return loanRepository.store(loan);
     }
+
+    private LocalDate getCurrentDate() {
+        return LocalDate.now();
+    }
+
 }
