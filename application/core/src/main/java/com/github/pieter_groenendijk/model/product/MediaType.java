@@ -1,11 +1,9 @@
-package com.github.pieter_groenendijk.model;
+package com.github.pieter_groenendijk.model.product;
 
 public enum MediaType {
     BOOK,
     EBOOK,
     AUDIOBOOK,
-    MOVIE,
-    SERIES,
     MAGAZINE,
     DVD
 }
