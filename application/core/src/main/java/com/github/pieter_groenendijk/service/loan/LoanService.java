@@ -16,6 +16,7 @@ import com.github.pieter_groenendijk.service.loan.event.ILoanEventService;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import static com.github.pieter_groenendijk.service.ServiceUtils.LOAN_LENGTH;
 
@@ -43,23 +44,14 @@ public class LoanService implements ILoanService {
 
     }
 
-    // TODO: Implement correct error handling. Is a loan still successful if we failed to schedule events for it, or the other way around?
     @Override
     public Loan store(LoanRequestDTO loanRequestDTO) {
-        if (loanRequestDTO == null) {
-            throw new IllegalArgumentException("LoanRequestDTO cannot be null.");
-        }
+        validateLoanRequestDTO(loanRequestDTO);
+
         Loan loan = new Loan();
+        setLoanStatus(loan, loanRequestDTO);
+        setLoanDates(loan);
 
-
-        if (loanRequestDTO.getLoanStatus() == null) {
-            loan.setLoanStatus(LoanStatus.ACTIVE);
-        } else {
-            loan.setLoanStatus(loanRequestDTO.getLoanStatus());
-        }
-
-        loan.setStartDate(LocalDate.now());
-        loan.setReturnBy(getCurrentDate().plusDays(LOAN_LENGTH));
 
         Membership membership = membershipRepository.retrieveMembershipById(loanRequestDTO.getMembershipId())
                 .orElseThrow(() -> new EntityNotFoundException("Membership not found"));
@@ -77,7 +69,6 @@ public class LoanService implements ILoanService {
 
         return loan;
     }
-
 
     @Override
     public void extendLoan(long loanId, LocalDate returnBy) {
@@ -199,6 +190,21 @@ public class LoanService implements ILoanService {
 
     private LocalDate getCurrentDate() {
         return LocalDate.now();
+    }
+    private void setLoanStatus(Loan loan, LoanRequestDTO loanRequestDTO) {
+        LoanStatus loanStatus = Optional.ofNullable(loanRequestDTO.getLoanStatus())
+                .orElse(LoanStatus.ACTIVE);
+        loan.setLoanStatus(loanStatus);
+    }
+
+    private void setLoanDates(Loan loan) {
+        loan.setStartDate(LocalDate.now());
+        loan.setReturnBy(getCurrentDate().plusDays(LOAN_LENGTH));
+    }
+    private void validateLoanRequestDTO(LoanRequestDTO loanRequestDTO) {
+        if (loanRequestDTO == null) {
+            throw new IllegalArgumentException("LoanRequestDTO cannot be null.");
+        }
     }
 
 }
