@@ -231,4 +231,120 @@ public class EventEmitterPoolTest {
         verify(emitter, times(2)).attach(firstListener);
         verify(secondEmitter, times(1)).attach(firstListener);
     }
+
+
+    @Test
+    void testDetach_existingListener() {
+        EventEmitter<String> emitter = mock(EventEmitter.class);
+        EventType type = EventType.ALMOST_OVERDUE_LOAN;
+        IEventListener<String> listener = (context) -> {};
+
+        this.pool.add(type, emitter);
+        this.pool.attach(type, listener);
+
+        this.pool.detach(type, listener);
+
+        verify(emitter, times(1)).detach(listener);
+    }
+
+    @Test
+    void testDetach_nonExistentEmitter() {
+        EventEmitter<String> emitter = mock(EventEmitter.class);
+        EventType type = EventType.ALMOST_OVERDUE_LOAN;
+        IEventListener<String> listener = (context) -> {};
+
+        this.pool.detach(type, listener);
+
+        verifyNoInteractions(emitter);
+    }
+
+    @Test
+    void testDetach_nonExistentListener() {
+        EventEmitter<String> emitter = mock(EventEmitter.class);
+        EventType type = EventType.ALMOST_OVERDUE_LOAN;
+        IEventListener<String> listener = (context) -> {};
+
+        this.pool.add(type, emitter);
+
+        this.pool.detach(type, listener);
+
+        verify(emitter, times(1)).detach(listener);
+    }
+
+    @Test
+    void testDetach_multipleDifferentListeners() {
+        EventEmitter<String> emitter = mock(EventEmitter.class);
+        EventType type = EventType.ALMOST_OVERDUE_LOAN;
+        IEventListener<String> listener = (context) -> {};
+        IEventListener<String> secondListener = (context) -> {};
+
+        this.pool.add(type, emitter);
+        this.pool.attach(type, listener);
+        this.pool.attach(type, secondListener);
+
+        this.pool.detach(type, listener);
+
+        verify(emitter, times(1)).detach(listener);
+        verify(emitter, times(0)).detach(secondListener);
+    }
+
+    @Test
+    void testDetach_multipleSameListeners() {
+        EventEmitter<String> emitter = mock(EventEmitter.class);
+        EventType type = EventType.ALMOST_OVERDUE_LOAN;
+        IEventListener<String> listener = (context) -> {};
+
+        this.pool.add(type, emitter);
+        this.pool.attach(type, listener);
+        this.pool.attach(type, listener);
+
+        this.pool.detach(type, listener);
+
+        verify(emitter, times(1)).detach(listener);
+    }
+
+    @Test
+    void testDetach_multipleEmittersSameListeners() {
+        EventEmitter<String> emitter = mock(EventEmitter.class);
+        EventType type = EventType.ALMOST_OVERDUE_LOAN;
+
+        EventEmitter<String> secondEmitter = mock(EventEmitter.class);
+        EventType secondType = EventType.DAY_OVERDUE_LOAN;
+
+        IEventListener<String> listener = (context) -> {};
+
+        this.pool.add(type, emitter);
+        this.pool.add(secondType, secondEmitter);
+
+        this.pool.attach(type, listener);
+        this.pool.attach(secondType, listener);
+
+        this.pool.detach(type, listener);
+
+        verify(emitter, times(1)).detach(listener);
+        verify(secondEmitter, times(0)).detach(listener);
+    }
+
+    @Test
+    void testDetach_multipleEmittersDifferentListeners() {
+        EventEmitter<String> emitter = mock(EventEmitter.class);
+        EventType type = EventType.ALMOST_OVERDUE_LOAN;
+        IEventListener<String> listener = (context) -> {};
+
+        EventEmitter<String> secondEmitter = mock(EventEmitter.class);
+        EventType secondType = EventType.DAY_OVERDUE_LOAN;
+        IEventListener<String> secondListener = (context) -> {};
+
+
+        this.pool.add(type, emitter);
+        this.pool.add(secondType, secondEmitter);
+
+        this.pool.attach(type, listener);
+        this.pool.attach(secondType, secondListener);
+
+        this.pool.detach(type, listener);
+
+        verify(emitter, times(1)).detach(listener);
+        verify(secondEmitter, times(0)).detach(secondListener);
+    }
 }
