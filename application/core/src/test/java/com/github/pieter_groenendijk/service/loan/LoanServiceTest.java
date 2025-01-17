@@ -6,10 +6,12 @@ import com.github.pieter_groenendijk.model.LoanStatus;
 import com.github.pieter_groenendijk.model.Membership;
 import com.github.pieter_groenendijk.model.Reservation;
 import com.github.pieter_groenendijk.model.product.ProductCopy;
+import com.github.pieter_groenendijk.model.product.ProductCopyStatus;
 import com.github.pieter_groenendijk.repository.ILoanRepository;
 import com.github.pieter_groenendijk.repository.IMembershipRepository;
 import com.github.pieter_groenendijk.repository.IProductRepository;
 import com.github.pieter_groenendijk.service.IReservationService;
+import com.github.pieter_groenendijk.service.ProductService;
 import com.github.pieter_groenendijk.service.ServiceUtils;
 import com.github.pieter_groenendijk.service.loan.event.ILoanEventService;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,6 +36,8 @@ class LoanServiceTest {
     private IMembershipRepository mockMembershipRepository;
     private IReservationService mockReservationService;
     private IProductRepository mockProductRepository;
+    private ProductCopy mockProductCopy;
+    private ProductService productService;
     private Loan mockLoan;
 
     @BeforeEach
@@ -92,7 +96,7 @@ class LoanServiceTest {
 
         // Assert
         verify(mockLoan, never()).setLoanStatus(any());
-        verify(mockLoanRepository, never()).updateLoan(any()); 
+        verify(mockLoanRepository, never()).updateLoan(any());
     }
 
     @Test
@@ -148,5 +152,21 @@ class LoanServiceTest {
         loanService.convertReservationToLoan(reservation);
 
         verify(mockReservationService).markReservationAsLoaned(reservation.getReservationId());
+    }
+    
+
+    @Test
+    void returnToCatalog_ShouldThrowException_WhenProductCopyDoesNotExist() {
+        // Arrange
+        long productCopyId = 1L;
+        when(mockProductRepository.retrieveProductCopyById(productCopyId)).thenReturn(Optional.empty());
+
+        // Act & Assert
+        EntityNotFoundException thrown = assertThrows(EntityNotFoundException.class,
+                () -> loanService.returnToCatalog(productCopyId),
+                "Expected returnToCatalog to throw, but it didn't");
+
+        assertEquals("ProductCopy not found with ID: " + productCopyId, thrown.getMessage());
+        verify(mockProductRepository, never()).updateProductCopy(any()); // Ensure update is not called
     }
 }
