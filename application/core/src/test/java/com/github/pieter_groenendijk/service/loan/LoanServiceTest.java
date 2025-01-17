@@ -58,13 +58,17 @@ class LoanServiceTest {
     @Test
     void checkIsLate() {
         LocalDate dueDate = LocalDate.now().minusDays(5);
+
         when(mockLoan.getLoanStatus()).thenReturn(LoanStatus.ACTIVE);
         when(mockLoan.getReturnBy()).thenReturn(dueDate);
+
         boolean result = loanService.checkIsLate(mockLoan);
+
         assertTrue(result, "Loan should be marked as late");
         verify(mockLoan).setLoanStatus(LoanStatus.OVERDUE);
         verify(mockLoanRepository).updateLoan(mockLoan);
     }
+    
     @Test
     void retrieveLoanByLoanId() {
         long loanId = 123L;
