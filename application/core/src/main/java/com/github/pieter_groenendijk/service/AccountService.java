@@ -3,6 +3,7 @@ package com.github.pieter_groenendijk.service;
 import com.github.pieter_groenendijk.model.Account;
 import com.github.pieter_groenendijk.model.MembershipType;
 import com.github.pieter_groenendijk.model.Membership;
+import com.github.pieter_groenendijk.model.LendingLimit;
 import com.github.pieter_groenendijk.repository.IAccountRepository;
 import com.github.pieter_groenendijk.repository.IMembershipTypeRepository;
 import com.github.pieter_groenendijk.repository.IMembershipRepository;
@@ -37,31 +38,30 @@ public class AccountService implements IAccountService {
                 .orElseThrow(() -> new EntityNotFoundException("Account with ID " + id + " not found."));
     }
 
-    public Account store(AccountRequestDTO request){
+    public void store(AccountRequestDTO request){
         boolean emailAlreadyExists = accountRepository.doesAccountExistByEmail(request.getEmail());
         if (emailAlreadyExists) {
             throw new InputValidationException("E-mail already exists!");
         }
 
-        //Create membership
         Account account = new Account();
         account.setEmail(request.getEmail());
         account.setFirstName(request.getFirstName());
         account.setLastName(request.getLastName());
         account.setDateOfBirth(request.getDateOfBirth());
         account.setGender(request.getGender());
-        account.setActive(true);
+        account.setBlocked(true);
         account.setUncollectedReservations(0);
+        account.setDeleted(false);
 
-        //Validate + Persist
         if ( isAccountInputValid(account)) {
-            return accountRepository.store(account);
+            accountRepository.store(account);
         } else {
             throw new InputValidationException("Account input is not valid");
         }
     }
 
-    public Account update(long id, AccountRequestDTO account) {
+    public void update(long id, AccountRequestDTO account) {
         Account retrievedAccount =  retrieveAccountById(id);
         if (retrievedAccount == null) {
             throw new EntityNotFoundException("Account with ID " + id + " not found.");
@@ -83,7 +83,7 @@ public class AccountService implements IAccountService {
         if (!isAccountInputValid(retrievedAccount)){
             throw new InputValidationException("Account input is not valid");
         } else {
-            return accountRepository.update(retrievedAccount);
+            accountRepository.update(retrievedAccount);
         }
     }
 
@@ -101,16 +101,39 @@ public class AccountService implements IAccountService {
         return true;
     }
 
-    public void setIsActive(long id, boolean newValue) {
+    public void setIsBlocked(long id, boolean newValue) {
         Account retrievedAccount =  retrieveAccountById(id);
         if (retrievedAccount == null) {
             throw new EntityNotFoundException("Account with ID " + id + " not found.");
         }
-        if (newValue == retrievedAccount.isActive()){
+        if (newValue == retrievedAccount.isBlocked()){
             throw new InputValidationException("This account is already (in)active");
         } else {
-            retrievedAccount.setActive(newValue);
+            retrievedAccount.setBlocked(newValue);
             accountRepository.update(retrievedAccount);
+        }
+        List<Membership> membershipList = membershipRepository.retrieveMembershipsByAccountId(id);
+        for (Membership membership : membershipList) {
+            membership.setBlocked(newValue);
+            membershipRepository.update(membership);
+        }
+    }
+
+    public void softDeleteAccount(long id) {
+        Account retrievedAccount =  retrieveAccountById(id);
+        if (retrievedAccount == null) {
+            throw new EntityNotFoundException("Account with ID " + id + " not found.");
+        }
+        if (retrievedAccount.isDeleted()){
+            throw new InputValidationException("This account is already deleted");
+        } else {
+            retrievedAccount.setDeleted(true);
+            accountRepository.update(retrievedAccount);
+        }
+        List<Membership> membershipList = membershipRepository.retrieveMembershipsByAccountId(id);
+        for (Membership membership : membershipList) {
+            membership.setDeleted(true);
+            membershipRepository.update(membership);
         }
     }
 
@@ -121,7 +144,7 @@ public class AccountService implements IAccountService {
                 .orElseThrow(() -> new EntityNotFoundException("Membershiptype with ID " + id + " not found."));
     }
 
-    public MembershipType store(MembershipTypeRequestDTO request){
+    public void store(MembershipTypeRequestDTO request){
         if (request.getMaxLendings() <= 0) {
             throw new InputValidationException("MaxLendings should be at least 1!");
         }
@@ -136,7 +159,7 @@ public class AccountService implements IAccountService {
         membershipType.setPhysicalProducts(request.isPhysicalProducts());
         membershipType.setMaxLendings(request.getMaxLendings());
 
-        return membershipTypeRepository.store(membershipType);
+        membershipTypeRepository.store(membershipType);
     }
 
     public void update(long id, MembershipTypeRequestDTO request) {
@@ -148,7 +171,6 @@ public class AccountService implements IAccountService {
             throw new EntityNotFoundException("MembershipType with ID " + id + " not found.");
         }
 
-        //if (retrievedMembershipType.getDescription() != request.getDescription()) {
           if (!retrievedMembershipType.getDescription().equals(request.getDescription())){
             boolean descriptionAlreadyExists = membershipTypeRepository.doesMembershipTypeExistByDescription(request.getDescription());
             if (descriptionAlreadyExists) {
@@ -168,6 +190,19 @@ public class AccountService implements IAccountService {
         return membershipTypes;
     }
 
+    public void softDeleteMembershipType(long id) {
+        MembershipType retrievedMembershipType =  retrieveMembershipTypeById(id);
+        if (retrievedMembershipType == null) {
+            throw new EntityNotFoundException("MembershipType with ID " + id + " not found.");
+        }
+        if (retrievedMembershipType.isDeleted()){
+            throw new InputValidationException("This membershipType is already deleted");
+        } else {
+            retrievedMembershipType.setDeleted(true);
+            membershipTypeRepository.update(retrievedMembershipType);
+        }
+    }
+
     //MembershipFunctionality
 
     public Membership retrieveMembershipById(long id){
@@ -183,7 +218,7 @@ public class AccountService implements IAccountService {
     return memberships;
     }
 
-    public Membership store(MembershipRequestDTO request){
+    public void store(MembershipRequestDTO request){
 
         Account account = accountRepository.retrieveAccountById(request.getAccountId())
         .orElseThrow(() -> new EntityNotFoundException("Account with ID " + request.getAccountId() + "not found."));
@@ -194,9 +229,57 @@ public class AccountService implements IAccountService {
         membership.setAccount(account);
         membership.setMembershipType(membershipType);
         membership.setStartDate(new Date());
-        membership.setActive(true);
+        membership.setDeleted(false);
         membership.setBlocked(false);
 
-        return membershipRepository.store(membership);
+        membershipRepository.store(membership);
+    }
+
+    public void update(long id, MembershipRequestDTO request){
+        Membership retrievedMembership = retrieveMembershipById(id);
+        if (retrievedMembership.getAccount().getAccountId() != request.getAccountId()) {
+            throw new InputValidationException("Cannot move a membership between accounts!");
+        }
+        MembershipType retrievedMembershipType = retrieveMembershipTypeById(request.getMembershipTypeId());
+        if (retrievedMembership.getMembershipType().getMembershipTypeId() == retrievedMembershipType.getMembershipTypeId()) {
+            throw new InputValidationException("Membership already has this account type");
+        }
+        retrievedMembership.setMembershipType(retrievedMembershipType);
+        membershipRepository.update(retrievedMembership);
+    }
+
+    public void softDeleteMembership(long id) {
+        Membership retrievedMembership =  retrieveMembershipById(id);
+        if (retrievedMembership == null) {
+            throw new EntityNotFoundException("Membership with ID " + id + " not found.");
+        }
+        if (retrievedMembership.isDeleted()){
+            throw new InputValidationException("This membership is already deleted");
+        } else {
+            retrievedMembership.setDeleted(true);
+            membershipRepository.update(retrievedMembership);
+        }
+    }
+
+    public LendingLimit retrieveLendingLimitById(long id){
+        return membershipTypeRepository.retrieveLendingLimitById(id)
+                .orElseThrow(() -> new EntityNotFoundException("LendingLimit with ID " + id + " not found."));
+    }
+
+    public void store(LendingLimit lendingLimit){
+        membershipTypeRepository.store(lendingLimit);
+    }
+
+    public void update(long id, LendingLimit lendingLimit){
+        membershipTypeRepository.update(lendingLimit);
+    }
+
+    public List<LendingLimit> retrieveLendingLimitList(long id){
+        List<LendingLimit> lendingLimitList = membershipTypeRepository.retrieveLendingLimitList(id);
+        return lendingLimitList;
+    }
+
+    public void softDeleteLendingLimit(long id){
+        membershipTypeRepository.retrieveLendingLimitById(id);
     }
 }

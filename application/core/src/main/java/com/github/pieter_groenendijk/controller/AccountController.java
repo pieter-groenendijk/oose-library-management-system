@@ -49,7 +49,7 @@ public class AccountController {
     @PostMapping
     public ResponseEntity<?> createAccount(@RequestBody AccountRequestDTO account) {
         accountService.store(account);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @Operation(summary = "Update an account", description = "Update an account in the database")
@@ -59,10 +59,17 @@ public class AccountController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @Operation(summary = "Set account active", description = "Set an account from active to inactive and back")
-    @PostMapping("/setActive/{id}")
-    public ResponseEntity<?> setAccountActive(@PathVariable("id") long id, @RequestBody boolean newValue) {
-        accountService.setIsActive(id, newValue);
+    @Operation(summary = "Set account blocked", description = "Set an account from blocked to unblocked and back")
+    @PostMapping("/setBlocked/{id}/{blocked}")
+    public ResponseEntity<?> setAccountBlocked(@PathVariable("id") long id, @PathVariable boolean newValue) {
+        accountService.setIsBlocked(id, newValue);
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @Operation(summary = "Softdelete an account", description = "Softdelete an account in the database")
+    @PutMapping("/softdelete/{id}")
+    public ResponseEntity<?> softDeleteAccount(@PathVariable("id") long id) {
+        accountService.softDeleteAccount(id);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 }

@@ -27,11 +27,14 @@ public class Account {
     @Column(name = "gender", nullable = false)
     private char gender;
 
-    @Column(name = "isActive", nullable = false)
-    private boolean isActive;
+    @Column(name = "isBlocked", nullable = false)
+    private boolean isBlocked;
 
     @Column(name = "uncollectedReservations", nullable = false)
     private int uncollectedReservations;
+
+    @Column(name = "isDeleted", nullable = false)
+    private boolean isDeleted;
 
     // Getters and Setters
     public Long getAccountId() {
@@ -82,13 +85,11 @@ public class Account {
         this.gender = gender;
     }
 
-    public boolean isActive() {
-        return isActive;
+    public boolean isBlocked() {
+        return isBlocked;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
-    }
+    public void setBlocked(boolean blocked) { isBlocked = blocked;}
 
     public int getUncollectedReservations() { return uncollectedReservations; }
 
@@ -96,5 +97,13 @@ public class Account {
 
     public void incrementUncollectedReservationCount() {
         this.uncollectedReservations++;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 }

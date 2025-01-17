@@ -1,18 +1,28 @@
 package com.github.pieter_groenendijk.service;
 
+import com.github.pieter_groenendijk.exception.EntityNotFoundException;
 import com.github.pieter_groenendijk.model.product.ProductCopy;
 import com.github.pieter_groenendijk.model.product.ProductCopyStatus;
 import com.github.pieter_groenendijk.model.product.ProductTemplate;
 import com.github.pieter_groenendijk.repository.IProductRepository;
+import org.springframework.stereotype.Service;
+import com.github.pieter_groenendijk.repository.genre.IGenreRepository;
+import com.github.pieter_groenendijk.repository.genre.GenreRepository;
+import com.github.pieter_groenendijk.model.product.Genre;
+import com.github.pieter_groenendijk.exception.EntityNotFoundException;
+import com.github.pieter_groenendijk.exception.InputValidationException;
+import java.util.List;
 
 import java.util.Optional;
 
 public class ProductService implements IProductService {
     private IProductRepository productRepository;
+    private IGenreRepository genreRepository;
 
 
-    public ProductService(IProductRepository productRepository) {
+    public ProductService(IProductRepository productRepository, IGenreRepository genreRepository) {
         this.productRepository = productRepository;
+        this.genreRepository = genreRepository;
     }
 
     @Override
@@ -50,5 +60,30 @@ public class ProductService implements IProductService {
         }
 
         return productRepository.updateProductCopy(productCopy);
+    }
+
+@Override
+    public ProductCopy retrieveProductByCopyId(long productCopyId) {
+    return productRepository.retrieveProductCopyById(productCopyId)
+            .orElseThrow(() -> new EntityNotFoundException("Product with ID " + productCopyId + " not found."));
+}
+    //Genres
+
+    public Genre retrieveGenreById(long id){
+        return genreRepository.retrieveGenreById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Genre with ID " + id + " not found."));
+    }
+
+    public void store(Genre genre) {
+        genreRepository.store(genre);
+    }
+
+    public void update(long id, Genre genre) {
+        genreRepository.update(genre);
+    }
+
+    public List<Genre> retrieveGenreList() {
+        List<Genre> genreList = genreRepository.retrieveGenreList();
+        return genreList;
     }
 }

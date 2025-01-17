@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface IMembershipRepository {
     Optional<Membership> retrieveMembershipById(long id);
-    Membership store(Membership membership);
+    void store(Membership membership);
     List<Membership> retrieveMembershipsByAccountId(long id);
+    void update(Membership membership);
+
 }

@@ -1,19 +1,21 @@
 package com.github.pieter_groenendijk.service.loan;
 
+import com.github.pieter_groenendijk.model.DTO.LoanRequestDTO;
 import com.github.pieter_groenendijk.model.Loan;
+import com.github.pieter_groenendijk.model.Reservation;
 
 import java.time.LocalDate;
 import java.util.List;
 
 
 public interface ILoanService {
-    Loan store(Loan loan);
+    Loan store(LoanRequestDTO loan);
 
-    Loan extendLoan(long loanId, LocalDate returnBy);
+    void extendLoan(long loanId, LocalDate returnBy);
 
     LocalDate generateReturnByDate(LocalDate returnBy);
 
-    void returnToCatalogue(long productCopyId);
+    void returnToCatalog(long productCopyId);
     void returnLoan(long loanId);
 
     void handleOverdueLoans();
@@ -23,4 +25,6 @@ public interface ILoanService {
     Loan retrieveLoanByLoanId(long loanId);
 
     List<Loan> retrieveActiveLoansByMembershipId(long membershipId);
+
+    Loan convertReservationToLoan(Reservation reservation);
 }
