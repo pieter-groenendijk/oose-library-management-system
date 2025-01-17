@@ -39,7 +39,7 @@ class ReservationServiceTest {
 
     @InjectMocks
     private ReservationService reservationService;
-    
+
     private static final long RESERVATION_ID = 1L;
     private static final long PRODUCT_COPY_ID = 1L;
     private static final int PICKUP_DAYS = 7;

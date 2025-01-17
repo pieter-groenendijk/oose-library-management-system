@@ -58,7 +58,7 @@ public class LoanService implements ILoanService {
             loan.setLoanStatus(loanRequestDTO.getLoanStatus());
         }
 
-        loan.setStartDate(loanRequestDTO.getStartDate());
+        loan.setStartDate(LocalDate.now());
         loan.setReturnBy(getCurrentDate().plusDays(LOAN_LENGTH));
 
         Membership membership = membershipRepository.retrieveMembershipById(loanRequestDTO.getMembershipId())
