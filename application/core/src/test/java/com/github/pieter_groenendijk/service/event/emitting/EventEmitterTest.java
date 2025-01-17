@@ -1,6 +1,5 @@
 package com.github.pieter_groenendijk.service.event.emitting;
 
-import com.github.pieter_groenendijk.repository.event.IEventRepository;
 import com.github.pieter_groenendijk.service.event.listener.IEventListener;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
