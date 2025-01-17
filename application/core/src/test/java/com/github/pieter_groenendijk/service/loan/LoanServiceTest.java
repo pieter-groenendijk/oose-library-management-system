@@ -1,17 +1,23 @@
 package com.github.pieter_groenendijk.service.loan;
 
+import com.github.pieter_groenendijk.exception.EntityNotFoundException;
 import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.model.LoanStatus;
+import com.github.pieter_groenendijk.model.Membership;
+import com.github.pieter_groenendijk.model.Reservation;
+import com.github.pieter_groenendijk.model.product.ProductCopy;
 import com.github.pieter_groenendijk.repository.ILoanRepository;
 import com.github.pieter_groenendijk.repository.IMembershipRepository;
 import com.github.pieter_groenendijk.repository.IProductRepository;
 import com.github.pieter_groenendijk.service.IReservationService;
+import com.github.pieter_groenendijk.service.ServiceUtils;
 import com.github.pieter_groenendijk.service.loan.event.ILoanEventService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +40,9 @@ class LoanServiceTest {
     public void setUp() {
         mockLoanRepository = mock(ILoanRepository.class);
         mockEventService = mock(ILoanEventService.class);
+        mockReservationService = mock(IReservationService.class);
+        mockProductRepository = mock(IProductRepository.class);
+        mockMembershipRepository = mock(IMembershipRepository.class);
         loanService = new LoanService(mockLoanRepository, mockMembershipRepository,mockEventService, mockReservationService, mockProductRepository);
         mockLoan = mock(Loan.class);
     }
@@ -69,4 +78,45 @@ class LoanServiceTest {
         verify(mockLoanRepository).retrieveLoanByLoanId(loanId);
     }
 
+
+    @Test
+    void retrieveActiveLoansByMembershipId_shouldReturnLoans_whenLoansExist() {
+        long membershipId = 1L;
+        Loan loan = new Loan();
+        when(mockLoanRepository.retrieveActiveLoansByMembershipId(membershipId))
+                .thenReturn(List.of(loan));
+
+        List<Loan> loans = loanService.retrieveActiveLoansByMembershipId(membershipId);
+
+        assertNotNull(loans);
+        assertEquals(1, loans.size());
+        assertEquals(loan, loans.getFirst());
+    }
+
+    @Test
+    void retrieveActiveLoansByMembershipId_shouldThrowException_whenNoLoansExist() {
+        long membershipId = 1L;
+        when(mockLoanRepository.retrieveActiveLoansByMembershipId(membershipId))
+                .thenReturn(Collections.emptyList());
+
+        EntityNotFoundException exception = assertThrows(
+                EntityNotFoundException.class,
+                () -> loanService.retrieveActiveLoansByMembershipId(membershipId)
+        );
+
+        assertEquals("Membership with ID" + membershipId + " not found.", exception.getMessage());
+    }
+
+
+    @Test
+    void convertReservationToLoan_shouldCallMarkReservationAsLoaned() {
+        Reservation reservation = new Reservation();
+        reservation.setReservationId(1L);
+
+        when(mockLoanRepository.store(any(Loan.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        loanService.convertReservationToLoan(reservation);
+
+        verify(mockReservationService).markReservationAsLoaned(reservation.getReservationId());
+    }
 }
