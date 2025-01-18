@@ -23,8 +23,8 @@ import static com.github.pieter_groenendijk.service.ServiceUtils.LOAN_LENGTH;
 
 public class LoanService implements ILoanService {
     private final IReservationService reservationService;
-    private ILoanRepository loanRepository;
-    private IProductRepository productRepository;
+    private final ILoanRepository loanRepository;
+    private final IProductRepository productRepository;
     private final ILoanEventService EVENT_SERVICE;
     private final IMembershipRepository membershipRepository;
 
@@ -188,6 +188,13 @@ public class LoanService implements ILoanService {
         return loanRepository.store(loan);
     }
 
+    @Override
+    public void validateLoanRequestDTO(LoanRequestDTO loanRequestDTO) {
+        if (loanRequestDTO == null) {
+            throw new IllegalArgumentException("LoanRequestDTO cannot be null.");
+        }
+    }
+
     private LocalDate getCurrentDate() {
         return LocalDate.now();
     }
@@ -201,10 +208,6 @@ public class LoanService implements ILoanService {
         loan.setStartDate(LocalDate.now());
         loan.setReturnBy(getCurrentDate().plusDays(LOAN_LENGTH));
     }
-    private void validateLoanRequestDTO(LoanRequestDTO loanRequestDTO) {
-        if (loanRequestDTO == null) {
-            throw new IllegalArgumentException("LoanRequestDTO cannot be null.");
-        }
-    }
+
 
 }

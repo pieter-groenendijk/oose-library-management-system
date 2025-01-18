@@ -1,5 +1,6 @@
 package com.github.pieter_groenendijk.service;
 import com.github.pieter_groenendijk.model.DTO.ReservationDTO;
+import com.github.pieter_groenendijk.model.Membership;
 import com.github.pieter_groenendijk.model.Reservation;
 import com.github.pieter_groenendijk.model.product.ProductCopy;
 
@@ -18,4 +19,6 @@ public interface IReservationService {
     void handleUncollectedReservations(long membershipId, LocalDate currentDate);
     void markReservationAsLoaned(long reservationId);
     void handleProductCopyAvailability(ProductCopy productCopy);
+
+    Reservation toEntity(ReservationDTO dto, ProductCopy productCopy, Membership membership);
 }

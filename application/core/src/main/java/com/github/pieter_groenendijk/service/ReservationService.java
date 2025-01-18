@@ -103,6 +103,7 @@ public class ReservationService implements IReservationService {
         }
         return LocalDate.now();
     }
+
     @Override
     public void handleProductCopyAvailability(ProductCopy productCopy) {
         if (productCopy.getAvailabilityStatus() == ProductCopyStatus.AVAILABLE) {
@@ -130,11 +131,24 @@ public class ReservationService implements IReservationService {
     }
 
     @Override
+    public Reservation toEntity(ReservationDTO dto, ProductCopy productCopy, Membership membership) {
+        Reservation reservation = new Reservation();
+        reservation.setReservationDate(dto.getReservationDate());
+        reservation.setReservationPickUpDate(null);
+        reservation.setReadyForPickup(dto.isReadyForPickup());
+        reservation.setProductCopy(productCopy);
+        reservation.setMembership(membership);
+        reservation.setReservationStatus(dto.getReservationStatus());
+        return reservation;
+    }
+
+    @Override
     public void markReservationAsLoaned(long reservationId) {
         Reservation reservation = retrieveReservationById(reservationId);
         reservation.setReservationStatus(ReservationStatus.LOANED);
         reservationRepository.updateReservation(reservation);
     }
+
     private Membership getMembership(long accountId) {
         return membershipRepository.retrieveMembershipById(accountId)
                 .orElseThrow(() -> new EntityNotFoundException("Account with ID " + accountId + " not found."));
@@ -159,15 +173,6 @@ public class ReservationService implements IReservationService {
         reservationRepository.updateReservation(reservation);
     }
 
-    public Reservation toEntity(ReservationDTO dto, ProductCopy productCopy, Membership membership) {
-        Reservation reservation = new Reservation();
-        reservation.setReservationDate(dto.getReservationDate());
-        reservation.setReservationPickUpDate(null);
-        reservation.setReadyForPickup(dto.isReadyForPickup());
-        reservation.setProductCopy(productCopy);
-        reservation.setMembership(membership);
-        reservation.setReservationStatus(dto.getReservationStatus());
-        return reservation;
-    }
+
 
 }

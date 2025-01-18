@@ -31,4 +31,6 @@ public interface ILoanService {
     List<Loan> retrieveActiveLoansByMembershipId(long membershipId);
 
     Loan convertReservationToLoan(Reservation reservation);
+
+    void validateLoanRequestDTO(LoanRequestDTO loanRequestDTO);
 }
