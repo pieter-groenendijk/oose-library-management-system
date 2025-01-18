@@ -1,5 +1,6 @@
 package com.github.pieter_groenendijk.repository.notification;
 
+import com.github.pieter_groenendijk.model.event.Event;
 import com.github.pieter_groenendijk.model.notification.Notification;
 import com.github.pieter_groenendijk.repository.scheduling.TaskRepository;
 import org.hibernate.SessionFactory;
