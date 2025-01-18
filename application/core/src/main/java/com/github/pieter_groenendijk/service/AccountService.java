@@ -1,9 +1,9 @@
 package com.github.pieter_groenendijk.service;
 
 import com.github.pieter_groenendijk.model.Account;
+import com.github.pieter_groenendijk.model.LendingLimit;
 import com.github.pieter_groenendijk.model.MembershipType;
 import com.github.pieter_groenendijk.model.Membership;
-import com.github.pieter_groenendijk.model.LendingLimit;
 import com.github.pieter_groenendijk.repository.IAccountRepository;
 import com.github.pieter_groenendijk.repository.IMembershipTypeRepository;
 import com.github.pieter_groenendijk.repository.IMembershipRepository;
@@ -20,7 +20,6 @@ import java.time.ZoneId;
 import java.util.List;
 
 public class AccountService implements IAccountService {
-
     private final IAccountRepository accountRepository;
     private final IMembershipTypeRepository membershipTypeRepository;
     private final IMembershipRepository membershipRepository;
@@ -31,14 +30,22 @@ public class AccountService implements IAccountService {
         this.membershipRepository = membershipRepository;
     }
 
-    //AccountFunctionality
-
-    public Account retrieveAccountById(long id) {
-        return accountRepository.retrieveAccountById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Account with ID " + id + " not found."));
+    public Account retrieveAccountById(long id) throws Exception {
+        return accountRepository.retrieveAccountById(id).orElseThrow();
     }
 
-    public void store(AccountRequestDTO request){
+    public MembershipType retrieveMembershipTypeById(long id){
+        return membershipTypeRepository.retrieveMembershipTypeById(id).orElseThrow();
+    }
+
+    public void store(Account account) throws Exception {
+        if ( isAccountInputValid(account)) {
+            accountRepository.store(account);
+        }
+        throw new InputValidationException("Account input is not valid");
+    }
+
+    public void store(AccountRequestDTO request) throws Exception {
         boolean emailAlreadyExists = accountRepository.doesAccountExistByEmail(request.getEmail());
         if (emailAlreadyExists) {
             throw new InputValidationException("E-mail already exists!");
@@ -54,14 +61,25 @@ public class AccountService implements IAccountService {
         account.setUncollectedReservations(0);
         account.setDeleted(false);
 
-        if ( isAccountInputValid(account)) {
+        if (isAccountInputValid(account)) {
             accountRepository.store(account);
         } else {
             throw new InputValidationException("Account input is not valid");
         }
     }
 
-    public void update(long id, AccountRequestDTO account) {
+    public void update(Account account) throws Exception {
+        Account retrievedAccount =  retrieveAccountById(account.getAccountId());
+        if (retrievedAccount == null) {
+            throw new EntityNotFoundException("Account with ID " + account.getAccountId() + " not found.");
+        } else if (!isAccountInputValid(account)){
+            throw new InputValidationException("Account input is not valid");
+        } else {
+            accountRepository.store(account);
+        }
+    }
+
+    public void update(long id, AccountRequestDTO account) throws Exception {
         Account retrievedAccount =  retrieveAccountById(id);
         if (retrievedAccount == null) {
             throw new EntityNotFoundException("Account with ID " + id + " not found.");
@@ -87,6 +105,10 @@ public class AccountService implements IAccountService {
         }
     }
 
+    public void store(MembershipType membershipType){
+        membershipTypeRepository.store(membershipType);
+    }
+
     private boolean isAccountInputValid(Account account) {
         if (!EmailValidator.isValidEmail(account.getEmail())) {
             throw new InputValidationException("Email " + account.getEmail() + " is not valid");
@@ -101,7 +123,7 @@ public class AccountService implements IAccountService {
         return true;
     }
 
-    public void setIsBlocked(long id, boolean newValue) {
+    public void setIsBlocked(long id, boolean newValue) throws Exception {
         Account retrievedAccount =  retrieveAccountById(id);
         if (retrievedAccount == null) {
             throw new EntityNotFoundException("Account with ID " + id + " not found.");
@@ -119,7 +141,7 @@ public class AccountService implements IAccountService {
         }
     }
 
-    public void softDeleteAccount(long id) {
+    public void softDeleteAccount(long id) throws Exception {
         Account retrievedAccount =  retrieveAccountById(id);
         if (retrievedAccount == null) {
             throw new EntityNotFoundException("Account with ID " + id + " not found.");
@@ -138,11 +160,6 @@ public class AccountService implements IAccountService {
     }
 
     //MembershipTypeFunctionality
-
-    public MembershipType retrieveMembershipTypeById(long id){
-        return membershipTypeRepository.retrieveMembershipTypeById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Membershiptype with ID " + id + " not found."));
-    }
 
     public void store(MembershipTypeRequestDTO request){
         if (request.getMaxLendings() <= 0) {
@@ -171,7 +188,7 @@ public class AccountService implements IAccountService {
             throw new EntityNotFoundException("MembershipType with ID " + id + " not found.");
         }
 
-          if (!retrievedMembershipType.getDescription().equals(request.getDescription())){
+        if (!retrievedMembershipType.getDescription().equals(request.getDescription())){
             boolean descriptionAlreadyExists = membershipTypeRepository.doesMembershipTypeExistByDescription(request.getDescription());
             if (descriptionAlreadyExists) {
                 throw new InputValidationException("Description already exists!");
@@ -211,17 +228,17 @@ public class AccountService implements IAccountService {
     }
 
     public List<Membership> retrieveMembershipsByAccountId(long id) {
-    List<Membership> memberships = membershipRepository.retrieveMembershipsByAccountId(id);
-    if (memberships.isEmpty()) {
-        throw new EntityNotFoundException("No memberships found for this accountId");
-    } 
-    return memberships;
+        List<Membership> memberships = membershipRepository.retrieveMembershipsByAccountId(id);
+        if (memberships.isEmpty()) {
+            throw new EntityNotFoundException("No memberships found for this accountId");
+        }
+        return memberships;
     }
 
-    public void store(MembershipRequestDTO request){
-
+    public void store(MembershipRequestDTO request) throws Exception {
         Account account = accountRepository.retrieveAccountById(request.getAccountId())
         .orElseThrow(() -> new EntityNotFoundException("Account with ID " + request.getAccountId() + "not found."));
+
         MembershipType membershipType = membershipTypeRepository.retrieveMembershipTypeById(request.getMembershipTypeId())
         .orElseThrow(() -> new EntityNotFoundException("MembershipType with ID" + request.getMembershipTypeId() + " not found."));
 

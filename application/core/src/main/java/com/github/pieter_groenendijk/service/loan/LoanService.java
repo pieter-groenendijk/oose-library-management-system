@@ -3,21 +3,21 @@ package com.github.pieter_groenendijk.service.loan;
 import com.github.pieter_groenendijk.exception.EntityNotFoundException;
 import com.github.pieter_groenendijk.model.DTO.LoanRequestDTO;
 import com.github.pieter_groenendijk.model.Loan;
+import com.github.pieter_groenendijk.repository.loan.ILoanRepository;
 import com.github.pieter_groenendijk.model.LoanStatus;
 import com.github.pieter_groenendijk.model.Membership;
 import com.github.pieter_groenendijk.model.Reservation;
 import com.github.pieter_groenendijk.model.product.ProductCopy;
 import com.github.pieter_groenendijk.model.product.ProductCopyStatus;
-import com.github.pieter_groenendijk.repository.ILoanRepository;
+import com.github.pieter_groenendijk.service.loan.event.ILoanEventService;
+
+import static com.github.pieter_groenendijk.service.ServiceUtils.LOAN_LENGTH;
 import com.github.pieter_groenendijk.repository.IMembershipRepository;
 import com.github.pieter_groenendijk.repository.IProductRepository;
-import com.github.pieter_groenendijk.service.IReservationService;
-import com.github.pieter_groenendijk.service.loan.event.ILoanEventService;
+import com.github.pieter_groenendijk.service.reservation.IReservationService;
 
 import java.time.LocalDate;
 import java.util.List;
-
-import static com.github.pieter_groenendijk.service.ServiceUtils.LOAN_LENGTH;
 
 
 public class LoanService implements ILoanService {
@@ -73,11 +73,10 @@ public class LoanService implements ILoanService {
         productRepository.updateProductCopy(productCopy);
 
         loanRepository.store(loan);
-        EVENT_SERVICE.scheduleEventsForNewLoan(loan);
+        EVENT_SERVICE.handleEventsForNewLoan(loan);
 
         return loan;
     }
-
 
     @Override
     public void extendLoan(long loanId, LocalDate returnBy) {
@@ -102,7 +101,6 @@ public class LoanService implements ILoanService {
         return LocalDate.now().plusDays(LOAN_LENGTH);
     }
 
-
     @Override
     public void returnLoan(long loanId) {
         Loan loan = loanRepository.retrieveLoanByLoanId(loanId);
@@ -118,7 +116,6 @@ public class LoanService implements ILoanService {
         loanRepository.updateLoan(loan);
         returnToCatalog(loan.getProductCopy());
     }
-
 
     @Override
     public void returnToCatalog(long productCopyId) {
@@ -145,7 +142,6 @@ public class LoanService implements ILoanService {
             }
         }
     }
-
 
     @Override
     public boolean checkIsLate(Loan loan) {
@@ -175,7 +171,7 @@ public class LoanService implements ILoanService {
         List<Loan> loans = loanRepository.retrieveActiveLoansByMembershipId(membershipId);
         if (loans.isEmpty()) {
             throw new EntityNotFoundException("Membership with ID" + membershipId + " not found.");
-    }
+        }
         return loans;
     }
 

@@ -5,22 +5,28 @@ import com.github.pieter_groenendijk.hibernate.SessionFactoryFactory;
 import com.github.pieter_groenendijk.model.DTO.LoanRequestDTO;
 import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.repository.*;
+import com.github.pieter_groenendijk.model.event.Event;
+import com.github.pieter_groenendijk.repository.loan.ILoanRepository;
+import com.github.pieter_groenendijk.repository.loan.LoanRepository;
 import com.github.pieter_groenendijk.repository.event.EventRepository;
 import com.github.pieter_groenendijk.repository.event.IEventRepository;
-import com.github.pieter_groenendijk.service.IReservationService;
-import com.github.pieter_groenendijk.service.ReservationService;
+import com.github.pieter_groenendijk.repository.loan.event.ILoanEventRepostory;
+import com.github.pieter_groenendijk.repository.loan.event.LoanEventRepostory;
+import com.github.pieter_groenendijk.repository.scheduling.ITaskRepository;
 import com.github.pieter_groenendijk.service.event.emitting.EventEmitterPool;
 import com.github.pieter_groenendijk.service.event.scheduling.EventScheduler;
 import com.github.pieter_groenendijk.service.loan.ILoanService;
 import com.github.pieter_groenendijk.service.loan.LoanService;
 import com.github.pieter_groenendijk.service.loan.event.ILoanEventService;
 import com.github.pieter_groenendijk.service.loan.event.LoanEventService;
+import com.github.pieter_groenendijk.service.loan.event.scheduling.LoanEventScheduler;
+import com.github.pieter_groenendijk.service.reservation.IReservationService;
+import com.github.pieter_groenendijk.service.reservation.ReservationService;
 import com.github.pieter_groenendijk.utils.scheduling.TaskScheduler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 
 import org.springframework.http.HttpStatus;
@@ -39,7 +45,6 @@ public class LoanController {
     private final SessionFactory sessionFactory = new SessionFactoryFactory().create();
     private final ILoanService loanService;
 
-
     public LoanController() {
         ILoanRepository loanRepository = new LoanRepository(sessionFactory);
         IProductRepository productRepository = new ProductRepository(sessionFactory);
@@ -50,14 +55,19 @@ public class LoanController {
             new AccountRepository(sessionFactory),
             productRepository
         );
-        // TODO: Make this mess work with beans or dependency injection
-        IEventRepository eventRepository = new EventRepository();
+
+        // TODO: Make this mess work with beans or dependency injection!!!!
+        IEventRepository eventRepository = new EventRepository(sessionFactory);
+        ILoanEventRepostory loanEventRepostory = new LoanEventRepostory(sessionFactory);
         ILoanEventService eventService = new LoanEventService(
-            eventRepository,
-            new EventScheduler(
-                new TaskScheduler(1),
+            new LoanEventScheduler(
                 eventRepository,
-                new EventEmitterPool()
+                loanEventRepostory,
+                new EventScheduler(
+                    (ITaskRepository<Event<?>>) eventRepository,
+                    new TaskScheduler(1),
+                    new EventEmitterPool()
+                )
             )
         );
         this.loanService = new LoanService(loanRepository, membershipRepository, eventService, reservationService, productRepository);
@@ -77,7 +87,6 @@ public class LoanController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
-
 
     @Operation(summary = "Retrieve a loan", description = "Retrieve a loan by Id")
     @ApiResponses(value = {

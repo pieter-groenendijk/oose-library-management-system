@@ -2,30 +2,30 @@ package com.github.pieter_groenendijk.service.loan.event;
 
 import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.repository.event.IEventRepository;
-import com.github.pieter_groenendijk.service.event.generator.DayOverdueLoanDetachedEventGenerator;
+import com.github.pieter_groenendijk.service.loan.event.generator.AlmostOverdueLoanDetachedEventGenerator;
+import com.github.pieter_groenendijk.service.loan.event.generator.DayOverdueLoanDetachedEventGenerator;
 import com.github.pieter_groenendijk.service.event.scheduling.EventScheduler;
+import com.github.pieter_groenendijk.service.loan.event.generator.OverdueLoanDetachedEventGenerator;
+import com.github.pieter_groenendijk.service.loan.event.scheduling.LoanEventScheduler;
 
 public class LoanEventService implements ILoanEventService {
-    private final DayOverdueLoanDetachedEventGenerator DAY_OVERDUE_GENERATOR;
+    private final LoanEventScheduler SCHEDULER;
 
-    private final EventScheduler SCHEDULER;
 
     public LoanEventService(
-        IEventRepository repository,
-        EventScheduler scheduler
+        LoanEventScheduler scheduler
     ) {
-        this.DAY_OVERDUE_GENERATOR = new DayOverdueLoanDetachedEventGenerator(repository);
         this.SCHEDULER = scheduler;
     }
 
-    @Override
-    public void scheduleEventsForNewLoan(Loan loan) {
-        this.scheduleDayOverdueLoanEvent(loan);
+    public void handleEventsForReturnedLoan(Loan loan) {
+
     }
 
-    private void scheduleDayOverdueLoanEvent(Loan loan) {
-        this.SCHEDULER.schedule(
-            this.DAY_OVERDUE_GENERATOR.generate(loan)
-        );
+    @Override
+    public void handleEventsForNewLoan(Loan loan) {
+        // TODO: Maybe optimize so that only one event is initially scheduled
+        this.SCHEDULER.scheduleAlmostOverdueLoanEvent(loan);
+        this.SCHEDULER.scheduleOverdueLoanEvent(loan);
     }
 }

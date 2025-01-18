@@ -27,11 +27,11 @@ public class Account {
     @Column(name = "gender", nullable = false)
     private char gender;
 
-    @Column(name = "isBlocked", nullable = false)
-    private boolean isBlocked;
-
     @Column(name = "uncollectedReservations", nullable = false)
     private int uncollectedReservations;
+
+    @Column(name = "isBlocked", nullable = false)
+    private boolean isBlocked;
 
     @Column(name = "isDeleted", nullable = false)
     private boolean isDeleted;
@@ -91,9 +91,13 @@ public class Account {
 
     public void setBlocked(boolean blocked) { isBlocked = blocked;}
 
-    public int getUncollectedReservations() { return uncollectedReservations; }
+    public int getUncollectedReservations() {
+        return uncollectedReservations;
+    }
 
-    public void setUncollectedReservations (int uncollectedReservations) { this.uncollectedReservations = uncollectedReservations; }
+    public void setUncollectedReservations (int uncollectedReservations) {
+        this.uncollectedReservations = uncollectedReservations;
+    }
 
     public void incrementUncollectedReservationCount() {
         this.uncollectedReservations++;

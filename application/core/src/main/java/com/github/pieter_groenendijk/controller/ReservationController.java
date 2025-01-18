@@ -6,11 +6,17 @@ import com.github.pieter_groenendijk.hibernate.SessionFactoryFactory;
 import com.github.pieter_groenendijk.model.DTO.ReservationDTO;
 import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.model.Reservation;
+import com.github.pieter_groenendijk.model.event.Event;
 import com.github.pieter_groenendijk.repository.*;
+import com.github.pieter_groenendijk.repository.loan.ILoanRepository;
+import com.github.pieter_groenendijk.repository.loan.LoanRepository;
+import com.github.pieter_groenendijk.repository.loan.event.LoanEventRepostory;
+import com.github.pieter_groenendijk.repository.scheduling.ITaskRepository;
+import com.github.pieter_groenendijk.service.loan.event.scheduling.LoanEventScheduler;
+import com.github.pieter_groenendijk.service.reservation.IReservationService;
+import com.github.pieter_groenendijk.service.reservation.ReservationService;
 import com.github.pieter_groenendijk.repository.event.EventRepository;
 import com.github.pieter_groenendijk.repository.event.IEventRepository;
-import com.github.pieter_groenendijk.service.IReservationService;
-import com.github.pieter_groenendijk.service.ReservationService;
 import com.github.pieter_groenendijk.service.event.emitting.EventEmitterPool;
 import com.github.pieter_groenendijk.service.event.scheduling.EventScheduler;
 import com.github.pieter_groenendijk.service.loan.ILoanService;
@@ -23,6 +29,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,11 +46,16 @@ public class ReservationController {
 
 
     public ReservationController() {
-        IEventRepository eventRepository = new EventRepository();
+        // TODO: THIS MESS CAN'T EXIST!!!
+        IEventRepository eventRepository = new EventRepository(sessionFactory);
         EventEmitterPool eventEmitterPool = new EventEmitterPool();
         TaskScheduler taskScheduler = new TaskScheduler(1);
-        EventScheduler eventScheduler = new EventScheduler(taskScheduler, eventRepository, eventEmitterPool);
-        ILoanEventService loanEventService = new LoanEventService(eventRepository, eventScheduler);
+        EventScheduler eventScheduler = new EventScheduler((ITaskRepository<Event<?>>) eventRepository, taskScheduler, eventEmitterPool);
+        ILoanEventService loanEventService = new LoanEventService(new LoanEventScheduler(
+            eventRepository,
+            new LoanEventRepostory(sessionFactory),
+            eventScheduler
+        ));
         IAccountRepository accountRepository = new AccountRepository(sessionFactory);
         IMembershipRepository membershipRepository = new MembershipRepository(sessionFactory);
         IReservationRepository reservationRepository = new ReservationRepository(sessionFactory);
@@ -139,6 +151,5 @@ public class ReservationController {
         }
     }
 }
-
 
 
