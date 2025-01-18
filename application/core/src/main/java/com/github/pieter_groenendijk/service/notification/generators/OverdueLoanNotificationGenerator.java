@@ -8,6 +8,7 @@ import com.github.pieter_groenendijk.utils.scheduling.TaskStorage;
 
 import java.time.LocalDateTime;
 
+// TODO: Make superclass that abstract away stuff for a generator for a LoanNotification; there is probably common behaviour
 public class OverdueLoanNotificationGenerator extends DetachedNotificationGenerator<Loan, LoanNotification> {
     public OverdueLoanNotificationGenerator(INotificationRepository repository) {
         super(
