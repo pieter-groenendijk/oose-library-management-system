@@ -9,7 +9,7 @@ public class FineProcessor {
     private final IAccountRepository ACCOUNT_REPOSITORY;
     private final IFineRepository FINE_REPOSITORY;
 
-    private final long BLOCK_TRESHOLD_IN_CENTS;
+    private final long BLOCK_THRESHOLD_IN_CENTS;
 
     public FineProcessor(
         IAccountRepository accountRepository,
@@ -17,8 +17,8 @@ public class FineProcessor {
         long blockThresholdInCents
     ) {
         this.ACCOUNT_REPOSITORY = accountRepository;
-        FINE_REPOSITORY = fineRepository;
-        this.BLOCK_TRESHOLD_IN_CENTS = blockThresholdInCents;
+        this.FINE_REPOSITORY = fineRepository;
+        this.BLOCK_THRESHOLD_IN_CENTS = blockThresholdInCents;
     }
 
     public void addFine(Fine fine) throws Exception {
@@ -38,7 +38,7 @@ public class FineProcessor {
     }
 
     private boolean shouldBlockAccount(Account account) throws Exception {
-        return this.retrieveCurrentBalanceInCents(account) > this.BLOCK_TRESHOLD_IN_CENTS;
+        return this.retrieveCurrentBalanceInCents(account) > this.BLOCK_THRESHOLD_IN_CENTS;
     }
 
     private long retrieveCurrentBalanceInCents(Account account) throws Exception {
