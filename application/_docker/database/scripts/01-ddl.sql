@@ -116,6 +116,7 @@ CREATE TABLE "Event" (
     "associationType" VARCHAR(50) NOT NULL,
     "loan" BIGINT,
     "reservation" BIGINT,
+    "status" VARCHAR(50) NOT NULL,
     PRIMARY KEY ("eventId"),
     FOREIGN KEY ("loan") REFERENCES "Loan"("loanId"),
     FOREIGN KEY ("reservation") REFERENCES "Reservation"("reservationId")
@@ -161,7 +162,7 @@ CREATE TABLE "Notification" (
     "sendStrategy" VARCHAR(20) NOT NULL,
     "loan" BIGINT,
     "associationType" VARCHAR(50) NOT NULL,
-    "status" VARCHAR(20) NOT NULL,
+    "status" VARCHAR(50) NOT NULL,
     FOREIGN KEY ("account") REFERENCES "Account"("accountId") ON UPDATE CASCADE ON DELETE RESTRICT,
     FOREIGN KEY ("loan") REFERENCES "Loan" ON UPDATE CASCADE ON DELETE RESTRICT
 );

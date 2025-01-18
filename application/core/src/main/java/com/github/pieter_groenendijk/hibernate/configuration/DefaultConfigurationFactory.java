@@ -36,18 +36,15 @@ public class DefaultConfigurationFactory {
             .addAnnotatedClass(ProductCopy.class)
             .addAnnotatedClass(ProductTemplate.class)
             .addAnnotatedClass(PhysicalProductTemplate.class)
-//            .addAnnotatedClass(Event.class)
-//            .addAnnotatedClass(LoanEvent.class)
-//            .addAnnotatedClass(Notification.class)
-// TODO: Add below annotated classes, currently not possible since Loan and all those other classes are not placed here yet.
-//            .addAnnotatedClass(LoanNotification.class)
-//            .addAnnotatedClass(Event.class)
-//            .addAnnotatedClass(LoanEvent.class
-//            .addAnnotatedClass(ReservationEvent.class)
+            .addAnnotatedClass(Event.class)
+            .addAnnotatedClass(LoanEvent.class)
+//            .addAnnotatedClass(ReservationEvent.class) TODO: Waiting for Reservation (and it dependants) to be added before
+            .addAnnotatedClass(Notification.class)
+            .addAnnotatedClass(LoanNotification.class)
             .addAnnotatedClass(FineType.class)
             .addAnnotatedClass(PaymentStatus.class)
             .addAnnotatedClass(Payment.class)
-//            .addAnnotatedClass(Fine.class);
+            .addAnnotatedClass(Fine.class);
         ;
     }
 

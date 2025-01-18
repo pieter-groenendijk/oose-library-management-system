@@ -17,7 +17,8 @@ public class Task {
     @Enumerated(EnumType.STRING)
     @Column(
         name = "status",
-        nullable = false
+        nullable = false,
+        length = 50
     )
     private TaskStatus status;
 
