@@ -3,10 +3,7 @@ package com.github.pieter_groenendijk.hibernate.configuration;
 import com.github.pieter_groenendijk.model.*;
 import com.github.pieter_groenendijk.model.event.Event;
 import com.github.pieter_groenendijk.model.event.LoanEvent;
-import com.github.pieter_groenendijk.model.event.ReservationEvent;
-import com.github.pieter_groenendijk.model.product.PhysicalProductTemplate;
-import com.github.pieter_groenendijk.model.product.ProductCopy;
-import com.github.pieter_groenendijk.model.product.ProductTemplate;
+import com.github.pieter_groenendijk.model.product.*;
 import com.github.pieter_groenendijk.model.fine.Fine;
 import com.github.pieter_groenendijk.model.fine.FineType;
 import com.github.pieter_groenendijk.model.notification.LoanNotification;
@@ -36,9 +33,14 @@ public class DefaultConfigurationFactory {
             .addAnnotatedClass(ProductCopy.class)
             .addAnnotatedClass(ProductTemplate.class)
             .addAnnotatedClass(PhysicalProductTemplate.class)
+            .addAnnotatedClass(PhysicalProduct.class)
+            .addAnnotatedClass(Reservation.class)
             .addAnnotatedClass(Event.class)
+// TODO: Add below annotated classes, currently not possible since Loan and all those other classes are not placed here yet.
+//            .addAnnotatedClass(ReservationEvent.class)
             .addAnnotatedClass(LoanEvent.class)
-//            .addAnnotatedClass(ReservationEvent.class) TODO: Waiting for Reservation (and it dependants) to be added before
+            .addAnnotatedClass(Genre.class)
+            .addAnnotatedClass(LendingLimit.class)
             .addAnnotatedClass(Notification.class)
             .addAnnotatedClass(LoanNotification.class)
             .addAnnotatedClass(FineType.class)

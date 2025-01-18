@@ -2,7 +2,8 @@ package com.github.pieter_groenendijk.service;
 
 import com.github.pieter_groenendijk.model.product.ProductCopy;
 import com.github.pieter_groenendijk.model.product.ProductTemplate;
-
+import com.github.pieter_groenendijk.model.product.Genre;
+import java.util.List;
 import java.util.Optional;
 
 public interface IProductService {
@@ -13,4 +14,13 @@ public interface IProductService {
     ProductTemplate updateProduct(ProductTemplate product);
 
     ProductCopy updateProductCopy(ProductCopy productCopy);
+
+    ProductCopy retrieveProductByCopyId(long productCopyId);
+
+    //Genre
+    Genre retrieveGenreById(long id);
+    void store(Genre genre);
+    void update(long id, Genre genre);
+    List<Genre> retrieveGenreList();
+
 }

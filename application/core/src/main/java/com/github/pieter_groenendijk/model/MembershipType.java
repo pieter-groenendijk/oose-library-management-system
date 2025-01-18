@@ -22,6 +22,9 @@ public class MembershipType {
     @Column(name = "maxLendings", nullable = false)
     private int maxLendings;
 
+    @Column(name = "isDeleted", nullable = false)
+    private boolean isDeleted;
+
     // Getters and Setters
     public Long getMembershipTypeId() {
         return membershipTypeId;
@@ -61,5 +64,13 @@ public class MembershipType {
 
     public void setMaxLendings(int maxLendings) {
         this.maxLendings = maxLendings;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 }

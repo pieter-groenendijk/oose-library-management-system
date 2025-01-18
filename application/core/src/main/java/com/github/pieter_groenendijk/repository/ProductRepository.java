@@ -3,12 +3,15 @@ import com.github.pieter_groenendijk.model.product.ProductCopy;
 import com.github.pieter_groenendijk.model.product.ProductTemplate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Repository;
+import org.hibernate.Transaction;
+import org.hibernate.Hibernate;
 
 import java.util.Optional;
 
 public class ProductRepository implements IProductRepository {
 
-    private SessionFactory sessionFactory;
+    SessionFactory sessionFactory;
 
     public ProductRepository(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
@@ -95,24 +98,12 @@ public class ProductRepository implements IProductRepository {
         return product;
     }
 
-    public Optional<ProductCopy> retrieveProductById(Long productCopyId) {
-        Session session = sessionFactory.openSession();
-        ProductCopy productCopy = null;
-
-        try {
-            productCopy = session.get(ProductCopy.class, productCopyId);
-        } finally {
-            session.close();
-        }
-        return Optional.ofNullable(productCopy);
-    }
-
     public ProductCopy updateProductCopy(ProductCopy productCopy) {
         Session session = sessionFactory.openSession();
 
         try {
             session.beginTransaction();
-            session.merge(productCopy); // Merge the productCopy object
+            session.merge(productCopy);
             session.getTransaction().commit();
         } catch (Exception e) {
             if (session.getTransaction() != null) {
@@ -125,17 +116,18 @@ public class ProductRepository implements IProductRepository {
         return productCopy;
     }
 
-    @Override
-    public Optional<ProductCopy> retrieveProductCopyById(long productCopyId) {
-        Session session = sessionFactory.openSession();
-        ProductCopy productCopy;
-
-        try {
-            productCopy = session.get(ProductCopy.class, productCopyId);
-        } finally {
-            session.close();
+    public Optional<ProductCopy> retrieveProductCopyById(long id) {
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            try {
+                ProductCopy productCopy = session.get(ProductCopy.class, id);
+                transaction.commit();
+                return Optional.ofNullable(productCopy);
+            } catch (Exception e) {
+                transaction.rollback();
+                throw e;
+            }
         }
-        return Optional.ofNullable(productCopy);
     }
 }
 

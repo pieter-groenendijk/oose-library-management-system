@@ -1,7 +1,7 @@
 package com.github.pieter_groenendijk.repository.loan;
 
-import com.github.pieter_groenendijk.exception.EntityNotFoundException;
 import com.github.pieter_groenendijk.model.Loan;
+import com.github.pieter_groenendijk.model.LoanStatus;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
@@ -10,7 +10,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import java.util.List;
-import java.util.Optional;
 
 public class LoanRepository implements ILoanRepository {
 
@@ -21,33 +20,24 @@ public class LoanRepository implements ILoanRepository {
     }
 
     @Override
-    public Optional<Loan> retrieveLoanByLoanId(long loanId) {
-        Session session = sessionFactory.openSession();
-        try {
+    public Loan retrieveLoanByLoanId(long loanId) {
+        try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
             CriteriaQuery<Loan> cr = cb.createQuery(Loan.class);
             Root<Loan> root = cr.from(Loan.class);
 
-            cr.select(root).where(cb.equal(root.get("id"), loanId));
+            cr.select(root).where(cb.equal(root.get("loanId"), loanId));
 
-            Loan loan = session.createQuery(cr).uniqueResult();
-            if (loan == null) {
-                throw new EntityNotFoundException("Loan with ID " + loanId + " not found");
-            }
-            return Optional.of(loan);
-        } catch (Exception e) {
+            return session.createQuery(cr).uniqueResult();
+        } catch (HibernateException e) {
             e.printStackTrace();
             throw new RuntimeException("Database query failed for Loan ID: " + loanId, e);
-        } finally {
-            session.close();
         }
     }
 
-
     @Override
     public List<Loan> retrieveActiveLoansByMembershipId(long membershipId) {
-        Session session = sessionFactory.openSession();
-        try {
+        try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
             CriteriaQuery<Loan> cr = cb.createQuery(Loan.class);
             Root<Loan> root = cr.from(Loan.class);
@@ -55,57 +45,61 @@ public class LoanRepository implements ILoanRepository {
             cr.select(root)
                     .where(
                             cb.equal(root.get("membership").get("id"), membershipId),
-                            cb.equal(root.get("loanStatus"), "ACTIVE")
+                            cb.equal(root.get("loanStatus"), LoanStatus.ACTIVE)
                     );
 
             return session.createQuery(cr).getResultList();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             e.printStackTrace();
             throw new RuntimeException("Database query failed", e);
-        } finally {
-            session.close();
         }
     }
 
     @Override
-    public Loan store(Loan loan) {
-        Session session = sessionFactory.openSession();
-
-        try {
+    public Loan store(Loan loan)  {
+        try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             session.persist(loan);
-            session.flush();
-
             session.getTransaction().commit();
-        } catch (Exception e) {
-            if (session.getTransaction() != null) {
-                session.getTransaction().rollback();
-            }
+            System.out.println("Loan successfully saved: " + loan);
+        } catch (HibernateException e) {
             e.printStackTrace();
-        } finally {
-            session.close();
+            throw new RuntimeException("Error occurred while storing loan", e);
         }
         return loan;
+
     }
 
     @Override
-    public Loan updateLoan(Loan loan) {
-        Session session = sessionFactory.openSession();
-        try {
+    public void updateLoan(Loan loan) {
+        try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             session.merge(loan);
             session.getTransaction().commit();
 
         } catch (HibernateException e) {
-            if (session.getTransaction() != null) {
-                session.getTransaction().rollback();
-            }
             e.printStackTrace();
-
-        } finally {
-            session.close();
+            throw new RuntimeException("Failed to update loan", e);
         }
-        return loan;
+    }
+
+    @Override
+    public List<Loan> retrieveAllActiveLoans() {
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<Loan> cr = cb.createQuery(Loan.class);
+            Root<Loan> root = cr.from(Loan.class);
+
+            cr.select(root)
+                    .where(
+                            cb.equal(root.get("loanStatus"), LoanStatus.ACTIVE)
+                    );
+
+            return session.createQuery(cr).getResultList();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Database query failed", e);
+        }
     }
 }
 
