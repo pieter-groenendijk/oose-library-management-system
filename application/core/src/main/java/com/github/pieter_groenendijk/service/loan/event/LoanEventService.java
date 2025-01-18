@@ -18,12 +18,12 @@ public class LoanEventService implements ILoanEventService {
         this.SCHEDULER = scheduler;
     }
 
-    public void handleEventsForReturnedLoan(Loan loan) {
-
+    // TODO: Make public when done
+    private void handleEventsForReturnedLoan(Loan loan) {
     }
 
     @Override
-    public void handleEventsForNewLoan(Loan loan) {
+    public void handleEventsForNewLoan(Loan loan) throws Exception {
         // TODO: Maybe optimize so that only one event is initially scheduled
         this.SCHEDULER.scheduleAlmostOverdueLoanEvent(loan);
         this.SCHEDULER.scheduleOverdueLoanEvent(loan);

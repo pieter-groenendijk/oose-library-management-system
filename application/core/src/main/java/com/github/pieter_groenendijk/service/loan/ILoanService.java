@@ -9,7 +9,7 @@ import java.util.List;
 
 
 public interface ILoanService {
-    Loan store(LoanRequestDTO loan);
+    Loan store(LoanRequestDTO loan) throws Exception;
 
     void extendLoan(long loanId, LocalDate returnBy);
 

@@ -8,8 +8,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface IEventRepository {
-    void storeLoanEvent(LoanEvent event);
-    void storeReservationEvent(ReservationEvent event);
-
+    void store(Event<?> event) throws Exception;
     List<Event> retrieveUntil(LocalDateTime scheduledAt) throws Exception; // TODO: Could generalize this in a separate interface; very similar for notifications.
 }

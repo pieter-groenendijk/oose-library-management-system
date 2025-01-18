@@ -24,6 +24,7 @@ public abstract class DetachedReservationEventGenerator extends DetachedEventGen
 
     @Override
     protected TaskStorage<ReservationEvent> generateEventStorage() {
-        return super.REPOSITORY::storeReservationEvent;
+        // TODO: Hibernate determines the object type at runtime, so the need for generating event storage should be reconsidered.
+        return super.REPOSITORY::store;
     }
 }

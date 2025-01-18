@@ -19,7 +19,7 @@ public class DetachedTask<T extends Task> {
         this.STORAGE = storage;
     }
 
-    public void store() {
+    public void store() throws Exception {
         this.STORAGE.store(
             this.TASK
         );

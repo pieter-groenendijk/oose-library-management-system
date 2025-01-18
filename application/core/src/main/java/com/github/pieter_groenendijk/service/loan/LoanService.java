@@ -45,7 +45,7 @@ public class LoanService implements ILoanService {
 
     // TODO: Implement correct error handling. Is a loan still successful if we failed to schedule events for it, or the other way around?
     @Override
-    public Loan store(LoanRequestDTO loanRequestDTO) {
+    public Loan store(LoanRequestDTO loanRequestDTO) throws Exception {
         if (loanRequestDTO == null) {
             throw new IllegalArgumentException("LoanRequestDTO cannot be null.");
         }

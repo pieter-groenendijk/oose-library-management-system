@@ -7,7 +7,6 @@ import com.github.pieter_groenendijk.repository.scheduling.TaskRepository;
 import org.hibernate.SessionFactory;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 public class EventRepository extends TaskRepository<Event> implements IEventRepository {
@@ -16,13 +15,8 @@ public class EventRepository extends TaskRepository<Event> implements IEventRepo
     }
 
     @Override
-    public void storeLoanEvent(LoanEvent event) {
-        // TODO: Implement
-    }
-
-    @Override
-    public void storeReservationEvent(ReservationEvent event) {
-        // TODO: Implement
+    public void store(Event<?> event) throws Exception {
+        super.persist(event);
     }
 
     // TODO: We could probably generalize this somehow

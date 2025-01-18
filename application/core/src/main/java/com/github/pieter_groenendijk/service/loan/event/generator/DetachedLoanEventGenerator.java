@@ -24,6 +24,7 @@ abstract class DetachedLoanEventGenerator extends DetachedEventGenerator<Loan, L
 
     @Override
     protected TaskStorage<LoanEvent> generateEventStorage() {
-        return super.REPOSITORY::storeLoanEvent;
+        // TODO: Hibernate determines the object type at runtime, so the need for generating event storage should be reconsidered.
+        return super.REPOSITORY::store;
     }
 }
