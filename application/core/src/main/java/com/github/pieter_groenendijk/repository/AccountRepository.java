@@ -3,10 +3,12 @@ package com.github.pieter_groenendijk.repository;
 import com.github.pieter_groenendijk.model.Account;
 import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.repository.fine.Repository;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 
 import java.util.Optional;
+import org.hibernate.HibernateException;
 
 public class AccountRepository extends Repository implements IAccountRepository {
     public AccountRepository (SessionFactory sessionFactory) {
@@ -25,12 +27,84 @@ public class AccountRepository extends Repository implements IAccountRepository 
         return account;
     }
 
-    @Override
-    public Account deleteAccountById(long id) throws Exception {
-        Account account = super.get(Account.class, id).orElseThrow();
+    public boolean doesAccountExistByEmail(String email) {
+        Session session = this.SESSION_FACTORY.openSession();
+        Account account;
 
-        super.remove(account);
+        try {
+            String hql = "FROM Account a WHERE a.email = :email";
+            account = session.createQuery(hql, Account.class)
+                .setParameter("email", email)
+                .uniqueResult();
+        } finally {
+            session.close();
+        }
 
+        return account != null;
+    }
+
+//    public Account store(Account account) {
+//        Session session = sessionFactory.openSession();
+//
+//        try {
+//            session.beginTransaction();
+//            session.persist(account);
+//            session.flush();
+//
+//            session.getTransaction().commit();
+//
+//        } catch (Exception e) {
+//            if (session.getTransaction() != null) {
+//                session.getTransaction().rollback();
+//            }
+//            e.printStackTrace();
+//        } finally {
+//            session.close();
+//        }
+//        return account;
+//    }
+
+//    public Optional<Account> deleteAccountById(long id) {
+//        Session session = null;  // Initialize to null
+//        Account account = null;  // Initialize to null
+//
+//        try {
+//            session = sessionFactory.openSession();
+//            session.beginTransaction();
+//
+//            account = session.get(Account.class, id);
+//            if (account != null) {
+//                session.delete(account);
+//                session.getTransaction().commit();
+//            } else {
+//                session.getTransaction().rollback();
+//            }
+//        } finally {
+//            if (session != null) {
+//                session.close();
+//            }
+//        }
+//        return Optional.ofNullable(account);  // Now account is definitely initialized
+//    }
+
+    public Account update(Account account) {
+        Session session = super.SESSION_FACTORY.openSession();
+
+        try {
+            session.beginTransaction();
+            session.merge(account);
+            session.flush();
+
+            session.getTransaction().commit();
+
+        } catch (HibernateException e) {
+            if (session.getTransaction() != null) {
+                session.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
         return account;
     }
 

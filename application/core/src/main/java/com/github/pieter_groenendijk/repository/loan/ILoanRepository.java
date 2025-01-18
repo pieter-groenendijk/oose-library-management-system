@@ -10,7 +10,6 @@ public interface ILoanRepository {
     Optional<Loan> retrieveLoanByLoanId(long loanId);
     List<Loan> retrieveActiveLoansByMembershipId(long MembershipId);
     Loan store(Loan loan);
-    void updateLoan(Loan loan);
-    void deleteLoanByLoanId(long loanId);
+    Loan updateLoan(Loan loan);
 
 }

@@ -12,9 +12,12 @@ import com.github.pieter_groenendijk.repository.IAccountRepository;
 import com.github.pieter_groenendijk.repository.IMembershipTypeRepository;
 import com.github.pieter_groenendijk.repository.IMembershipRepository;
 import com.github.pieter_groenendijk.model.Account;
+import com.github.pieter_groenendijk.model.DTO.AccountRequestDTO;
 
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import com.github.pieter_groenendijk.hibernate.SessionFactoryFactory;
 import org.hibernate.SessionFactory;
 
@@ -51,19 +54,22 @@ public class AccountController {
 
     @Operation(summary = "Create an account", description = "Add a new account to the database")
     @PostMapping
-    public Account createAccount(@RequestBody Account account) throws Exception {
-        return accountService.store(account);
+    public ResponseEntity<?> createAccount(@RequestBody AccountRequestDTO account) throws Exception {
+        accountService.store(account);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @Operation(summary = "Update an account", description = "Update an account in the database")
-    @PutMapping
-    public Account updateAccount(@RequestBody Account account) throws Exception {
-        return accountService.update(account);
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateAccount(@PathVariable("id") long id, @RequestBody AccountRequestDTO account) throws Exception {
+        accountService.update(id, account);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @Operation(summary = "Delete an account", description = "Delete an account from the database")
-    @DeleteMapping("/{id}")
-    public Account deleteAccount(@PathVariable("id") long id) throws Exception {
-        return accountService.deleteAccount(id);
+    @Operation(summary = "Set account active", description = "Set an account from active to inactive and back")
+    @PostMapping("/setActive/{id}")
+    public ResponseEntity<?> setAccountActive(@PathVariable("id") long id, @RequestBody boolean newValue) throws Exception {
+        accountService.setIsActive(id, newValue);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

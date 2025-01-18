@@ -2,6 +2,8 @@ package com.github.pieter_groenendijk.controller;
 
 import com.github.pieter_groenendijk.hibernate.SessionFactoryFactory;
 import com.github.pieter_groenendijk.model.Loan;
+import com.github.pieter_groenendijk.repository.IProductRepository;
+import com.github.pieter_groenendijk.repository.ProductRepository;
 import com.github.pieter_groenendijk.model.event.Event;
 import com.github.pieter_groenendijk.repository.loan.ILoanRepository;
 import com.github.pieter_groenendijk.repository.loan.LoanRepository;
@@ -41,6 +43,7 @@ public class LoanController {
 
     public LoanController() {
         ILoanRepository loanRepository = new LoanRepository(sessionFactory);
+        IProductRepository productRepository = new ProductRepository(sessionFactory);
 
         // TODO: Make this mess work with beans or dependency injection!!!!
         IEventRepository eventRepository = new EventRepository(sessionFactory);
@@ -99,7 +102,6 @@ public class LoanController {
         }
     }
 }
-
 
 
 

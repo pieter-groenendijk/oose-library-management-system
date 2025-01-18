@@ -1,6 +1,12 @@
 package com.github.pieter_groenendijk.hibernate.configuration;
 
 import com.github.pieter_groenendijk.model.*;
+import com.github.pieter_groenendijk.model.event.Event;
+import com.github.pieter_groenendijk.model.event.LoanEvent;
+import com.github.pieter_groenendijk.model.event.ReservationEvent;
+import com.github.pieter_groenendijk.model.product.PhysicalProductTemplate;
+import com.github.pieter_groenendijk.model.product.ProductCopy;
+import com.github.pieter_groenendijk.model.product.ProductTemplate;
 import com.github.pieter_groenendijk.model.fine.Fine;
 import com.github.pieter_groenendijk.model.fine.FineType;
 import com.github.pieter_groenendijk.model.notification.LoanNotification;
@@ -26,7 +32,13 @@ public class DefaultConfigurationFactory {
             .addAnnotatedClass(Account.class)
             .addAnnotatedClass(Membership.class)
             .addAnnotatedClass(MembershipType.class)
-            .addAnnotatedClass(Notification.class)
+            .addAnnotatedClass(Loan.class)
+            .addAnnotatedClass(ProductCopy.class)
+            .addAnnotatedClass(ProductTemplate.class)
+            .addAnnotatedClass(PhysicalProductTemplate.class)
+//            .addAnnotatedClass(Event.class)
+//            .addAnnotatedClass(LoanEvent.class)
+//            .addAnnotatedClass(Notification.class)
 // TODO: Add below annotated classes, currently not possible since Loan and all those other classes are not placed here yet.
 //            .addAnnotatedClass(LoanNotification.class)
 //            .addAnnotatedClass(Event.class)
@@ -35,7 +47,8 @@ public class DefaultConfigurationFactory {
             .addAnnotatedClass(FineType.class)
             .addAnnotatedClass(PaymentStatus.class)
             .addAnnotatedClass(Payment.class)
-            .addAnnotatedClass(Fine.class);
+//            .addAnnotatedClass(Fine.class);
+        ;
     }
 
     private void setMisc(ConfigurationBuilder builder) {
