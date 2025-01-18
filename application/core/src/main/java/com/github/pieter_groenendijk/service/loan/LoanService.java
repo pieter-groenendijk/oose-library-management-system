@@ -14,6 +14,7 @@ import com.github.pieter_groenendijk.service.loan.event.ILoanEventService;
 import static com.github.pieter_groenendijk.service.ServiceUtils.LOAN_LENGTH;
 import com.github.pieter_groenendijk.repository.IMembershipRepository;
 import com.github.pieter_groenendijk.repository.IProductRepository;
+import com.github.pieter_groenendijk.service.reservation.IReservationService;
 
 import java.time.LocalDate;
 import java.util.List;
