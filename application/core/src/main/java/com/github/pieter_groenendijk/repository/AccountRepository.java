@@ -43,50 +43,6 @@ public class AccountRepository extends Repository implements IAccountRepository 
         return account != null;
     }
 
-//    public Account store(Account account) {
-//        Session session = sessionFactory.openSession();
-//
-//        try {
-//            session.beginTransaction();
-//            session.persist(account);
-//            session.flush();
-//
-//            session.getTransaction().commit();
-//
-//        } catch (Exception e) {
-//            if (session.getTransaction() != null) {
-//                session.getTransaction().rollback();
-//            }
-//            e.printStackTrace();
-//        } finally {
-//            session.close();
-//        }
-//        return account;
-//    }
-
-//    public Optional<Account> deleteAccountById(long id) {
-//        Session session = null;  // Initialize to null
-//        Account account = null;  // Initialize to null
-//
-//        try {
-//            session = sessionFactory.openSession();
-//            session.beginTransaction();
-//
-//            account = session.get(Account.class, id);
-//            if (account != null) {
-//                session.delete(account);
-//                session.getTransaction().commit();
-//            } else {
-//                session.getTransaction().rollback();
-//            }
-//        } finally {
-//            if (session != null) {
-//                session.close();
-//            }
-//        }
-//        return Optional.ofNullable(account);  // Now account is definitely initialized
-//    }
-
     public Account update(Account account) {
         Session session = super.SESSION_FACTORY.openSession();
 

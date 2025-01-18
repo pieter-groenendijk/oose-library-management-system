@@ -103,10 +103,6 @@ public class AccountService implements IAccountService {
         }
     }
 
-//    public Account deleteAccount(long id) throws Exception {
-//        return accountRepository.deleteAccountById(id);
-//    }
-//
     public MembershipType store(MembershipType membershipType){
         return membershipTypeRepository.store(membershipType);
     }
@@ -140,11 +136,6 @@ public class AccountService implements IAccountService {
 
     //MembershipTypeFunctionality
 
-//    public MembershipType retrieveMembershipTypeById(long id){
-//        return membershipTypeRepository.retrieveMembershipTypeById(id)
-//                .orElseThrow(() -> new EntityNotFoundException("Membershiptype with ID " + id + " not found."));
-//    }
-
     public MembershipType store(MembershipTypeRequestDTO request){
         if (request.getMaxLendings() <= 0) {
             throw new InputValidationException("MaxLendings should be at least 1!");
@@ -172,8 +163,7 @@ public class AccountService implements IAccountService {
             throw new EntityNotFoundException("MembershipType with ID " + id + " not found.");
         }
 
-        //if (retrievedMembershipType.getDescription() != request.getDescription()) {
-          if (!retrievedMembershipType.getDescription().equals(request.getDescription())){
+        if (!retrievedMembershipType.getDescription().equals(request.getDescription())){
             boolean descriptionAlreadyExists = membershipTypeRepository.doesMembershipTypeExistByDescription(request.getDescription());
             if (descriptionAlreadyExists) {
                 throw new InputValidationException("Description already exists!");
