@@ -12,7 +12,7 @@ public class FineTypeRegistry {
 
     public FineTypeRegistry() {}
 
-    public void initialize(IFineRepository repository) {
+    public void initialize(IFineRepository repository) throws Exception {
         this.DAY_OVERDUE_LENDING_FINE_TYPE = repository.retrieveFineType("day-overdue-lending").orElseThrow();
         this.UNCOLLECTED_RESERVATION_PATTERNS_FINE_TYPE = repository.retrieveFineType("uncollected-reservation-pattern").orElseThrow();
     }

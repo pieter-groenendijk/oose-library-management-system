@@ -5,7 +5,6 @@ import com.github.pieter_groenendijk.model.fine.Fine;
 import com.github.pieter_groenendijk.repository.IAccountRepository;
 import com.github.pieter_groenendijk.repository.fine.IFineRepository;
 
-// TODO: Better name?
 public class FineProcessor {
     private final IAccountRepository ACCOUNT_REPOSITORY;
     private final IFineRepository FINE_REPOSITORY;
