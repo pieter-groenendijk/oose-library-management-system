@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @MappedSuperclass
-public class Task {
+public abstract class Task {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(
         name = "scheduledAt",
