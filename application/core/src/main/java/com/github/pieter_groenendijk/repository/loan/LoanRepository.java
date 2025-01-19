@@ -103,12 +103,12 @@ public class LoanRepository implements ILoanRepository {
     }
 
     public int retrieveCurrentMembershipLimit(long membershipId) {
-        Session session = this.SESSION_FACTORY.openSession();
+        Session session = sessionFactory.openSession();
         Integer result = null;
 
         try {
             String hql = "SELECT vwl.loanCount FROM vw_Loans_Per_Membership vwl WHERE vwl.membershipId = :membershipId";
-            result = (Integer) session.createQuery(hql, int)
+            result = (Integer) session.createQuery(hql, Integer.class)
                     .setParameter("membershipId", membershipId)
                     .uniqueResult();
         } finally {

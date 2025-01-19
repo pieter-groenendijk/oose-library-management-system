@@ -6,6 +6,7 @@ import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.repository.loan.ILoanRepository;
 import com.github.pieter_groenendijk.model.LoanStatus;
 import com.github.pieter_groenendijk.model.Membership;
+import com.github.pieter_groenendijk.model.MembershipType;
 import com.github.pieter_groenendijk.model.Reservation;
 import com.github.pieter_groenendijk.model.product.ProductCopy;
 import com.github.pieter_groenendijk.model.product.ProductCopyStatus;
@@ -13,6 +14,7 @@ import com.github.pieter_groenendijk.service.loan.event.ILoanEventService;
 
 import static com.github.pieter_groenendijk.service.ServiceUtils.LOAN_LENGTH;
 import com.github.pieter_groenendijk.repository.IMembershipRepository;
+import com.github.pieter_groenendijk.repository.IMembershipTypeRepository;
 import com.github.pieter_groenendijk.repository.IProductRepository;
 import com.github.pieter_groenendijk.service.reservation.IReservationService;
 
@@ -26,6 +28,7 @@ public class LoanService implements ILoanService {
     private IProductRepository productRepository;
     private final ILoanEventService EVENT_SERVICE;
     private final IMembershipRepository membershipRepository;
+    private final IMembershipTypeRepository membershipTypeRepository;
 
 
     public LoanService(
@@ -33,8 +36,8 @@ public class LoanService implements ILoanService {
         IMembershipRepository membershipRepository,
         ILoanEventService eventService,
         IReservationService reservationService,
-        IProductRepository productRepository
-        IMembershipTypeRepository membershipTypeReposity
+        IProductRepository productRepository,
+        IMembershipTypeRepository membershipTypeRepository
     ) {
         this.loanRepository = loanRepository;
         this.membershipRepository = membershipRepository;
@@ -70,10 +73,10 @@ public class LoanService implements ILoanService {
                 .orElseThrow(() -> new EntityNotFoundException("ProductCopy not found"));
         loan.setProductCopy(productCopy);
 
+        checkDoesLoanExceedLimitForMembership(membership);
+
         productCopy.setAvailabilityStatus(ProductCopyStatus.LOANED);
         productRepository.updateProductCopy(productCopy);
-
-        MembershipType membershipType =
 
         loanRepository.store(loan);
         EVENT_SERVICE.handleEventsForNewLoan(loan);
@@ -190,13 +193,16 @@ public class LoanService implements ILoanService {
         return loanRepository.store(loan);
     }
 
-    public boolean doesLoanExceedLimit (Membership membership, ProductCopy productCopy) {
+    public void checkDoesLoanExceedLimitForMembership (Membership membership) {
         List<Loan> activeLoanList = retrieveActiveLoansByMembershipId(membership.getMembershipId());
-        int numberOfLoans = activeLoanList.length();
+        int numberOfLoans = activeLoanList.size();
 
-        MembershipType membershipType = membershipRepository.retrieveMembershipTypeById(membership.getMembershipTypeId());
+        long membershipTypeId = membership.getMembershipType().getMembershipTypeId();
+        MembershipType membershipType = membershipTypeRepository.retrieveMembershipTypeById(membershipTypeId).get();
         int maxNumberOfLoans = membershipType.getMaxLendings();
 
-        if
+        if (numberOfLoans >= maxNumberOfLoans) {
+            throw new IllegalStateException("Loan would exceed limit for MembershipType");
+        }
     }
 }

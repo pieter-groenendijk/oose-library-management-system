@@ -57,11 +57,12 @@ public class ReservationController {
         ));
         IAccountRepository accountRepository = new AccountRepository(sessionFactory);
         IMembershipRepository membershipRepository = new MembershipRepository(sessionFactory);
+        IMembershipTypeRepository membershipTypeRepository = new MembershipTypeRepository(sessionFactory);
         IReservationRepository reservationRepository = new ReservationRepository(sessionFactory);
         IProductRepository productRepository = new ProductRepository(sessionFactory);
         ILoanRepository loanRepository = new LoanRepository(sessionFactory);
         this.reservationService = new ReservationService(reservationRepository, membershipRepository, accountRepository, productRepository);
-        this.loanService = new LoanService(loanRepository, membershipRepository, loanEventService, reservationService, productRepository);
+        this.loanService = new LoanService(loanRepository, membershipRepository, loanEventService, reservationService, productRepository, membershipTypeRepository);
     }
 
     @Operation(summary = "Create a reservation", description = "Create a new reservation")
