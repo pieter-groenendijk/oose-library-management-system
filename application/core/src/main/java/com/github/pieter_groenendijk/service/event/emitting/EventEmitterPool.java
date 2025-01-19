@@ -48,10 +48,10 @@ public class EventEmitterPool {
      * Misuse of adding the wrong EventEmitter with the wrong EventType will cause runtime errors!
      */
     public void add(
-        @NotNull EventType eventType,
-        @NotNull EventEmitter<?> eventEmitter
+        @NotNull EventType type,
+        @NotNull EventEmitter<?> emitter
     ) {
-        this.EMITTERS.put(eventType, eventEmitter);
+        this.EMITTERS.put(type, emitter);
     }
 
     public void remove(@NotNull EventType eventType) {
@@ -70,7 +70,7 @@ public class EventEmitterPool {
     }
 
     @SuppressWarnings("unchecked") // We assume people haven't mismatched at the .add() method.
-    private <T> EventEmitter<T> get(@NotNull EventType eventType) {
-        return (EventEmitter<T>) this.EMITTERS.get(eventType);
+    private <T> EventEmitter<T> get(@NotNull EventType type) {
+        return (EventEmitter<T>) this.EMITTERS.get(type);
     }
 }

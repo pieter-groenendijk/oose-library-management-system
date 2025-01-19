@@ -46,7 +46,7 @@ public class EventEmitterPoolTest {
         EventEmitter<Long> longEmitter = mock(EventEmitter.class);
 
         EventEmitter<Character> usedEmitter = mock(EventEmitter.class);
-        EventType usedType = EventType.UNCOLLECTED_RESERVATION_EVENT;
+        EventType usedType = EventType.UNCOLLECTED_RESERVATION;
         Character usedContext = Character.valueOf('k');
 
         this.pool.add(EventType.OVERDUE_LOAN, stringEmitter);
@@ -67,7 +67,7 @@ public class EventEmitterPoolTest {
         EventEmitter<Long> longEmitter = mock(EventEmitter.class);
 
         EventEmitter<Character> firstUsedEmitter = mock(EventEmitter.class);
-        EventType firstUsedType = EventType.UNCOLLECTED_RESERVATION_EVENT;
+        EventType firstUsedType = EventType.UNCOLLECTED_RESERVATION;
         Character firstUsedContext = Character.valueOf('k');
 
         EventEmitter<String> secondUsedEmitter = mock(EventEmitter.class);
@@ -102,7 +102,7 @@ public class EventEmitterPoolTest {
         EventEmitter<String> stringEmitter = mock(EventEmitter.class);
 
         EventEmitter<String> usedEmitter = mock(EventEmitter.class);
-        EventType usedType = EventType.UNCOLLECTED_RESERVATION_EVENT;
+        EventType usedType = EventType.UNCOLLECTED_RESERVATION;
         String usedContext = "example";
 
         this.pool.add(usedType, stringEmitter);

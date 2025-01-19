@@ -4,6 +4,7 @@ import com.github.pieter_groenendijk.model.Account;
 import com.github.pieter_groenendijk.model.fine.Fine;
 import com.github.pieter_groenendijk.model.fine.FineBalance;
 import com.github.pieter_groenendijk.model.fine.FineType;
+import jakarta.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -15,16 +16,17 @@ public class FineRepository extends Repository implements IFineRepository {
     }
 
     @Override
-    public Optional<FineType> retrieveFineType(String title) {
-        FineType fineType;
-        try (Session session = this.SESSION_FACTORY.openSession()) {
-            try {
-                fineType = new FineType(); // TODO: Remove dummy code
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return Optional.ofNullable(fineType);
+    public Optional<FineType> retrieveFineType(String title) throws Exception {
+        return super.performAtomicOperationReturning((session -> {
+            FineType type = session.createQuery(
+                "select f from FineType f where f.title = :title",
+                FineType.class
+            )
+                .setParameter("title", title)
+                .getSingleResultOrNull();
+
+            return Optional.ofNullable(type);
+        }));
     }
 
     @Override
