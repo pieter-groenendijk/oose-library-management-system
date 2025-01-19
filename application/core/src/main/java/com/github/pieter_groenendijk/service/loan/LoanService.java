@@ -45,17 +45,11 @@ public class LoanService implements ILoanService {
     }
 
     @Override
-
-    public Loan store(LoanRequestDTO loanRequestDTO) {
-        validateLoanRequestDTO(loanRequestDTO);
-
     public Loan store(LoanRequestDTO loanRequestDTO) throws Exception {
         if (loanRequestDTO == null) {
             throw new IllegalArgumentException("LoanRequestDTO cannot be null.");
         }
         validateLoanRequestDTO(loanRequestDTO);
-        Loan loan = new Loan();
-
 
         Loan loan = new Loan();
         setLoanStatus(loan, loanRequestDTO);
