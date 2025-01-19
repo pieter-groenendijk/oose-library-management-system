@@ -3,7 +3,6 @@ package com.github.pieter_groenendijk.service.reservation.event.generator;
 import com.github.pieter_groenendijk.model.Reservation;
 import com.github.pieter_groenendijk.model.event.EventType;
 import com.github.pieter_groenendijk.repository.event.IEventRepository;
-import com.github.pieter_groenendijk.utils.time.TimeUtils;
 
 import java.time.LocalDateTime;
 
