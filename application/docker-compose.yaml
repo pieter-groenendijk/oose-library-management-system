@@ -52,6 +52,8 @@ services:
                 -   path: "web-ui/src"
                     action: sync+restart
                     target: "/app/src"
+        ports:
+            -   "8081:8080"
     web-ui-tester:
         build:
             context: "."

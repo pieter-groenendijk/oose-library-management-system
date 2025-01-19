@@ -1,0 +1,5 @@
+body::after {
+    content: 'Home css rendered';
+
+    font-size: 2rem;
+}
