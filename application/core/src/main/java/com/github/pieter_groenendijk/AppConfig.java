@@ -21,17 +21,20 @@ import com.github.pieter_groenendijk.service.reservation.IReservationService;
 import com.github.pieter_groenendijk.service.reservation.ReservationService;
 import com.github.pieter_groenendijk.utils.scheduling.TaskScheduler;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 @Configuration
 @ComponentScan(basePackages = "com.github.pieter_groenendijk")
 public class AppConfig {
 
     @Bean(name = "sessionFactory")
-    public SessionFactory sessionFactory() {
-        return new SessionFactoryFactory().create();
+    @Primary
+  public SessionFactory sessionFactory() {
+    return new SessionFactoryFactory().create();
     }
 
     @Bean(name = "loanRepositoryBean")
@@ -88,7 +91,7 @@ public class AppConfig {
     public ILoanService loanService(
             ILoanRepository loanRepository,
             IMembershipRepository membershipRepository,
-            ILoanEventService eventService,
+            @Qualifier("loanEventServiceBean") ILoanEventService eventService,
             IReservationService reservationService,
             IProductRepository productRepository
     ) {

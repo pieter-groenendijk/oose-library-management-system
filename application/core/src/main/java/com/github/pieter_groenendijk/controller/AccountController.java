@@ -1,6 +1,7 @@
 package com.github.pieter_groenendijk.controller;
 
 import com.github.pieter_groenendijk.exception.EntityNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.Operation;
 import com.github.pieter_groenendijk.service.AccountService;
@@ -28,14 +29,10 @@ import java.util.NoSuchElementException;
 public class AccountController {
 
     private IAccountService accountService;
-    private SessionFactory sessionFactory = new SessionFactoryFactory().create();
 
-    private AccountController()
-    {
-        IAccountRepository accountRepository = new AccountRepository(sessionFactory);
-        IMembershipTypeRepository membershipTypeRepository = new MembershipTypeRepository(sessionFactory);
-        IMembershipRepository membershipRepository = new MembershipRepository(sessionFactory);
-        accountService = new AccountService(accountRepository, membershipTypeRepository, membershipRepository);
+@Autowired
+    private AccountController(AccountService accountService) {
+        this.accountService = accountService;
     }
 
     @Operation(summary = "Retrieve an account", description = "Retrieve an account by Id")
