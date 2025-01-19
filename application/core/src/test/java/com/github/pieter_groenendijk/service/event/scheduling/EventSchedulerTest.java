@@ -3,13 +3,11 @@ package com.github.pieter_groenendijk.service.event.scheduling;
 import com.github.pieter_groenendijk.model.event.Event;
 import com.github.pieter_groenendijk.model.event.EventType;
 import com.github.pieter_groenendijk.repository.scheduling.ITaskRepository;
+import com.github.pieter_groenendijk.scheduling.TaskScheduler;
 import com.github.pieter_groenendijk.service.event.emitting.EventEmitterPool;
-import com.github.pieter_groenendijk.utils.scheduling.TaskScheduler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-
-import javax.swing.event.HyperlinkEvent;
 
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.openMocks;

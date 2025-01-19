@@ -1,7 +1,6 @@
-package com.github.pieter_groenendijk.utils.scheduling.longterm;
+package com.github.pieter_groenendijk.scheduling;
 
 import com.github.pieter_groenendijk.model.scheduling.Task;
-import com.github.pieter_groenendijk.utils.scheduling.TaskStorage;
 
 /**
  * This class wraps around a task to provide a consistent call signature to store the object, without having to know what

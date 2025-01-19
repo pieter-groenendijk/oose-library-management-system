@@ -2,10 +2,7 @@ package com.github.pieter_groenendijk.service.loan.event.generator;
 
 import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.model.event.EventType;
-import com.github.pieter_groenendijk.model.event.LoanEvent;
 import com.github.pieter_groenendijk.repository.event.IEventRepository;
-import com.github.pieter_groenendijk.service.event.generator.DetachedEventGenerator;
-import com.github.pieter_groenendijk.utils.scheduling.TaskStorage;
 
 import java.time.LocalDateTime;
 

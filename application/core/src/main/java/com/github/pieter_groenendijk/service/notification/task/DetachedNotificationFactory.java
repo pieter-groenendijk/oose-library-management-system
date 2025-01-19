@@ -4,9 +4,9 @@ import com.github.pieter_groenendijk.model.Account;
 import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.model.notification.LoanNotification;
 import com.github.pieter_groenendijk.repository.notification.INotificationRepository;
+import com.github.pieter_groenendijk.scheduling.DetachedTask;
 import com.github.pieter_groenendijk.service.notification.generators.AlmostOverdueLoanNotificationGenerator;
 import com.github.pieter_groenendijk.service.notification.generators.OverdueLoanNotificationGenerator;
-import com.github.pieter_groenendijk.utils.scheduling.longterm.DetachedTask;
 
 public class DetachedNotificationFactory {
     private final OverdueLoanNotificationGenerator OVERDUE_GENERATOR;
