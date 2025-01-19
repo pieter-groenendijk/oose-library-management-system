@@ -9,10 +9,19 @@ import org.hibernate.query.Query;
 
 import java.util.Optional;
 import org.hibernate.HibernateException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+
 @org.springframework.stereotype.Repository
+@Qualifier("accountRepository")
 public class AccountRepository extends Repository implements IAccountRepository {
-    public AccountRepository (SessionFactory sessionFactory) {
+
+
+
+    @Autowired
+    public AccountRepository(SessionFactory sessionFactory) {
         super(sessionFactory);
+
     }
 
     @Override
@@ -110,9 +119,9 @@ public class AccountRepository extends Repository implements IAccountRepository 
 
             query.setParameter("loan", loan);
 
-            return Optional.ofNullable(
-                query.getSingleResultOrNull()
-            );
+
+            return Optional.empty();
+
         }));
     }
 }

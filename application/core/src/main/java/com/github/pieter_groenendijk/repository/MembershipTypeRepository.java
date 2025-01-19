@@ -4,7 +4,6 @@ import com.github.pieter_groenendijk.model.MembershipType;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import java.util.Optional;
-import com.github.pieter_groenendijk.model.DTO.MembershipRequestDTO;
 import java.util.List;
 import java.util.Collections;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -13,6 +12,8 @@ import jakarta.persistence.criteria.Root;
 import org.hibernate.HibernateException;
 import com.github.pieter_groenendijk.model.LendingLimit;
 import org.springframework.stereotype.Repository;
+
+import javax.persistence.criteria.CriteriaUpdate;
 
 @Repository
 public class MembershipTypeRepository implements IMembershipTypeRepository {
@@ -90,14 +91,14 @@ public class MembershipTypeRepository implements IMembershipTypeRepository {
         }
     }
 
-    public List<MembershipType> retrieveMembershipTypeList() {
+    public List retrieveMembershipTypeList() {
             Session session = sessionFactory.openSession();
             try {
-                CriteriaBuilder cb = session.getCriteriaBuilder();
+                CriteriaBuilder cb = (CriteriaBuilder) session.getCriteriaBuilder();
                 CriteriaQuery<MembershipType> cr = cb.createQuery(MembershipType.class);
                 Root<MembershipType> root = cr.from(MembershipType.class);
                 cr.select(root);
-                return session.createQuery(cr).getResultList();
+                return session.createQuery((CriteriaUpdate) cr).getResultList();
             } catch (HibernateException e) {
                 if (session.getTransaction() != null) {
                     session.getTransaction().rollback();
@@ -160,16 +161,16 @@ public class MembershipTypeRepository implements IMembershipTypeRepository {
         }
     }
 
-    public List<LendingLimit> retrieveLendingLimitList(long id){
+    public List retrieveLendingLimitList(long id){
         Session session = sessionFactory.openSession();
         try {
-            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaBuilder cb = (CriteriaBuilder) session.getCriteriaBuilder();
             CriteriaQuery<LendingLimit> cr = cb.createQuery(LendingLimit.class);
             Root<LendingLimit> root = cr.from(LendingLimit.class);
 
             cr.select(root).where(cb.equal(root.get("membershiptype").get("id"), id));
 
-            return session.createQuery(cr).getResultList();
+            return session.createQuery((CriteriaUpdate) cr).getResultList();
         } catch (HibernateException e) {
             if (session.getTransaction() != null) {
                 session.getTransaction().rollback();

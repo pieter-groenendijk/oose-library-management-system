@@ -24,7 +24,7 @@ public class LoanEventRepostory extends Repository implements ILoanEventRepostor
     @Override
     public void cancelDuenessEventsForLoan(Loan loan) throws Exception {
         super.performAtomicOperation((session) -> {
-            Query query = session.createQuery(
+            Query query = (Query) session.createQuery(
                 """
                 update 
                    Event e 

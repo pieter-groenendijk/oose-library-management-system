@@ -10,8 +10,9 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import org.hibernate.HibernateException;
-import com.github.pieter_groenendijk.repository.genre.IGenreRepository;
 import org.springframework.stereotype.Repository;
+
+import javax.persistence.criteria.CriteriaUpdate;
 
 @Repository
 public class GenreRepository implements IGenreRepository {
@@ -67,14 +68,14 @@ public class GenreRepository implements IGenreRepository {
         }
     }
 
-    public List<Genre> retrieveGenreList() {
+    public List retrieveGenreList() {
         Session session = sessionFactory.openSession();
         try {
-            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaBuilder cb = (CriteriaBuilder) session.getCriteriaBuilder();
             CriteriaQuery<Genre> cr = cb.createQuery(Genre.class);
             Root<Genre> root = cr.from(Genre.class);
             cr.select(root);
-            return session.createQuery(cr).getResultList();
+            return session.createQuery((CriteriaUpdate) cr).getResultList();
         } catch (HibernateException e) {
             if (session.getTransaction() != null) {
                 session.getTransaction().rollback();

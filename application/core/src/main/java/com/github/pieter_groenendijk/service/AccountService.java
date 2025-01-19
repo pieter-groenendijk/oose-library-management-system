@@ -14,6 +14,8 @@ import com.github.pieter_groenendijk.service.validator.GenderCheck;
 import com.github.pieter_groenendijk.model.DTO.MembershipRequestDTO;
 import com.github.pieter_groenendijk.model.DTO.MembershipTypeRequestDTO;
 import com.github.pieter_groenendijk.model.DTO.AccountRequestDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -21,11 +23,12 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
 @Service
+@Qualifier("accountService")
 public class AccountService implements IAccountService {
     private final IAccountRepository accountRepository;
     private final IMembershipTypeRepository membershipTypeRepository;
     private final IMembershipRepository membershipRepository;
-
+@Autowired
     public AccountService(IAccountRepository accountRepository, IMembershipTypeRepository membershipTypeRepository, IMembershipRepository membershipRepository) {
         this.accountRepository = accountRepository;
         this.membershipTypeRepository = membershipTypeRepository;

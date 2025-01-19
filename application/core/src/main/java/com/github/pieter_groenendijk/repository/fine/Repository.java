@@ -4,6 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
+import java.io.Serializable;
 import java.util.Optional;
 @org.springframework.stereotype.Repository
 public abstract class Repository {
@@ -16,7 +17,7 @@ public abstract class Repository {
     protected <T> Optional<T> get(Class<T> entityType, Object id) throws Exception {
         return this.performAtomicOperationReturning(session -> {
             return Optional.ofNullable(
-                session.get(entityType, id)
+                session.get(entityType, (Serializable) id)
             );
         });
     }

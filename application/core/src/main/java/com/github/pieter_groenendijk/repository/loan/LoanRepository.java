@@ -8,14 +8,17 @@ import jakarta.persistence.criteria.Root;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.criteria.CriteriaUpdate;
 import java.util.List;
 @Repository
 public class LoanRepository implements ILoanRepository {
 
     SessionFactory sessionFactory;
 
+    @Autowired
     public LoanRepository(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
@@ -23,13 +26,13 @@ public class LoanRepository implements ILoanRepository {
     @Override
     public Loan retrieveLoanByLoanId(long loanId) {
         try (Session session = sessionFactory.openSession()) {
-            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaBuilder cb = (CriteriaBuilder) session.getCriteriaBuilder();
             CriteriaQuery<Loan> cr = cb.createQuery(Loan.class);
             Root<Loan> root = cr.from(Loan.class);
 
             cr.select(root).where(cb.equal(root.get("loanId"), loanId));
 
-            return session.createQuery(cr).uniqueResult();
+            return (Loan) session.createQuery((CriteriaUpdate) cr).uniqueResult();
         } catch (HibernateException e) {
             e.printStackTrace();
             throw new RuntimeException("Database query failed for Loan ID: " + loanId, e);
@@ -39,7 +42,7 @@ public class LoanRepository implements ILoanRepository {
     @Override
     public List<Loan> retrieveActiveLoansByMembershipId(long membershipId) {
         try (Session session = sessionFactory.openSession()) {
-            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaBuilder cb = (CriteriaBuilder) session.getCriteriaBuilder();
             CriteriaQuery<Loan> cr = cb.createQuery(Loan.class);
             Root<Loan> root = cr.from(Loan.class);
 
@@ -49,7 +52,7 @@ public class LoanRepository implements ILoanRepository {
                             cb.equal(root.get("loanStatus"), LoanStatus.ACTIVE)
                     );
 
-            return session.createQuery(cr).getResultList();
+            return session.createQuery((CriteriaUpdate) cr).getResultList();
         } catch (HibernateException e) {
             e.printStackTrace();
             throw new RuntimeException("Database query failed", e);
@@ -87,7 +90,7 @@ public class LoanRepository implements ILoanRepository {
     @Override
     public List<Loan> retrieveAllActiveLoans() {
         try (Session session = sessionFactory.openSession()) {
-            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaBuilder cb = (CriteriaBuilder) session.getCriteriaBuilder();
             CriteriaQuery<Loan> cr = cb.createQuery(Loan.class);
             Root<Loan> root = cr.from(Loan.class);
 
@@ -96,7 +99,7 @@ public class LoanRepository implements ILoanRepository {
                             cb.equal(root.get("loanStatus"), LoanStatus.ACTIVE)
                     );
 
-            return session.createQuery(cr).getResultList();
+            return session.createQuery((CriteriaUpdate) cr).getResultList();
         } catch (HibernateException e) {
             e.printStackTrace();
             throw new RuntimeException("Database query failed", e);

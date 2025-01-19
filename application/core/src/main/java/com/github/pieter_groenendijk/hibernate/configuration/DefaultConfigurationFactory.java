@@ -11,8 +11,13 @@ import com.github.pieter_groenendijk.model.notification.Notification;
 import com.github.pieter_groenendijk.model.payment.Payment;
 import com.github.pieter_groenendijk.model.payment.PaymentStatus;
 import org.hibernate.cfg.Configuration;
+import org.springframework.boot.SpringBootConfiguration;
+import org.springframework.context.annotation.Bean;
+
 
 public class DefaultConfigurationFactory {
+
+
     public Configuration create() {
         ConfigurationBuilder builder = new ConfigurationBuilder();
 
@@ -24,7 +29,7 @@ public class DefaultConfigurationFactory {
         return builder.build();
     }
 
-    private void setAnnotatedClasses(ConfigurationBuilder builder) {
+protected void setAnnotatedClasses(ConfigurationBuilder builder) {
         builder
             .addAnnotatedClass(Account.class)
             .addAnnotatedClass(Membership.class)
@@ -50,7 +55,7 @@ public class DefaultConfigurationFactory {
         ;
     }
 
-    private void setMisc(ConfigurationBuilder builder) {
+protected void setMisc(ConfigurationBuilder builder) {
         builder
             .setDriver("org.postgresql.Driver")
             .setDialect("org.hibernate.dialect.PostgreSQLDialect")
@@ -61,7 +66,7 @@ public class DefaultConfigurationFactory {
             .setQuotingOfIdentifiers(true);
     }
 
-    private void setConnection(ConfigurationBuilder builder) {
+protected void setConnection(ConfigurationBuilder builder) {
         builder
             .setConnectionURL(
                 "postgresql",
