@@ -34,13 +34,14 @@ public class LoanService implements ILoanService {
         ILoanEventService eventService,
         IReservationService reservationService,
         IProductRepository productRepository
+        IMembershipTypeRepository membershipTypeReposity
     ) {
         this.loanRepository = loanRepository;
         this.membershipRepository = membershipRepository;
         this.EVENT_SERVICE = eventService;
         this.reservationService = reservationService;
         this.productRepository = productRepository;
-
+        this.membershipTypeRepository = membershipTypeRepository;
     }
 
     // TODO: Implement correct error handling. Is a loan still successful if we failed to schedule events for it, or the other way around?
@@ -71,6 +72,8 @@ public class LoanService implements ILoanService {
 
         productCopy.setAvailabilityStatus(ProductCopyStatus.LOANED);
         productRepository.updateProductCopy(productCopy);
+
+        MembershipType membershipType =
 
         loanRepository.store(loan);
         EVENT_SERVICE.handleEventsForNewLoan(loan);
@@ -153,7 +156,6 @@ public class LoanService implements ILoanService {
             loan.setLoanStatus(LoanStatus.OVERDUE);
             loanRepository.updateLoan(loan);
         }
-
         return isLate;
     }
 
@@ -186,5 +188,15 @@ public class LoanService implements ILoanService {
         loan.setReturnBy(LocalDate.now().plusDays(LOAN_LENGTH));
         loan.setLoanStatus(LoanStatus.ACTIVE);
         return loanRepository.store(loan);
+    }
+
+    public boolean doesLoanExceedLimit (Membership membership, ProductCopy productCopy) {
+        List<Loan> activeLoanList = retrieveActiveLoansByMembershipId(membership.getMembershipId());
+        int numberOfLoans = activeLoanList.length();
+
+        MembershipType membershipType = membershipRepository.retrieveMembershipTypeById(membership.getMembershipTypeId());
+        int maxNumberOfLoans = membershipType.getMaxLendings();
+
+        if
     }
 }
