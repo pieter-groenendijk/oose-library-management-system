@@ -75,12 +75,9 @@ public class ReservationService implements IReservationService {
     public void cancelReservation(long reservationId) {
         Reservation reservation = reservationRepository.retrieveReservationById(reservationId)
                 .orElseThrow(() -> new EntityNotFoundException("Reservation with ID " + reservationId + " not found.", System.out));
-        System.out.println("Reservation found");
 
         reservation.setReservationStatus(ReservationStatus.CANCELLED);
-        System.out.println("Reservation cancelled");
         reservationRepository.updateReservation(reservation);
-        System.out.println("Reservation updated");
     }
 
     @Override
@@ -102,10 +99,11 @@ public class ReservationService implements IReservationService {
         if (productCopy.getAvailabilityStatus() == ProductCopyStatus.AVAILABLE) {
             return LocalDate.now().plusDays(PICKUP_DAYS);
         } else if (productCopy.getAvailabilityStatus() == ProductCopyStatus.LOANED) {
-            return null;
+            throw new IllegalStateException("This product cannot be picked up because it is already loaned.");
         }
         return LocalDate.now();
     }
+
     @Override
     public void handleProductCopyAvailability(ProductCopy productCopy) {
         if (productCopy.getAvailabilityStatus() == ProductCopyStatus.AVAILABLE) {
@@ -130,6 +128,18 @@ public class ReservationService implements IReservationService {
             }
         }
         accountRepository.store(account);
+    }
+
+    @Override
+    public Reservation toEntity(ReservationDTO dto, ProductCopy productCopy, Membership membership) {
+        Reservation reservation = new Reservation();
+        reservation.setReservationDate(dto.getReservationDate());
+        reservation.setReservationPickUpDate(null);
+        reservation.setReadyForPickup(dto.isReadyForPickup());
+        reservation.setProductCopy(productCopy);
+        reservation.setMembership(membership);
+        reservation.setReservationStatus(dto.getReservationStatus());
+        return reservation;
     }
 
     @Override
@@ -163,15 +173,6 @@ public class ReservationService implements IReservationService {
         reservationRepository.updateReservation(reservation);
     }
 
-    public Reservation toEntity(ReservationDTO dto, ProductCopy productCopy, Membership membership) {
-        Reservation reservation = new Reservation();
-        reservation.setReservationDate(dto.getReservationDate());
-        reservation.setReservationPickUpDate(null);
-        reservation.setReadyForPickup(dto.isReadyForPickup());
-        reservation.setProductCopy(productCopy);
-        reservation.setMembership(membership);
-        reservation.setReservationStatus(dto.getReservationStatus());
-        return reservation;
-    }
+
 
 }

@@ -95,4 +95,11 @@ public class Loan {
 
     public void setMembershipId(long membershipId) {
     }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setLoanId(long l) {
+    }
 }
