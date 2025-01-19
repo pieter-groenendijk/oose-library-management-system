@@ -1,22 +1,20 @@
 package com.github.pieter_groenendijk.service.event.scheduling;
 
 import com.github.pieter_groenendijk.model.event.Event;
-import com.github.pieter_groenendijk.repository.event.IEventRepository;
 import com.github.pieter_groenendijk.repository.scheduling.ITaskRepository;
+import com.github.pieter_groenendijk.scheduling.LongTermTaskScheduler;
+import com.github.pieter_groenendijk.scheduling.TaskScheduler;
 import com.github.pieter_groenendijk.service.event.emitting.EventEmitterPool;
-import com.github.pieter_groenendijk.utils.scheduling.longterm.LongTermTaskScheduler;
-import com.github.pieter_groenendijk.utils.scheduling.TaskScheduler;
-
-import java.util.List;
+import org.jetbrains.annotations.NotNull;
 
 // TODO: Do something about the big constructors
 public class EventScheduler extends LongTermTaskScheduler<Event<?>> {
     private final EventEmitterPool EMITTER_POOL;
 
     public EventScheduler(
-        ITaskRepository<Event<?>> taskRepository,
-        TaskScheduler scheduler,
-        EventEmitterPool eventEmitterPool
+        @NotNull ITaskRepository<Event<?>> taskRepository,
+        @NotNull TaskScheduler scheduler,
+        @NotNull EventEmitterPool eventEmitterPool
     ) {
         super(
             taskRepository,
@@ -28,8 +26,8 @@ public class EventScheduler extends LongTermTaskScheduler<Event<?>> {
 
     public EventScheduler(
         int amountOfThreads,
-        ITaskRepository<Event<?>> taskRepository,
-        EventEmitterPool eventEmitterPool
+        @NotNull ITaskRepository<Event<?>> taskRepository,
+        @NotNull EventEmitterPool eventEmitterPool
     ) {
         super(
             taskRepository,
@@ -40,7 +38,7 @@ public class EventScheduler extends LongTermTaskScheduler<Event<?>> {
     }
 
     @Override
-    protected void executeTask(Event<?> event) {
+    protected void executeTask(@NotNull Event<?> event) {
         this.EMITTER_POOL.emit(
             event.getType(),
             event.getAssociation()

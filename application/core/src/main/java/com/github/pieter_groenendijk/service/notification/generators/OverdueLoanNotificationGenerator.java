@@ -3,8 +3,8 @@ package com.github.pieter_groenendijk.service.notification.generators;
 import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.model.notification.LoanNotification;
 import com.github.pieter_groenendijk.repository.notification.INotificationRepository;
+import com.github.pieter_groenendijk.scheduling.TaskStorage;
 import com.github.pieter_groenendijk.service.notification.sendstrategies.registry.SendStrategyType;
-import com.github.pieter_groenendijk.utils.scheduling.TaskStorage;
 
 import java.time.LocalDateTime;
 

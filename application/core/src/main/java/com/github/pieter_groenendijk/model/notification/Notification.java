@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
     length = 50
 )
 @Table(name = "Notification")
-public class Notification extends Task {
+public abstract class Notification extends Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(

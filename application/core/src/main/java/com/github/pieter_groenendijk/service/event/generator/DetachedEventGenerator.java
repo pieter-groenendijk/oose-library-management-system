@@ -3,8 +3,9 @@ package com.github.pieter_groenendijk.service.event.generator;
 import com.github.pieter_groenendijk.model.event.Event;
 import com.github.pieter_groenendijk.model.event.EventType;
 import com.github.pieter_groenendijk.repository.event.IEventRepository;
-import com.github.pieter_groenendijk.utils.scheduling.longterm.DetachedTask;
-import com.github.pieter_groenendijk.utils.scheduling.TaskStorage;
+import com.github.pieter_groenendijk.scheduling.DetachedTask;
+import com.github.pieter_groenendijk.scheduling.TaskStorage;
+import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDateTime;
 
@@ -23,12 +24,12 @@ public abstract class DetachedEventGenerator<Association, AssociatedEvent extend
 
     private final EventType TYPE;
 
-    protected DetachedEventGenerator(IEventRepository repository, EventType type) {
+    protected DetachedEventGenerator(@NotNull IEventRepository repository, @NotNull EventType type) {
         this.REPOSITORY = repository;
         this.TYPE = type;
     }
 
-    public final DetachedTask<AssociatedEvent> generate(Association association) {
+    public final DetachedTask<AssociatedEvent> generate(@NotNull Association association) {
         AssociatedEvent event = this.generateEvent(association);
 
         return new DetachedTask<>(
@@ -37,7 +38,7 @@ public abstract class DetachedEventGenerator<Association, AssociatedEvent extend
         );
     }
 
-    private AssociatedEvent generateEvent(Association association) {
+    private AssociatedEvent generateEvent(@NotNull Association association) {
         AssociatedEvent event = this.generateEmptyEvent();
 
         event.setScheduledAt(

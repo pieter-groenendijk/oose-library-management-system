@@ -3,9 +3,9 @@ package com.github.pieter_groenendijk.service.notification.generators;
 import com.github.pieter_groenendijk.model.Account;
 import com.github.pieter_groenendijk.model.notification.Notification;
 import com.github.pieter_groenendijk.repository.notification.INotificationRepository;
+import com.github.pieter_groenendijk.scheduling.DetachedTask;
+import com.github.pieter_groenendijk.scheduling.TaskStorage;
 import com.github.pieter_groenendijk.service.notification.sendstrategies.registry.SendStrategyType;
-import com.github.pieter_groenendijk.utils.scheduling.TaskStorage;
-import com.github.pieter_groenendijk.utils.scheduling.longterm.DetachedTask;
 
 import java.time.LocalDateTime;
 

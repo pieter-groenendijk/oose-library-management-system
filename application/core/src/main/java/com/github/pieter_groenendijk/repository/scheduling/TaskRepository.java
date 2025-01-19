@@ -2,7 +2,7 @@ package com.github.pieter_groenendijk.repository.scheduling;
 
 import com.github.pieter_groenendijk.model.scheduling.Task;
 import com.github.pieter_groenendijk.repository.fine.Repository;
-import com.github.pieter_groenendijk.utils.scheduling.TaskStatus;
+import com.github.pieter_groenendijk.scheduling.TaskStatus;
 import org.hibernate.SessionFactory;
 
 public abstract class TaskRepository<T extends Task> extends Repository implements ITaskRepository<T> {
@@ -16,3 +16,4 @@ public abstract class TaskRepository<T extends Task> extends Repository implemen
         super.merge(task);
     }
 }
+
