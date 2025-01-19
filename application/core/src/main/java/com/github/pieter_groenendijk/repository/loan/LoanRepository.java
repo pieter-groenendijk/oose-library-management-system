@@ -8,6 +8,7 @@ import jakarta.persistence.criteria.Root;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
 public class LoanRepository implements ILoanRepository {
 
     SessionFactory sessionFactory;
-
+@Autowired
     public LoanRepository(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }

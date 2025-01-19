@@ -28,27 +28,28 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ComponentScan(basePackages = "com.github.pieter_groenendijk")
 public class AppConfig {
-    @Bean
+
+    @Bean(name = "sessionFactory")
     public SessionFactory sessionFactory() {
         return new SessionFactoryFactory().create();
     }
-    @Bean
+
+    @Bean(name = "loanRepositoryBean")
     public ILoanRepository loanRepository() {
         return new LoanRepository(sessionFactory());
     }
 
-    @Bean
+    @Bean(name = "membershipRepositoryBean")
     public IMembershipRepository membershipRepository() {
         return new MembershipRepository(sessionFactory());
     }
 
-
-    @Bean
+    @Bean(name = "productRepositoryBean")
     public IProductRepository productRepository() {
         return new ProductRepository(sessionFactory());
     }
 
-    @Bean
+    @Bean(name = "reservationServiceBean")
     public IReservationService reservationService(SessionFactory sessionFactory, IMembershipRepository membershipRepository, IProductRepository productRepository) {
         return new ReservationService(
                 new ReservationRepository(sessionFactory),
@@ -58,7 +59,7 @@ public class AppConfig {
         );
     }
 
-    @Bean
+    @Bean(name = "loanEventServiceBean")
     public ILoanEventService loanEventService(SessionFactory sessionFactory, IEventRepository eventRepository, ILoanEventRepostory loanEventRepostory) {
         return new LoanEventService(
                 new LoanEventScheduler(
@@ -73,17 +74,17 @@ public class AppConfig {
         );
     }
 
-    @Bean
+    @Bean(name = "eventRepositoryBean")
     public IEventRepository eventRepository(SessionFactory sessionFactory) {
         return new EventRepository(sessionFactory);
     }
 
-    @Bean
+    @Bean(name = "loanEventRepositoryBean")
     public ILoanEventRepostory loanEventRepository(SessionFactory sessionFactory) {
         return new LoanEventRepostory(sessionFactory);
     }
 
-    @Bean
+    @Bean(name = "loanServiceBean")
     public ILoanService loanService(
             ILoanRepository loanRepository,
             IMembershipRepository membershipRepository,
@@ -94,17 +95,17 @@ public class AppConfig {
         return new LoanService(loanRepository, membershipRepository, eventService, reservationService, productRepository);
     }
 
-    @Bean
+    @Bean(name = "taskRepositoryBean")
     public ITaskRepository<Event<?>> taskRepository() {
         return new EventRepository(sessionFactory());
     }
 
-    @Bean
+    @Bean(name = "eventEmitterPoolBean")
     public EventEmitterPool eventEmitterPool() {
         return new EventEmitterPool();
     }
 
-    @Bean
+    @Bean(name = "eventSchedulerBean")
     public EventScheduler eventScheduler() {
         return new EventScheduler(
                 taskRepository(),
@@ -113,7 +114,7 @@ public class AppConfig {
         );
     }
 
-    @Bean
+    @Bean(name = "loanEventSchedulerBean")
     public LoanEventScheduler loanEventScheduler() {
         return new LoanEventScheduler(
                 eventRepository(sessionFactory()),
@@ -121,5 +122,4 @@ public class AppConfig {
                 eventScheduler()
         );
     }
-
 }
