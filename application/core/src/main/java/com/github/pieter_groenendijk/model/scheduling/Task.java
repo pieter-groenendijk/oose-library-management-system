@@ -1,12 +1,12 @@
 package com.github.pieter_groenendijk.model.scheduling;
 
-import com.github.pieter_groenendijk.utils.scheduling.TaskStatus;
+import com.github.pieter_groenendijk.scheduling.TaskStatus;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
 @MappedSuperclass
-public class Task {
+public abstract class Task {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(
         name = "scheduledAt",

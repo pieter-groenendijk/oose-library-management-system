@@ -1,9 +1,7 @@
-package com.github.pieter_groenendijk.utils.scheduling.longterm;
+package com.github.pieter_groenendijk.scheduling;
 
 import com.github.pieter_groenendijk.model.scheduling.Task;
 import com.github.pieter_groenendijk.repository.scheduling.ITaskRepository;
-import com.github.pieter_groenendijk.utils.scheduling.TaskScheduler;
-import com.github.pieter_groenendijk.utils.scheduling.TaskStatus;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -44,6 +42,9 @@ public abstract class LongTermTaskScheduler<T extends Task> {
         }
     }
 
+    // TODO: Maybe move this responsibility to the actual task
+    protected abstract void executeTask(T task);
+
     // TODO: Makes more sense that this is passed to the retrieveDueSoonTasks abstract method instead. Currently this promotes a little duplication.
     protected final LocalDateTime getScheduledUntilDateTime() {
         return LocalDateTime.now()
@@ -56,9 +57,6 @@ public abstract class LongTermTaskScheduler<T extends Task> {
             TaskStatus.CANCELLED
         );
     }
-
-    // TODO: Maybe move this responsibility to the actual task
-    protected abstract void executeTask(T task);
 
     private List<T> retrieveDueSoonTasks() {
         try {
