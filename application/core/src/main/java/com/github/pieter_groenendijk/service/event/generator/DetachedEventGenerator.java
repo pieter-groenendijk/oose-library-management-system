@@ -38,6 +38,12 @@ public abstract class DetachedEventGenerator<Association, AssociatedEvent extend
         );
     }
 
+    protected abstract AssociatedEvent generateEmptyEvent();
+
+    protected abstract LocalDateTime determineScheduledDateTime(Association association);
+
+    protected abstract TaskStorage<AssociatedEvent> generateEventStorage();
+
     private AssociatedEvent generateEvent(@NotNull Association association) {
         AssociatedEvent event = this.generateEmptyEvent();
 
@@ -49,10 +55,4 @@ public abstract class DetachedEventGenerator<Association, AssociatedEvent extend
 
         return event;
     }
-
-    protected abstract AssociatedEvent generateEmptyEvent();
-
-    protected abstract LocalDateTime determineScheduledDateTime(Association association);
-
-    protected abstract TaskStorage<AssociatedEvent> generateEventStorage();
 }

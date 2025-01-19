@@ -10,7 +10,7 @@ public class UncollectedReservationDetachedEventGenerator extends DetachedReserv
     protected UncollectedReservationDetachedEventGenerator(IEventRepository repository) {
         super(
             repository,
-            EventType.UNCOLLECTED_RESERVATION_EVENT
+            EventType.UNCOLLECTED_RESERVATION
         );
     }
 
