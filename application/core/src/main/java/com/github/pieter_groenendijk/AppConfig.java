@@ -41,7 +41,7 @@ public class AppConfig {
     public IMembershipRepository membershipRepository() {
         return new MembershipRepository(sessionFactory());
     }
-    
+
 
     @Bean
     public IProductRepository productRepository() {
@@ -79,7 +79,7 @@ public class AppConfig {
     }
 
     @Bean
-    public ILoanEventRepostory loanEventRepostory(SessionFactory sessionFactory) {
+    public ILoanEventRepostory loanEventRepository(SessionFactory sessionFactory) {
         return new LoanEventRepostory(sessionFactory);
     }
 
@@ -117,7 +117,7 @@ public class AppConfig {
     public LoanEventScheduler loanEventScheduler() {
         return new LoanEventScheduler(
                 eventRepository(sessionFactory()),
-                loanEventRepostory(sessionFactory()),
+                loanEventRepository(sessionFactory()),
                 eventScheduler()
         );
     }

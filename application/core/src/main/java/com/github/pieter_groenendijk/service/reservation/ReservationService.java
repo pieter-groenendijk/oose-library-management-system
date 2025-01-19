@@ -12,6 +12,7 @@ import com.github.pieter_groenendijk.repository.IAccountRepository;
 import com.github.pieter_groenendijk.repository.IMembershipRepository;
 import com.github.pieter_groenendijk.repository.IProductRepository;
 import com.github.pieter_groenendijk.repository.IReservationRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -26,7 +27,7 @@ public class ReservationService implements IReservationService {
     private final IMembershipRepository membershipRepository;
     private final IProductRepository productRepository;
 
-
+@Autowired
     public ReservationService(IReservationRepository reservationRepository, IMembershipRepository membershipRepository, IAccountRepository accountRepository, IProductRepository productRepository) {
         this.reservationRepository = reservationRepository;
         this.membershipRepository = membershipRepository;

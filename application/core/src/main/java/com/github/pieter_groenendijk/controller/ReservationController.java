@@ -40,29 +40,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/reservation")
 public class ReservationController {
 
-    private final SessionFactory sessionFactory = new SessionFactoryFactory().create();
     private final IReservationService reservationService;
     private final ILoanService loanService;
-
-
-    public ReservationController() {
-        // TODO: THIS MESS CAN'T EXIST!!!
-        IEventRepository eventRepository = new EventRepository(sessionFactory);
-        EventEmitterPool eventEmitterPool = new EventEmitterPool();
-        TaskScheduler taskScheduler = new TaskScheduler(1);
-        EventScheduler eventScheduler = new EventScheduler((ITaskRepository<Event<?>>) eventRepository, taskScheduler, eventEmitterPool);
-        ILoanEventService loanEventService = new LoanEventService(new LoanEventScheduler(
-            eventRepository,
-            new LoanEventRepostory(sessionFactory),
-            eventScheduler
-        ));
-        IAccountRepository accountRepository = new AccountRepository(sessionFactory);
-        IMembershipRepository membershipRepository = new MembershipRepository(sessionFactory);
-        IReservationRepository reservationRepository = new ReservationRepository(sessionFactory);
-        IProductRepository productRepository = new ProductRepository(sessionFactory);
-        ILoanRepository loanRepository = new LoanRepository(sessionFactory);
+    
+    @Autowired
+    public ReservationController(IReservationRepository reservationRepository, IMembershipRepository membershipRepository, IAccountRepository accountRepository, IProductRepository productRepository, ILoanRepository loanRepository, ILoanEventService loanEventService) {
         this.reservationService = new ReservationService(reservationRepository, membershipRepository, accountRepository, productRepository);
-        this.loanService = new LoanService(loanRepository, membershipRepository, loanEventService, reservationService, productRepository);
+    this.loanService = new LoanService(loanRepository, membershipRepository, loanEventService, reservationService, productRepository);
     }
 
     @Operation(summary = "Create a reservation", description = "Create a new reservation")
