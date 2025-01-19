@@ -4,12 +4,13 @@ import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.model.LoanStatus;
 import com.github.pieter_groenendijk.model.LoansPerGenrePerMembership;
 import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.*;
+//import jakarta.persistence.criteria.CriteriaQuery;
+//import jakarta.persistence.criteria.Root;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-
+//import jakarta.persistence.criteria.Predicate;
 import java.util.List;
 
 public class LoanRepository implements ILoanRepository {
@@ -43,10 +44,11 @@ public class LoanRepository implements ILoanRepository {
             CriteriaQuery<Loan> cr = cb.createQuery(Loan.class);
             Root<Loan> root = cr.from(Loan.class);
 
+            Predicate statusPredicate = root.get("loanStatus").in(LoanStatus.ACTIVE, LoanStatus.EXTENDED, LoanStatus.OVERDUE);
             cr.select(root)
                     .where(
                             cb.equal(root.get("membership").get("id"), membershipId),
-                            cb.equal(root.get("loanStatus"), LoanStatus.ACTIVE, LoanStatus.EXTENDED, LoanStatus.OVERDUE)
+                            statusPredicate
                     );
 
             return session.createQuery(cr).getResultList();
