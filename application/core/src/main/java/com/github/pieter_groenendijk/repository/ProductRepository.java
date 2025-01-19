@@ -8,7 +8,7 @@ import org.hibernate.Transaction;
 import org.hibernate.Hibernate;
 
 import java.util.Optional;
-
+@Repository
 public class ProductRepository implements IProductRepository {
 
     SessionFactory sessionFactory;

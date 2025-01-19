@@ -14,7 +14,7 @@ import com.github.pieter_groenendijk.exception.InputValidationException;
 import java.util.List;
 
 import java.util.Optional;
-
+@Service
 public class ProductService implements IProductService {
     private IProductRepository productRepository;
     private IGenreRepository genreRepository;

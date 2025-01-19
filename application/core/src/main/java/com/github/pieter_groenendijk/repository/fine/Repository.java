@@ -5,7 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import java.util.Optional;
-
+@org.springframework.stereotype.Repository
 public abstract class Repository {
     protected final SessionFactory SESSION_FACTORY;
 

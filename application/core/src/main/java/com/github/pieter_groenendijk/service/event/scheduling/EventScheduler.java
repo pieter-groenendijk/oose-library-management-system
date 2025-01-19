@@ -6,10 +6,13 @@ import com.github.pieter_groenendijk.repository.scheduling.ITaskRepository;
 import com.github.pieter_groenendijk.service.event.emitting.EventEmitterPool;
 import com.github.pieter_groenendijk.utils.scheduling.longterm.LongTermTaskScheduler;
 import com.github.pieter_groenendijk.utils.scheduling.TaskScheduler;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 // TODO: Do something about the big constructors
+@Component
 public class EventScheduler extends LongTermTaskScheduler<Event<?>> {
     private final EventEmitterPool EMITTER_POOL;
 

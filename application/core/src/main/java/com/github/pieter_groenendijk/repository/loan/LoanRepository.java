@@ -8,9 +8,10 @@ import jakarta.persistence.criteria.Root;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Repository
 public class LoanRepository implements ILoanRepository {
 
     SessionFactory sessionFactory;

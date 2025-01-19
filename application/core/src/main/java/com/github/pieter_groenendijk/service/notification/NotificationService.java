@@ -8,7 +8,9 @@ import com.github.pieter_groenendijk.service.notification.scheduling.Notificatio
 import com.github.pieter_groenendijk.service.notification.sendstrategies.NotificationSendStrategyFactory;
 import com.github.pieter_groenendijk.service.notification.sendstrategies.registry.NotificationSendStrategyRegistry;
 import com.github.pieter_groenendijk.service.notification.task.DetachedNotificationFactory;
+import org.springframework.stereotype.Service;
 
+@Service
 public class NotificationService {
     private final DetachedNotificationFactory FACTORY;
     private final NotificationScheduler SCHEDULER;

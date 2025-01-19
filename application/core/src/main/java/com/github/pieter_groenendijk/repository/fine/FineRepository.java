@@ -8,7 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import java.util.Optional;
-
+@org.springframework.stereotype.Repository
 public class FineRepository extends Repository implements IFineRepository {
     public FineRepository(SessionFactory sessionFactory) {
         super(sessionFactory);

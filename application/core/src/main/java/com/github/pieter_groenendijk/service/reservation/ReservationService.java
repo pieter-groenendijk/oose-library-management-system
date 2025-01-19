@@ -12,13 +12,14 @@ import com.github.pieter_groenendijk.repository.IAccountRepository;
 import com.github.pieter_groenendijk.repository.IMembershipRepository;
 import com.github.pieter_groenendijk.repository.IProductRepository;
 import com.github.pieter_groenendijk.repository.IReservationRepository;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
 
 import static com.github.pieter_groenendijk.service.ServiceUtils.PICKUP_DAYS;
 import static com.github.pieter_groenendijk.service.ServiceUtils.PICKUP_EXPIRY_DAYS;
-
+@Service
 public class ReservationService implements IReservationService {
     private final IAccountRepository accountRepository;
     private final IReservationRepository reservationRepository;

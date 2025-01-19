@@ -14,11 +14,13 @@ import com.github.pieter_groenendijk.service.validator.GenderCheck;
 import com.github.pieter_groenendijk.model.DTO.MembershipRequestDTO;
 import com.github.pieter_groenendijk.model.DTO.MembershipTypeRequestDTO;
 import com.github.pieter_groenendijk.model.DTO.AccountRequestDTO;
+import org.springframework.stereotype.Service;
+
 import java.util.Date;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
-
+@Service
 public class AccountService implements IAccountService {
     private final IAccountRepository accountRepository;
     private final IMembershipTypeRepository membershipTypeRepository;

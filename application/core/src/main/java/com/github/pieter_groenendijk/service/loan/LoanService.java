@@ -15,11 +15,14 @@ import static com.github.pieter_groenendijk.service.ServiceUtils.LOAN_LENGTH;
 import com.github.pieter_groenendijk.repository.IMembershipRepository;
 import com.github.pieter_groenendijk.repository.IProductRepository;
 import com.github.pieter_groenendijk.service.reservation.IReservationService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
 
-
+@Service
 public class LoanService implements ILoanService {
     private final IReservationService reservationService;
     private ILoanRepository loanRepository;
@@ -27,7 +30,7 @@ public class LoanService implements ILoanService {
     private final ILoanEventService EVENT_SERVICE;
     private final IMembershipRepository membershipRepository;
 
-
+@Autowired
     public LoanService(
         ILoanRepository loanRepository,
         IMembershipRepository membershipRepository,

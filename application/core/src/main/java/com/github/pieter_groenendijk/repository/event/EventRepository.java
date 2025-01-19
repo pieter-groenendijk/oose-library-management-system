@@ -5,12 +5,13 @@ import com.github.pieter_groenendijk.model.event.LoanEvent;
 import com.github.pieter_groenendijk.model.event.ReservationEvent;
 import com.github.pieter_groenendijk.repository.scheduling.TaskRepository;
 import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
+@Repository
 public class EventRepository extends TaskRepository<Event<?>> implements IEventRepository {
     public EventRepository(SessionFactory sessionFactory) {
         super(sessionFactory);

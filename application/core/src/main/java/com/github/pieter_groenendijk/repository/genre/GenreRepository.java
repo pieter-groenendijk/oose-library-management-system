@@ -11,7 +11,9 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import org.hibernate.HibernateException;
 import com.github.pieter_groenendijk.repository.genre.IGenreRepository;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class GenreRepository implements IGenreRepository {
     private SessionFactory sessionFactory;
 

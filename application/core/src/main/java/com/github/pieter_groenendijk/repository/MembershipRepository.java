@@ -10,7 +10,9 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import org.hibernate.HibernateException;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class MembershipRepository implements IMembershipRepository{
 	private SessionFactory sessionFactory;
 

@@ -2,6 +2,8 @@ package com.github.pieter_groenendijk.service.product;
 
 import com.github.pieter_groenendijk.service.event.emitting.EventEmitterPool;
 import com.github.pieter_groenendijk.service.event.listener.EventListener;
+import org.springframework.stereotype.Service;
+
 
 public class EventPoolListener {
     protected final EventEmitterPool EVENT_EMITTER_POOL;

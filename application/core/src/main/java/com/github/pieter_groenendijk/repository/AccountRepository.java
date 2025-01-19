@@ -9,7 +9,7 @@ import org.hibernate.query.Query;
 
 import java.util.Optional;
 import org.hibernate.HibernateException;
-
+@org.springframework.stereotype.Repository
 public class AccountRepository extends Repository implements IAccountRepository {
     public AccountRepository (SessionFactory sessionFactory) {
         super(sessionFactory);

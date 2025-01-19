@@ -7,7 +7,10 @@ import com.github.pieter_groenendijk.service.event.scheduling.EventScheduler;
 import com.github.pieter_groenendijk.service.loan.event.generator.AlmostOverdueLoanDetachedEventGenerator;
 import com.github.pieter_groenendijk.service.loan.event.generator.DayOverdueLoanDetachedEventGenerator;
 import com.github.pieter_groenendijk.service.loan.event.generator.OverdueLoanDetachedEventGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class LoanEventScheduler {
     private final DayOverdueLoanDetachedEventGenerator DAY_OVERDUE_GENERATOR;
     private final OverdueLoanDetachedEventGenerator OVERDUE_GENERATOR;
@@ -16,7 +19,7 @@ public class LoanEventScheduler {
     private final IEventRepository EVENT_REPOSITORY;
     private final ILoanEventRepostory LOAN_EVENT_REPOSITORY;
     private final EventScheduler SCHEDULER;
-
+@Autowired
     public LoanEventScheduler(
         IEventRepository repository,
         ILoanEventRepostory loanEventRepository,

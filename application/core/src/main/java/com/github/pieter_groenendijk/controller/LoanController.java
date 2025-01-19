@@ -42,35 +42,10 @@ import static org.hibernate.query.sqm.tree.SqmNode.log;
 @RequestMapping("/loan")
 public class LoanController {
 
-    private final SessionFactory sessionFactory = new SessionFactoryFactory().create();
     private final ILoanService loanService;
 
-    public LoanController() {
-        ILoanRepository loanRepository = new LoanRepository(sessionFactory);
-        IProductRepository productRepository = new ProductRepository(sessionFactory);
-        IMembershipRepository membershipRepository = new MembershipRepository(sessionFactory);
-        IReservationService reservationService = new ReservationService(
-            new ReservationRepository(sessionFactory),
-            membershipRepository,
-            new AccountRepository(sessionFactory),
-            productRepository
-        );
-
-        // TODO: Make this mess work with beans or dependency injection!!!!
-        IEventRepository eventRepository = new EventRepository(sessionFactory);
-        ILoanEventRepostory loanEventRepostory = new LoanEventRepostory(sessionFactory);
-        ILoanEventService eventService = new LoanEventService(
-            new LoanEventScheduler(
-                eventRepository,
-                loanEventRepostory,
-                new EventScheduler(
-                    (ITaskRepository<Event<?>>) eventRepository,
-                    new TaskScheduler(1),
-                    new EventEmitterPool()
-                )
-            )
-        );
-        this.loanService = new LoanService(loanRepository, membershipRepository, eventService, reservationService, productRepository);
+    public LoanController(ILoanService loanService) {
+        this.loanService = loanService;
     }
 
     @Operation(summary = "Create a Loan", description = "Create a new Loan")
