@@ -46,7 +46,10 @@ public class DefaultConfigurationFactory {
             .addAnnotatedClass(FineType.class)
             .addAnnotatedClass(PaymentStatus.class)
             .addAnnotatedClass(Payment.class)
-            .addAnnotatedClass(Fine.class);
+            .addAnnotatedClass(Fine.class)
+            .addAnnotatedClass(LoansPerGenrePerMembershipId.class)
+            .addAnnotatedClass(LoansPerGenrePerMembership.class);
+
         ;
     }
 

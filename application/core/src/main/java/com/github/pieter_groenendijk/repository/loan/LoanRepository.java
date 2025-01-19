@@ -2,6 +2,7 @@ package com.github.pieter_groenendijk.repository.loan;
 
 import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.model.LoanStatus;
+import com.github.pieter_groenendijk.model.LoansPerGenrePerMembership;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
@@ -45,7 +46,7 @@ public class LoanRepository implements ILoanRepository {
             cr.select(root)
                     .where(
                             cb.equal(root.get("membership").get("id"), membershipId),
-                            cb.equal(root.get("loanStatus"), LoanStatus.ACTIVE)
+                            cb.equal(root.get("loanStatus"), LoanStatus.ACTIVE, LoanStatus.EXTENDED, LoanStatus.OVERDUE)
                     );
 
             return session.createQuery(cr).getResultList();
@@ -102,20 +103,24 @@ public class LoanRepository implements ILoanRepository {
         }
     }
 
-    public int retrieveCurrentMembershipLimit(long membershipId) {
+    public int retrieveCurrentGenreLoanCount(long membershipId, long genreId) {
+        System.out.println("Test2");
         Session session = sessionFactory.openSession();
         Integer result = null;
 
         try {
-            String hql = "SELECT vwl.loanCount FROM vw_Loans_Per_Membership vwl WHERE vwl.membershipId = :membershipId";
+            String hql = "SELECT vwl.loanCount FROM LoansPerGenrePerMembership vwl WHERE vwl.id.membershipId = :membershipId AND vwl.id.genreId = :genreId";
             result = (Integer) session.createQuery(hql, Integer.class)
                     .setParameter("membershipId", membershipId)
+                    .setParameter("genreId", genreId)
                     .uniqueResult();
-        } finally {
+        } catch (Exception e) {
+            System.out.println("Error in hibernate" + e.getMessage());
+            e.printStackTrace();
+        }finally {
             session.close();
         }
         return result != null ? result : 0;
     }
-
 }
 

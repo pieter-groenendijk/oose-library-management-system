@@ -53,6 +53,7 @@ INSERT INTO "LendingLimit" ("membershipTypeId", "genreId", "maxLendings") VALUES
 (1, 2, 5),
 (2, 3, 6),
 (2, 4, 7),
+(2, 2, 3),
 (4, 1, 12),
 (4, 5, 10),
 (5, 2, 15),
@@ -81,10 +82,10 @@ VALUES
     ('The Pragmatic Programmer', 1, 1999, 'A book by Andrew Hunt and David Thomas', 18, 'EBOOK'),
     ('Refactoring', 1, 1999, 'Improving the design of existing code by Martin Fowler', 18, 'EBOOK'),
     ('The Mythical Man-Month', 1, 1975, 'A collection of essays by Fred Brooks', 18, 'EBOOK'),
-    ('Design Patterns', 1, 1994, 'Elements of reusable object-oriented software', 18, 'EBOOK'),
-    ('JavaScript: The Good Parts', 1, 2008, 'A book by Douglas Crockford on JavaScript', 18, 'BOOK'),
-    ('The Catcher in the Rye', 4, 1951, 'A novel by J.D. Salinger', 18, 'BOOK'),
-    ('The Road', 4, 2006, 'A novel by Cormac McCarthy', 18, 'BOOK');
+    ('Design Patterns', 2, 1994, 'Elements of reusable object-oriented software', 18, 'EBOOK'),
+    ('JavaScript: The Good Parts', 2, 2008, 'A book by Douglas Crockford on JavaScript', 18, 'BOOK'),
+    ('The Catcher in the Rye', 2, 1951, 'A novel by J.D. Salinger', 18, 'BOOK'),
+    ('The Road', 2, 2006, 'A novel by Cormac McCarthy', 18, 'BOOK');
 
 INSERT INTO "DigitalProductTemplate" ("productId", "language")
 VALUES

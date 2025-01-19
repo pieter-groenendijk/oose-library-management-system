@@ -73,7 +73,11 @@ public class LoanService implements ILoanService {
                 .orElseThrow(() -> new EntityNotFoundException("ProductCopy not found"));
         loan.setProductCopy(productCopy);
 
+        System.out.println("A");
         checkDoesLoanExceedLimitForMembership(membership);
+        System.out.println("B");
+        checkDoesLoanExceedLimitForGenre(membership, productCopy);
+        System.out.println("C");
 
         productCopy.setAvailabilityStatus(ProductCopyStatus.LOANED);
         productRepository.updateProductCopy(productCopy);
@@ -200,9 +204,25 @@ public class LoanService implements ILoanService {
         long membershipTypeId = membership.getMembershipType().getMembershipTypeId();
         MembershipType membershipType = membershipTypeRepository.retrieveMembershipTypeById(membershipTypeId).get();
         int maxNumberOfLoans = membershipType.getMaxLendings();
-
+        System.out.println("A1");
         if (numberOfLoans >= maxNumberOfLoans) {
             throw new IllegalStateException("Loan would exceed limit for MembershipType");
+        }
+    }
+
+    public void checkDoesLoanExceedLimitForGenre (Membership membership, ProductCopy productCopy) {
+        System.out.println("A2");
+        long membershipId = membership.getMembershipId();
+        long membershipTypeId = membership.getMembershipType().getMembershipTypeId();
+        long genreId = productCopy.getPhysicalProductId().getGenre().getGenreId();
+
+        int maxLendingsForGenre = membershipTypeRepository.retrieveLendingLimitByGenreAndMembershipType(membershipTypeId, genreId);
+        System.out.println("MaxforGenre" + maxLendingsForGenre);
+        int currentLendingsForGenre = loanRepository.retrieveCurrentGenreLoanCount(membershipId, genreId);
+        System.out.println("LendingsforGenre" + currentLendingsForGenre);
+
+        if (currentLendingsForGenre >= maxLendingsForGenre) {
+            throw new IllegalStateException("Loan would exceed limit for Genre");
         }
     }
 }
