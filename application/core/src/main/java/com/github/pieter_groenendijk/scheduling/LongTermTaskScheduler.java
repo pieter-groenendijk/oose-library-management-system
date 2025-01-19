@@ -42,6 +42,9 @@ public abstract class LongTermTaskScheduler<T extends Task> {
         }
     }
 
+    // TODO: Maybe move this responsibility to the actual task
+    protected abstract void executeTask(T task);
+
     // TODO: Makes more sense that this is passed to the retrieveDueSoonTasks abstract method instead. Currently this promotes a little duplication.
     protected final LocalDateTime getScheduledUntilDateTime() {
         return LocalDateTime.now()
@@ -54,9 +57,6 @@ public abstract class LongTermTaskScheduler<T extends Task> {
             TaskStatus.CANCELLED
         );
     }
-
-    // TODO: Maybe move this responsibility to the actual task
-    protected abstract void executeTask(T task);
 
     private List<T> retrieveDueSoonTasks() {
         try {
