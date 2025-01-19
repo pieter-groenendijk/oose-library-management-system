@@ -20,12 +20,13 @@ import com.github.pieter_groenendijk.service.reservation.IReservationService;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 
 public class LoanService implements ILoanService {
     private final IReservationService reservationService;
-    private ILoanRepository loanRepository;
-    private IProductRepository productRepository;
+    private final ILoanRepository loanRepository;
+    private final IProductRepository productRepository;
     private final ILoanEventService EVENT_SERVICE;
     private final IMembershipRepository membershipRepository;
     private final IMembershipTypeRepository membershipTypeRepository;
@@ -49,21 +50,16 @@ public class LoanService implements ILoanService {
 
     // TODO: Implement correct error handling. Is a loan still successful if we failed to schedule events for it, or the other way around?
     @Override
-    public Loan store(LoanRequestDTO loanRequestDTO) {
+    public Loan store(LoanRequestDTO loanRequestDTO) throws Exception {
         if (loanRequestDTO == null) {
             throw new IllegalArgumentException("LoanRequestDTO cannot be null.");
         }
+        validateLoanRequestDTO(loanRequestDTO);
+
         Loan loan = new Loan();
+        setLoanStatus(loan, loanRequestDTO);
+        setLoanDates(loan);
 
-
-        if (loanRequestDTO.getLoanStatus() == null) {
-            loan.setLoanStatus(LoanStatus.ACTIVE);
-        } else {
-            loan.setLoanStatus(loanRequestDTO.getLoanStatus());
-        }
-
-        loan.setStartDate(loanRequestDTO.getStartDate());
-        loan.setReturnBy(LocalDate.now().plusDays(LOAN_LENGTH));
 
         Membership membership = membershipRepository.retrieveMembershipById(loanRequestDTO.getMembershipId())
                 .orElseThrow(() -> new EntityNotFoundException("Membership not found"));
@@ -73,11 +69,8 @@ public class LoanService implements ILoanService {
                 .orElseThrow(() -> new EntityNotFoundException("ProductCopy not found"));
         loan.setProductCopy(productCopy);
 
-        System.out.println("A");
         checkDoesLoanExceedLimitForMembership(membership);
-        System.out.println("B");
         checkDoesLoanExceedLimitForGenre(membership, productCopy);
-        System.out.println("C");
 
         productCopy.setAvailabilityStatus(ProductCopyStatus.LOANED);
         productRepository.updateProductCopy(productCopy);
@@ -107,8 +100,8 @@ public class LoanService implements ILoanService {
     }
 
     @Override
-    public LocalDate generateReturnByDate(LocalDate returnBy) {
-        return LocalDate.now().plusDays(LOAN_LENGTH);
+  public LocalDate generateReturnByDate(LocalDate returnBy) {
+        return getCurrentDate().plusDays(LOAN_LENGTH);
     }
 
     @Override
@@ -138,7 +131,7 @@ public class LoanService implements ILoanService {
 
     @Override
     public void handleOverdueLoans() {
-        LocalDate currentDate = LocalDate.now();
+        LocalDate currentDate = getCurrentDate();
 
         List<Loan> activeLoans = loanRepository.retrieveAllActiveLoans();
         for (Loan loan : activeLoans) {
@@ -155,11 +148,19 @@ public class LoanService implements ILoanService {
 
     @Override
     public boolean checkIsLate(Loan loan) {
-        LocalDate currentDate = LocalDate.now();
-
+        LocalDate currentDate = getCurrentDate();
         boolean isLate = loan.getLoanStatus().isOverdue(currentDate, loan);
 
-        if (isLate && loan.getLoanStatus() != LoanStatus.OVERDUE) {
+        if (isLate) {
+            updateLoanStatusIfNeeded(loan);
+        }
+
+        return isLate;
+    }
+
+    @Override
+    public void updateLoanStatusIfNeeded(Loan loan) {
+        if (loan.getLoanStatus() != LoanStatus.OVERDUE) {
             loan.setLoanStatus(LoanStatus.OVERDUE);
             loanRepository.updateLoan(loan);
         }
@@ -191,11 +192,34 @@ public class LoanService implements ILoanService {
         Loan loan = new Loan();
         loan.setProductCopy(reservation.getProductCopy());
         loan.setMembership(reservation.getMembership());
-        loan.setStartDate(LocalDate.now());
-        loan.setReturnBy(LocalDate.now().plusDays(LOAN_LENGTH));
+        loan.setStartDate(getCurrentDate());
+        loan.setReturnBy(getCurrentDate().plusDays(LOAN_LENGTH));
         loan.setLoanStatus(LoanStatus.ACTIVE);
         return loanRepository.store(loan);
     }
+
+    @Override
+    public void validateLoanRequestDTO(LoanRequestDTO loanRequestDTO) {
+        if (loanRequestDTO == null) {
+            throw new IllegalArgumentException("LoanRequestDTO cannot be null.");
+        }
+    }
+
+    private LocalDate getCurrentDate() {
+        return LocalDate.now();
+    }
+    private void setLoanStatus(Loan loan, LoanRequestDTO loanRequestDTO) {
+        LoanStatus loanStatus = Optional.ofNullable(loanRequestDTO.getLoanStatus())
+                .orElse(LoanStatus.ACTIVE);
+        loan.setLoanStatus(loanStatus);
+    }
+
+    private void setLoanDates(Loan loan) {
+        loan.setStartDate(LocalDate.now());
+        loan.setReturnBy(getCurrentDate().plusDays(LOAN_LENGTH));
+    }
+
+
 
     public void checkDoesLoanExceedLimitForMembership (Membership membership) {
         List<Loan> activeLoanList = retrieveActiveLoansByMembershipId(membership.getMembershipId());

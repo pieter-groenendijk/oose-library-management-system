@@ -1,5 +1,6 @@
 package com.github.pieter_groenendijk.service;
 
+import com.github.pieter_groenendijk.exception.EntityNotFoundException;
 import com.github.pieter_groenendijk.model.Account;
 import com.github.pieter_groenendijk.model.DTO.ReservationDTO;
 import com.github.pieter_groenendijk.model.Membership;
@@ -40,6 +41,11 @@ class ReservationServiceTest {
 
     @InjectMocks
     private ReservationService reservationService;
+
+    private static final long RESERVATION_ID = 1L;
+    private static final long PRODUCT_COPY_ID = 1L;
+    private static final int PICKUP_DAYS = 7;
+
 
 
     @BeforeEach
@@ -102,35 +108,14 @@ class ReservationServiceTest {
         ProductCopy productCopy = new ProductCopy();
         productCopy.setAvailabilityStatus(ProductCopyStatus.AVAILABLE);
 
-        LocalDate expectedDate = LocalDate.now().plusDays(PICKUP_DAYS);
+        LocalDate today = LocalDate.now();
+        LocalDate expectedDate = today.plusDays(PICKUP_DAYS);
         LocalDate actualDate = reservationService.generateReservationPickUpDate(productCopy);
 
         assertEquals(expectedDate, actualDate, "The generated pickup date for AVAILABLE status is not correct.");
     }
 
 
-/*
-    @Test
-    void handleUncollectedReservations() {
-        LocalDate currentDate = LocalDate.now();
-        Reservation reservation = new Reservation();
-        reservation.setReservationPickUpDate(LocalDate.now().minusDays(10));
-        reservation.setReservationStatus(ReservationStatus.ACTIVE);
-
-        Account account = new Account();
-        account.setAccountId(1L);
-
-        Membership membership = new Membership();
-        membership.setMembershipId(1L);
-        membership.setAccount(account);
-
-        when(membershipRepository.retrieveMembershipById(1L)).thenReturn(Optional.of(membership));
-        when(reservationRepository.retrieveReservationByMembershipId(1L)).thenReturn(List.of(reservation));
-
-        reservationService.handleUncollectedReservations(1L, currentDate);
-
-        assertEquals(ReservationStatus.EXPIRED, reservation.getReservationStatus());
-    }*/
 
 
     @Test
@@ -153,6 +138,57 @@ class ReservationServiceTest {
 
         verify(mockReservationRepository).updateReservation(reservation);
         assertEquals(ReservationStatus.LOANED, reservation.getReservationStatus());
+    }
+
+
+
+    @Test
+    void testReadyForPickup_reservationNotFound() {
+        when(reservationRepository.retrieveReservationById(RESERVATION_ID)).thenReturn(Optional.empty());
+
+        boolean result = reservationService.readyForPickup(RESERVATION_ID);
+
+        assertFalse(result);
+    }
+
+    @Test
+    void testGenerateReservationPickUpDate_productCopyAvailable() {
+        ProductCopy productCopy = mock(ProductCopy.class);
+
+        when(productCopy.getAvailabilityStatus()).thenReturn(ProductCopyStatus.AVAILABLE);
+
+        LocalDate expectedDate = LocalDate.now().plusDays(PICKUP_DAYS);
+        LocalDate result = reservationService.generateReservationPickUpDate(productCopy);
+
+        assertEquals(expectedDate, result);
+    }
+
+    @Test
+    void testGenerateReservationPickUpDate_productCopyLoaned() {
+        ProductCopy productCopy = mock(ProductCopy.class);
+
+        when(productCopy.getAvailabilityStatus()).thenReturn(ProductCopyStatus.LOANED);
+
+        Exception exception = assertThrows(IllegalStateException.class, () -> {
+            reservationService.generateReservationPickUpDate(productCopy);
+        });
+
+        assertEquals("This product cannot be picked up because it is already loaned.", exception.getMessage());
+    }
+
+    @Test
+    void testHandleProductCopyAvailability_reservationNotFound() {
+        ProductCopy productCopy = mock(ProductCopy.class);
+
+        when(productCopy.getAvailabilityStatus()).thenReturn(ProductCopyStatus.AVAILABLE);
+        when(productCopy.getProductCopyId()).thenReturn(PRODUCT_COPY_ID);
+        when(reservationRepository.retrieveReservationById(PRODUCT_COPY_ID)).thenReturn(Optional.empty());
+
+        Exception exception = assertThrows(EntityNotFoundException.class, () -> {
+            reservationService.handleProductCopyAvailability(productCopy);
+        });
+
+        assertEquals("Reservation not found for ProductCopy ID " + PRODUCT_COPY_ID, exception.getMessage());
     }
 }
 

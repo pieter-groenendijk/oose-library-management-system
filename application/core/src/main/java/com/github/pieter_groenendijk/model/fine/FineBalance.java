@@ -1,9 +1,7 @@
 package com.github.pieter_groenendijk.model.fine;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.github.pieter_groenendijk.model.Account;
+import jakarta.persistence.*;
 import org.hibernate.annotations.Immutable; // TODO: Perhaps bypass specific usage of hibernate, and prefer jpa.
 
 @Entity
@@ -11,11 +9,12 @@ import org.hibernate.annotations.Immutable; // TODO: Perhaps bypass specific usa
 @Immutable
 public class FineBalance {
     @Id
-    @Column(
+    @ManyToOne
+    @JoinColumn(
         name = "account",
         nullable = false
     )
-    private Long account;
+    private Account account;
 
     @Column(
         name = "balanceInCents",
@@ -23,12 +22,12 @@ public class FineBalance {
     )
     private Long balanceInCents;
 
-    public void setAccount(Long account) {
-        this.account = account;
+    public Account getAccount() {
+        return account;
     }
 
-    public Long getAccount() {
-        return account;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     public Long getBalanceInCents() {

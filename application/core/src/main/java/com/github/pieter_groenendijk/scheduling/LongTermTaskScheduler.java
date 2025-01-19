@@ -27,7 +27,7 @@ public abstract class LongTermTaskScheduler<T extends Task> {
     /**
      * Expects to schedule events that are at least the retrieve interval of this scheduler, otherwise a delay is experienced.
      */
-    public void schedule(DetachedTask<? extends T> task) {
+    public void schedule(DetachedTask<? extends T> task) throws Exception {
         task.store();
     }
 
