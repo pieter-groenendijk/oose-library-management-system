@@ -1,9 +1,7 @@
 package com.github.pieter_groenendijk.hibernate.configuration;
 
 import org.hibernate.cfg.Configuration;
-import org.springframework.stereotype.Component;
 
-@Component
 public class ConfigurationBuilder {
     private final Configuration CONFIGURATION;
 
@@ -115,7 +113,7 @@ public class ConfigurationBuilder {
     }
 
     private void setProperty(String key, boolean value) {
-        this.CONFIGURATION.setProperty(key, String.valueOf(value));
+        this.CONFIGURATION.setProperty(key, value);
     }
 
     public Configuration build() {

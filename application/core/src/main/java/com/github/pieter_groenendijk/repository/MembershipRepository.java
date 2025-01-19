@@ -12,8 +12,6 @@ import jakarta.persistence.criteria.Root;
 import org.hibernate.HibernateException;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.criteria.CriteriaUpdate;
-
 @Repository
 public class MembershipRepository implements IMembershipRepository{
 	private SessionFactory sessionFactory;
@@ -37,13 +35,13 @@ public class MembershipRepository implements IMembershipRepository{
 	public List<Membership> retrieveMembershipsByAccountId(long accountId) {
 		Session session = sessionFactory.openSession();
 		try {
-			CriteriaBuilder cb = (CriteriaBuilder) session.getCriteriaBuilder();
+			CriteriaBuilder cb = session.getCriteriaBuilder();
 			CriteriaQuery<Membership> cr = cb.createQuery(Membership.class);
 			Root<Membership> root = cr.from(Membership.class);
 
 			cr.select(root).where(cb.equal(root.get("account").get("id"), accountId));
 
-			return session.createQuery((CriteriaUpdate) cr).getResultList();
+			return session.createQuery(cr).getResultList();
 		} catch (HibernateException e) {
 			if (session.getTransaction() != null) {
 				session.getTransaction().rollback();
