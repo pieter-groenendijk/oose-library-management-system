@@ -119,6 +119,27 @@ public class MembershipTypeRepository implements IMembershipTypeRepository {
         return Optional.ofNullable(lendingLimit);
     }
 
+    public int retrieveLendingLimitByGenreAndMembershipType(long membershipTypeId, long genreId) {
+        Session session = sessionFactory.openSession();
+        Integer result = null;
+
+        try {
+            String hql = "SELECT a.maxLendings FROM LendingLimit a WHERE a.membershipType.membershipTypeId = :membershipTypeId AND a.genre.genreId = :genreId";
+            result = (Integer) session.createQuery(hql, Integer.class)
+                    .setParameter("membershipTypeId", membershipTypeId)
+                    .setParameter("genreId", genreId)
+                    .uniqueResult();
+        } catch (HibernateException e) {
+            if (session.getTransaction() != null) {
+                session.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return result != null ? result : 0;
+    }
+
     public void store(LendingLimit lendingLimit){
         Session session = sessionFactory.openSession();
         try {

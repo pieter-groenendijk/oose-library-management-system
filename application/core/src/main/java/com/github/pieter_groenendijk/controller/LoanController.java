@@ -47,6 +47,7 @@ public class LoanController {
         ILoanRepository loanRepository = new LoanRepository(sessionFactory);
         IProductRepository productRepository = new ProductRepository(sessionFactory);
         IMembershipRepository membershipRepository = new MembershipRepository(sessionFactory);
+        IMembershipTypeRepository membershipTypeRepository = new MembershipTypeRepository(sessionFactory);
         IReservationService reservationService = new ReservationService(
             new ReservationRepository(sessionFactory),
             membershipRepository,
@@ -68,7 +69,7 @@ public class LoanController {
                 )
             )
         );
-        this.loanService = new LoanService(loanRepository, membershipRepository, eventService, reservationService, productRepository);
+        this.loanService = new LoanService(loanRepository, membershipRepository, eventService, reservationService, productRepository, membershipTypeRepository);
     }
 
     @Operation(summary = "Create a Loan", description = "Create a new Loan")

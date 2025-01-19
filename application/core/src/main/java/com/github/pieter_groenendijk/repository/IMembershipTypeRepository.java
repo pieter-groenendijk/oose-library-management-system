@@ -15,4 +15,5 @@ public interface IMembershipTypeRepository {
     void store(LendingLimit lendingLimit);
     void update(LendingLimit lendingLimit);
     List<LendingLimit> retrieveLendingLimitList(long id);
+    int retrieveLendingLimitByGenreAndMembershipType(long membershipTypeId, long genreId);
 }

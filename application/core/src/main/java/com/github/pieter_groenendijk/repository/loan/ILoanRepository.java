@@ -11,4 +11,5 @@ public interface ILoanRepository {
     Loan store(Loan loan);
     void updateLoan(Loan loan);
     List<Loan> retrieveAllActiveLoans();
+    int retrieveCurrentGenreLoanCount(long membershipId, long genreId);
 }

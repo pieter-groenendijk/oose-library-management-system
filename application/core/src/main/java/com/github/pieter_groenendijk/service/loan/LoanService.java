@@ -6,6 +6,7 @@ import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.repository.loan.ILoanRepository;
 import com.github.pieter_groenendijk.model.LoanStatus;
 import com.github.pieter_groenendijk.model.Membership;
+import com.github.pieter_groenendijk.model.MembershipType;
 import com.github.pieter_groenendijk.model.Reservation;
 import com.github.pieter_groenendijk.model.product.ProductCopy;
 import com.github.pieter_groenendijk.model.product.ProductCopyStatus;
@@ -13,6 +14,7 @@ import com.github.pieter_groenendijk.service.loan.event.ILoanEventService;
 
 import static com.github.pieter_groenendijk.service.ServiceUtils.LOAN_LENGTH;
 import com.github.pieter_groenendijk.repository.IMembershipRepository;
+import com.github.pieter_groenendijk.repository.IMembershipTypeRepository;
 import com.github.pieter_groenendijk.repository.IProductRepository;
 import com.github.pieter_groenendijk.service.reservation.IReservationService;
 
@@ -27,6 +29,7 @@ public class LoanService implements ILoanService {
     private final IProductRepository productRepository;
     private final ILoanEventService EVENT_SERVICE;
     private final IMembershipRepository membershipRepository;
+    private final IMembershipTypeRepository membershipTypeRepository;
 
 
     public LoanService(
@@ -34,16 +37,18 @@ public class LoanService implements ILoanService {
         IMembershipRepository membershipRepository,
         ILoanEventService eventService,
         IReservationService reservationService,
-        IProductRepository productRepository
+        IProductRepository productRepository,
+        IMembershipTypeRepository membershipTypeRepository
     ) {
         this.loanRepository = loanRepository;
         this.membershipRepository = membershipRepository;
         this.EVENT_SERVICE = eventService;
         this.reservationService = reservationService;
         this.productRepository = productRepository;
-
+        this.membershipTypeRepository = membershipTypeRepository;
     }
 
+    // TODO: Implement correct error handling. Is a loan still successful if we failed to schedule events for it, or the other way around?
     @Override
     public Loan store(LoanRequestDTO loanRequestDTO) throws Exception {
         if (loanRequestDTO == null) {
@@ -63,6 +68,9 @@ public class LoanService implements ILoanService {
         ProductCopy productCopy = productRepository.retrieveProductCopyById(loanRequestDTO.getProductCopyId())
                 .orElseThrow(() -> new EntityNotFoundException("ProductCopy not found"));
         loan.setProductCopy(productCopy);
+
+        checkDoesLoanExceedLimitForMembership(membership);
+        checkDoesLoanExceedLimitForGenre(membership, productCopy);
 
         productCopy.setAvailabilityStatus(ProductCopyStatus.LOANED);
         productRepository.updateProductCopy(productCopy);
@@ -211,4 +219,29 @@ public class LoanService implements ILoanService {
     }
 
 
+
+    public void checkDoesLoanExceedLimitForMembership (Membership membership) {
+        List<Loan> activeLoanList = retrieveActiveLoansByMembershipId(membership.getMembershipId());
+        int numberOfLoans = activeLoanList.size();
+
+        long membershipTypeId = membership.getMembershipType().getMembershipTypeId();
+        MembershipType membershipType = membershipTypeRepository.retrieveMembershipTypeById(membershipTypeId).get();
+        int maxNumberOfLoans = membershipType.getMaxLendings();
+        if (numberOfLoans >= maxNumberOfLoans) {
+            throw new IllegalStateException("Loan would exceed limit for MembershipType");
+        }
+    }
+
+    public void checkDoesLoanExceedLimitForGenre (Membership membership, ProductCopy productCopy) {
+        long membershipId = membership.getMembershipId();
+        long membershipTypeId = membership.getMembershipType().getMembershipTypeId();
+        long genreId = productCopy.getPhysicalProductId().getGenre().getGenreId();
+
+        int maxLendingsForGenre = membershipTypeRepository.retrieveLendingLimitByGenreAndMembershipType(membershipTypeId, genreId);
+        int currentLendingsForGenre = loanRepository.retrieveCurrentGenreLoanCount(membershipId, genreId);
+
+        if (currentLendingsForGenre >= maxLendingsForGenre) {
+            throw new IllegalStateException("Loan would exceed limit for Genre");
+        }
+    }
 }
