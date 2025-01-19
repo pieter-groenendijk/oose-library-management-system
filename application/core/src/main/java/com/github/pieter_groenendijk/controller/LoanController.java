@@ -13,6 +13,7 @@ import com.github.pieter_groenendijk.repository.event.IEventRepository;
 import com.github.pieter_groenendijk.repository.loan.event.ILoanEventRepostory;
 import com.github.pieter_groenendijk.repository.loan.event.LoanEventRepostory;
 import com.github.pieter_groenendijk.repository.scheduling.ITaskRepository;
+import com.github.pieter_groenendijk.scheduling.TaskScheduler;
 import com.github.pieter_groenendijk.service.event.emitting.EventEmitterPool;
 import com.github.pieter_groenendijk.service.event.scheduling.EventScheduler;
 import com.github.pieter_groenendijk.service.loan.ILoanService;
@@ -22,7 +23,6 @@ import com.github.pieter_groenendijk.service.loan.event.LoanEventService;
 import com.github.pieter_groenendijk.service.loan.event.scheduling.LoanEventScheduler;
 import com.github.pieter_groenendijk.service.reservation.IReservationService;
 import com.github.pieter_groenendijk.service.reservation.ReservationService;
-import com.github.pieter_groenendijk.utils.scheduling.TaskScheduler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -35,8 +35,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
-
-import static org.hibernate.query.sqm.tree.SqmNode.log;
 
 @RestController
 @RequestMapping("/loan")
