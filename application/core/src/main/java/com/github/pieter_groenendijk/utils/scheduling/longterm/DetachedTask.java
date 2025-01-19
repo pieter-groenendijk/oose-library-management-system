@@ -24,4 +24,12 @@ public class DetachedTask<T extends Task> {
             this.TASK
         );
     }
+
+    public T getTask() {
+        return TASK;
+    }
+
+    public TaskStorage<T> getStorage() {
+        return STORAGE;
+    }
 }
