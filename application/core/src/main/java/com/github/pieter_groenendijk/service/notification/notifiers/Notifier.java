@@ -1,7 +1,7 @@
 package com.github.pieter_groenendijk.service.notification.notifiers;
 
-import com.github.pieter_groenendijk.model.notification.NotificationTask;
+import com.github.pieter_groenendijk.model.notification.Notification;
 
 public interface Notifier {
-    void send(NotificationTask task);
+    void send(Notification task);
 }

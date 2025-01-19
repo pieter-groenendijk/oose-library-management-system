@@ -9,7 +9,6 @@ import com.github.pieter_groenendijk.model.ReservationStatus;
 import com.github.pieter_groenendijk.model.product.ProductCopy;
 import com.github.pieter_groenendijk.model.product.ProductCopyStatus;
 import com.github.pieter_groenendijk.repository.*;
-import com.github.pieter_groenendijk.service.loan.LoanService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -33,6 +32,8 @@ class ReservationServiceTest {
     @Mock
     private IMembershipRepository membershipRepository;
 
+    @Mock
+    private IAccountRepository accountRepository;
 
     @Mock
     private IProductRepository productRepository;

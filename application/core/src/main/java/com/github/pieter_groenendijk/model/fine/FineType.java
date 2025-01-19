@@ -40,4 +40,20 @@ public class FineType {
     public Long getFineTypeId() {
         return fineTypeId;
     }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public @Min(0) Long getAmountInCents() {
+        return amountInCents;
+    }
+
+    public void setAmountInCents(@Min(0) Long amountInCents) {
+        this.amountInCents = amountInCents;
+    }
 }

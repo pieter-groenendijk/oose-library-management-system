@@ -3,16 +3,11 @@ package com.github.pieter_groenendijk.service.loan;
 import com.github.pieter_groenendijk.exception.EntityNotFoundException;
 import com.github.pieter_groenendijk.model.Loan;
 import com.github.pieter_groenendijk.model.LoanStatus;
-import com.github.pieter_groenendijk.model.Membership;
 import com.github.pieter_groenendijk.model.Reservation;
-import com.github.pieter_groenendijk.model.product.ProductCopy;
-import com.github.pieter_groenendijk.model.product.ProductCopyStatus;
 import com.github.pieter_groenendijk.repository.ILoanRepository;
 import com.github.pieter_groenendijk.repository.IMembershipRepository;
 import com.github.pieter_groenendijk.repository.IProductRepository;
 import com.github.pieter_groenendijk.service.IReservationService;
-import com.github.pieter_groenendijk.service.ProductService;
-import com.github.pieter_groenendijk.service.ServiceUtils;
 import com.github.pieter_groenendijk.service.loan.event.ILoanEventService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,7 +31,6 @@ class LoanServiceTest {
     private IMembershipRepository mockMembershipRepository;
     private IReservationService mockReservationService;
     private IProductRepository mockProductRepository;
-
     private Loan mockLoan;
 
     @BeforeEach
@@ -61,12 +55,9 @@ class LoanServiceTest {
     @Test
     void checkIsLate() {
         LocalDate dueDate = LocalDate.now().minusDays(5);
-
         when(mockLoan.getLoanStatus()).thenReturn(LoanStatus.ACTIVE);
         when(mockLoan.getReturnBy()).thenReturn(dueDate);
-
         boolean result = loanService.checkIsLate(mockLoan);
-
         assertTrue(result, "Loan should be marked as late");
         verify(mockLoan).setLoanStatus(LoanStatus.OVERDUE);
         verify(mockLoanRepository).updateLoan(mockLoan);

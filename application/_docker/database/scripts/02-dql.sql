@@ -39,6 +39,21 @@ SELECT
     "endDate"
 FROM "Membership";
 
+CREATE VIEW
+    "vw_FineBalance"
+AS
+(
+    SELECT
+        "account",
+        SUM("amountInCents") as "balanceInCents"
+    FROM
+        "Fine"
+    WHERE
+        "paidBy" is null
+    GROUP BY
+        "account"
+);
+
 CREATE VIEW "vw_Loans_Per_Membership" AS
 SELECT
     l."membershipId",

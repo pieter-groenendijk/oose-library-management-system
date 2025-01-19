@@ -1,36 +1,38 @@
 package com.github.pieter_groenendijk.service;
 
 import com.github.pieter_groenendijk.model.Account;
+import com.github.pieter_groenendijk.model.DTO.MembershipTypeRequestDTO;
 import com.github.pieter_groenendijk.model.MembershipType;
-import com.github.pieter_groenendijk.repository.IAccountRepository;
-import com.github.pieter_groenendijk.repository.IMembershipTypeRepository;
 import com.github.pieter_groenendijk.model.Membership;
 import com.github.pieter_groenendijk.model.LendingLimit;
 import com.github.pieter_groenendijk.model.DTO.MembershipRequestDTO;
-import com.github.pieter_groenendijk.model.DTO.MembershipTypeRequestDTO;
-import com.github.pieter_groenendijk.repository.IMembershipRepository;
+
 import java.util.List;
 import com.github.pieter_groenendijk.model.DTO.AccountRequestDTO;
 
 public interface IAccountService {
 
-    Account retrieveAccountById(long id);
+    Account retrieveAccountById(long id) throws Exception;
     
     MembershipType retrieveMembershipTypeById(long id);
     
-    void store(AccountRequestDTO account);
+    void store(Account account) throws Exception;
 
-    void update(long id, AccountRequestDTO account);
-    
+    void store(AccountRequestDTO account) throws Exception;
+
+    void update(Account account) throws Exception;
+
+    void update(long id, AccountRequestDTO account) throws Exception;
+
     void store(MembershipTypeRequestDTO membershipType);
     
     Membership retrieveMembershipById(long id);
     
-    void store(MembershipRequestDTO request);
+    void store(MembershipRequestDTO request) throws Exception;
 
     List<Membership> retrieveMembershipsByAccountId (long id);
 
-    void setIsBlocked(long id, boolean newValue);
+    void setIsBlocked(long id, boolean newValue) throws Exception;
 
     void update(long id, MembershipTypeRequestDTO request);
 
@@ -38,7 +40,7 @@ public interface IAccountService {
 
     void update(long id, MembershipRequestDTO request);
 
-    void softDeleteAccount(long id);
+    void softDeleteAccount(long id) throws Exception;
 
     void softDeleteMembership(long id);
 

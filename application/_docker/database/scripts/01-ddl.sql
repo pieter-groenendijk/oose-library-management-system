@@ -6,8 +6,8 @@ CREATE TABLE "Account" (
     "lastName" VARCHAR(50) NOT NULL,
     "dateOfBirth" DATE NOT NULL,
     "gender" CHAR(1) NOT NULL,
-    "isBlocked" BOOLEAN NOT NULL,
     "uncollectedReservations" INT DEFAULT 0,
+    "isBlocked" BOOLEAN DEFAULT FALSE,
     "isDeleted" BOOLEAN NOT NULL
 );
 
@@ -48,28 +48,6 @@ CREATE TABLE "LendingLimit" (
     FOREIGN KEY ("genreId") REFERENCES "Genre" ("genreId") ON DELETE CASCADE
 );
 
-CREATE TABLE "Lending" (
-    "lendingId" BIGSERIAL PRIMARY KEY,
-    "mustReturnBy" DATE NOT NULL
-);
-
-CREATE TABLE "NotificationTask" (
-    "notificationTaskId" BIGSERIAL PRIMARY KEY,
-    "account" BIGINT NOT NULL,
-    "title" VARCHAR(100) NOT NULL,
-    "message" TEXT NOT NULL,
-    "scheduledAt" TIMESTAMP NOT NULL, -- TODO: Add index; is used quite a bit
-    "sendStrategy" VARCHAR(20) NOT NULL,
-    "status" VARCHAR(20) NOT NULL,
-    FOREIGN KEY ("account") REFERENCES "Account"("accountId") ON UPDATE CASCADE ON DELETE RESTRICT
-);
-
-CREATE TABLE "LendingAssociatedNotificationTask" (
-                                                     "lendingId" BIGSERIAL NOT NULL,
-    "notificationTaskId" BIGINT NOT NULL,
-    PRIMARY KEY ("lendingId", "notificationTaskId")
-);
-
 CREATE TABLE "PaymentStatus" (
     "paymentStatusId" SMALLSERIAL NOT NULL,
     "title" VARCHAR(50) NOT NULL,
@@ -88,31 +66,6 @@ CREATE TABLE "Payment" (
     UNIQUE ("molliePaymentId"),
     CHECK ("amountInCents" >= 0)
 );
-
--- region: Fine Related
-CREATE TABLE "FineType" (
-    "fineTypeId" BIGSERIAL NOT NULL,
-    "title" VARCHAR(50) NOT NULL,
-    "amountInCents" BIGINT NOT NULL,
-    PRIMARY KEY ("fineTypeId"),
-    UNIQUE ("title"),
-    CHECK ("amountInCents" >= 0)
-);
-
-CREATE TABLE "Fine" (
-    "fineId" BIGSERIAL NOT NULL,
-    "fineType" SMALLINT NOT NULL,
-    "account" BIGINT NOT NULL,
-    "amountInCents" BIGINT NOT NULL,
-    "declaredOn" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    "paidBy" BIGINT,
-    PRIMARY KEY ("fineId"),
-    FOREIGN KEY ("fineType") REFERENCES "FineType"("fineTypeId") ON UPDATE CASCADE ON DELETE RESTRICT,
-    FOREIGN KEY ("account") REFERENCES "Account"("accountId") ON UPDATE CASCADE ON DELETE RESTRICT,
-    FOREIGN KEY ("paidBy") REFERENCES "Payment"("paymentId") ON UPDATE CASCADE ON DELETE RESTRICT,
-    CHECK ("amountInCents" >= 0)
-);
--- endregion
 
 CREATE TABLE "ProductTemplate" (
     "productId" BIGSERIAL PRIMARY KEY,
@@ -145,13 +98,13 @@ CREATE TABLE "PhysicalProduct" (
     "author" VARCHAR(100) NOT NULL,
     FOREIGN KEY ("productId") REFERENCES "ProductTemplate" ("productId")
 );
+
 CREATE TABLE "DigitalProduct"
 (
     "productId" BIGSERIAL PRIMARY KEY,
     "language"      VARCHAR(100),
     FOREIGN KEY ("productId") REFERENCES "ProductTemplate" ("productId")
 );
-
 
 CREATE TABLE "ProductCopy"
 (
@@ -160,6 +113,7 @@ CREATE TABLE "ProductCopy"
     "productId"          BIGINT      NOT NULL,
     FOREIGN KEY ("productId") REFERENCES "PhysicalProduct" ("productId")
 );
+
 CREATE TYPE loanStatus AS ENUM ('ACTIVE', 'EXTENDED', 'RETURNED', 'OVERDUE');
 CREATE TYPE reservationStatus AS ENUM ('ACTIVE', 'LOANED', 'EXPIRED', 'CANCELLED');
 
@@ -198,9 +152,55 @@ CREATE TABLE "Event" (
     "associationType" VARCHAR(50) NOT NULL,
     "loan" BIGINT,
     "reservation" BIGINT,
+    "status" VARCHAR(50) NOT NULL,
     PRIMARY KEY ("eventId"),
     FOREIGN KEY ("loan") REFERENCES "Loan"("loanId"),
     FOREIGN KEY ("reservation") REFERENCES "Reservation"("reservationId")
 );
 -- endregion
+
+-- region: Fine Related
+CREATE TABLE "FineType" (
+    "fineTypeId" BIGSERIAL NOT NULL,
+    "title" VARCHAR(50) NOT NULL,
+    "amountInCents" BIGINT NOT NULL,
+    PRIMARY KEY ("fineTypeId"),
+    UNIQUE ("title"),
+    CHECK ("amountInCents" >= 0)
+);
+
+CREATE TABLE "Fine" (
+    "fineId" BIGSERIAL NOT NULL,
+    "fineType" BIGINT NOT NULL,
+    "account" BIGINT NOT NULL,
+    "amountInCents" BIGINT NOT NULL,
+    "loan" BIGINT,
+    "reservation" BIGINT,
+    "associationType" VARCHAR(50) NOT NULL,
+    "declaredOn" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    "paidBy" BIGINT,
+    PRIMARY KEY ("fineId"),
+    FOREIGN KEY ("fineType") REFERENCES "FineType"("fineTypeId") ON UPDATE CASCADE ON DELETE RESTRICT,
+    FOREIGN KEY ("account") REFERENCES "Account"("accountId") ON UPDATE CASCADE ON DELETE RESTRICT,
+    FOREIGN KEY ("paidBy") REFERENCES "Payment"("paymentId") ON UPDATE CASCADE ON DELETE RESTRICT,
+    FOREIGN KEY ("loan") REFERENCES "Loan"("loanId") ON UPDATE CASCADE ON DELETE RESTRICT,
+    FOREIGN KEY ("reservation") REFERENCES "Reservation"("reservationId") ON UPDATE CASCADE ON DELETE RESTRICT,
+    CHECK ("amountInCents" >= 0)
+);
+-- endregion
+
+CREATE TABLE "Notification" (
+    "notificationId" BIGSERIAL PRIMARY KEY,
+    "account" BIGINT NOT NULL,
+    "title" VARCHAR(100) NOT NULL,
+    "message" TEXT NOT NULL,
+    "scheduledAt" TIMESTAMP NOT NULL, -- TODO: Add index; is used quite a bit
+    "sendStrategy" VARCHAR(20) NOT NULL,
+    "loan" BIGINT,
+    "associationType" VARCHAR(50) NOT NULL,
+    "status" VARCHAR(50) NOT NULL,
+    FOREIGN KEY ("account") REFERENCES "Account"("accountId") ON UPDATE CASCADE ON DELETE RESTRICT,
+    FOREIGN KEY ("loan") REFERENCES "Loan" ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
 

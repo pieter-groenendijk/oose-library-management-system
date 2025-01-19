@@ -8,7 +8,6 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "Loan")
 public class Loan {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long loanId;
@@ -54,10 +53,10 @@ public class Loan {
         this.membership = membership;
     }
 
-
     public Long getProductCopy() {
         return productCopy.getProductCopyId();
     }
+
     public void setProductCopy(ProductCopy productCopy) {
         this.productCopy = productCopy;
     }

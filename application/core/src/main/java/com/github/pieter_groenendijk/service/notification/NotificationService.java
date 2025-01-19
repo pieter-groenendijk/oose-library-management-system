@@ -1,36 +1,55 @@
 package com.github.pieter_groenendijk.service.notification;
 
-import com.github.pieter_groenendijk.utils.scheduling.TaskScheduler;
-import com.github.pieter_groenendijk.model.Account;
-import com.github.pieter_groenendijk.model.Lending;
-import com.github.pieter_groenendijk.repository.notification.INotificationTaskRepository;
-import com.github.pieter_groenendijk.service.notification.scheduling.NotificationTaskScheduler;
-import com.github.pieter_groenendijk.service.notification.send_strategies.NotificationSendStrategyFactory;
-import com.github.pieter_groenendijk.service.notification.send_strategies.registry.NotificationSendStrategyRegistry;
-import com.github.pieter_groenendijk.service.notification.task.NotificationTaskFactory;
+import com.github.pieter_groenendijk.model.Loan;
+import com.github.pieter_groenendijk.repository.IAccountRepository;
+import com.github.pieter_groenendijk.repository.notification.INotificationRepository;
+import com.github.pieter_groenendijk.scheduling.TaskScheduler;
+import com.github.pieter_groenendijk.service.notification.scheduling.NotificationScheduler;
+import com.github.pieter_groenendijk.service.notification.sendstrategies.NotificationSendStrategyFactory;
+import com.github.pieter_groenendijk.service.notification.sendstrategies.registry.NotificationSendStrategyRegistry;
+import com.github.pieter_groenendijk.service.notification.task.DetachedNotificationFactory;
 
 public class NotificationService {
-    private final NotificationTaskFactory FACTORY;
-    private final NotificationTaskScheduler SCHEDULER;
+    private final DetachedNotificationFactory FACTORY;
+    private final NotificationScheduler SCHEDULER;
 
-    public NotificationService(TaskScheduler scheduler, INotificationTaskRepository repository) {
-        this.FACTORY = new NotificationTaskFactory(repository);
-        this.SCHEDULER = new NotificationTaskScheduler(
-            scheduler,
+    private final IAccountRepository ACCOUNT_REPOSITORY;
+
+    public NotificationService(
+        TaskScheduler scheduler,
+        INotificationRepository repository,
+        IAccountRepository accountRepository
+    ) {
+        this.FACTORY = new DetachedNotificationFactory(
+            repository
+        );
+
+        this.SCHEDULER = new NotificationScheduler(
             repository,
+            scheduler,
             new NotificationSendStrategyRegistry(
                 new NotificationSendStrategyFactory()
             )
         );
+
+        this.ACCOUNT_REPOSITORY = accountRepository;
     }
 
-    public void scheduleNewLendingBundle(Account account, Lending lending) {
-        this.scheduleReturnDateNotification(account, lending);
-    }
-
-    private void scheduleReturnDateNotification(Account account, Lending lending) {
+    public void scheduleOverdueLoanNotification(Loan loan) throws Exception {
         this.SCHEDULER.schedule(
-            this.FACTORY.createReturnDateNotificationTask(account, lending)
+            this.FACTORY.createOverdueLoanNotification(
+                this.ACCOUNT_REPOSITORY.retrieveAccountFromLoan(loan).orElseThrow(),
+                loan
+            )
+        );
+    }
+
+    public void scheduleAlmostOverdueLoanNotification(Loan loan) throws Exception {
+        this.SCHEDULER.schedule(
+            this.FACTORY.createAlmostOverdueLoanNotification(
+                this.ACCOUNT_REPOSITORY.retrieveAccountFromLoan(loan).orElseThrow(),
+                loan
+            )
         );
     }
 }

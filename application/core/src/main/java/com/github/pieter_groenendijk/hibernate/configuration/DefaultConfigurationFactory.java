@@ -3,9 +3,13 @@ package com.github.pieter_groenendijk.hibernate.configuration;
 import com.github.pieter_groenendijk.model.*;
 import com.github.pieter_groenendijk.model.event.Event;
 import com.github.pieter_groenendijk.model.event.LoanEvent;
-import com.github.pieter_groenendijk.model.notification.LendingAssociatedNotificationTask;
-import com.github.pieter_groenendijk.model.notification.NotificationTask;
 import com.github.pieter_groenendijk.model.product.*;
+import com.github.pieter_groenendijk.model.fine.Fine;
+import com.github.pieter_groenendijk.model.fine.FineType;
+import com.github.pieter_groenendijk.model.notification.LoanNotification;
+import com.github.pieter_groenendijk.model.notification.Notification;
+import com.github.pieter_groenendijk.model.payment.Payment;
+import com.github.pieter_groenendijk.model.payment.PaymentStatus;
 import org.hibernate.cfg.Configuration;
 
 public class DefaultConfigurationFactory {
@@ -25,9 +29,6 @@ public class DefaultConfigurationFactory {
             .addAnnotatedClass(Account.class)
             .addAnnotatedClass(Membership.class)
             .addAnnotatedClass(MembershipType.class)
-            .addAnnotatedClass(Lending.class)
-            .addAnnotatedClass(NotificationTask.class)
-            .addAnnotatedClass(LendingAssociatedNotificationTask.class)
             .addAnnotatedClass(Loan.class)
             .addAnnotatedClass(ProductCopy.class)
             .addAnnotatedClass(ProductTemplate.class)
@@ -35,12 +36,17 @@ public class DefaultConfigurationFactory {
             .addAnnotatedClass(PhysicalProduct.class)
             .addAnnotatedClass(Reservation.class)
             .addAnnotatedClass(Event.class)
+// TODO: Add below annotated classes, currently not possible since Loan and all those other classes are not placed here yet.
+//            .addAnnotatedClass(ReservationEvent.class)
             .addAnnotatedClass(LoanEvent.class)
             .addAnnotatedClass(Genre.class)
             .addAnnotatedClass(LendingLimit.class)
-
-// TODO: Add below annotated classes, currently not possible since Loan and all those other classes are not placed here yet.
-//            .addAnnotatedClass(ReservationEvent.class)
+            .addAnnotatedClass(Notification.class)
+            .addAnnotatedClass(LoanNotification.class)
+            .addAnnotatedClass(FineType.class)
+            .addAnnotatedClass(PaymentStatus.class)
+            .addAnnotatedClass(Payment.class)
+            .addAnnotatedClass(Fine.class);
         ;
     }
 
