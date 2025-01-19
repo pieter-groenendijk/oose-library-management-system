@@ -31,19 +31,19 @@ public class LoanEventScheduler {
         this.SCHEDULER = scheduler;
     }
 
-    public void scheduleDayOverdueLoanEvent(Loan loan) {
+    public void scheduleDayOverdueLoanEvent(Loan loan) throws Exception {
         this.SCHEDULER.schedule(
             this.DAY_OVERDUE_GENERATOR.generate(loan)
         );
     }
 
-    public void scheduleOverdueLoanEvent(Loan loan) {
+    public void scheduleOverdueLoanEvent(Loan loan) throws Exception {
         this.SCHEDULER.schedule(
             this.OVERDUE_GENERATOR.generate(loan)
         );
     }
 
-    public void scheduleAlmostOverdueLoanEvent(Loan loan) {
+    public void scheduleAlmostOverdueLoanEvent(Loan loan) throws Exception {
         this.SCHEDULER.schedule(
             this.ALMOST_OVERDUE_GENERATOR.generate(loan)
         );

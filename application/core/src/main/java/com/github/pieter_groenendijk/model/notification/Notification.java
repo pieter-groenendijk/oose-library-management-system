@@ -22,7 +22,7 @@ public abstract class Notification extends Task {
         name = "notificationId",
         nullable = false
     )
-    private Long id;
+    private Long notificationId;
 
     @ManyToOne
     @JoinColumn(
@@ -53,12 +53,12 @@ public abstract class Notification extends Task {
 
     public Notification() {} // Needed for ORM
 
-    public Long getId() {
-        return id;
+    public Long getNotificationId() {
+        return notificationId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setNotificationId(Long id) {
+        this.notificationId = id;
     }
 
     public Account getAccount() {

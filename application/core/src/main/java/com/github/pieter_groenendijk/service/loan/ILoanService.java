@@ -11,7 +11,7 @@ import static com.github.pieter_groenendijk.service.ServiceUtils.LOAN_LENGTH;
 
 
 public interface ILoanService {
-    Loan store(LoanRequestDTO loan);
+    Loan store(LoanRequestDTO loan) throws Exception;
 
     void extendLoan(long loanId, LocalDate returnBy);
 
